@@ -62,7 +62,7 @@ Reference these Tailwind v4 theme vars (already in `src/index.css`) — add any 
 
 Same shell/sidebar as Dashboard (sidebar nav highlight moves to none active on this page in the reference — confirm whether Detail should highlight "Dashboard" as parent).
 
-**Header block:** `<h1>` injury name (Lora 600, 24px) + status pill (top-aligned, `margin-top:4px` to optically align with baseline), space-between. Description paragraph below: `ink-secondary`, 14px, `max-width: 56ch`. Action row: "Log Entry for Injury" (primary) + "Edit" (secondary button style, same as "+ Log" above but radius 11px/padding `9px 15px`).
+**Header block:** `<h1>` injury name (Lora 600, 24px) + status pill (top-aligned, `margin-top:4px` to optically align with baseline), space-between. Description paragraph below: `ink-secondary`, 14px, `max-width: 56ch`. Action row: "Log Entry" (primary) + "Edit" (secondary button style, same as "+ Log" above but radius 11px/padding `9px 15px`).
 
 **Body grid:** `2fr 1fr` columns, gap 20px.
 

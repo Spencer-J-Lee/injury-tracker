@@ -2,7 +2,6 @@ import { Link, Outlet, useLocation } from 'react-router-dom'
 import clsx from 'clsx'
 import { useLogModal } from '@/context/LogModalContext'
 import { BackupBanner } from '@/components/layout/BackupBanner'
-import { Button } from '@/components/ui/Button'
 
 export function AppShell() {
   const location = useLocation()
@@ -44,9 +43,6 @@ export function AppShell() {
             <Link to="/" className="font-heading text-[19px] font-semibold text-ink">
               Rehab Tracker
             </Link>
-            <Button onClick={() => openLogModal()} size="lg" className="w-full">
-              Log Entry
-            </Button>
             <nav className="flex flex-col gap-1">
               {navLinkSidebar('/', 'Dashboard')}
               {navLinkSidebar('/settings', 'Settings')}

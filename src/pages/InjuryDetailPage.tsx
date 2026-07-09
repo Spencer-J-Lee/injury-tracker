@@ -34,7 +34,7 @@ export function InjuryDetailPage() {
         )}
 
         <div className="mt-3.5 flex flex-wrap items-center gap-2.5">
-          <Button onClick={() => openLogModal([injury.id])}>Log Entry for Injury</Button>
+          <Button onClick={() => openLogModal([injury.id])}>Log Entry</Button>
           <Link to={`/injuries/${injury.id}/edit`}>
             <Button variant="secondary">Edit</Button>
           </Link>

@@ -22,7 +22,7 @@
                         - heading "Test Knee Injury" [level=1] [ref=f2e84]
                         - generic [ref=f2e86]: Active
                     - generic [ref=f2e87]:
-                        - button "Log Entry for Injury" [ref=f2e88] [cursor=pointer]
+                        - button "Log Entry" [ref=f2e88] [cursor=pointer]
                         - link "Edit" [ref=f2e89] [cursor=pointer]:
                             - /url: /injuries/80a9217c-6d19-4f86-9dad-b9d57bec6820/edit
                             - button "Edit" [ref=f2e90]
