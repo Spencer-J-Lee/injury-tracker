@@ -20,7 +20,7 @@ export function InjuryFormPage() {
       </h1>
       <InjuryForm
         initial={injury ?? undefined}
-        submitLabel={isEdit ? 'Save changes' : 'Create injury'}
+        submitLabel={isEdit ? 'Save' : 'Create injury'}
         onSubmit={async (values) => {
           if (isEdit && id) {
             await updateInjury(id, values)

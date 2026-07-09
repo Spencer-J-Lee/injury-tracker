@@ -38,7 +38,7 @@ function RemedyGroup({
               <RemedyForm
                 type={remedy.type}
                 initial={{ name: remedy.name, description: remedy.description ?? '' }}
-                submitLabel="Save changes"
+                submitLabel="Save"
                 onCancel={() => setEditingId(null)}
                 onSubmit={async (values) => {
                   await updateRemedy(remedy.id, values)

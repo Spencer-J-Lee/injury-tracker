@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/Input'
 import { Textarea } from '@/components/ui/Textarea'
 import { Select } from '@/components/ui/Select'
 import { Button } from '@/components/ui/Button'
+import { Label } from '@/components/ui/Label'
 
 interface InjuryFormValues {
   name: string
@@ -38,7 +39,7 @@ export function InjuryForm({ initial, onSubmit, onCancel, submitLabel }: InjuryF
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="mb-1 block text-sm font-medium text-ink-secondary">Name</label>
+        <Label size="md">Name</Label>
         <Input
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -48,7 +49,7 @@ export function InjuryForm({ initial, onSubmit, onCancel, submitLabel }: InjuryF
       </div>
       {initial && (
         <div>
-          <label className="mb-1 block text-sm font-medium text-ink-secondary">Status</label>
+          <Label size="md">Status</Label>
           <Select value={status} onChange={(e) => setStatus(e.target.value as InjuryStatus)}>
             <option value="active">Active</option>
             <option value="monitoring">Monitoring</option>
@@ -57,7 +58,7 @@ export function InjuryForm({ initial, onSubmit, onCancel, submitLabel }: InjuryF
         </div>
       )}
       <div>
-        <label className="mb-1 block text-sm font-medium text-ink-secondary">Description</label>
+        <Label size="md">Description</Label>
         <Textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
