@@ -27,58 +27,56 @@ function RemedyGroup({
     <div>
       <h4 className="mb-2.5 text-[11px] font-semibold tracking-wide text-ink-faint uppercase">{title}</h4>
 
-      {filtered.length === 0 && !adding && (
-        <p className="mb-2 text-[13px] text-ink-muted">None added yet.</p>
+      {filtered.length > 0 && (
+        <ul className="space-y-2 mb-2">
+          {filtered.map((remedy) =>
+            editingId === remedy.id ? (
+              <li key={remedy.id}>
+                <RemedyForm
+                  type={remedy.type}
+                  initial={{ name: remedy.name, description: remedy.description ?? '' }}
+                  submitLabel="Save"
+                  onCancel={() => setEditingId(null)}
+                  onSubmit={async (values) => {
+                    await updateRemedy(remedy.id, values)
+                    setEditingId(null)
+                  }}
+                />
+              </li>
+            ) : (
+              <li
+                key={remedy.id}
+                className="flex items-center justify-between gap-2 rounded-[10px] border border-subtle px-3 py-[9px]"
+              >
+                <div className="min-w-0 truncate">
+                  <span className="text-[13px] text-ink">{remedy.name}</span>
+                  {remedy.description && (
+                    <span className="ml-2 text-xs text-ink-muted">{remedy.description}</span>
+                  )}
+                </div>
+                <div className="flex shrink-0 items-center gap-2">
+                  <span className="text-xs text-ink-muted">×{usageCounts.get(remedy.id) ?? 0}</span>
+                  <button
+                    onClick={() => setEditingId(remedy.id)}
+                    className="rounded-md px-1.5 py-1 text-xs font-medium text-ink-muted transition-colors hover:bg-accent-soft hover:text-accent-soft-text"
+                  >
+                    edit
+                  </button>
+                  <button
+                    onClick={() => archiveRemedy(remedy.id)}
+                    className="rounded-md px-1.5 py-1 text-xs font-medium text-ink-muted transition-colors hover:bg-pain-red-bg hover:text-pain-red"
+                  >
+                    archive
+                  </button>
+                </div>
+              </li>
+            ),
+          )}
+        </ul>
       )}
 
-      <ul className="space-y-2">
-        {filtered.map((remedy) =>
-          editingId === remedy.id ? (
-            <li key={remedy.id}>
-              <RemedyForm
-                type={remedy.type}
-                initial={{ name: remedy.name, description: remedy.description ?? '' }}
-                submitLabel="Save"
-                onCancel={() => setEditingId(null)}
-                onSubmit={async (values) => {
-                  await updateRemedy(remedy.id, values)
-                  setEditingId(null)
-                }}
-              />
-            </li>
-          ) : (
-            <li
-              key={remedy.id}
-              className="flex items-center justify-between gap-2 rounded-[10px] border border-subtle px-3 py-[9px]"
-            >
-              <div className="min-w-0 truncate">
-                <span className="text-[13px] text-ink">{remedy.name}</span>
-                {remedy.description && (
-                  <span className="ml-2 text-xs text-ink-muted">{remedy.description}</span>
-                )}
-              </div>
-              <div className="flex shrink-0 items-center gap-2">
-                <span className="text-xs text-ink-muted">×{usageCounts.get(remedy.id) ?? 0}</span>
-                <button
-                  onClick={() => setEditingId(remedy.id)}
-                  className="rounded-md px-1.5 py-1 text-xs font-medium text-ink-muted transition-colors hover:bg-accent-soft hover:text-accent-soft-text"
-                >
-                  edit
-                </button>
-                <button
-                  onClick={() => archiveRemedy(remedy.id)}
-                  className="rounded-md px-1.5 py-1 text-xs font-medium text-ink-muted transition-colors hover:bg-pain-red-bg hover:text-pain-red"
-                >
-                  archive
-                </button>
-              </div>
-            </li>
-          ),
-        )}
-      </ul>
-
       {adding ? (
-        <div className="mt-2">
+        <div>
           <RemedyForm
             type={type}
             submitLabel="Add"
@@ -89,7 +87,7 @@ function RemedyGroup({
           />
         </div>
       ) : (
-        <Button variant="dashed" onClick={() => setAdding(true)} className="mt-2 w-full">
+        <Button variant="dashed" onClick={() => setAdding(true)} className="w-full">
           + Add {title.toLowerCase()} remedy
         </Button>
       )}
