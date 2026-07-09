@@ -42,11 +42,11 @@ export function InjuryDetailPage() {
       </div>
 
       <div className="grid gap-5 lg:grid-cols-[2fr_1fr]">
-        <div className="space-y-5">
+        <div className="space-y-5 min-w-0">
           <PainTrendChart injuryId={injury.id} />
           <LogTimeline injuryId={injury.id} />
         </div>
-        <div className="lg:self-start">
+        <div className="lg:self-start min-w-0">
           <RemedyList injuryId={injury.id} />
         </div>
       </div>
