@@ -87,7 +87,7 @@ export function SettingsPage() {
         {message && <p className="text-[13px] text-pain-green">{message}</p>}
       </Card>
 
-      <Card className="space-y-3" style={{ borderColor: 'oklch(0.35 0.05 25)' }}>
+      <Card className="space-y-3" style={{ borderColor: 'oklch(0.40 0.08 25)' }}>
         <div>
           <h3 className="text-[15px] font-semibold text-pain-red">Danger zone</h3>
           <p className="mt-1 text-[13px] text-ink-muted">

@@ -29,9 +29,9 @@ export function BackupBanner() {
     <div
       className="mb-5 flex items-center justify-between gap-3 rounded-xl border px-[14px] py-[10px] text-[13px]"
       style={{
-        background: 'oklch(0.24 0.035 85)',
-        borderColor: 'oklch(0.32 0.05 85)',
-        color: 'oklch(0.85 0.09 85)',
+        background: 'oklch(0.27 0.06 85)',
+        borderColor: 'oklch(0.38 0.08 85)',
+        color: 'oklch(0.90 0.12 85)',
       }}
     >
       <span>

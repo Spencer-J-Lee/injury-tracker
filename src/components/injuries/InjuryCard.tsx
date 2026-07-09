@@ -51,7 +51,7 @@ export function InjuryCard({ injury }: { injury: Injury }) {
             openLogModal([injury.id])
           }}
         >
-          Log Entry
+          + Log Entry
         </Button>
       </div>
     </Card>

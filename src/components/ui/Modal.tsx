@@ -15,7 +15,7 @@ export function Modal({ open, onClose, title, children, footer }: ModalProps) {
   return createPortal(
     <div
       className="fixed inset-0 z-50 flex items-end justify-center backdrop-blur-sm sm:items-center sm:p-6"
-      style={{ background: 'oklch(0.11 0.006 60 / 0.7)' }}
+      style={{ background: 'oklch(0.05 0.007 60 / 0.7)' }}
       onClick={onClose}
     >
       <div

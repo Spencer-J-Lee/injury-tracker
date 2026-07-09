@@ -1,35 +1,35 @@
 @import "tailwindcss";
 
 @theme {
-  --color-canvas-page: oklch(0.13 0.007 60);
-  --color-canvas: oklch(0.14 0.008 60);
-  --color-canvas-sidebar: oklch(0.16 0.008 60);
-  --color-surface: oklch(0.19 0.01 60);
-  --color-surface-raised: oklch(0.2 0.011 60);
-  --color-control: oklch(0.24 0.012 60);
-  --color-input: oklch(0.17 0.009 60);
+  --color-canvas-page: oklch(0.07 0.008 60);
+  --color-canvas: oklch(0.10 0.009 60);
+  --color-canvas-sidebar: oklch(0.14 0.009 60);
+  --color-surface: oklch(0.21 0.012 60);
+  --color-surface-raised: oklch(0.24 0.013 60);
+  --color-control: oklch(0.28 0.015 60);
+  --color-input: oklch(0.15 0.01 60);
 
-  --color-subtle: oklch(0.27 0.01 60);
-  --color-strong: oklch(0.32 0.012 60);
+  --color-subtle: oklch(0.38 0.017 60);
+  --color-strong: oklch(0.44 0.019 60);
 
-  --color-ink: oklch(0.96 0.004 60);
-  --color-ink-emphasis: oklch(0.88 0.006 60);
-  --color-ink-secondary: oklch(0.76 0.012 60);
-  --color-ink-muted: oklch(0.6 0.012 60);
-  --color-ink-faint: oklch(0.52 0.012 60);
+  --color-ink: oklch(0.97 0.004 60);
+  --color-ink-emphasis: oklch(0.93 0.007 60);
+  --color-ink-secondary: oklch(0.81 0.013 60);
+  --color-ink-muted: oklch(0.65 0.013 60);
+  --color-ink-faint: oklch(0.59 0.013 60);
 
-  --color-accent: oklch(0.58 0.1 250);
-  --color-accent-hover: oklch(0.5 0.1 250);
-  --color-accent-soft: oklch(0.26 0.05 250);
-  --color-accent-soft-text: oklch(0.8 0.08 250);
+  --color-accent: oklch(0.58 0.13 250);
+  --color-accent-hover: oklch(0.5 0.13 250);
+  --color-accent-soft: oklch(0.26 0.07 250);
+  --color-accent-soft-text: oklch(0.83 0.1 250);
   --color-accent-on: oklch(0.14 0.01 60);
 
-  --color-pain-green: oklch(0.72 0.13 150);
-  --color-pain-green-bg: oklch(0.27 0.045 150);
-  --color-pain-amber: oklch(0.76 0.13 85);
-  --color-pain-amber-bg: oklch(0.27 0.045 85);
-  --color-pain-red: oklch(0.72 0.15 25);
-  --color-pain-red-bg: oklch(0.27 0.05 25);
+  --color-pain-green: oklch(0.80 0.18 150);
+  --color-pain-green-bg: oklch(0.30 0.09 150);
+  --color-pain-amber: oklch(0.82 0.17 85);
+  --color-pain-amber-bg: oklch(0.30 0.09 85);
+  --color-pain-red: oklch(0.78 0.2 25);
+  --color-pain-red-bg: oklch(0.30 0.1 25);
 
   --font-heading: 'Lora', serif;
 }

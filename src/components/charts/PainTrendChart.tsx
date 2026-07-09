@@ -14,13 +14,13 @@ const RANGES: { value: TrendRange; label: string }[] = [
 ]
 
 const colors = {
-  line: 'oklch(0.58 0.1 250)',
-  frequencyLine: 'oklch(0.76 0.13 85)',
-  surface: 'oklch(0.2 0.011 60)',
-  grid: 'oklch(0.25 0.01 60)',
-  muted: 'oklch(0.6 0.012 60)',
-  primary: 'oklch(0.96 0.004 60)',
-  secondary: 'oklch(0.76 0.012 60)',
+  line: 'oklch(0.58 0.13 250)',
+  frequencyLine: 'oklch(0.82 0.17 85)',
+  surface: 'oklch(0.24 0.013 60)',
+  grid: 'oklch(0.29 0.013 60)',
+  muted: 'oklch(0.65 0.013 60)',
+  primary: 'oklch(0.97 0.004 60)',
+  secondary: 'oklch(0.81 0.013 60)',
 }
 
 interface ChartPoint {
