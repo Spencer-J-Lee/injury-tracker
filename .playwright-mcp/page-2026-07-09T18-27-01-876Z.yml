@@ -1,0 +1,69 @@
+- generic [ref=e1]:
+    - generic [ref=e5]:
+        - complementary [ref=e32]:
+            - link "Rehab Tracker" [ref=e33] [cursor=pointer]:
+                - /url: /
+            - button "Log Entry" [ref=e34] [cursor=pointer]
+            - navigation [ref=e35]:
+                - link "Dashboard" [ref=e36] [cursor=pointer]:
+                    - /url: /
+                - link "Settings" [ref=e37] [cursor=pointer]:
+                    - /url: /settings
+        - main [ref=e12]:
+            - generic [ref=e20]:
+                - generic [ref=e21]:
+                    - text: Back up your data — it only lives in this browser.
+                    - link "Export now" [ref=e22] [cursor=pointer]:
+                        - /url: /settings
+                - button "✕" [ref=e23] [cursor=pointer]
+            - generic [ref=e13]:
+                - generic [ref=e14]:
+                    - heading "Your injuries" [level=1] [ref=e15]
+                    - link "New Injury" [ref=e16] [cursor=pointer]:
+                        - /url: /injuries/new
+                        - button "New Injury" [ref=e17]
+                - link "Test Knee Injury Active No entries yet + Log" [ref=e25] [cursor=pointer]:
+                    - generic [ref=e26]:
+                        - heading "Test Knee Injury" [level=3] [ref=e27]
+                        - generic [ref=e28]: Active
+                    - generic [ref=e29]:
+                        - generic [ref=e30]: No entries yet
+                        - button "+ Log" [ref=e31]
+    - generic [ref=e39]:
+        - generic [ref=e40]:
+            - heading "Log entry" [level=2] [ref=e41]
+            - button "Close" [ref=e42] [cursor=pointer]: ✕
+        - generic [ref=e43]:
+            - generic [ref=e44]:
+                - generic [ref=e45]:
+                    - generic [ref=e46]: Injuries
+                    - button "Show all" [ref=e47] [cursor=pointer]
+                - button "Test Knee Injury" [active] [ref=e49] [cursor=pointer]
+            - generic [ref=e58]:
+                - paragraph [ref=e59]: Test Knee Injury
+                - generic [ref=e60]:
+                    - generic [ref=e61]:
+                        - generic [ref=e62]: Pain intensity
+                        - generic [ref=e64]: Not rated
+                    - slider [ref=e65] [cursor=pointer]: "0"
+                - generic [ref=e66]:
+                    - generic [ref=e67]:
+                        - generic [ref=e68]: Frequency
+                        - generic [ref=e70]: Not rated
+                    - slider [ref=e71] [cursor=pointer]: "0"
+                - generic [ref=e72]:
+                    - generic [ref=e73]:
+                        - paragraph [ref=e74]: Relief
+                        - textbox "+ quick add relief remedy" [ref=e76]
+                    - generic [ref=e77]:
+                        - paragraph [ref=e78]: Long-term
+                        - textbox "+ quick add long-term remedy" [ref=e80]
+            - generic [ref=e50]:
+                - generic [ref=e51]: When
+                - textbox [ref=e52]: 2026-07-09T11:26
+            - generic [ref=e53]:
+                - generic [ref=e54]: Notes
+                - textbox "How does it feel today? What did you notice?" [ref=e55]
+        - generic [ref=e56]:
+            - button "Cancel" [ref=e57] [cursor=pointer]
+            - button "Save" [ref=e81] [cursor=pointer]
