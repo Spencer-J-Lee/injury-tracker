@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import clsx from 'clsx'
 import type { Injury } from '@/types/models'
+import { TogglePill } from '@/components/ui/TogglePill'
 
 interface InjurySelectorProps {
   injuries: Injury[]
@@ -28,19 +28,9 @@ export function InjurySelector({ injuries, selectedIds, onToggle }: InjurySelect
         {visible.map((injury) => {
           const selected = selectedIds.includes(injury.id)
           return (
-            <button
-              key={injury.id}
-              type="button"
-              onClick={() => onToggle(injury.id)}
-              className={clsx(
-                'whitespace-nowrap rounded-full border px-3 py-[5px] text-xs font-semibold transition-colors',
-                selected
-                  ? 'border-accent bg-accent-soft text-accent-soft-text'
-                  : 'border-strong bg-transparent text-ink-secondary hover:bg-surface-raised',
-              )}
-            >
+            <TogglePill key={injury.id} selected={selected} onClick={() => onToggle(injury.id)}>
               {injury.name}
-            </button>
+            </TogglePill>
           )
         })}
         {visible.length === 0 && (

@@ -3,8 +3,8 @@ import clsx from 'clsx'
 import type { Remedy } from '@/types/models'
 import { useRemedies } from '@/hooks/useRemedies'
 import { createRemedy } from '@/db/queries/remedies'
-import { Input } from '@/components/ui/Input'
 import { Label } from '../ui/Label'
+import { TogglePill } from '@/components/ui/TogglePill'
 
 interface RemedyCheckboxGroupProps {
   injuryId: string
@@ -34,19 +34,9 @@ function RemedySection({
         {remedies.map((remedy) => {
           const selected = selectedRemedyIds.includes(remedy.id)
           return (
-            <button
-              key={remedy.id}
-              type="button"
-              onClick={() => onToggle(remedy.id)}
-              className={clsx(
-                'rounded-full border px-[10px] py-1 text-xs font-semibold transition-colors',
-                selected
-                  ? 'border-transparent bg-accent-soft text-accent-soft-text'
-                  : 'border-strong bg-transparent text-ink-secondary hover:bg-surface-raised',
-              )}
-            >
+            <TogglePill key={remedy.id} selected={selected} onClick={() => onToggle(remedy.id)}>
               {remedy.name}
-            </button>
+            </TogglePill>
           )
         })}
       </div>
