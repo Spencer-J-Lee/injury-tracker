@@ -4,6 +4,10 @@ export function formatTimestamp(iso: string): string {
   return format(new Date(iso), 'MMM d, yyyy · h:mm a')
 }
 
+export function formatShortDate(iso: string): string {
+  return format(new Date(iso), 'MMM d')
+}
+
 export function formatRelative(iso: string): string {
   return formatDistanceToNow(new Date(iso), { addSuffix: true })
 }

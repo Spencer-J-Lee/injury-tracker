@@ -3,8 +3,7 @@ import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tool
 import clsx from 'clsx'
 import { Card } from '@/components/ui/Card'
 import { useLogEntriesForInjury } from '@/hooks/useLogEntriesForInjury'
-import { isWithinRange, type TrendRange } from '@/lib/dates'
-import { format } from 'date-fns'
+import { formatShortDate, formatTimestamp, isWithinRange, type TrendRange } from '@/lib/dates'
 
 const RANGES: { value: TrendRange; label: string }[] = [
   { value: '7d', label: '7d' },
@@ -44,10 +43,10 @@ function ChartTooltip({ active, payload, colors }: ChartTooltipProps) {
       style={{ background: colors.surface, borderColor: colors.grid, color: colors.secondary }}
     >
       <p style={{ color: colors.muted }} className="text-xs">
-        {format(new Date(point.timestamp), 'MMM d, yyyy · h:mm a')}
+        {formatTimestamp(point.timestamp)}
       </p>
       {point.painLevel !== undefined && (
-        <p className="font-semibold" style={{ color: colors.primary }}>
+        <p className="font-semibold" style={{ color: colors.line }}>
           {point.painLevel}/10 intensity
         </p>
       )}
@@ -100,20 +99,47 @@ export function PainTrendChart({ injuryId }: { injuryId: string }) {
           <div className="mb-2.5 flex items-center gap-4 text-xs text-ink-muted">
             <span className="flex items-center gap-1.5">
               <span className="h-2 w-2 rounded-full" style={{ background: colors.line }} />
-              Pain intensity
+              Pain intensity (0–10)
             </span>
             <span className="flex items-center gap-1.5">
               <span className="h-2 w-2 rounded-full" style={{ background: colors.frequencyLine }} />
-              Frequency
+              Frequency (%)
             </span>
           </div>
-          <div className="h-[180px]">
+          <div className="h-[204px]">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={data} margin={{ top: 4, right: 4, left: 4, bottom: 0 }}>
                 <CartesianGrid vertical={false} stroke={colors.grid} strokeWidth={1} />
-                <XAxis dataKey="timestamp" hide />
-                <YAxis yAxisId="left" domain={[0, 10]} hide />
-                <YAxis yAxisId="right" orientation="right" domain={[0, 100]} hide />
+                <XAxis
+                  dataKey="timestamp"
+                  tickFormatter={formatShortDate}
+                  interval="preserveStartEnd"
+                  minTickGap={32}
+                  tick={{ fill: colors.muted, fontSize: 10 }}
+                  axisLine={{ stroke: colors.grid }}
+                  tickLine={false}
+                  tickMargin={6}
+                />
+                <YAxis
+                  yAxisId="left"
+                  domain={[0, 10]}
+                  ticks={[0, 5, 10]}
+                  tick={{ fill: colors.muted, fontSize: 10 }}
+                  axisLine={false}
+                  tickLine={false}
+                  width={20}
+                />
+                <YAxis
+                  yAxisId="right"
+                  orientation="right"
+                  domain={[0, 100]}
+                  ticks={[0, 50, 100]}
+                  tickFormatter={(v) => `${v}%`}
+                  tick={{ fill: colors.muted, fontSize: 10 }}
+                  axisLine={false}
+                  tickLine={false}
+                  width={32}
+                />
                 <Tooltip content={<ChartTooltip colors={colors} />} />
                 <Line
                   yAxisId="left"
