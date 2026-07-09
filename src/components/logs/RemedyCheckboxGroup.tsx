@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import clsx from 'clsx'
-import type { Remedy } from '@/types/models'
+import type { Remedy, RemedyType } from '@/types/models'
 import { useRemedies } from '@/hooks/useRemedies'
 import { createRemedy } from '@/db/queries/remedies'
 import { Label } from '../ui/Label'
 import { TogglePill } from '@/components/ui/TogglePill'
+import { Button } from '../ui/Button'
+import { RemedyForm } from '../remedies/RemedyForm'
 
 interface RemedyCheckboxGroupProps {
   injuryId: string
@@ -14,18 +15,20 @@ interface RemedyCheckboxGroupProps {
 
 function RemedySection({
   title,
+  type,
   remedies,
   selectedRemedyIds,
   onToggle,
-  onQuickAdd,
+  onAdd,
 }: {
   title: string
+  type: RemedyType
   remedies: Remedy[]
   selectedRemedyIds: string[]
   onToggle: (remedyId: string) => void
-  onQuickAdd: (name: string) => void
+  onAdd: (values: { name: string; description: string }) => void | Promise<void>
 }) {
-  const [quickAddValue, setQuickAddValue] = useState('')
+  const [adding, setAdding] = useState(false)
 
   return (
     <div>
@@ -39,22 +42,23 @@ function RemedySection({
             </TogglePill>
           )
         })}
+        <Button variant="dashed" size="sm" onClick={() => setAdding(true)}>
+          + Add
+        </Button>
       </div>
-      <div className="mt-1.5">
-        <Input
-          value={quickAddValue}
-          onChange={(e) => setQuickAddValue(e.target.value)}
-          placeholder={`+ quick add ${title.toLowerCase()} remedy`}
-          className="text-xs"
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' && quickAddValue.trim()) {
-              e.preventDefault()
-              onQuickAdd(quickAddValue.trim())
-              setQuickAddValue('')
-            }
-          }}
-        />
-      </div>
+      {adding && (
+        <div className="mt-1.5">
+          <RemedyForm
+            type={type}
+            submitLabel="Add"
+            onCancel={() => setAdding(false)}
+            onSubmit={async (values) => {
+              await onAdd(values)
+              setAdding(false)
+            }}
+          />
+        </div>
+      )}
     </div>
   )
 }
@@ -64,8 +68,13 @@ export function RemedyCheckboxGroup({ injuryId, selectedRemedyIds, onToggle }: R
   const relief = remedies.filter((r) => r.type === 'relief')
   const longterm = remedies.filter((r) => r.type === 'longterm')
 
-  const handleQuickAdd = async (type: 'relief' | 'longterm', name: string) => {
-    const created = await createRemedy({ injuryId, name, type })
+  const handleAdd = async (type: RemedyType, values: { name: string; description: string }) => {
+    const created = await createRemedy({
+      injuryId,
+      name: values.name,
+      description: values.description || undefined,
+      type,
+    })
     onToggle(created.id)
   }
 
@@ -73,17 +82,19 @@ export function RemedyCheckboxGroup({ injuryId, selectedRemedyIds, onToggle }: R
     <div className="space-y-3">
       <RemedySection
         title="Relief"
+        type="relief"
         remedies={relief}
         selectedRemedyIds={selectedRemedyIds}
         onToggle={onToggle}
-        onQuickAdd={(name) => handleQuickAdd('relief', name)}
+        onAdd={(values) => handleAdd('relief', values)}
       />
       <RemedySection
         title="Long-term"
+        type="longterm"
         remedies={longterm}
         selectedRemedyIds={selectedRemedyIds}
         onToggle={onToggle}
-        onQuickAdd={(name) => handleQuickAdd('longterm', name)}
+        onAdd={(values) => handleAdd('longterm', values)}
       />
     </div>
   )
