@@ -44,6 +44,7 @@ body {
   background-color: var(--color-canvas-page);
   color: var(--color-ink);
   font-family: 'Manrope', sans-serif;
+  overflow-y: scroll;
 }
 
 button:not(:disabled) {
