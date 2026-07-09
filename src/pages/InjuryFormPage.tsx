@@ -16,11 +16,11 @@ export function InjuryFormPage() {
   return (
     <div className="space-y-5">
       <h1 className="font-heading text-2xl font-semibold text-ink">
-        {isEdit ? 'Edit injury' : 'New injury'}
+        {isEdit ? 'Edit injury' : 'Add injury'}
       </h1>
       <InjuryForm
         initial={injury ?? undefined}
-        submitLabel={isEdit ? 'Save' : 'Create injury'}
+        submitLabel={isEdit ? 'Save' : 'Submit'}
         onSubmit={async (values) => {
           if (isEdit && id) {
             await updateInjury(id, values)

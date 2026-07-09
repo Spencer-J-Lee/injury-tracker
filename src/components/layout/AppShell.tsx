@@ -1,7 +1,6 @@
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import clsx from 'clsx'
 import { useLogModal } from '@/context/LogModalContext'
-import { BackupBanner } from '@/components/layout/BackupBanner'
 
 export function AppShell() {
   const location = useLocation()
@@ -61,7 +60,7 @@ export function AppShell() {
             </header>
 
             <main className="mx-auto max-w-6xl px-4 py-5 sm:px-6 lg:max-w-none lg:p-6">
-              <BackupBanner />
+              {/* <BackupBanner /> */}
               <Outlet />
             </main>
           </div>

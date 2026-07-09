@@ -11,7 +11,7 @@ export function DashboardPage() {
       <div className="flex items-center justify-between gap-3">
         <h1 className="font-heading text-2xl font-semibold text-ink">Your injuries</h1>
         <Link to="/injuries/new">
-          <Button>New Injury</Button>
+          <Button>Add Injury</Button>
         </Link>
       </div>
 
