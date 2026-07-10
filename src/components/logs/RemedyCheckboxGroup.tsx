@@ -5,7 +5,7 @@ import { createRemedy } from '@/db/queries/remedies'
 import { Label } from '../ui/Label'
 import { TogglePill } from '@/components/ui/TogglePill'
 import { Button } from '../ui/Button'
-import { RemedyForm } from '../remedies/RemedyForm'
+import { EntityForm } from '@/components/ui/EntityForm'
 
 interface RemedyCheckboxGroupProps {
   injuryId: string
@@ -46,7 +46,8 @@ function RemedySection({
       </div>
       {adding && (
         <div className="mt-1.5">
-          <RemedyForm
+          <EntityForm
+            nameLabel="Remedy Name"
             submitLabel="Add"
             onCancel={() => setAdding(false)}
             onSubmit={async (values) => {

@@ -5,19 +5,20 @@ import { Kbd } from '@/components/ui/Kbd'
 import { useFormShortcuts } from '@/hooks/useFormShortcuts'
 import { saveShortcutLabel, cancelShortcutLabel } from '@/lib/shortcuts'
 
-interface RemedyFormValues {
+interface EntityFormValues {
   name: string
   description: string
 }
 
-interface RemedyFormProps {
-  initial?: RemedyFormValues
+interface EntityFormProps {
+  nameLabel: string
+  initial?: EntityFormValues
   submitLabel: string
-  onSubmit: (values: RemedyFormValues) => void | Promise<void>
+  onSubmit: (values: EntityFormValues) => void | Promise<void>
   onCancel?: () => void
 }
 
-export function RemedyForm({ initial, submitLabel, onSubmit, onCancel }: RemedyFormProps) {
+export function EntityForm({ nameLabel, initial, submitLabel, onSubmit, onCancel }: EntityFormProps) {
   const [name, setName] = useState(initial?.name ?? '')
   const [description, setDescription] = useState(initial?.description ?? '')
   const [submitting, setSubmitting] = useState(false)
@@ -45,7 +46,7 @@ export function RemedyForm({ initial, submitLabel, onSubmit, onCancel }: RemedyF
 
   return (
     <form onSubmit={handleSubmit} className="space-y-2 rounded-lg border border-dashed border-strong p-3">
-      <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="Remedy Name" required autoFocus />
+      <Input value={name} onChange={(e) => setName(e.target.value)} placeholder={nameLabel} required autoFocus />
       <Input
         value={description}
         onChange={(e) => setDescription(e.target.value)}

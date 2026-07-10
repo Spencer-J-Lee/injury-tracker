@@ -3,7 +3,7 @@ import { faPen, faBoxArchive } from '@fortawesome/free-solid-svg-icons'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { IconButton } from '@/components/ui/IconButton'
-import { TriggerForm } from '@/components/triggers/TriggerForm'
+import { EntityForm } from '@/components/ui/EntityForm'
 import { useTriggers } from '@/hooks/useTriggers'
 import { createTrigger, archiveTrigger, updateTrigger } from '@/db/queries/triggers'
 
@@ -13,15 +13,16 @@ export function TriggerList({ injuryId }: { injuryId: string }) {
   const [editingId, setEditingId] = useState<string | null>(null)
 
   return (
-    <Card className="space-y-5">
-      <h3 className="font-heading text-sm font-semibold text-ink-emphasis">Triggers</h3>
+    <Card>
+      <h3 className="mb-5 font-heading text-sm font-semibold text-ink-emphasis">Triggers</h3>
 
       {triggers.length > 0 && (
-        <ul className="space-y-2">
+        <ul className="space-y-2 mb-2">
           {triggers.map((trigger) =>
             editingId === trigger.id ? (
               <li key={trigger.id}>
-                <TriggerForm
+                <EntityForm
+                  nameLabel="Trigger Name"
                   initial={{ name: trigger.name, description: trigger.description ?? '' }}
                   submitLabel="Save"
                   onCancel={() => setEditingId(null)}
@@ -59,7 +60,8 @@ export function TriggerList({ injuryId }: { injuryId: string }) {
 
       {adding ? (
         <div>
-          <TriggerForm
+          <EntityForm
+            nameLabel="Trigger Name"
             submitLabel="Add"
             onCancel={() => setAdding(false)}
             onSubmit={async (values) => {

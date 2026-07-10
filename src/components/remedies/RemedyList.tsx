@@ -4,7 +4,7 @@ import type { RemedyType } from '@/types/models'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { IconButton } from '@/components/ui/IconButton'
-import { RemedyForm } from '@/components/remedies/RemedyForm'
+import { EntityForm } from '@/components/ui/EntityForm'
 import { useRemedies } from '@/hooks/useRemedies'
 import { createRemedy, archiveRemedy, updateRemedy } from '@/db/queries/remedies'
 
@@ -31,7 +31,8 @@ function RemedyGroup({
           {filtered.map((remedy) =>
             editingId === remedy.id ? (
               <li key={remedy.id}>
-                <RemedyForm
+                <EntityForm
+                  nameLabel="Remedy Name"
                   initial={{ name: remedy.name, description: remedy.description ?? '' }}
                   submitLabel="Save"
                   onCancel={() => setEditingId(null)}
@@ -69,7 +70,8 @@ function RemedyGroup({
 
       {adding ? (
         <div>
-          <RemedyForm
+          <EntityForm
+            nameLabel="Remedy Name"
             submitLabel="Add"
             onCancel={() => setAdding(false)}
             onSubmit={async (values) => {
