@@ -48,3 +48,7 @@ export async function deleteInjuries(ids: string[]) {
     await db.injuries.bulkDelete(ids)
   })
 }
+
+export async function deleteInjury(id: string) {
+  await deleteInjuries([id])
+}
