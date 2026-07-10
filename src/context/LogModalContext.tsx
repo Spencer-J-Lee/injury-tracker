@@ -1,17 +1,5 @@
-import { createContext, useContext, useState, useCallback, type ReactNode } from 'react'
-
-interface LogModalState {
-  open: boolean
-  initialInjuryIds: string[]
-}
-
-interface LogModalContextValue {
-  state: LogModalState
-  openLogModal: (initialInjuryIds?: string[]) => void
-  closeLogModal: () => void
-}
-
-const LogModalContext = createContext<LogModalContextValue | null>(null)
+import { useState, useCallback, type ReactNode } from 'react'
+import { LogModalContext, type LogModalState } from '@/context/logModalStore'
 
 export function LogModalProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<LogModalState>({ open: false, initialInjuryIds: [] })
@@ -29,10 +17,4 @@ export function LogModalProvider({ children }: { children: ReactNode }) {
       {children}
     </LogModalContext.Provider>
   )
-}
-
-export function useLogModal() {
-  const ctx = useContext(LogModalContext)
-  if (!ctx) throw new Error('useLogModal must be used within LogModalProvider')
-  return ctx
 }

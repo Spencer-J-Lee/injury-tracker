@@ -1,38 +1,38 @@
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import clsx from 'clsx'
-import { useLogModal } from '@/context/LogModalContext'
+import { useLogModal } from '@/context/useLogModal'
 
 export function AppShell() {
-  const location = useLocation()
-  const { openLogModal } = useLogModal()
+  // const location = useLocation()
+  // const { openLogModal } = useLogModal()
 
-  const navLinkMobile = (to: string, label: string) => (
-    <Link
-      to={to}
-      className={clsx(
-        'rounded-[10px] px-3 py-1.5 text-sm',
-        location.pathname === to
-          ? 'bg-accent-soft font-semibold text-accent-soft-text'
-          : 'font-medium text-ink-muted',
-      )}
-    >
-      {label}
-    </Link>
-  )
+  // const navLinkMobile = (to: string, label: string) => (
+  //   <Link
+  //     to={to}
+  //     className={clsx(
+  //       'rounded-[10px] px-3 py-1.5 text-sm',
+  //       location.pathname === to
+  //         ? 'bg-accent-soft font-semibold text-accent-soft-text'
+  //         : 'font-medium text-ink-muted',
+  //     )}
+  //   >
+  //     {label}
+  //   </Link>
+  // )
 
-  const navLinkSidebar = (to: string, label: string) => (
-    <Link
-      to={to}
-      className={clsx(
-        'rounded-[10px] px-3 py-[9px] text-sm',
-        location.pathname === to
-          ? 'bg-accent-soft font-semibold text-accent-soft-text'
-          : 'font-medium text-ink-muted hover:text-ink-secondary',
-      )}
-    >
-      {label}
-    </Link>
-  )
+  // const navLinkSidebar = (to: string, label: string) => (
+  //   <Link
+  //     to={to}
+  //     className={clsx(
+  //       'rounded-[10px] px-3 py-[9px] text-sm',
+  //       location.pathname === to
+  //         ? 'bg-accent-soft font-semibold text-accent-soft-text'
+  //         : 'font-medium text-ink-muted hover:text-ink-secondary',
+  //     )}
+  //   >
+  //     {label}
+  //   </Link>
+  // )
 
   return (
     <div className="min-h-screen bg-canvas-page">
@@ -43,8 +43,8 @@ export function AppShell() {
               Rehab Tracker
             </Link>
             <nav className="flex flex-col gap-1">
-              {navLinkSidebar('/', 'Dashboard')}
-              {navLinkSidebar('/settings', 'Settings')}
+              {/* {navLinkSidebar('/', 'Dashboard')}
+              {navLinkSidebar('/settings', 'Settings')} */}
             </nav>
           </aside>
 
@@ -53,9 +53,11 @@ export function AppShell() {
               <Link to="/" className="font-heading font-semibold text-ink">
                 Rehab Tracker
               </Link>
+              <a href='asd'>sdasd</a>
+              asdasd
               <nav className="flex gap-1">
-                {navLinkMobile('/', 'Dashboard')}
-                {navLinkMobile('/settings', 'Settings')}
+                {/* {navLinkMobile('/', 'Dashboard')}
+                {navLinkMobile('/settings', 'Settings')} */}
               </nav>
             </header>
 
@@ -67,12 +69,12 @@ export function AppShell() {
         </div>
       </div>
 
-      <button
+      {/* <button
         onClick={() => openLogModal()}
         className="fixed bottom-6 right-6 flex h-14 w-14 items-center justify-center rounded-full bg-accent text-2xl text-accent-on shadow-lg hover:bg-accent-hover lg:hidden"
       >
         +
-      </button>
+      </button> */}
     </div>
   )
 }

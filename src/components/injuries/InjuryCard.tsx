@@ -7,7 +7,7 @@ import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { InjuryStatusBadge } from '@/components/injuries/InjuryStatusBadge'
 import { useLastLogEntryForInjury } from '@/hooks/useLastLogEntryForInjury'
-import { useLogModal } from '@/context/LogModalContext'
+import { useLogModal } from '@/context/useLogModal'
 import { formatRelative } from '@/lib/dates'
 
 interface InjuryCardProps {

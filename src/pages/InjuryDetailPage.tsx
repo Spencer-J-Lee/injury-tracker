@@ -7,7 +7,7 @@ import { IconButton } from '@/components/ui/IconButton'
 import { Kbd } from '@/components/ui/Kbd'
 import { useKeyboardShortcut } from '@/hooks/useKeyboardShortcut'
 import { logEntryShortcutLabel } from '@/lib/shortcuts'
-import { useLogModal } from '@/context/LogModalContext'
+import { useLogModal } from '@/context/useLogModal'
 import { RemedyList } from '@/components/remedies/RemedyList'
 import { TriggerList } from '@/components/triggers/TriggerList'
 import { PainTrendChart } from '@/components/charts/PainTrendChart'
@@ -20,7 +20,7 @@ export function InjuryDetailPage() {
   const { openLogModal } = useLogModal()
   const navigate = useNavigate()
 
-  useKeyboardShortcut('l', () => openLogModal([injury.id]), !!injury)
+  useKeyboardShortcut('l', () => openLogModal(injury ? [injury.id] : []), !!injury)
 
   if (injury === undefined) {
     return <p className="text-ink-muted">Loading…</p>
