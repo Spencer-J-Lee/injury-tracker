@@ -1,58 +1,76 @@
-import { useEffect, useState } from 'react'
-import type { LogEntry } from '@/types/models'
-import { Modal } from '@/components/ui/Modal'
-import { Button } from '@/components/ui/Button'
-import { Textarea } from '@/components/ui/Textarea'
-import { Input } from '@/components/ui/Input'
-import { Label } from '@/components/ui/Label'
-import { Kbd } from '@/components/ui/Kbd'
-import { PainSlider } from '@/components/logs/PainSlider'
-import { PainFrequencySlider } from '@/components/logs/PainFrequencySlider'
-import { RemedyCheckboxGroup } from '@/components/logs/RemedyCheckboxGroup'
-import { TriggerCheckboxGroup } from '@/components/logs/TriggerCheckboxGroup'
-import { useInjury } from '@/hooks/useInjury'
-import { updateLogEntry } from '@/db/queries/logEntries'
-import { toDatetimeLocalValue, fromDatetimeLocalValue } from '@/lib/dates'
-import { saveShortcutLabel, cancelShortcutLabel } from '@/lib/shortcuts'
+import { useEffect, useState } from "react";
+import type { LogEntry } from "@/types/models";
+import { Modal } from "@/components/ui/Modal";
+import { Button } from "@/components/ui/Button";
+import { Textarea } from "@/components/ui/Textarea";
+import { Input } from "@/components/ui/Input";
+import { Label } from "@/components/ui/Label";
+import { Kbd } from "@/components/ui/Kbd";
+import { PainSlider } from "@/components/logs/PainSlider";
+import { PainFrequencySlider } from "@/components/logs/PainFrequencySlider";
+import { RemedyCheckboxGroup } from "@/components/logs/RemedyCheckboxGroup";
+import { TriggerCheckboxGroup } from "@/components/logs/TriggerCheckboxGroup";
+import { useInjury } from "@/hooks/useInjury";
+import { updateLogEntry } from "@/db/queries/logEntries";
+import { toDatetimeLocalValue, fromDatetimeLocalValue } from "@/lib/dates";
+import { saveShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
 
 interface LogEntryEditModalProps {
-  entry: LogEntry
-  open: boolean
-  onClose: () => void
+  entry: LogEntry;
+  open: boolean;
+  onClose: () => void;
 }
 
-export function LogEntryEditModal({ entry, open, onClose }: LogEntryEditModalProps) {
-  const injury = useInjury(entry.injuryId)
+export function LogEntryEditModal({
+  entry,
+  open,
+  onClose,
+}: LogEntryEditModalProps) {
+  const injury = useInjury(entry.injuryId);
 
-  const [painLevel, setPainLevel] = useState<number | undefined>(entry.painLevel)
-  const [painFrequency, setPainFrequency] = useState<number | undefined>(entry.painFrequency)
-  const [remedyIds, setRemedyIds] = useState<string[]>(entry.remedyIds)
-  const [triggerIds, setTriggerIds] = useState<string[]>(entry.triggerIds)
-  const [notes, setNotes] = useState(entry.notes ?? '')
-  const [timestamp, setTimestamp] = useState(() => toDatetimeLocalValue(entry.timestamp))
-  const [saving, setSaving] = useState(false)
+  const [painLevel, setPainLevel] = useState<number | undefined>(
+    entry.painLevel,
+  );
+  const [painFrequency, setPainFrequency] = useState<number | undefined>(
+    entry.painFrequency,
+  );
+  const [remedyIds, setRemedyIds] = useState<string[]>(entry.remedyIds);
+  const [triggerIds, setTriggerIds] = useState<string[]>(entry.triggerIds);
+  const [notes, setNotes] = useState(entry.notes ?? "");
+  const [timestamp, setTimestamp] = useState(() =>
+    toDatetimeLocalValue(entry.timestamp),
+  );
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (open) {
-      setPainLevel(entry.painLevel)
-      setPainFrequency(entry.painFrequency)
-      setRemedyIds(entry.remedyIds)
-      setTriggerIds(entry.triggerIds)
-      setNotes(entry.notes ?? '')
-      setTimestamp(toDatetimeLocalValue(entry.timestamp))
+      setPainLevel(entry.painLevel);
+      setPainFrequency(entry.painFrequency);
+      setRemedyIds(entry.remedyIds);
+      setTriggerIds(entry.triggerIds);
+      setNotes(entry.notes ?? "");
+      setTimestamp(toDatetimeLocalValue(entry.timestamp));
     }
-  }, [open, entry])
+  }, [open, entry]);
 
   const toggleRemedy = (remedyId: string) => {
-    setRemedyIds((prev) => (prev.includes(remedyId) ? prev.filter((id) => id !== remedyId) : [...prev, remedyId]))
-  }
+    setRemedyIds((prev) =>
+      prev.includes(remedyId)
+        ? prev.filter((id) => id !== remedyId)
+        : [...prev, remedyId],
+    );
+  };
 
   const toggleTrigger = (triggerId: string) => {
-    setTriggerIds((prev) => (prev.includes(triggerId) ? prev.filter((id) => id !== triggerId) : [...prev, triggerId]))
-  }
+    setTriggerIds((prev) =>
+      prev.includes(triggerId)
+        ? prev.filter((id) => id !== triggerId)
+        : [...prev, triggerId],
+    );
+  };
 
   const handleSave = async () => {
-    setSaving(true)
+    setSaving(true);
     try {
       await updateLogEntry(entry.id, {
         timestamp: fromDatetimeLocalValue(timestamp),
@@ -61,19 +79,19 @@ export function LogEntryEditModal({ entry, open, onClose }: LogEntryEditModalPro
         remedyIds,
         triggerIds,
         notes: notes.trim() || undefined,
-      })
-      onClose()
+      });
+      onClose();
     } finally {
-      setSaving(false)
+      setSaving(false);
     }
-  }
+  };
 
   return (
     <Modal
       open={open}
       onClose={onClose}
       onSave={handleSave}
-      title={injury ? `Edit log entry — ${injury.name}` : 'Edit log entry'}
+      title={injury ? `Edit log entry — ${injury.name}` : "Edit log entry"}
       footer={
         <>
           <Button variant="ghost" onClick={onClose}>
@@ -89,12 +107,24 @@ export function LogEntryEditModal({ entry, open, onClose }: LogEntryEditModalPro
     >
       <PainSlider value={painLevel} onChange={setPainLevel} />
       <PainFrequencySlider value={painFrequency} onChange={setPainFrequency} />
-      <RemedyCheckboxGroup injuryId={entry.injuryId} selectedRemedyIds={remedyIds} onToggle={toggleRemedy} />
-      <TriggerCheckboxGroup injuryId={entry.injuryId} selectedTriggerIds={triggerIds} onToggle={toggleTrigger} />
+      <RemedyCheckboxGroup
+        injuryId={entry.injuryId}
+        selectedRemedyIds={remedyIds}
+        onToggle={toggleRemedy}
+      />
+      <TriggerCheckboxGroup
+        injuryId={entry.injuryId}
+        selectedTriggerIds={triggerIds}
+        onToggle={toggleTrigger}
+      />
 
       <div>
         <Label>When</Label>
-        <Input type="datetime-local" value={timestamp} onChange={(e) => setTimestamp(e.target.value)} />
+        <Input
+          type="datetime-local"
+          value={timestamp}
+          onChange={(e) => setTimestamp(e.target.value)}
+        />
       </div>
 
       <div>
@@ -108,5 +138,5 @@ export function LogEntryEditModal({ entry, open, onClose }: LogEntryEditModalPro
         />
       </div>
     </Modal>
-  )
+  );
 }

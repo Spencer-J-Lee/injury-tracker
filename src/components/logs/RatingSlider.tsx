@@ -1,17 +1,17 @@
-import { useMemo } from 'react'
+import { useMemo } from "react";
 
-const THUMB_RADIUS_PX = 8
+const THUMB_RADIUS_PX = 8;
 
 interface RatingSliderProps {
-  label: string
-  value: number | undefined
-  onChange: (value: number | undefined) => void
-  max: number
-  step: number
-  color: string
-  formatValue: (value: number) => string
-  className?: string
-  ticks: number[]
+  label: string;
+  value: number | undefined;
+  onChange: (value: number | undefined) => void;
+  max: number;
+  step: number;
+  color: string;
+  formatValue: (value: number) => string;
+  className?: string;
+  ticks: number[];
 }
 
 export function RatingSlider({
@@ -25,8 +25,11 @@ export function RatingSlider({
   className,
   ticks,
 }: RatingSliderProps) {
-  const pct = ((value ?? 0) / max) * 100
-  const listId = useMemo(() => `${label.replace(/\s+/g, '-').toLowerCase()}-ticks`, [label])
+  const pct = ((value ?? 0) / max) * 100;
+  const listId = useMemo(
+    () => `${label.replace(/\s+/g, "-").toLowerCase()}-ticks`,
+    [label],
+  );
 
   const tickPositions = useMemo(
     () =>
@@ -34,29 +37,29 @@ export function RatingSlider({
         tick,
         left: `calc(${THUMB_RADIUS_PX}px + ${tick / max} * (100% - ${2 * THUMB_RADIUS_PX}px))`,
       })),
-    [ticks, max]
-  )
+    [ticks, max],
+  );
 
   return (
     <div>
-      <div className="mb-1.5 flex items-center justify-between text-[13px] text-ink-muted">
+      <div className="text-ink-muted mb-1.5 flex items-center justify-between text-[13px]">
         <span>{label}</span>
         <div className="flex items-center gap-2">
-          <span className="font-semibold text-ink-emphasis">
-            {value === undefined ? 'Not rated' : formatValue(value)}
+          <span className="text-ink-emphasis font-semibold">
+            {value === undefined ? "Not rated" : formatValue(value)}
           </span>
           {value !== undefined && (
             <button
               type="button"
               onClick={() => onChange(undefined)}
-              className="font-semibold text-accent-soft-text hover:underline"
+              className="text-accent-soft-text font-semibold hover:underline"
             >
               clear
             </button>
           )}
         </div>
       </div>
-      
+
       <input
         type="range"
         min={0}
@@ -66,7 +69,9 @@ export function RatingSlider({
         onChange={(e) => onChange(Number(e.target.value))}
         className={className}
         list={listId}
-        style={{ background: `linear-gradient(to right, ${color} ${pct}%, var(--color-subtle) ${pct}%)` }}
+        style={{
+          background: `linear-gradient(to right, ${color} ${pct}%, var(--color-subtle) ${pct}%)`,
+        }}
       />
       <datalist id={listId}>
         {ticks.map((tick) => (
@@ -77,18 +82,22 @@ export function RatingSlider({
         {tickPositions.map(({ tick, left }) => (
           <span
             key={tick}
-            className="absolute top-0 h-1.5 w-px -translate-x-1/2 bg-ink-muted/40"
+            className="bg-ink-muted/40 absolute top-0 h-1.5 w-px -translate-x-1/2"
             style={{ left }}
           />
         ))}
       </div>
-      <div className="relative mt-0.5 h-4 text-[11px] text-ink-muted">
+      <div className="text-ink-muted relative mt-0.5 h-4 text-[11px]">
         {tickPositions.map(({ tick, left }) => (
-          <span key={tick} className="absolute -translate-x-1/2" style={{ left }}>
+          <span
+            key={tick}
+            className="absolute -translate-x-1/2"
+            style={{ left }}
+          >
             {tick}
           </span>
         ))}
       </div>
     </div>
-  )
+  );
 }

@@ -1,58 +1,80 @@
-import { useState } from 'react'
-import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons'
-import type { JournalEntry } from '@/types/models'
-import { Card } from '@/components/ui/Card'
-import { Button } from '@/components/ui/Button'
-import { IconButton } from '@/components/ui/IconButton'
-import { RichTextEditor, RichTextContent } from '@/components/journal/RichTextEditor'
-import { isRichTextHtml } from '@/lib/richText'
-import { Kbd } from '@/components/ui/Kbd'
-import { formatFullDate } from '@/lib/dates'
-import { updateJournalEntry, deleteJournalEntry } from '@/db/queries/journalEntries'
-import { useFormShortcuts } from '@/hooks/useFormShortcuts'
-import { saveShortcutLabel, cancelShortcutLabel } from '@/lib/shortcuts'
+import { useState } from "react";
+import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
+import type { JournalEntry } from "@/types/models";
+import { Card } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
+import { IconButton } from "@/components/ui/IconButton";
+import {
+  RichTextEditor,
+  RichTextContent,
+} from "@/components/journal/RichTextEditor";
+import { isRichTextHtml } from "@/lib/richText";
+import { Kbd } from "@/components/ui/Kbd";
+import { formatFullDate } from "@/lib/dates";
+import {
+  updateJournalEntry,
+  deleteJournalEntry,
+} from "@/db/queries/journalEntries";
+import { useFormShortcuts } from "@/hooks/useFormShortcuts";
+import { saveShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
 
 interface JournalEntryCardProps {
-  entry: JournalEntry
-  isEditing: boolean
-  onStartEdit: () => void
-  onStopEdit: () => void
+  entry: JournalEntry;
+  isEditing: boolean;
+  onStartEdit: () => void;
+  onStopEdit: () => void;
 }
 
-export function JournalEntryCard({ entry, isEditing, onStartEdit, onStopEdit }: JournalEntryCardProps) {
-  const [draft, setDraft] = useState(entry.text)
+export function JournalEntryCard({
+  entry,
+  isEditing,
+  onStartEdit,
+  onStopEdit,
+}: JournalEntryCardProps) {
+  const [draft, setDraft] = useState(entry.text);
 
   const startEdit = () => {
-    setDraft(entry.text)
-    onStartEdit()
-  }
+    setDraft(entry.text);
+    onStartEdit();
+  };
 
   const cancelEdit = () => {
-    setDraft(entry.text)
-    onStopEdit()
-  }
+    setDraft(entry.text);
+    onStopEdit();
+  };
 
   const handleSave = async () => {
-    if (!draft.trim()) return
-    await updateJournalEntry(entry.id, draft)
-    onStopEdit()
-  }
+    if (!draft.trim()) return;
+    await updateJournalEntry(entry.id, draft);
+    onStopEdit();
+  };
 
   const handleDelete = async () => {
-    if (!confirm('Delete this journal entry? This cannot be undone.')) return
-    await deleteJournalEntry(entry.id)
-  }
+    if (!confirm("Delete this journal entry? This cannot be undone.")) return;
+    await deleteJournalEntry(entry.id);
+  };
 
-  useFormShortcuts({ onSave: handleSave, onCancel: cancelEdit, enabled: isEditing })
+  useFormShortcuts({
+    onSave: handleSave,
+    onCancel: cancelEdit,
+    enabled: isEditing,
+  });
 
   return (
     <Card>
       <div className="mb-2.5 flex items-center justify-between gap-2">
-        <div className="font-heading text-xl font-semibold text-ink">{formatFullDate(entry.date)}</div>
+        <div className="font-heading text-ink text-xl font-semibold">
+          {formatFullDate(entry.date)}
+        </div>
         {!isEditing && (
           <div className="flex items-center gap-1">
             <IconButton icon={faPen} label="Edit entry" onClick={startEdit} />
-            <IconButton icon={faTrash} tone="danger" label="Delete entry" onClick={handleDelete} />
+            <IconButton
+              icon={faTrash}
+              tone="danger"
+              label="Delete entry"
+              onClick={handleDelete}
+            />
           </div>
         )}
       </div>
@@ -72,10 +94,15 @@ export function JournalEntryCard({ entry, isEditing, onStartEdit, onStopEdit }: 
           </div>
         </>
       ) : isRichTextHtml(entry.text) ? (
-        <RichTextContent html={entry.text} className="text-[14px] text-ink-secondary" />
+        <RichTextContent
+          html={entry.text}
+          className="text-ink-secondary text-[14px]"
+        />
       ) : (
-        <p className="whitespace-pre-wrap text-[14px] leading-[1.6] text-ink-secondary">{entry.text}</p>
+        <p className="text-ink-secondary text-[14px] leading-[1.6] whitespace-pre-wrap">
+          {entry.text}
+        </p>
       )}
     </Card>
-  )
+  );
 }

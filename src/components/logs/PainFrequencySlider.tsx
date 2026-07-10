@@ -1,11 +1,14 @@
-import { RatingSlider } from '@/components/logs/RatingSlider'
+import { RatingSlider } from "@/components/logs/RatingSlider";
 
 interface PainFrequencySliderProps {
-  value: number | undefined
-  onChange: (value: number | undefined) => void
+  value: number | undefined;
+  onChange: (value: number | undefined) => void;
 }
 
-export function PainFrequencySlider({ value, onChange }: PainFrequencySliderProps) {
+export function PainFrequencySlider({
+  value,
+  onChange,
+}: PainFrequencySliderProps) {
   return (
     <RatingSlider
       label="Frequency"
@@ -18,5 +21,5 @@ export function PainFrequencySlider({ value, onChange }: PainFrequencySliderProp
       className="range-amber"
       ticks={[0, 25, 50, 75, 100]}
     />
-  )
+  );
 }

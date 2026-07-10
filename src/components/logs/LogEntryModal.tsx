@@ -1,64 +1,83 @@
-import { useEffect, useState } from 'react'
-import { Modal } from '@/components/ui/Modal'
-import { Button } from '@/components/ui/Button'
-import { Textarea } from '@/components/ui/Textarea'
-import { Input } from '@/components/ui/Input'
-import { Label } from '@/components/ui/Label'
-import { Kbd } from '@/components/ui/Kbd'
-import { InjurySelector } from '@/components/logs/InjurySelector'
-import { PainSlider } from '@/components/logs/PainSlider'
-import { PainFrequencySlider } from '@/components/logs/PainFrequencySlider'
-import { RemedyCheckboxGroup } from '@/components/logs/RemedyCheckboxGroup'
-import { TriggerCheckboxGroup } from '@/components/logs/TriggerCheckboxGroup'
-import { useLogModal } from '@/context/useLogModal'
-import { useInjuries } from '@/hooks/useInjuries'
-import { createLogSession } from '@/db/queries/logEntries'
-import { toDatetimeLocalValue, fromDatetimeLocalValue } from '@/lib/dates'
-import { saveShortcutLabel, cancelShortcutLabel } from '@/lib/shortcuts'
+import { useEffect, useState } from "react";
+import { Modal } from "@/components/ui/Modal";
+import { Button } from "@/components/ui/Button";
+import { Textarea } from "@/components/ui/Textarea";
+import { Input } from "@/components/ui/Input";
+import { Label } from "@/components/ui/Label";
+import { Kbd } from "@/components/ui/Kbd";
+import { InjurySelector } from "@/components/logs/InjurySelector";
+import { PainSlider } from "@/components/logs/PainSlider";
+import { PainFrequencySlider } from "@/components/logs/PainFrequencySlider";
+import { RemedyCheckboxGroup } from "@/components/logs/RemedyCheckboxGroup";
+import { TriggerCheckboxGroup } from "@/components/logs/TriggerCheckboxGroup";
+import { useLogModal } from "@/context/useLogModal";
+import { useInjuries } from "@/hooks/useInjuries";
+import { createLogSession } from "@/db/queries/logEntries";
+import { toDatetimeLocalValue, fromDatetimeLocalValue } from "@/lib/dates";
+import { saveShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
 
 interface PerInjuryState {
-  painLevel?: number
-  painFrequency?: number
-  remedyIds: string[]
-  triggerIds: string[]
+  painLevel?: number;
+  painFrequency?: number;
+  remedyIds: string[];
+  triggerIds: string[];
 }
 
 export function LogEntryModal() {
-  const { state, closeLogModal } = useLogModal()
-  const injuries = useInjuries() ?? []
+  const { state, closeLogModal } = useLogModal();
+  const injuries = useInjuries() ?? [];
 
-  const [selectedIds, setSelectedIds] = useState<string[]>([])
-  const [perInjury, setPerInjury] = useState<Record<string, PerInjuryState>>({})
-  const [notes, setNotes] = useState('')
-  const [timestamp, setTimestamp] = useState(() => toDatetimeLocalValue(new Date().toISOString()))
-  const [saving, setSaving] = useState(false)
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [perInjury, setPerInjury] = useState<Record<string, PerInjuryState>>(
+    {},
+  );
+  const [notes, setNotes] = useState("");
+  const [timestamp, setTimestamp] = useState(() =>
+    toDatetimeLocalValue(new Date().toISOString()),
+  );
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (state.open) {
-      setSelectedIds(state.initialInjuryIds)
+      setSelectedIds(state.initialInjuryIds);
       setPerInjury(
         Object.fromEntries(
           state.initialInjuryIds.map((id) => [
             id,
-            { painLevel: undefined, painFrequency: undefined, remedyIds: [], triggerIds: [] },
+            {
+              painLevel: undefined,
+              painFrequency: undefined,
+              remedyIds: [],
+              triggerIds: [],
+            },
           ]),
         ),
-      )
-      setNotes('')
-      setTimestamp(toDatetimeLocalValue(new Date().toISOString()))
+      );
+      setNotes("");
+      setTimestamp(toDatetimeLocalValue(new Date().toISOString()));
     }
-  }, [state.open, state.initialInjuryIds])
+  }, [state.open, state.initialInjuryIds]);
 
   const toggleInjury = (injuryId: string) => {
     setSelectedIds((prev) =>
-      prev.includes(injuryId) ? prev.filter((id) => id !== injuryId) : [...prev, injuryId],
-    )
+      prev.includes(injuryId)
+        ? prev.filter((id) => id !== injuryId)
+        : [...prev, injuryId],
+    );
     setPerInjury((prev) =>
       prev[injuryId]
         ? prev
-        : { ...prev, [injuryId]: { painLevel: undefined, painFrequency: undefined, remedyIds: [], triggerIds: [] } },
-    )
-  }
+        : {
+            ...prev,
+            [injuryId]: {
+              painLevel: undefined,
+              painFrequency: undefined,
+              remedyIds: [],
+              triggerIds: [],
+            },
+          },
+    );
+  };
 
   const setPainLevel = (injuryId: string, painLevel: number | undefined) => {
     setPerInjury((prev) => ({
@@ -69,10 +88,13 @@ export function LogEntryModal() {
         remedyIds: prev[injuryId]?.remedyIds ?? [],
         triggerIds: prev[injuryId]?.triggerIds ?? [],
       },
-    }))
-  }
+    }));
+  };
 
-  const setPainFrequency = (injuryId: string, painFrequency: number | undefined) => {
+  const setPainFrequency = (
+    injuryId: string,
+    painFrequency: number | undefined,
+  ) => {
     setPerInjury((prev) => ({
       ...prev,
       [injuryId]: {
@@ -81,32 +103,32 @@ export function LogEntryModal() {
         remedyIds: prev[injuryId]?.remedyIds ?? [],
         triggerIds: prev[injuryId]?.triggerIds ?? [],
       },
-    }))
-  }
+    }));
+  };
 
   const toggleRemedy = (injuryId: string, remedyId: string) => {
     setPerInjury((prev) => {
-      const current = prev[injuryId]?.remedyIds ?? []
+      const current = prev[injuryId]?.remedyIds ?? [];
       const remedyIds = current.includes(remedyId)
         ? current.filter((id) => id !== remedyId)
-        : [...current, remedyId]
-      return { ...prev, [injuryId]: { ...prev[injuryId], remedyIds } }
-    })
-  }
+        : [...current, remedyId];
+      return { ...prev, [injuryId]: { ...prev[injuryId], remedyIds } };
+    });
+  };
 
   const toggleTrigger = (injuryId: string, triggerId: string) => {
     setPerInjury((prev) => {
-      const current = prev[injuryId]?.triggerIds ?? []
+      const current = prev[injuryId]?.triggerIds ?? [];
       const triggerIds = current.includes(triggerId)
         ? current.filter((id) => id !== triggerId)
-        : [...current, triggerId]
-      return { ...prev, [injuryId]: { ...prev[injuryId], triggerIds } }
-    })
-  }
+        : [...current, triggerId];
+      return { ...prev, [injuryId]: { ...prev[injuryId], triggerIds } };
+    });
+  };
 
   const handleSave = async () => {
-    if (selectedIds.length === 0) return
-    setSaving(true)
+    if (selectedIds.length === 0) return;
+    setSaving(true);
     try {
       await createLogSession({
         timestamp: fromDatetimeLocalValue(timestamp),
@@ -118,12 +140,12 @@ export function LogEntryModal() {
           remedyIds: perInjury[injuryId]?.remedyIds ?? [],
           triggerIds: perInjury[injuryId]?.triggerIds ?? [],
         })),
-      })
-      closeLogModal()
+      });
+      closeLogModal();
     } finally {
-      setSaving(false)
+      setSaving(false);
     }
-  }
+  };
 
   return (
     <Modal
@@ -133,7 +155,10 @@ export function LogEntryModal() {
       title="Log entry"
       footer={
         <>
-          <Button onClick={handleSave} disabled={saving || selectedIds.length === 0}>
+          <Button
+            onClick={handleSave}
+            disabled={saving || selectedIds.length === 0}
+          >
             Submit
             <Kbd>{saveShortcutLabel}</Kbd>
           </Button>
@@ -144,14 +169,21 @@ export function LogEntryModal() {
         </>
       }
     >
-      <InjurySelector injuries={injuries} selectedIds={selectedIds} onToggle={toggleInjury} />
+      <InjurySelector
+        injuries={injuries}
+        selectedIds={selectedIds}
+        onToggle={toggleInjury}
+      />
 
       {selectedIds.map((injuryId) => {
-        const injury = injuries.find((i) => i.id === injuryId)
-        if (!injury) return null
+        const injury = injuries.find((i) => i.id === injuryId);
+        if (!injury) return null;
         return (
-          <div key={injuryId} className="space-y-[14px] rounded-[14px] border border-subtle p-[14px]">
-            <p className="text-sm font-semibold text-ink mb-4">{injury.name}</p>
+          <div
+            key={injuryId}
+            className="border-subtle space-y-[14px] rounded-[14px] border p-[14px]"
+          >
+            <p className="text-ink mb-4 text-sm font-semibold">{injury.name}</p>
             <PainSlider
               value={perInjury[injuryId]?.painLevel}
               onChange={(value) => setPainLevel(injuryId, value)}
@@ -171,12 +203,16 @@ export function LogEntryModal() {
               onToggle={(triggerId) => toggleTrigger(injuryId, triggerId)}
             />
           </div>
-        )
+        );
       })}
 
       <div>
         <Label>When</Label>
-        <Input type="datetime-local" value={timestamp} onChange={(e) => setTimestamp(e.target.value)} />
+        <Input
+          type="datetime-local"
+          value={timestamp}
+          onChange={(e) => setTimestamp(e.target.value)}
+        />
       </div>
 
       <div>
@@ -190,5 +226,5 @@ export function LogEntryModal() {
         />
       </div>
     </Modal>
-  )
+  );
 }

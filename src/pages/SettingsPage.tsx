@@ -1,111 +1,135 @@
-import { useEffect, useRef, useState } from 'react'
-import { Card } from '@/components/ui/Card'
-import { Button } from '@/components/ui/Button'
-import { exportBackup, importBackup, deleteAllData, getLastExportedAt } from '@/db/backup'
-import { seedTestData, clearSeedTestData, SEED_MARKER } from '@/db/seed'
-import { formatRelative } from '@/lib/dates'
+import { useEffect, useRef, useState } from "react";
+import { Card } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
+import {
+  exportBackup,
+  importBackup,
+  deleteAllData,
+  getLastExportedAt,
+} from "@/db/backup";
+import { seedTestData, clearSeedTestData, SEED_MARKER } from "@/db/seed";
+import { formatRelative } from "@/lib/dates";
 
 export function SettingsPage() {
-  const [lastExportedAt, setLastExportedAt] = useState<string | undefined>()
-  const [busy, setBusy] = useState(false)
-  const [message, setMessage] = useState<string | null>(null)
-  const fileInputRef = useRef<HTMLInputElement>(null)
+  const [lastExportedAt, setLastExportedAt] = useState<string | undefined>();
+  const [busy, setBusy] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    getLastExportedAt().then(setLastExportedAt)
-  }, [])
+    getLastExportedAt().then(setLastExportedAt);
+  }, []);
 
   const handleExport = async () => {
-    setBusy(true)
-    setMessage(null)
+    setBusy(true);
+    setMessage(null);
     try {
-      await exportBackup()
-      setLastExportedAt(await getLastExportedAt())
-      setMessage('Export downloaded.')
+      await exportBackup();
+      setLastExportedAt(await getLastExportedAt());
+      setMessage("Export downloaded.");
     } finally {
-      setBusy(false)
+      setBusy(false);
     }
-  }
+  };
 
-  const handleImportClick = () => fileInputRef.current?.click()
+  const handleImportClick = () => fileInputRef.current?.click();
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-    setBusy(true)
-    setMessage(null)
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setBusy(true);
+    setMessage(null);
     try {
-      await importBackup(file)
-      setLastExportedAt(await getLastExportedAt())
-      setMessage('Import complete.')
+      await importBackup(file);
+      setLastExportedAt(await getLastExportedAt());
+      setMessage("Import complete.");
     } finally {
-      setBusy(false)
-      e.target.value = ''
+      setBusy(false);
+      e.target.value = "";
     }
-  }
+  };
 
   const handleSeed = async () => {
-    setBusy(true)
-    setMessage(null)
+    setBusy(true);
+    setMessage(null);
     try {
-      const result = await seedTestData()
+      const result = await seedTestData();
       setMessage(
         `Loaded ${result.injuriesCreated} injuries, ${result.remediesCreated} remedies, ${result.triggersCreated} triggers, ${result.logEntriesCreated} log entries, and ${result.journalEntriesCreated} journal entries` +
           (result.injuriesDeleted > 0 || result.journalEntriesDeleted > 0
             ? ` (replaced ${result.injuriesDeleted} previous seed injuries and ${result.journalEntriesDeleted} journal entries).`
-            : '.'),
-      )
+            : "."),
+      );
     } finally {
-      setBusy(false)
+      setBusy(false);
     }
-  }
+  };
 
   const handleClearSeed = async () => {
-    if (!confirm('Clear seed data? This removes only the example data created by "Load example data".')) return
-    setBusy(true)
-    setMessage(null)
-    try {
-      const { injuriesDeleted, journalEntriesDeleted } = await clearSeedTestData()
-      setMessage(
-        `Cleared ${injuriesDeleted} seed injur${injuriesDeleted === 1 ? 'y' : 'ies'} and ${journalEntriesDeleted} seed journal entr${journalEntriesDeleted === 1 ? 'y' : 'ies'}.`,
+    if (
+      !confirm(
+        'Clear seed data? This removes only the example data created by "Load example data".',
       )
+    )
+      return;
+    setBusy(true);
+    setMessage(null);
+    try {
+      const { injuriesDeleted, journalEntriesDeleted } =
+        await clearSeedTestData();
+      setMessage(
+        `Cleared ${injuriesDeleted} seed injur${injuriesDeleted === 1 ? "y" : "ies"} and ${journalEntriesDeleted} seed journal entr${journalEntriesDeleted === 1 ? "y" : "ies"}.`,
+      );
     } finally {
-      setBusy(false)
+      setBusy(false);
     }
-  }
+  };
 
   const handleDeleteAll = async () => {
-    if (!confirm('Delete all injuries, remedies, and log entries? This cannot be undone.')) return
-    setBusy(true)
-    setMessage(null)
+    if (
+      !confirm(
+        "Delete all injuries, remedies, and log entries? This cannot be undone.",
+      )
+    )
+      return;
+    setBusy(true);
+    setMessage(null);
     try {
-      await deleteAllData()
-      setMessage('All data deleted.')
+      await deleteAllData();
+      setMessage("All data deleted.");
     } finally {
-      setBusy(false)
+      setBusy(false);
     }
-  }
+  };
 
   return (
     <div className="space-y-5">
-      <h1 className="font-heading text-2xl font-semibold text-ink">Settings</h1>
-      {message && <p className="text-[13px] text-pain-green">{message}</p>}
+      <h1 className="font-heading text-ink text-2xl font-semibold">Settings</h1>
+      {message && <p className="text-pain-green text-[13px]">{message}</p>}
 
       <Card className="space-y-3">
         <div>
-          <h3 className="text-[15px] font-semibold text-ink">Backup</h3>
-          <p className="mt-1 text-[13px] text-ink-muted">
-            All data is stored only in this browser. Export regularly to avoid losing it.
+          <h3 className="text-ink text-[15px] font-semibold">Backup</h3>
+          <p className="text-ink-muted mt-1 text-[13px]">
+            All data is stored only in this browser. Export regularly to avoid
+            losing it.
           </p>
-          <p className="mt-1.5 text-xs text-ink-faint">
-            {lastExportedAt ? `Last exported ${formatRelative(lastExportedAt)}` : 'Never exported'}
+          <p className="text-ink-faint mt-1.5 text-xs">
+            {lastExportedAt
+              ? `Last exported ${formatRelative(lastExportedAt)}`
+              : "Never exported"}
           </p>
         </div>
         <div className="flex flex-wrap gap-2.5">
           <Button onClick={handleExport} disabled={busy}>
             Export data
           </Button>
-          <Button variant="secondary" onClick={handleImportClick} disabled={busy} className="whitespace-nowrap">
+          <Button
+            variant="secondary"
+            onClick={handleImportClick}
+            disabled={busy}
+            className="whitespace-nowrap"
+          >
             Import data
           </Button>
           <input
@@ -120,14 +144,15 @@ export function SettingsPage() {
 
       <Card className="space-y-3">
         <div>
-          <h3 className="text-[15px] font-semibold text-ink">Seed data</h3>
-          <p className="mt-1 text-[13px] text-ink-muted">
-            Loads a set of example injuries, remedies, and log entries for testing. Re-running replaces previous
-            seed data.
+          <h3 className="text-ink text-[15px] font-semibold">Seed data</h3>
+          <p className="text-ink-muted mt-1 text-[13px]">
+            Loads a set of example injuries, remedies, and log entries for
+            testing. Re-running replaces previous seed data.
           </p>
-          <p className="mt-1 text-[13px] text-ink-muted">
-            Seeded items are tagged with the <span className="font-mono">{SEED_MARKER}</span> marker so they can be
-            identified and cleared later.
+          <p className="text-ink-muted mt-1 text-[13px]">
+            Seeded items are tagged with the{" "}
+            <span className="font-mono">{SEED_MARKER}</span> marker so they can
+            be identified and cleared later.
           </p>
         </div>
         <div className="flex flex-wrap gap-2.5">
@@ -140,10 +165,15 @@ export function SettingsPage() {
         </div>
       </Card>
 
-      <Card className="space-y-3" style={{ borderColor: 'oklch(0.40 0.08 25)' }}>
+      <Card
+        className="space-y-3"
+        style={{ borderColor: "oklch(0.40 0.08 25)" }}
+      >
         <div>
-          <h3 className="text-[15px] font-semibold text-pain-red">Danger zone</h3>
-          <p className="mt-1 text-[13px] text-ink-muted">
+          <h3 className="text-pain-red text-[15px] font-semibold">
+            Danger zone
+          </h3>
+          <p className="text-ink-muted mt-1 text-[13px]">
             Permanently delete every injury, remedy, and log entry.
           </p>
         </div>
@@ -152,5 +182,5 @@ export function SettingsPage() {
         </Button>
       </Card>
     </div>
-  )
+  );
 }

@@ -15,59 +15,60 @@ All defined in `src/index.css` under `@theme`. Values are **oklch**, given here 
 
 ### 1.1 Color — Surfaces (dark, warm-neutral near-black scale)
 
-| Token | Value | Usage |
-|---|---|---|
-| `--color-canvas-page` | `oklch(0.07 0.008 60)` | Outermost page background (`body`) |
-| `--color-canvas` | `oklch(0.10 0.009 60)` | Main content background inside the app shell frame |
-| `--color-canvas-sidebar` | `oklch(0.14 0.009 60)` | Desktop sidebar background |
-| `--color-surface` | `oklch(0.21 0.012 60)` | Default card background (`Card`) |
+| Token                    | Value                  | Usage                                                                      |
+| ------------------------ | ---------------------- | -------------------------------------------------------------------------- |
+| `--color-canvas-page`    | `oklch(0.07 0.008 60)` | Outermost page background (`body`)                                         |
+| `--color-canvas`         | `oklch(0.10 0.009 60)` | Main content background inside the app shell frame                         |
+| `--color-canvas-sidebar` | `oklch(0.14 0.009 60)` | Desktop sidebar background                                                 |
+| `--color-surface`        | `oklch(0.21 0.012 60)` | Default card background (`Card`)                                           |
 | `--color-surface-raised` | `oklch(0.24 0.013 60)` | Modal background, hover states, "raised" panels (e.g. select-mode toolbar) |
-| `--color-control` | `oklch(0.28 0.015 60)` | Secondary button bg, slate badge bg, IconButton neutral bg |
-| `--color-input` | `oklch(0.15 0.01 60)` | Input/Select/Textarea backgrounds (darker than surface — recessed look) |
+| `--color-control`        | `oklch(0.28 0.015 60)` | Secondary button bg, slate badge bg, IconButton neutral bg                 |
+| `--color-input`          | `oklch(0.15 0.01 60)`  | Input/Select/Textarea backgrounds (darker than surface — recessed look)    |
 
 All share hue `60` (warm/brown-neutral) and low chroma (0.008–0.015) — a monochrome warm-gray scale distinguished only by lightness. This is the backbone of the "elevation" system: page < canvas < sidebar < surface < surface-raised < control, each step roughly +0.03–0.07 lightness.
 
 ### 1.2 Color — Borders
 
-| Token | Value | Usage |
-|---|---|---|
-| `--color-subtle` | `oklch(0.38 0.017 60)` | Default border for Card, list items, dividers |
+| Token            | Value                  | Usage                                                |
+| ---------------- | ---------------------- | ---------------------------------------------------- |
+| `--color-subtle` | `oklch(0.38 0.017 60)` | Default border for Card, list items, dividers        |
 | `--color-strong` | `oklch(0.44 0.019 60)` | Input/Select/Textarea/Button borders, dashed borders |
 
 ### 1.3 Color — Text ("ink" scale)
 
-| Token | Value | Usage |
-|---|---|---|
-| `--color-ink` | `oklch(0.97 0.004 60)` | Primary text, headings, primary button text |
-| `--color-ink-emphasis` | `oklch(0.93 0.007 60)` | Slightly-below-primary emphasis (input text, card titles in some lists) |
-| `--color-ink-secondary` | `oklch(0.81 0.013 60)` | Body copy, descriptions, secondary button text |
-| `--color-ink-muted` | `oklch(0.65 0.013 60)` | Meta text, labels, placeholders-adjacent, timestamps |
-| `--color-ink-faint` | `oklch(0.59 0.013 60)` | Least prominent text (input placeholders, uppercase eyebrow labels, Kbd text) |
+| Token                   | Value                  | Usage                                                                         |
+| ----------------------- | ---------------------- | ----------------------------------------------------------------------------- |
+| `--color-ink`           | `oklch(0.97 0.004 60)` | Primary text, headings, primary button text                                   |
+| `--color-ink-emphasis`  | `oklch(0.93 0.007 60)` | Slightly-below-primary emphasis (input text, card titles in some lists)       |
+| `--color-ink-secondary` | `oklch(0.81 0.013 60)` | Body copy, descriptions, secondary button text                                |
+| `--color-ink-muted`     | `oklch(0.65 0.013 60)` | Meta text, labels, placeholders-adjacent, timestamps                          |
+| `--color-ink-faint`     | `oklch(0.59 0.013 60)` | Least prominent text (input placeholders, uppercase eyebrow labels, Kbd text) |
 
 ### 1.4 Color — Accent (indigo/blue, hue 250)
 
-| Token | Value | Usage |
-|---|---|---|
-| `--color-accent` | `oklch(0.58 0.13 250)` | Primary button bg, slider thumb/track fill, FAB bg, active nav indicator base |
-| `--color-accent-hover` | `oklch(0.5 0.13 250)` | Primary button hover, FAB hover |
-| `--color-accent-soft` | `oklch(0.26 0.07 250)` | Selected-state background (nav active, TogglePill selected, InjuryCard selected overlay), "indigo" badge tone bg |
-| `--color-accent-soft-text` | `oklch(0.83 0.1 250)` | Text on accent-soft backgrounds; also used as a general "link" color (e.g. "Show all", "Load more", NotFoundPage link) |
-| `--color-accent-on` | `oklch(0.14 0.01 60)` | Text/icon color drawn on top of solid `--color-accent` (FAB "+", selected-checkmark badge bg) |
+| Token                      | Value                  | Usage                                                                                                                  |
+| -------------------------- | ---------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `--color-accent`           | `oklch(0.58 0.13 250)` | Primary button bg, slider thumb/track fill, FAB bg, active nav indicator base                                          |
+| `--color-accent-hover`     | `oklch(0.5 0.13 250)`  | Primary button hover, FAB hover                                                                                        |
+| `--color-accent-soft`      | `oklch(0.26 0.07 250)` | Selected-state background (nav active, TogglePill selected, InjuryCard selected overlay), "indigo" badge tone bg       |
+| `--color-accent-soft-text` | `oklch(0.83 0.1 250)`  | Text on accent-soft backgrounds; also used as a general "link" color (e.g. "Show all", "Load more", NotFoundPage link) |
+| `--color-accent-on`        | `oklch(0.14 0.01 60)`  | Text/icon color drawn on top of solid `--color-accent` (FAB "+", selected-checkmark badge bg)                          |
 
 ### 1.5 Color — Pain semantic scale (green/amber/red, used for intensity & frequency)
 
-| Token | Value | Notes |
-|---|---|---|
-| `--color-pain-green` | `oklch(0.84 0.11 150)` | Foreground/text on green badges |
-| `--color-pain-green-bg` | `oklch(0.30 0.09 150)` | Background for green badges |
-| `--color-pain-amber` | `oklch(0.85 0.13 85)` | Foreground text; also frequency-slider thumb color |
-| `--color-pain-amber-bg` | `oklch(0.30 0.09 85)` | Background for amber badges |
-| `--color-pain-red` | `oklch(0.82 0.12 25)` | Foreground text on red badges/pills |
-| `--color-pain-red-bg` | `oklch(0.30 0.1 25)` | Background for red badges/pills |
+| Token                   | Value                  | Notes                                              |
+| ----------------------- | ---------------------- | -------------------------------------------------- |
+| `--color-pain-green`    | `oklch(0.84 0.11 150)` | Foreground/text on green badges                    |
+| `--color-pain-green-bg` | `oklch(0.30 0.09 150)` | Background for green badges                        |
+| `--color-pain-amber`    | `oklch(0.85 0.13 85)`  | Foreground text; also frequency-slider thumb color |
+| `--color-pain-amber-bg` | `oklch(0.30 0.09 85)`  | Background for amber badges                        |
+| `--color-pain-red`      | `oklch(0.82 0.12 25)`  | Foreground text on red badges/pills                |
+| `--color-pain-red-bg`   | `oklch(0.30 0.1 25)`   | Background for red badges/pills                    |
 
 **Note (recent change):** these three foreground values were tuned in commit `ab83486` ("Improve visibility") — bumped lightness/lowered chroma from the previous, more saturated values (e.g. green went `0.80/0.18` → `0.84/0.11`). If regenerating mockups from an older snapshot of this file, use the values above, not more saturated versions.
 
 Semantic thresholds these colors map to (see §6 Inconsistencies for the two independent implementations of this logic):
+
 - Pain intensity (0–10): **green** ≤3 (Mild), **amber** 4–6 (Moderate), **red** 7+ (Severe/Extreme, 9+ = "Extreme")
 - Pain frequency (0–100%): **green** ≤33%, **amber** 34–66%, **red** 67%+
 
@@ -75,44 +76,45 @@ Semantic thresholds these colors map to (see §6 Inconsistencies for the two ind
 
 These do **not** have theme tokens and are hand-written oklch literals scattered across component files. Reproduce them exactly if matching current UI, but treat them as candidates for consolidation (see §6):
 
-| Value | Where | Purpose |
-|---|---|---|
-| `oklch(0.33 0.14 25)` | `Button.tsx` (danger variant bg/border), `IconButton.tsx` (danger tone, md size, bg/border) | "Danger" red background — darker/more saturated than `--color-pain-red-bg` |
-| `oklch(0.37 0.14 25)` | Same two files | Danger hover state |
-| `oklch(0.96 0.03 25)` | Same two files | Danger button/icon text color |
-| `oklch(0.40 0.08 25)` | `SettingsPage.tsx` | Danger-zone Card border override |
-| `oklch(0.05 0.007 60 / 0.7)` | `Modal.tsx` | Modal backdrop (70% opaque near-black) |
-| `oklch(0.27 0.06 85)` / `oklch(0.38 0.08 85)` / `oklch(0.90 0.12 85)` | `BackupBanner.tsx` | Amber warning banner bg/border/text (banner is currently disabled — see §6) |
+| Value                                                                 | Where                                                                                       | Purpose                                                                     |
+| --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| `oklch(0.33 0.14 25)`                                                 | `Button.tsx` (danger variant bg/border), `IconButton.tsx` (danger tone, md size, bg/border) | "Danger" red background — darker/more saturated than `--color-pain-red-bg`  |
+| `oklch(0.37 0.14 25)`                                                 | Same two files                                                                              | Danger hover state                                                          |
+| `oklch(0.96 0.03 25)`                                                 | Same two files                                                                              | Danger button/icon text color                                               |
+| `oklch(0.40 0.08 25)`                                                 | `SettingsPage.tsx`                                                                          | Danger-zone Card border override                                            |
+| `oklch(0.05 0.007 60 / 0.7)`                                          | `Modal.tsx`                                                                                 | Modal backdrop (70% opaque near-black)                                      |
+| `oklch(0.27 0.06 85)` / `oklch(0.38 0.08 85)` / `oklch(0.90 0.12 85)` | `BackupBanner.tsx`                                                                          | Amber warning banner bg/border/text (banner is currently disabled — see §6) |
 
 ### 1.7 Typography
 
 Fonts loaded via Google Fonts `<link>` in `index.html` (not self-hosted, not bundled):
+
 ```html
 family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400
 family=Manrope:wght@400;500;600;700
 ```
 
-| Token | Value | Usage |
-|---|---|---|
-| `--font-heading` | `'Lora', serif` | Applied via `font-heading` utility class. Used for: page `<h1>` titles, sidebar/mobile-header logo wordmark ("Rehab Tracker"), Modal title, and section headings inside cards (e.g. "History", "Remedies", "Triggers", "Pain over time") |
-| body default | `'Manrope', sans-serif` | Set directly on `body` in `index.css`; everything else (buttons, inputs, badges, body text) inherits this — there is no `font-sans` token, it's just the CSS `body` rule |
+| Token            | Value                   | Usage                                                                                                                                                                                                                                    |
+| ---------------- | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--font-heading` | `'Lora', serif`         | Applied via `font-heading` utility class. Used for: page `<h1>` titles, sidebar/mobile-header logo wordmark ("Rehab Tracker"), Modal title, and section headings inside cards (e.g. "History", "Remedies", "Triggers", "Pain over time") |
+| body default     | `'Manrope', sans-serif` | Set directly on `body` in `index.css`; everything else (buttons, inputs, badges, body text) inherits this — there is no `font-sans` token, it's just the CSS `body` rule                                                                 |
 
 No monospace token is declared, but `Kbd` uses `font-mono` (Tailwind's default mono stack) for keyboard-shortcut hints.
 
 **Type scale in practice** (all via Tailwind utilities/arbitrary values — no named type-scale tokens exist):
 
-| Class | Size | Used for |
-|---|---|---|
-| `text-2xl` (24px) | Page `<h1>` titles ("Your injuries", "Settings", "Add injury", injury detail name) — always `font-heading font-semibold` |
-| `text-lg` (18px) | Modal title (`font-heading font-semibold`) |
-| `text-[19px]` | Sidebar/header wordmark (`font-heading font-semibold`) |
-| `text-base` (16px) | InjuryCard title (`font-semibold`), IconButton md icon size |
-| `text-sm` (14px) | Section card headings (`font-heading font-semibold`), nav links, form labels (`md` Label size), general body copy |
-| `text-[15px]` | SettingsPage card sub-headings (`font-semibold`) |
-| `text-[13px]` | The most common "small body text" size — meta info, slider labels, badge-adjacent copy, timeline notes, input text |
-| `text-xs` (12px) | Filter labels, `sm` Label size, TogglePill text, small buttons, status filter chip label |
-| `text-[11px]` | Badge text, uppercase group eyebrow labels (`RemedyList`/`TriggerList` group titles — `uppercase tracking-wide`) |
-| `text-[10px]` | Chart axis tick labels, `Kbd` text |
+| Class              | Size                                                                                                                     | Used for |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------ | -------- |
+| `text-2xl` (24px)  | Page `<h1>` titles ("Your injuries", "Settings", "Add injury", injury detail name) — always `font-heading font-semibold` |
+| `text-lg` (18px)   | Modal title (`font-heading font-semibold`)                                                                               |
+| `text-[19px]`      | Sidebar/header wordmark (`font-heading font-semibold`)                                                                   |
+| `text-base` (16px) | InjuryCard title (`font-semibold`), IconButton md icon size                                                              |
+| `text-sm` (14px)   | Section card headings (`font-heading font-semibold`), nav links, form labels (`md` Label size), general body copy        |
+| `text-[15px]`      | SettingsPage card sub-headings (`font-semibold`)                                                                         |
+| `text-[13px]`      | The most common "small body text" size — meta info, slider labels, badge-adjacent copy, timeline notes, input text       |
+| `text-xs` (12px)   | Filter labels, `sm` Label size, TogglePill text, small buttons, status filter chip label                                 |
+| `text-[11px]`      | Badge text, uppercase group eyebrow labels (`RemedyList`/`TriggerList` group titles — `uppercase tracking-wide`)         |
+| `text-[10px]`      | Chart axis tick labels, `Kbd` text                                                                                       |
 
 Font weights used: `font-normal` (Kbd), `font-medium` (nav inactive links, `md` Label), `font-semibold` (default body/heading emphasis — the most common weight), `font-bold` (primary/danger button text, bold badges, status badges).
 
@@ -123,6 +125,7 @@ No explicit line-height tokens — relies on Tailwind defaults per text-size uti
 No custom spacing scale is declared — the app uses **Tailwind's default 4px-based scale** (`space-y-2` = 8px, etc.) supplemented heavily by **arbitrary bracket values** that still land near-4px increments (e.g. `px-[14px]`, `py-[9px]`, `p-[18px]`, `p-[22px]`). There's no dedicated `--spacing-*` token set in `@theme`.
 
 Common recurring spacing values (component-level, not systematized):
+
 - Page-level vertical rhythm: `space-y-5` (20px) between major page sections
 - Card internal padding: `p-[18px]` (Card default), `p-[22px]` (Modal)
 - Compact list-item padding: `px-3 py-[9px]` (Input, Select, Textarea, remedy/trigger list rows), `px-[14px] py-3` (timeline items)
@@ -132,18 +135,18 @@ Common recurring spacing values (component-level, not systematized):
 
 No `--radius-*` tokens — every component hand-picks a pixel value in Tailwind arbitrary-value syntax. The **de facto scale** in use today:
 
-| Value | Where |
-|---|---|
-| `rounded-md` (6px) | `IconButton` sm size |
-| `rounded-[9px]` | `Button` sm size |
-| `rounded-[10px]` | `Button` md size, `Input`/`Select`/`Textarea`, `IconButton` md size, nav links, TriggerList/RemedyList row items |
+| Value               | Where                                                                                                                                  |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `rounded-md` (6px)  | `IconButton` sm size                                                                                                                   |
+| `rounded-[9px]`     | `Button` sm size                                                                                                                       |
+| `rounded-[10px]`    | `Button` md size, `Input`/`Select`/`Textarea`, `IconButton` md size, nav links, TriggerList/RemedyList row items                       |
 | `rounded-xl` (12px) | `Button` lg size, dashboard FAB-adjacent... (also `rounded-lg`/`rounded-xl` used loosely e.g. `EntityForm` wrapper `rounded-lg` = 8px) |
-| `rounded-[12px]` | InjuryCard select-mode toolbar |
-| `rounded-[14px]` | LogEntryModal per-injury group wrapper |
-| `rounded-[16px]` | `Card` |
-| `rounded-[18px]` | `Modal` panel |
-| `rounded-[20px]` | Desktop AppShell outer frame |
-| `rounded-full` | `Badge`, `TogglePill`, range-slider thumb/track, FAB, chart range-toggle buttons |
+| `rounded-[12px]`    | InjuryCard select-mode toolbar                                                                                                         |
+| `rounded-[14px]`    | LogEntryModal per-injury group wrapper                                                                                                 |
+| `rounded-[16px]`    | `Card`                                                                                                                                 |
+| `rounded-[18px]`    | `Modal` panel                                                                                                                          |
+| `rounded-[20px]`    | Desktop AppShell outer frame                                                                                                           |
+| `rounded-full`      | `Badge`, `TogglePill`, range-slider thumb/track, FAB, chart range-toggle buttons                                                       |
 
 This is a genuine inconsistency (see §6) — treat 9/10/12/14/16/18/20px + `full` as the working palette, but don't assume a formal 2px or 4px step system; it's closer to "increases roughly with component size/prominence."
 
@@ -151,12 +154,12 @@ This is a genuine inconsistency (see §6) — treat 9/10/12/14/16/18/20px + `ful
 
 Only two shadows exist in the whole app, both hand-written (no `--shadow-*` token):
 
-| Where | Value |
-|---|---|
+| Where                        | Value                                        |
+| ---------------------------- | -------------------------------------------- |
 | Desktop AppShell outer frame | `shadow-[0_24px_60px_-20px_rgba(0,0,0,0.5)]` |
-| Modal panel | `shadow-[0_30px_70px_-20px_rgba(0,0,0,0.6)]` |
-| Mobile FAB | `shadow-lg` (Tailwind default) |
-| SettingsPage message text | none |
+| Modal panel                  | `shadow-[0_30px_70px_-20px_rgba(0,0,0,0.6)]` |
+| Mobile FAB                   | `shadow-lg` (Tailwind default)               |
+| SettingsPage message text    | none                                         |
 
 Both custom shadows are large, soft, downward-offset "floating panel" shadows — negative spread pulls them tight to the element edge horizontally while still reading as a big soft drop below.
 
@@ -168,39 +171,39 @@ All primitives live in `src/components/ui/`. Feature-specific components are gro
 
 ### 2.1 Primitives (`src/components/ui/`)
 
-| Component | File | Variants / Props | Notes |
-|---|---|---|---|
-| `Button` | `Button.tsx` | `variant`: `primary` \| `secondary` \| `danger` \| `ghost` \| `dashed`; `size`: `sm` \| `md` \| `lg` (default `primary`/`md`) | primary = solid accent + bold text; secondary = control bg + strong border; danger = hardcoded red (see §1.6); ghost = transparent, no border, used for Cancel actions; dashed = transparent + dashed border, used for "+ Add" affordances. All sizes share `inline-flex items-center gap-1.5` (icons/Kbd sit inline with label). Disabled state: `opacity-50 pointer-events-none`. |
-| `IconButton` | `IconButton.tsx` | `tone`: `neutral` \| `danger`; `size`: `sm` \| `md` (default `neutral`/`sm`); requires `icon` (FontAwesome) + `label` (used as both `aria-label` and `title`) | sm = 24×24px, no border, used inline in timeline/list rows; md = 40×40px, bordered, used as standalone actions (edit/delete injury) |
-| `Card` | `Card.tsx` | none (style-only wrapper) | `rounded-[16px] border border-subtle bg-surface p-[18px]`. Every content block on every page is a `Card` unless it's a modal or a raw `<div>` in the header area. |
-| `Badge` | `Badge.tsx` | `tone`: `slate` \| `green` \| `amber` \| `red` \| `indigo`; `weight`: `semibold` \| `bold` (default `slate`/`semibold`) | Pill-shaped (`rounded-full`), used for status labels, pain-level chips, remedy/trigger tags in timeline |
-| `TogglePill` | `TogglePill.tsx` | `selected: boolean` (required); `tone`: `accent` \| `red` (default `accent`) | Selectable filter/tag chip. Unselected = transparent + strong border; selected = tone-colored soft bg + matching border/text. Used for dashboard status filters, injury multi-select in log modal, remedy/trigger selection |
-| `Input` | `Input.tsx` | standard HTML input props | Recessed `bg-input`, `border-strong`, focus ring via `focus:border-accent` (no box-shadow ring, just border color change) |
-| `Select` | `Select.tsx` | standard HTML select props | Same visual treatment as `Input` |
-| `Textarea` | `Textarea.tsx` | standard HTML textarea props | Same visual treatment as `Input` |
-| `Label` | `Label.tsx` | `size`: `sm` \| `md` (default `sm`) | sm = 12px/muted (used for grouped-field labels like "Injuries", "Relief", "Triggers"); md = 14px/secondary (used for primary form fields like Name/Status/Description) |
-| `Kbd` | `Kbd.tsx` | children only | Small mono badge for keyboard-shortcut hints, rendered inline inside `Button` labels (e.g. `Add Injury [N]`) |
-| `Modal` | `Modal.tsx` | `open`, `onClose`, `onSave?`, `title`, `children`, `footer?` | Portal to `document.body`. Bottom sheet on mobile (`items-end`, rounded top only), centered dialog on `sm:` and up. Wires `Esc`/`Cmd+S` via `useFormShortcuts`. Backdrop click closes. |
-| `EntityForm` | `EntityForm.tsx` | `nameLabel`, `initial?`, `submitLabel`, `onSubmit`, `onCancel?` | Generic inline add/edit form (name + optional description) shared by remedies and triggers — see §5 consolidation history. Dashed-border wrapper (`rounded-lg border-dashed`), which is visually distinct from the Card radius (16px) elsewhere — another minor radius inconsistency. |
+| Component    | File             | Variants / Props                                                                                                                                              | Notes                                                                                                                                                                                                                                                                                                                                                                               |
+| ------------ | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Button`     | `Button.tsx`     | `variant`: `primary` \| `secondary` \| `danger` \| `ghost` \| `dashed`; `size`: `sm` \| `md` \| `lg` (default `primary`/`md`)                                 | primary = solid accent + bold text; secondary = control bg + strong border; danger = hardcoded red (see §1.6); ghost = transparent, no border, used for Cancel actions; dashed = transparent + dashed border, used for "+ Add" affordances. All sizes share `inline-flex items-center gap-1.5` (icons/Kbd sit inline with label). Disabled state: `opacity-50 pointer-events-none`. |
+| `IconButton` | `IconButton.tsx` | `tone`: `neutral` \| `danger`; `size`: `sm` \| `md` (default `neutral`/`sm`); requires `icon` (FontAwesome) + `label` (used as both `aria-label` and `title`) | sm = 24×24px, no border, used inline in timeline/list rows; md = 40×40px, bordered, used as standalone actions (edit/delete injury)                                                                                                                                                                                                                                                 |
+| `Card`       | `Card.tsx`       | none (style-only wrapper)                                                                                                                                     | `rounded-[16px] border border-subtle bg-surface p-[18px]`. Every content block on every page is a `Card` unless it's a modal or a raw `<div>` in the header area.                                                                                                                                                                                                                   |
+| `Badge`      | `Badge.tsx`      | `tone`: `slate` \| `green` \| `amber` \| `red` \| `indigo`; `weight`: `semibold` \| `bold` (default `slate`/`semibold`)                                       | Pill-shaped (`rounded-full`), used for status labels, pain-level chips, remedy/trigger tags in timeline                                                                                                                                                                                                                                                                             |
+| `TogglePill` | `TogglePill.tsx` | `selected: boolean` (required); `tone`: `accent` \| `red` (default `accent`)                                                                                  | Selectable filter/tag chip. Unselected = transparent + strong border; selected = tone-colored soft bg + matching border/text. Used for dashboard status filters, injury multi-select in log modal, remedy/trigger selection                                                                                                                                                         |
+| `Input`      | `Input.tsx`      | standard HTML input props                                                                                                                                     | Recessed `bg-input`, `border-strong`, focus ring via `focus:border-accent` (no box-shadow ring, just border color change)                                                                                                                                                                                                                                                           |
+| `Select`     | `Select.tsx`     | standard HTML select props                                                                                                                                    | Same visual treatment as `Input`                                                                                                                                                                                                                                                                                                                                                    |
+| `Textarea`   | `Textarea.tsx`   | standard HTML textarea props                                                                                                                                  | Same visual treatment as `Input`                                                                                                                                                                                                                                                                                                                                                    |
+| `Label`      | `Label.tsx`      | `size`: `sm` \| `md` (default `sm`)                                                                                                                           | sm = 12px/muted (used for grouped-field labels like "Injuries", "Relief", "Triggers"); md = 14px/secondary (used for primary form fields like Name/Status/Description)                                                                                                                                                                                                              |
+| `Kbd`        | `Kbd.tsx`        | children only                                                                                                                                                 | Small mono badge for keyboard-shortcut hints, rendered inline inside `Button` labels (e.g. `Add Injury [N]`)                                                                                                                                                                                                                                                                        |
+| `Modal`      | `Modal.tsx`      | `open`, `onClose`, `onSave?`, `title`, `children`, `footer?`                                                                                                  | Portal to `document.body`. Bottom sheet on mobile (`items-end`, rounded top only), centered dialog on `sm:` and up. Wires `Esc`/`Cmd+S` via `useFormShortcuts`. Backdrop click closes.                                                                                                                                                                                              |
+| `EntityForm` | `EntityForm.tsx` | `nameLabel`, `initial?`, `submitLabel`, `onSubmit`, `onCancel?`                                                                                               | Generic inline add/edit form (name + optional description) shared by remedies and triggers — see §5 consolidation history. Dashed-border wrapper (`rounded-lg border-dashed`), which is visually distinct from the Card radius (16px) elsewhere — another minor radius inconsistency.                                                                                               |
 
 ### 2.2 Feature components
 
-| Component | File | Purpose |
-|---|---|---|
-| `InjuryCard` | `injuries/InjuryCard.tsx` | Dashboard grid item. Shows name, status badge, last-log summary, quick "Log Entry" button. Supports a multi-select mode (checkbox overlay, top-left floating check circle) |
-| `InjuryForm` | `injuries/InjuryForm.tsx` | Name/Status(edit-only)/Description form, full page (not modal) — used by `InjuryFormPage` for both create and edit |
-| `InjuryStatusBadge` | `injuries/InjuryStatusBadge.tsx` | Thin wrapper mapping `InjuryStatus` → `Badge` tone: `active`→amber, `monitoring`→indigo, `resolved`→green, always `weight="bold"` |
-| `AppShell` | `layout/AppShell.tsx` | Root layout — see §3 Layout Patterns |
-| `BackupBanner` | `layout/BackupBanner.tsx` | Dismissible warning banner nudging the user to export data if >14 days since last export. **Currently commented out** in `AppShell` — not rendered (see §6) |
-| `InjurySelector` | `logs/InjurySelector.tsx` | Multi-select `TogglePill` row for choosing which injuries a log entry applies to, with an "active only / show all" toggle |
-| `LogEntryModal` | `logs/LogEntryModal.tsx` | The global "+" log-entry modal (creates a session across 1+ injuries at once). Opened from FAB, InjuryCard, InjuryDetailPage, or `L`/`N` shortcuts |
-| `LogEntryEditModal` | `logs/LogEntryEditModal.tsx` | Same field set as `LogEntryModal` but scoped to editing one existing entry |
-| `LogTimeline` / `LogTimelineItem` | `logs/LogTimeline.tsx`, `LogTimelineItem.tsx` | Paginated (`+15` "Load more") history list on injury detail page. Each item: timestamp, pain/frequency badges (color-coded via local `painTone`/`freqTone` helpers — duplicated logic, see §6), remedy/trigger tag badges, notes, edit/delete `IconButton`s |
-| `PainSlider` / `PainFrequencySlider` | `logs/PainSlider.tsx`, `PainFrequencySlider.tsx` | Custom-styled native `<input type=range>` (see §1 CSS for thumb/track styling). Intensity 0–10 step 1 (accent color); Frequency 0–100 step 5 (amber color, `.range-amber` class). Both have a "clear" link to unset the value (nullable rating) |
-| `RemedyCheckboxGroup` / `TriggerCheckboxGroup` | `logs/*.tsx` | In-modal pickers using `TogglePill` + inline "+ Add" → `EntityForm`. Remedies split into "Relief"/"Long-term" sub-sections (by `RemedyType`) |
-| `RemedyList` | `remedies/RemedyList.tsx` | Injury-detail-page card managing remedies (full CRUD: add/edit/archive), grouped Relief vs Long-term |
-| `TriggerList` | `triggers/TriggerList.tsx` | Injury-detail-page card managing triggers (full CRUD: add/edit/archive) — structurally near-identical to `RemedyList` but not deduplicated (single group, no relief/longterm split) |
-| `PainTrendChart` | `charts/PainTrendChart.tsx` | Recharts dual-line chart (pain intensity left axis 0–10, frequency right axis 0–100%), range toggle (7d/30d/90d/All), custom tooltip, colors hardcoded in a local `colors` object (not theme tokens — mirrors the accent/pain-amber hues but as separate literals, see §6) |
+| Component                                      | File                                             | Purpose                                                                                                                                                                                                                                                                    |
+| ---------------------------------------------- | ------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `InjuryCard`                                   | `injuries/InjuryCard.tsx`                        | Dashboard grid item. Shows name, status badge, last-log summary, quick "Log Entry" button. Supports a multi-select mode (checkbox overlay, top-left floating check circle)                                                                                                 |
+| `InjuryForm`                                   | `injuries/InjuryForm.tsx`                        | Name/Status(edit-only)/Description form, full page (not modal) — used by `InjuryFormPage` for both create and edit                                                                                                                                                         |
+| `InjuryStatusBadge`                            | `injuries/InjuryStatusBadge.tsx`                 | Thin wrapper mapping `InjuryStatus` → `Badge` tone: `active`→amber, `monitoring`→indigo, `resolved`→green, always `weight="bold"`                                                                                                                                          |
+| `AppShell`                                     | `layout/AppShell.tsx`                            | Root layout — see §3 Layout Patterns                                                                                                                                                                                                                                       |
+| `BackupBanner`                                 | `layout/BackupBanner.tsx`                        | Dismissible warning banner nudging the user to export data if >14 days since last export. **Currently commented out** in `AppShell` — not rendered (see §6)                                                                                                                |
+| `InjurySelector`                               | `logs/InjurySelector.tsx`                        | Multi-select `TogglePill` row for choosing which injuries a log entry applies to, with an "active only / show all" toggle                                                                                                                                                  |
+| `LogEntryModal`                                | `logs/LogEntryModal.tsx`                         | The global "+" log-entry modal (creates a session across 1+ injuries at once). Opened from FAB, InjuryCard, InjuryDetailPage, or `L`/`N` shortcuts                                                                                                                         |
+| `LogEntryEditModal`                            | `logs/LogEntryEditModal.tsx`                     | Same field set as `LogEntryModal` but scoped to editing one existing entry                                                                                                                                                                                                 |
+| `LogTimeline` / `LogTimelineItem`              | `logs/LogTimeline.tsx`, `LogTimelineItem.tsx`    | Paginated (`+15` "Load more") history list on injury detail page. Each item: timestamp, pain/frequency badges (color-coded via local `painTone`/`freqTone` helpers — duplicated logic, see §6), remedy/trigger tag badges, notes, edit/delete `IconButton`s                |
+| `PainSlider` / `PainFrequencySlider`           | `logs/PainSlider.tsx`, `PainFrequencySlider.tsx` | Custom-styled native `<input type=range>` (see §1 CSS for thumb/track styling). Intensity 0–10 step 1 (accent color); Frequency 0–100 step 5 (amber color, `.range-amber` class). Both have a "clear" link to unset the value (nullable rating)                            |
+| `RemedyCheckboxGroup` / `TriggerCheckboxGroup` | `logs/*.tsx`                                     | In-modal pickers using `TogglePill` + inline "+ Add" → `EntityForm`. Remedies split into "Relief"/"Long-term" sub-sections (by `RemedyType`)                                                                                                                               |
+| `RemedyList`                                   | `remedies/RemedyList.tsx`                        | Injury-detail-page card managing remedies (full CRUD: add/edit/archive), grouped Relief vs Long-term                                                                                                                                                                       |
+| `TriggerList`                                  | `triggers/TriggerList.tsx`                       | Injury-detail-page card managing triggers (full CRUD: add/edit/archive) — structurally near-identical to `RemedyList` but not deduplicated (single group, no relief/longterm split)                                                                                        |
+| `PainTrendChart`                               | `charts/PainTrendChart.tsx`                      | Recharts dual-line chart (pain intensity left axis 0–10, frequency right axis 0–100%), range toggle (7d/30d/90d/All), custom tooltip, colors hardcoded in a local `colors` object (not theme tokens — mirrors the accent/pain-amber hues but as separate literals, see §6) |
 
 ---
 
@@ -231,6 +234,7 @@ Only two Tailwind breakpoints are actively used: `sm:` (640px, mostly for the Mo
 ## 4. Key Screens
 
 ### 4.1 Dashboard (`/`, `DashboardPage.tsx`)
+
 - Header row: "Your injuries" `h1` + action buttons. Normal mode: `Select` (secondary) + `Add Injury` (primary, with `N` kbd hint). Select mode: swaps to a single `Cancel` (ghost, `Esc` hint) button.
 - Status filter row: "Filter by:" label + `TogglePill` row (Active/Monitoring/Resolved), multi-selectable, all selected by default.
 - When in select mode and ≥0 selected: an extra toolbar `Card`-like strip (`rounded-[12px] bg-surface-raised`) shows "`N` selected" + a `danger` "Delete selected" button (disabled at 0).
@@ -238,6 +242,7 @@ Only two Tailwind breakpoints are actively used: `sm:` (640px, mostly for the Mo
 - `n` keyboard shortcut jumps to new-injury form (disabled while in select mode); `Escape` exits select mode.
 
 ### 4.2 Injury Detail (`/injuries/:id`, `InjuryDetailPage.tsx`)
+
 - Loading state: plain `Loading…` text. Not-found state: plain `Injury not found.` text (no dedicated illustration/empty-state component — same minimal pattern used everywhere).
 - Header: injury name (`h1`) + status badge top-right; optional description paragraph (`max-w-3/5`, muted) below.
 - Action row: `Log Entry` (primary, `L` hint) + edit `IconButton` (pencil) on the left; delete `IconButton` (trash, danger tone) on the right — deliberately separated to opposite ends of the row to reduce accidental-delete risk.
@@ -245,26 +250,32 @@ Only two Tailwind breakpoints are actively used: `sm:` (640px, mostly for the Mo
 - `l` keyboard shortcut opens the log modal pre-scoped to this injury.
 
 ### 4.3 Injury Form (`/injuries/new`, `/injuries/:id/edit`, `InjuryFormPage.tsx`)
+
 - Full-page (not modal) form, reused for both create/edit via `isEdit` flag. Status field only shown when editing (new injuries default to `active` implicitly). Submit label switches "Submit" (create) vs "Save" (edit).
 
 ### 4.4 Log Entry Modal (global, `LogEntryModal.tsx`)
+
 - Opened via FAB, `InjuryCard`'s "Log Entry" button, detail-page "Log Entry" button, or `l`/`n`-adjacent flows.
 - Structure: `InjurySelector` (which injuries does this entry cover) → for each selected injury, a bordered sub-card (`rounded-[14px] border border-subtle p-[14px]`) containing that injury's name + its own `PainSlider`, `PainFrequencySlider`, `RemedyCheckboxGroup`, `TriggerCheckboxGroup` → shared `When` datetime field → shared `Notes` textarea.
 - This is a "session" concept: one submit creates one `LogEntry` per selected injury sharing the same timestamp/notes but independent pain data — reflected in `createLogSession`.
-- Footer: `Submit` (primary, disabled until ≥1 injury selected) + `Cancel` (ghost). Note the footer button *order* here is Submit-then-Cancel, whereas `LogEntryEditModal` and most other dual-button forms use Cancel-then-Save order — a minor inconsistency (see §6).
+- Footer: `Submit` (primary, disabled until ≥1 injury selected) + `Cancel` (ghost). Note the footer button _order_ here is Submit-then-Cancel, whereas `LogEntryEditModal` and most other dual-button forms use Cancel-then-Save order — a minor inconsistency (see §6).
 
 ### 4.5 Log Entry Edit Modal (`LogEntryEditModal.tsx`)
+
 - Same field set as the creation modal but for a single existing entry, opened by clicking the pencil `IconButton` on a `LogTimelineItem`.
 
 ### 4.6 Settings (`/settings`, `SettingsPage.tsx`)
+
 - Three stacked `Card`s: **Backup** (export/import, last-exported-at relative timestamp), **Seed data** (load/clear example data — a dev/demo convenience), **Danger zone** (delete all data, red-tinted border override, red heading text).
 - Transient success messages render as a green (`text-pain-green`) line above the cards, cleared on next action.
 - Import uses a hidden native `<input type=file accept="application/json">` triggered by a visible `Import data` button (common a11y-friendly file-input pattern).
 
 ### 4.7 Not Found (`*`, `NotFoundPage.tsx`)
+
 - Minimal centered text + "Back to dashboard" link. No illustration, no `AppShell`-independent layout — still renders inside the shell.
 
 ### Interaction/state pattern summary (cross-cutting)
+
 - **Loading**: always a plain `<p className="text-ink-muted">Loading…</p>` (or `Loading…` inline) — no skeletons/spinners anywhere in the app.
 - **Empty states**: always plain muted `<p>` text, phrased contextually (e.g. "No injuries tracked yet. Add one to start logging.", "No log entries yet.", "No rated entries in this range yet.") — no icons or illustrations.
 - **Destructive confirmation**: always the native browser `confirm()` — no custom confirmation dialog component exists, for single delete, bulk delete, and settings' delete-all.
@@ -290,7 +301,7 @@ Only two Tailwind breakpoints are actively used: `sm:` (640px, mostly for the Mo
 
 ## 6. Inconsistencies to Reconcile (don't copy forward)
 
-1. **Two independent "danger red" definitions.** `Button`'s `danger` variant and `IconButton`'s `danger` tone (md size) both hardcode the identical trio `oklch(0.33 0.14 25)` / `oklch(0.37 0.14 25)` / `oklch(0.96 0.03 25)` inline rather than referencing a shared token — and this red is visually distinct from `--color-pain-red-bg` (`oklch(0.30 0.1 25)`), which is *also* a "red" used for the same semantic concept (danger/severe) elsewhere. There are effectively two reds in the app that should probably be one token.
+1. **Two independent "danger red" definitions.** `Button`'s `danger` variant and `IconButton`'s `danger` tone (md size) both hardcode the identical trio `oklch(0.33 0.14 25)` / `oklch(0.37 0.14 25)` / `oklch(0.96 0.03 25)` inline rather than referencing a shared token — and this red is visually distinct from `--color-pain-red-bg` (`oklch(0.30 0.1 25)`), which is _also_ a "red" used for the same semantic concept (danger/severe) elsewhere. There are effectively two reds in the app that should probably be one token.
 2. **`BackupBanner` is built but disabled.** `AppShell.tsx` line 63 has `{/* <BackupBanner /> */}` — the component, its hook wiring, and its 14-day-reminder logic all exist and work, but it's commented out, so no banner currently ever renders. If reproducing "current" behavior faithfully, omit it; if asked to show the "intended" banner design, know it renders as a full-width amber notice below the shell header using entirely off-token amber colors (§1.6) rather than the `--color-pain-amber*` tokens already in the theme.
 3. **No border-radius scale — every component invented its own value.** See §1.9: 6/9/10/12/14/16/18/20px + full, with no visible rule for which component gets which (e.g. `Button` lg is 12px but `Card`, which is visually larger, is 16px; `EntityForm`'s wrapper is a plain Tailwind `rounded-lg`=8px, smaller than any Button). Treat this as organic/unsystematic rather than a deliberate scale.
 4. **Pain-tone color logic is duplicated, not shared.** `LogTimelineItem.tsx` has local `painTone()`/`freqTone()` functions mapping numeric thresholds to badge tones. `PainTrendChart.tsx` separately hardcodes its own `colors` object with visually-similar-but-independently-declared oklch values for the same intensity/frequency concepts (e.g. chart's `line: oklch(0.58 0.13 250)` matches `--color-accent` exactly by coincidence of copy-paste, but isn't referencing the token). A future pass should centralize "what color is pain level X" into one helper/token set.

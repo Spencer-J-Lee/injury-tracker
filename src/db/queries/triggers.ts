@@ -1,22 +1,22 @@
-import { db } from '@/db/schema'
-import type { Trigger } from '@/types/models'
+import { db } from "@/db/schema";
+import type { Trigger } from "@/types/models";
 
 export function listActiveTriggersForInjury(injuryId: string) {
   return db.triggers
-    .where('injuryId')
+    .where("injuryId")
     .equals(injuryId)
     .filter((trigger) => !trigger.archivedAt)
-    .toArray()
+    .toArray();
 }
 
 export function listAllTriggersForInjury(injuryId: string) {
-  return db.triggers.where('injuryId').equals(injuryId).toArray()
+  return db.triggers.where("injuryId").equals(injuryId).toArray();
 }
 
 export async function createTrigger(input: {
-  injuryId: string
-  name: string
-  description?: string
+  injuryId: string;
+  name: string;
+  description?: string;
 }): Promise<Trigger> {
   const trigger: Trigger = {
     id: crypto.randomUUID(),
@@ -24,21 +24,24 @@ export async function createTrigger(input: {
     name: input.name,
     description: input.description,
     createdAt: new Date().toISOString(),
-  }
-  await db.triggers.add(trigger)
-  return trigger
+  };
+  await db.triggers.add(trigger);
+  return trigger;
 }
 
-export async function updateTrigger(id: string, changes: Partial<Pick<Trigger, 'name' | 'description'>>) {
-  await db.triggers.update(id, changes)
+export async function updateTrigger(
+  id: string,
+  changes: Partial<Pick<Trigger, "name" | "description">>,
+) {
+  await db.triggers.update(id, changes);
 }
 
 export async function archiveTrigger(id: string) {
-  await db.triggers.update(id, { archivedAt: new Date().toISOString() })
+  await db.triggers.update(id, { archivedAt: new Date().toISOString() });
 }
 
 export async function getTriggersByIds(ids: string[]): Promise<Trigger[]> {
-  if (ids.length === 0) return []
-  const triggers = await db.triggers.bulkGet(ids)
-  return triggers.filter((t): t is Trigger => t !== undefined)
+  if (ids.length === 0) return [];
+  const triggers = await db.triggers.bulkGet(ids);
+  return triggers.filter((t): t is Trigger => t !== undefined);
 }

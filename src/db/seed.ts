@@ -1,6 +1,12 @@
 import { format } from "date-fns";
 import { db } from "@/db/schema";
-import type { Injury, LogEntry, Remedy, Trigger, JournalEntry } from "@/types/models";
+import type {
+  Injury,
+  LogEntry,
+  Remedy,
+  Trigger,
+  JournalEntry,
+} from "@/types/models";
 import { SEED_INJURIES, SEED_JOURNAL_ENTRIES } from "@/db/seedData";
 
 export const SEED_MARKER = "꧁꧂";
@@ -8,7 +14,10 @@ export const SEED_MARKER = "꧁꧂";
 const LEGACY_SEED_MARKERS: string[] = [];
 
 function isSeedMarked(value: string): boolean {
-  return value.endsWith(SEED_MARKER) || LEGACY_SEED_MARKERS.some((marker) => value.endsWith(marker));
+  return (
+    value.endsWith(SEED_MARKER) ||
+    LEGACY_SEED_MARKERS.some((marker) => value.endsWith(marker))
+  );
 }
 
 function isoOffsetDays(

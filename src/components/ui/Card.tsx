@@ -1,14 +1,14 @@
-import type { HTMLAttributes } from 'react'
-import clsx from 'clsx'
+import type { HTMLAttributes } from "react";
+import clsx from "clsx";
 
 export function Card({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       className={clsx(
-        'rounded-[16px] border border-subtle bg-surface p-[18px]',
+        "border-subtle bg-surface rounded-[16px] border p-[18px]",
         className,
       )}
       {...props}
     />
-  )
+  );
 }

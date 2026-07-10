@@ -1,13 +1,13 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { AppShell } from '@/components/layout/AppShell'
-import { LogModalProvider } from '@/context/LogModalContext'
-import { LogEntryModal } from '@/components/logs/LogEntryModal'
-import { DashboardPage } from '@/pages/DashboardPage'
-import { InjuryDetailPage } from '@/pages/InjuryDetailPage'
-import { InjuryFormPage } from '@/pages/InjuryFormPage'
-import { JournalPage } from '@/pages/JournalPage'
-import { SettingsPage } from '@/pages/SettingsPage'
-import { NotFoundPage } from '@/pages/NotFoundPage'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AppShell } from "@/components/layout/AppShell";
+import { LogModalProvider } from "@/context/LogModalContext";
+import { LogEntryModal } from "@/components/logs/LogEntryModal";
+import { DashboardPage } from "@/pages/DashboardPage";
+import { InjuryDetailPage } from "@/pages/InjuryDetailPage";
+import { InjuryFormPage } from "@/pages/InjuryFormPage";
+import { JournalPage } from "@/pages/JournalPage";
+import { SettingsPage } from "@/pages/SettingsPage";
+import { NotFoundPage } from "@/pages/NotFoundPage";
 
 function App() {
   return (
@@ -27,7 +27,7 @@ function App() {
       </BrowserRouter>
       <LogEntryModal />
     </LogModalProvider>
-  )
+  );
 }
 
-export default App
+export default App;

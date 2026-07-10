@@ -1,4 +1,10 @@
-import { format, formatDistanceToNow, subDays, isAfter, parseISO } from "date-fns";
+import {
+  format,
+  formatDistanceToNow,
+  subDays,
+  isAfter,
+  parseISO,
+} from "date-fns";
 
 export function formatTimestamp(iso: string): string {
   return format(new Date(iso), "MMM d, yyyy • h:mm a");

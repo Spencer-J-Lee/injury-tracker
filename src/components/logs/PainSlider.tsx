@@ -1,8 +1,8 @@
-import { RatingSlider } from '@/components/logs/RatingSlider'
+import { RatingSlider } from "@/components/logs/RatingSlider";
 
 interface PainSliderProps {
-  value: number | undefined
-  onChange: (value: number | undefined) => void
+  value: number | undefined;
+  onChange: (value: number | undefined) => void;
 }
 
 export function PainSlider({ value, onChange }: PainSliderProps) {
@@ -17,5 +17,5 @@ export function PainSlider({ value, onChange }: PainSliderProps) {
       formatValue={(v) => `${v}/10`}
       ticks={[0, 2, 4, 6, 8, 10]}
     />
-  )
+  );
 }

@@ -1,16 +1,16 @@
-import { useState } from 'react'
-import type { Remedy, RemedyType } from '@/types/models'
-import { useRemedies } from '@/hooks/useRemedies'
-import { createRemedy } from '@/db/queries/remedies'
-import { Label } from '../ui/Label'
-import { TogglePill } from '@/components/ui/TogglePill'
-import { Button } from '../ui/Button'
-import { EntityForm } from '@/components/ui/EntityForm'
+import { useState } from "react";
+import type { Remedy, RemedyType } from "@/types/models";
+import { useRemedies } from "@/hooks/useRemedies";
+import { createRemedy } from "@/db/queries/remedies";
+import { Label } from "../ui/Label";
+import { TogglePill } from "@/components/ui/TogglePill";
+import { Button } from "../ui/Button";
+import { EntityForm } from "@/components/ui/EntityForm";
 
 interface RemedyCheckboxGroupProps {
-  injuryId: string
-  selectedRemedyIds: string[]
-  onToggle: (remedyId: string) => void
+  injuryId: string;
+  selectedRemedyIds: string[];
+  onToggle: (remedyId: string) => void;
 }
 
 function RemedySection({
@@ -20,25 +20,32 @@ function RemedySection({
   onToggle,
   onAdd,
 }: {
-  title: string
-  remedies: Remedy[]
-  selectedRemedyIds: string[]
-  onToggle: (remedyId: string) => void
-  onAdd: (values: { name: string; description: string }) => void | Promise<void>
+  title: string;
+  remedies: Remedy[];
+  selectedRemedyIds: string[];
+  onToggle: (remedyId: string) => void;
+  onAdd: (values: {
+    name: string;
+    description: string;
+  }) => void | Promise<void>;
 }) {
-  const [adding, setAdding] = useState(false)
+  const [adding, setAdding] = useState(false);
 
   return (
     <div>
       <Label>{title}</Label>
       <div className="flex flex-wrap gap-2">
         {remedies.map((remedy) => {
-          const selected = selectedRemedyIds.includes(remedy.id)
+          const selected = selectedRemedyIds.includes(remedy.id);
           return (
-            <TogglePill key={remedy.id} selected={selected} onClick={() => onToggle(remedy.id)}>
+            <TogglePill
+              key={remedy.id}
+              selected={selected}
+              onClick={() => onToggle(remedy.id)}
+            >
               {remedy.name}
             </TogglePill>
-          )
+          );
         })}
         <Button variant="dashed" size="sm" onClick={() => setAdding(true)}>
           + Add
@@ -51,30 +58,37 @@ function RemedySection({
             submitLabel="Add"
             onCancel={() => setAdding(false)}
             onSubmit={async (values) => {
-              await onAdd(values)
-              setAdding(false)
+              await onAdd(values);
+              setAdding(false);
             }}
           />
         </div>
       )}
     </div>
-  )
+  );
 }
 
-export function RemedyCheckboxGroup({ injuryId, selectedRemedyIds, onToggle }: RemedyCheckboxGroupProps) {
-  const remedies = useRemedies(injuryId) ?? []
-  const relief = remedies.filter((r) => r.type === 'relief')
-  const longterm = remedies.filter((r) => r.type === 'longterm')
+export function RemedyCheckboxGroup({
+  injuryId,
+  selectedRemedyIds,
+  onToggle,
+}: RemedyCheckboxGroupProps) {
+  const remedies = useRemedies(injuryId) ?? [];
+  const relief = remedies.filter((r) => r.type === "relief");
+  const longterm = remedies.filter((r) => r.type === "longterm");
 
-  const handleAdd = async (type: RemedyType, values: { name: string; description: string }) => {
+  const handleAdd = async (
+    type: RemedyType,
+    values: { name: string; description: string },
+  ) => {
     const created = await createRemedy({
       injuryId,
       name: values.name,
       description: values.description || undefined,
       type,
-    })
-    onToggle(created.id)
-  }
+    });
+    onToggle(created.id);
+  };
 
   return (
     <div className="space-y-3">
@@ -83,15 +97,15 @@ export function RemedyCheckboxGroup({ injuryId, selectedRemedyIds, onToggle }: R
         remedies={relief}
         selectedRemedyIds={selectedRemedyIds}
         onToggle={onToggle}
-        onAdd={(values) => handleAdd('relief', values)}
+        onAdd={(values) => handleAdd("relief", values)}
       />
       <RemedySection
         title="Long-term"
         remedies={longterm}
         selectedRemedyIds={selectedRemedyIds}
         onToggle={onToggle}
-        onAdd={(values) => handleAdd('longterm', values)}
+        onAdd={(values) => handleAdd("longterm", values)}
       />
     </div>
-  )
+  );
 }

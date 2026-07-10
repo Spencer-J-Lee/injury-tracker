@@ -1,14 +1,14 @@
-import { createContext } from 'react'
+import { createContext } from "react";
 
 export interface LogModalState {
-  open: boolean
-  initialInjuryIds: string[]
+  open: boolean;
+  initialInjuryIds: string[];
 }
 
 export interface LogModalContextValue {
-  state: LogModalState
-  openLogModal: (initialInjuryIds?: string[]) => void
-  closeLogModal: () => void
+  state: LogModalState;
+  openLogModal: (initialInjuryIds?: string[]) => void;
+  closeLogModal: () => void;
 }
 
-export const LogModalContext = createContext<LogModalContextValue | null>(null)
+export const LogModalContext = createContext<LogModalContextValue | null>(null);
