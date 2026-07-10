@@ -9,6 +9,7 @@ import { InjurySelector } from '@/components/logs/InjurySelector'
 import { PainSlider } from '@/components/logs/PainSlider'
 import { PainFrequencySlider } from '@/components/logs/PainFrequencySlider'
 import { RemedyCheckboxGroup } from '@/components/logs/RemedyCheckboxGroup'
+import { TriggerCheckboxGroup } from '@/components/logs/TriggerCheckboxGroup'
 import { useLogModal } from '@/context/LogModalContext'
 import { useInjuries } from '@/hooks/useInjuries'
 import { createLogSession } from '@/db/queries/logEntries'
@@ -19,6 +20,7 @@ interface PerInjuryState {
   painLevel?: number
   painFrequency?: number
   remedyIds: string[]
+  triggerIds: string[]
 }
 
 export function LogEntryModal() {
@@ -36,7 +38,10 @@ export function LogEntryModal() {
       setSelectedIds(state.initialInjuryIds)
       setPerInjury(
         Object.fromEntries(
-          state.initialInjuryIds.map((id) => [id, { painLevel: undefined, painFrequency: undefined, remedyIds: [] }]),
+          state.initialInjuryIds.map((id) => [
+            id,
+            { painLevel: undefined, painFrequency: undefined, remedyIds: [], triggerIds: [] },
+          ]),
         ),
       )
       setNotes('')
@@ -49,18 +54,33 @@ export function LogEntryModal() {
       prev.includes(injuryId) ? prev.filter((id) => id !== injuryId) : [...prev, injuryId],
     )
     setPerInjury((prev) =>
-      prev[injuryId] ? prev : { ...prev, [injuryId]: { painLevel: undefined, painFrequency: undefined, remedyIds: [] } },
+      prev[injuryId]
+        ? prev
+        : { ...prev, [injuryId]: { painLevel: undefined, painFrequency: undefined, remedyIds: [], triggerIds: [] } },
     )
   }
 
   const setPainLevel = (injuryId: string, painLevel: number | undefined) => {
-    setPerInjury((prev) => ({ ...prev, [injuryId]: { ...prev[injuryId], painLevel, remedyIds: prev[injuryId]?.remedyIds ?? [] } }))
+    setPerInjury((prev) => ({
+      ...prev,
+      [injuryId]: {
+        ...prev[injuryId],
+        painLevel,
+        remedyIds: prev[injuryId]?.remedyIds ?? [],
+        triggerIds: prev[injuryId]?.triggerIds ?? [],
+      },
+    }))
   }
 
   const setPainFrequency = (injuryId: string, painFrequency: number | undefined) => {
     setPerInjury((prev) => ({
       ...prev,
-      [injuryId]: { ...prev[injuryId], painFrequency, remedyIds: prev[injuryId]?.remedyIds ?? [] },
+      [injuryId]: {
+        ...prev[injuryId],
+        painFrequency,
+        remedyIds: prev[injuryId]?.remedyIds ?? [],
+        triggerIds: prev[injuryId]?.triggerIds ?? [],
+      },
     }))
   }
 
@@ -71,6 +91,16 @@ export function LogEntryModal() {
         ? current.filter((id) => id !== remedyId)
         : [...current, remedyId]
       return { ...prev, [injuryId]: { ...prev[injuryId], remedyIds } }
+    })
+  }
+
+  const toggleTrigger = (injuryId: string, triggerId: string) => {
+    setPerInjury((prev) => {
+      const current = prev[injuryId]?.triggerIds ?? []
+      const triggerIds = current.includes(triggerId)
+        ? current.filter((id) => id !== triggerId)
+        : [...current, triggerId]
+      return { ...prev, [injuryId]: { ...prev[injuryId], triggerIds } }
     })
   }
 
@@ -86,6 +116,7 @@ export function LogEntryModal() {
           painLevel: perInjury[injuryId]?.painLevel,
           painFrequency: perInjury[injuryId]?.painFrequency,
           remedyIds: perInjury[injuryId]?.remedyIds ?? [],
+          triggerIds: perInjury[injuryId]?.triggerIds ?? [],
         })),
       })
       closeLogModal()
@@ -133,6 +164,11 @@ export function LogEntryModal() {
               injuryId={injuryId}
               selectedRemedyIds={perInjury[injuryId]?.remedyIds ?? []}
               onToggle={(remedyId) => toggleRemedy(injuryId, remedyId)}
+            />
+            <TriggerCheckboxGroup
+              injuryId={injuryId}
+              selectedTriggerIds={perInjury[injuryId]?.triggerIds ?? []}
+              onToggle={(triggerId) => toggleTrigger(injuryId, triggerId)}
             />
           </div>
         )

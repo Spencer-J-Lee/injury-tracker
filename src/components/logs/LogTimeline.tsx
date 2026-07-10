@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { Card } from '@/components/ui/Card'
 import { useLogEntriesForInjury } from '@/hooks/useLogEntriesForInjury'
 import { useAllRemediesForInjury } from '@/hooks/useAllRemediesForInjury'
+import { useAllTriggersForInjury } from '@/hooks/useAllTriggersForInjury'
 import { LogTimelineItem } from '@/components/logs/LogTimelineItem'
 
 const PAGE_SIZE = 15
@@ -10,8 +11,10 @@ export function LogTimeline({ injuryId }: { injuryId: string }) {
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
   const entries = useLogEntriesForInjury(injuryId, visibleCount + 1)
   const remedies = useAllRemediesForInjury(injuryId)
+  const triggers = useAllTriggersForInjury(injuryId)
 
   const remedyMap = useMemo(() => new Map((remedies ?? []).map((r) => [r.id, r])), [remedies])
+  const triggerMap = useMemo(() => new Map((triggers ?? []).map((t) => [t.id, t])), [triggers])
   const hasMore = (entries?.length ?? 0) > visibleCount
   const visibleEntries = (entries ?? []).slice(0, visibleCount)
 
@@ -23,7 +26,7 @@ export function LogTimeline({ injuryId }: { injuryId: string }) {
       ) : (
         <ul className="space-y-2.5">
           {visibleEntries.map((entry) => (
-            <LogTimelineItem key={entry.id} entry={entry} remedyMap={remedyMap} />
+            <LogTimelineItem key={entry.id} entry={entry} remedyMap={remedyMap} triggerMap={triggerMap} />
           ))}
         </ul>
       )}

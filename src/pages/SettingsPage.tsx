@@ -50,7 +50,7 @@ export function SettingsPage() {
     try {
       const result = await seedTestData()
       setMessage(
-        `Loaded ${result.injuriesCreated} injuries, ${result.remediesCreated} remedies, and ${result.logEntriesCreated} log entries` +
+        `Loaded ${result.injuriesCreated} injuries, ${result.remediesCreated} remedies, ${result.triggersCreated} triggers, and ${result.logEntriesCreated} log entries` +
           (result.injuriesDeleted > 0 ? ` (replaced ${result.injuriesDeleted} previous seed injuries).` : '.'),
       )
     } finally {

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import clsx from 'clsx'
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons'
-import type { LogEntry, Remedy } from '@/types/models'
+import type { LogEntry, Remedy, Trigger } from '@/types/models'
 import { Badge } from '@/components/ui/Badge'
 import { IconButton } from '@/components/ui/IconButton'
 import { formatTimestamp } from '@/lib/dates'
@@ -31,9 +31,17 @@ function freqTone(painFrequency: number | undefined): 'slate' | 'green' | 'amber
   return 'red'
 }
 
-export function LogTimelineItem({ entry, remedyMap }: { entry: LogEntry; remedyMap: Map<string, Remedy> }) {
+export function LogTimelineItem({
+  entry,
+  remedyMap,
+  triggerMap,
+}: {
+  entry: LogEntry
+  remedyMap: Map<string, Remedy>
+  triggerMap: Map<string, Trigger>
+}) {
   const [editing, setEditing] = useState(false)
-  const hasDetails = entry.remedyIds.length > 0 || Boolean(entry.notes)
+  const hasDetails = entry.remedyIds.length > 0 || entry.triggerIds.length > 0 || Boolean(entry.notes)
 
   return (
     <li className="rounded-[12px] border border-subtle px-[14px] py-3">
@@ -66,6 +74,19 @@ export function LogTimelineItem({ entry, remedyMap }: { entry: LogEntry; remedyM
             return (
               <Badge key={remedyId} tone="indigo">
                 {remedy?.name ?? 'Unknown remedy'}
+              </Badge>
+            )
+          })}
+        </div>
+      )}
+
+      {entry.triggerIds.length > 0 && (
+        <div className="mb-1.5 flex flex-wrap gap-1.5">
+          {entry.triggerIds.map((triggerId) => {
+            const trigger = triggerMap.get(triggerId)
+            return (
+              <Badge key={triggerId} tone="red">
+                {trigger?.name ?? 'Unknown trigger'}
               </Badge>
             )
           })}

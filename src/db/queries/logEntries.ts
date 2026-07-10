@@ -6,6 +6,7 @@ export interface LogSessionInjuryInput {
   painLevel?: number
   painFrequency?: number
   remedyIds: string[]
+  triggerIds: string[]
 }
 
 export interface CreateLogSessionInput {
@@ -25,6 +26,7 @@ export async function createLogSession(input: CreateLogSessionInput): Promise<Lo
     painLevel: entry.painLevel,
     painFrequency: entry.painFrequency,
     remedyIds: entry.remedyIds,
+    triggerIds: entry.triggerIds,
     notes: input.notes,
     createdAt: now,
     updatedAt: now,
@@ -55,6 +57,7 @@ export interface UpdateLogEntryInput {
   painLevel: number | undefined
   painFrequency: number | undefined
   remedyIds: string[]
+  triggerIds: string[]
   notes: string | undefined
 }
 

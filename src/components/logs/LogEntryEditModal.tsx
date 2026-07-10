@@ -9,6 +9,7 @@ import { Kbd } from '@/components/ui/Kbd'
 import { PainSlider } from '@/components/logs/PainSlider'
 import { PainFrequencySlider } from '@/components/logs/PainFrequencySlider'
 import { RemedyCheckboxGroup } from '@/components/logs/RemedyCheckboxGroup'
+import { TriggerCheckboxGroup } from '@/components/logs/TriggerCheckboxGroup'
 import { useInjury } from '@/hooks/useInjury'
 import { updateLogEntry } from '@/db/queries/logEntries'
 import { toDatetimeLocalValue, fromDatetimeLocalValue } from '@/lib/dates'
@@ -26,6 +27,7 @@ export function LogEntryEditModal({ entry, open, onClose }: LogEntryEditModalPro
   const [painLevel, setPainLevel] = useState<number | undefined>(entry.painLevel)
   const [painFrequency, setPainFrequency] = useState<number | undefined>(entry.painFrequency)
   const [remedyIds, setRemedyIds] = useState<string[]>(entry.remedyIds)
+  const [triggerIds, setTriggerIds] = useState<string[]>(entry.triggerIds)
   const [notes, setNotes] = useState(entry.notes ?? '')
   const [timestamp, setTimestamp] = useState(() => toDatetimeLocalValue(entry.timestamp))
   const [saving, setSaving] = useState(false)
@@ -35,6 +37,7 @@ export function LogEntryEditModal({ entry, open, onClose }: LogEntryEditModalPro
       setPainLevel(entry.painLevel)
       setPainFrequency(entry.painFrequency)
       setRemedyIds(entry.remedyIds)
+      setTriggerIds(entry.triggerIds)
       setNotes(entry.notes ?? '')
       setTimestamp(toDatetimeLocalValue(entry.timestamp))
     }
@@ -42,6 +45,10 @@ export function LogEntryEditModal({ entry, open, onClose }: LogEntryEditModalPro
 
   const toggleRemedy = (remedyId: string) => {
     setRemedyIds((prev) => (prev.includes(remedyId) ? prev.filter((id) => id !== remedyId) : [...prev, remedyId]))
+  }
+
+  const toggleTrigger = (triggerId: string) => {
+    setTriggerIds((prev) => (prev.includes(triggerId) ? prev.filter((id) => id !== triggerId) : [...prev, triggerId]))
   }
 
   const handleSave = async () => {
@@ -52,6 +59,7 @@ export function LogEntryEditModal({ entry, open, onClose }: LogEntryEditModalPro
         painLevel,
         painFrequency,
         remedyIds,
+        triggerIds,
         notes: notes.trim() || undefined,
       })
       onClose()
@@ -82,6 +90,7 @@ export function LogEntryEditModal({ entry, open, onClose }: LogEntryEditModalPro
       <PainSlider value={painLevel} onChange={setPainLevel} />
       <PainFrequencySlider value={painFrequency} onChange={setPainFrequency} />
       <RemedyCheckboxGroup injuryId={entry.injuryId} selectedRemedyIds={remedyIds} onToggle={toggleRemedy} />
+      <TriggerCheckboxGroup injuryId={entry.injuryId} selectedTriggerIds={triggerIds} onToggle={toggleTrigger} />
 
       <div>
         <Label>When</Label>

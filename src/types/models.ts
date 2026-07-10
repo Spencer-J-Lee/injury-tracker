@@ -21,6 +21,15 @@ export interface Remedy {
   archivedAt?: string
 }
 
+export interface Trigger {
+  id: string
+  injuryId: string
+  name: string
+  description?: string
+  createdAt: string
+  archivedAt?: string
+}
+
 export interface LogEntry {
   id: string
   sessionId: string
@@ -29,6 +38,7 @@ export interface LogEntry {
   painLevel?: number
   painFrequency?: number
   remedyIds: string[]
+  triggerIds: string[]
   notes?: string
   createdAt: string
   updatedAt: string

@@ -9,6 +9,7 @@ import { useKeyboardShortcut } from '@/hooks/useKeyboardShortcut'
 import { logEntryShortcutLabel } from '@/lib/shortcuts'
 import { useLogModal } from '@/context/LogModalContext'
 import { RemedyList } from '@/components/remedies/RemedyList'
+import { TriggerList } from '@/components/triggers/TriggerList'
 import { PainTrendChart } from '@/components/charts/PainTrendChart'
 import { LogTimeline } from '@/components/logs/LogTimeline'
 import { deleteInjury } from '@/db/queries/injuries'
@@ -69,8 +70,9 @@ export function InjuryDetailPage() {
           <PainTrendChart injuryId={injury.id} />
           <LogTimeline injuryId={injury.id} />
         </div>
-        <div className="lg:self-start min-w-0">
+        <div className="space-y-5 lg:self-start min-w-0">
           <RemedyList injuryId={injury.id} />
+          <TriggerList injuryId={injury.id} />
         </div>
       </div>
     </div>

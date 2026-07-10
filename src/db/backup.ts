@@ -33,9 +33,10 @@ export async function importBackup(file: File): Promise<void> {
 }
 
 export async function deleteAllData(): Promise<void> {
-  await db.transaction('rw', db.injuries, db.remedies, db.logEntries, async () => {
+  await db.transaction('rw', db.injuries, db.remedies, db.triggers, db.logEntries, async () => {
     await db.injuries.clear()
     await db.remedies.clear()
+    await db.triggers.clear()
     await db.logEntries.clear()
   })
 }

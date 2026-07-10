@@ -1,5 +1,5 @@
 import { db } from "@/db/schema";
-import type { Injury, LogEntry, Remedy } from "@/types/models";
+import type { Injury, LogEntry, Remedy, Trigger } from "@/types/models";
 import { SEED_INJURIES } from "@/db/seedData";
 
 export const SEED_MARKER = " •";
@@ -21,6 +21,7 @@ export async function clearSeedTestData(): Promise<number> {
     "rw",
     db.injuries,
     db.remedies,
+    db.triggers,
     db.logEntries,
     async () => {
       const seedIds = (await db.injuries.toArray())
@@ -31,6 +32,7 @@ export async function clearSeedTestData(): Promise<number> {
 
       await db.logEntries.where("injuryId").anyOf(seedIds).delete();
       await db.remedies.where("injuryId").anyOf(seedIds).delete();
+      await db.triggers.where("injuryId").anyOf(seedIds).delete();
       await db.injuries.bulkDelete(seedIds);
 
       return seedIds.length;
@@ -41,6 +43,7 @@ export async function clearSeedTestData(): Promise<number> {
 export interface SeedResult {
   injuriesCreated: number;
   remediesCreated: number;
+  triggersCreated: number;
   logEntriesCreated: number;
   injuriesDeleted: number;
 }
@@ -50,6 +53,7 @@ export async function seedTestData(): Promise<SeedResult> {
 
   const injuryRows: Injury[] = [];
   const remedyRows: Remedy[] = [];
+  const triggerRows: Trigger[] = [];
   const logEntryRows: LogEntry[] = [];
 
   for (const seed of SEED_INJURIES) {
@@ -82,10 +86,26 @@ export async function seedTestData(): Promise<SeedResult> {
       });
     }
 
+    const triggerIdByKey = new Map<string, string>();
+    for (const trigger of seed.triggers) {
+      const triggerId = crypto.randomUUID();
+      triggerIdByKey.set(trigger.key, triggerId);
+      triggerRows.push({
+        id: triggerId,
+        injuryId,
+        name: trigger.name,
+        description: trigger.description,
+        createdAt,
+      });
+    }
+
     for (const log of seed.logs) {
       const timestamp = isoOffsetDays(log.offsetDays, log.atHour, log.atMinute);
       const remedyIds = (log.remedyKeys ?? [])
         .map((key) => remedyIdByKey.get(key))
+        .filter((id): id is string => id !== undefined);
+      const triggerIds = (log.triggerKeys ?? [])
+        .map((key) => triggerIdByKey.get(key))
         .filter((id): id is string => id !== undefined);
       logEntryRows.push({
         id: crypto.randomUUID(),
@@ -95,6 +115,7 @@ export async function seedTestData(): Promise<SeedResult> {
         painLevel: log.painLevel,
         painFrequency: log.painFrequency,
         remedyIds,
+        triggerIds,
         notes: log.notes,
         createdAt: timestamp,
         updatedAt: timestamp,
@@ -106,10 +127,12 @@ export async function seedTestData(): Promise<SeedResult> {
     "rw",
     db.injuries,
     db.remedies,
+    db.triggers,
     db.logEntries,
     async () => {
       await db.injuries.bulkAdd(injuryRows);
       await db.remedies.bulkAdd(remedyRows);
+      await db.triggers.bulkAdd(triggerRows);
       await db.logEntries.bulkAdd(logEntryRows);
     },
   );
@@ -117,6 +140,7 @@ export async function seedTestData(): Promise<SeedResult> {
   return {
     injuriesCreated: injuryRows.length,
     remediesCreated: remedyRows.length,
+    triggersCreated: triggerRows.length,
     logEntriesCreated: logEntryRows.length,
     injuriesDeleted,
   };

@@ -7,6 +7,12 @@ export interface SeedRemedy {
   type: RemedyType
 }
 
+export interface SeedTrigger {
+  key: string
+  name: string
+  description?: string
+}
+
 export interface SeedLogEntry {
   offsetDays: number
   atHour?: number
@@ -14,6 +20,7 @@ export interface SeedLogEntry {
   painLevel?: number
   painFrequency?: number
   remedyKeys?: string[]
+  triggerKeys?: string[]
   notes?: string
 }
 
@@ -24,6 +31,7 @@ export interface SeedInjury {
   createdDaysAgo: number
   archivedDaysAgo?: number
   remedies: SeedRemedy[]
+  triggers: SeedTrigger[]
   logs: SeedLogEntry[]
 }
 
@@ -38,9 +46,13 @@ export const SEED_INJURIES: SeedInjury[] = [
       { key: 'heat-pack', name: 'Heat pack', type: 'relief' },
       { key: 'physio-exercises', name: 'Physio stretches', description: '15 min routine, morning and evening', type: 'longterm' },
     ],
+    triggers: [
+      { key: 'sitting-long', name: 'Sitting for long periods', description: 'Especially without lumbar support' },
+      { key: 'deadlifting-heavy', name: 'Deadlifting heavy without warming up' },
+    ],
     logs: [
-      { offsetDays: -40, atHour: 9, painLevel: 7, painFrequency: 80, remedyKeys: ['heat-pack'], notes: 'Could barely stand up straight this morning.' },
-      { offsetDays: -33, atHour: 9, painLevel: 6, painFrequency: 60, remedyKeys: ['heat-pack', 'physio-exercises'] },
+      { offsetDays: -40, atHour: 9, painLevel: 7, painFrequency: 80, remedyKeys: ['heat-pack'], triggerKeys: ['deadlifting-heavy'], notes: 'Could barely stand up straight this morning.' },
+      { offsetDays: -33, atHour: 9, painLevel: 6, painFrequency: 60, remedyKeys: ['heat-pack', 'physio-exercises'], triggerKeys: ['sitting-long'] },
       { offsetDays: -26, atHour: 9, painLevel: 5, painFrequency: 60, remedyKeys: ['physio-exercises'], notes: 'Started the stretch routine, feels a bit looser.' },
       { offsetDays: -19, atHour: 9, painLevel: 4, painFrequency: 40, remedyKeys: ['physio-exercises'] },
       { offsetDays: -12, atHour: 9, painLevel: 3, painFrequency: 40, remedyKeys: ['physio-exercises'] },
@@ -54,10 +66,13 @@ export const SEED_INJURIES: SeedInjury[] = [
     status: 'active',
     createdDaysAgo: 60,
     remedies: [],
+    triggers: [
+      { key: 'typing-gripping', name: 'Typing / gripping tightly', description: 'Flares up after long coding sessions' },
+    ],
     logs: [
       { offsetDays: -50, atHour: 18, painLevel: 5, painFrequency: 60 },
-      { offsetDays: -35, atHour: 18, painLevel: 5, painFrequency: 60, notes: 'About the same, still bothers me typing a lot.' },
-      { offsetDays: -20, atHour: 18, painLevel: 6, painFrequency: 80 },
+      { offsetDays: -35, atHour: 18, painLevel: 5, painFrequency: 60, triggerKeys: ['typing-gripping'], notes: 'About the same, still bothers me typing a lot.' },
+      { offsetDays: -20, atHour: 18, painLevel: 6, painFrequency: 80, triggerKeys: ['typing-gripping'] },
       { offsetDays: -6, atHour: 18, painLevel: 5, painFrequency: 60 },
     ],
   },
@@ -68,6 +83,7 @@ export const SEED_INJURIES: SeedInjury[] = [
     status: 'monitoring',
     createdDaysAgo: 90,
     remedies: [{ key: 'knee-brace', name: 'Knee brace', type: 'relief' }],
+    triggers: [],
     logs: [
       { offsetDays: -80, atHour: 20, painLevel: 3, painFrequency: 20, remedyKeys: ['knee-brace'] },
       { offsetDays: -45, atHour: 20, painLevel: 2, painFrequency: 20 },
@@ -84,6 +100,7 @@ export const SEED_INJURIES: SeedInjury[] = [
       { key: 'ice', name: 'Ice pack', type: 'relief' },
       { key: 'ankle-mobility', name: 'Ankle mobility exercises', type: 'longterm' },
     ],
+    triggers: [],
     logs: [
       { offsetDays: -34, atHour: 12, painLevel: 8, painFrequency: 100, remedyKeys: ['ice'], notes: 'Pretty swollen, kept it elevated.' },
       { offsetDays: -30, atHour: 12, painLevel: 6, painFrequency: 80, remedyKeys: ['ice', 'ankle-mobility'] },
@@ -100,6 +117,7 @@ export const SEED_INJURIES: SeedInjury[] = [
     status: 'active',
     createdDaysAgo: 0,
     remedies: [],
+    triggers: [],
     logs: [],
   },
   // archived
@@ -110,6 +128,7 @@ export const SEED_INJURIES: SeedInjury[] = [
     createdDaysAgo: 400,
     archivedDaysAgo: 300,
     remedies: [{ key: 'wrist-brace', name: 'Wrist brace', type: 'relief' }],
+    triggers: [],
     logs: [
       { offsetDays: -395, atHour: 10, painLevel: 6, painFrequency: 60, remedyKeys: ['wrist-brace'] },
       { offsetDays: -370, atHour: 10, painLevel: 2, painFrequency: 20 },
