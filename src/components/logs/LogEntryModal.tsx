@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/Button'
 import { Textarea } from '@/components/ui/Textarea'
 import { Input } from '@/components/ui/Input'
 import { Label } from '@/components/ui/Label'
+import { Kbd } from '@/components/ui/Kbd'
 import { InjurySelector } from '@/components/logs/InjurySelector'
 import { PainSlider } from '@/components/logs/PainSlider'
 import { PainFrequencySlider } from '@/components/logs/PainFrequencySlider'
@@ -12,6 +13,7 @@ import { useLogModal } from '@/context/LogModalContext'
 import { useInjuries } from '@/hooks/useInjuries'
 import { createLogSession } from '@/db/queries/logEntries'
 import { toDatetimeLocalValue, fromDatetimeLocalValue } from '@/lib/dates'
+import { saveShortcutLabel, cancelShortcutLabel } from '@/lib/shortcuts'
 
 interface PerInjuryState {
   painLevel?: number
@@ -96,14 +98,17 @@ export function LogEntryModal() {
     <Modal
       open={state.open}
       onClose={closeLogModal}
+      onSave={handleSave}
       title="Log entry"
       footer={
         <>
           <Button onClick={handleSave} disabled={saving || selectedIds.length === 0}>
             Submit
+            <Kbd>{saveShortcutLabel}</Kbd>
           </Button>
           <Button variant="ghost" onClick={closeLogModal}>
             Cancel
+            <Kbd>{cancelShortcutLabel}</Kbd>
           </Button>
         </>
       }
@@ -146,6 +151,7 @@ export function LogEntryModal() {
           placeholder="How does it feel today? What did you notice?"
           rows={3}
           className="min-h-[52px]"
+          autoFocus
         />
       </div>
     </Modal>

@@ -5,12 +5,14 @@ import { Button } from '@/components/ui/Button'
 import { Textarea } from '@/components/ui/Textarea'
 import { Input } from '@/components/ui/Input'
 import { Label } from '@/components/ui/Label'
+import { Kbd } from '@/components/ui/Kbd'
 import { PainSlider } from '@/components/logs/PainSlider'
 import { PainFrequencySlider } from '@/components/logs/PainFrequencySlider'
 import { RemedyCheckboxGroup } from '@/components/logs/RemedyCheckboxGroup'
 import { useInjury } from '@/hooks/useInjury'
 import { updateLogEntry } from '@/db/queries/logEntries'
 import { toDatetimeLocalValue, fromDatetimeLocalValue } from '@/lib/dates'
+import { saveShortcutLabel, cancelShortcutLabel } from '@/lib/shortcuts'
 
 interface LogEntryEditModalProps {
   entry: LogEntry
@@ -62,14 +64,17 @@ export function LogEntryEditModal({ entry, open, onClose }: LogEntryEditModalPro
     <Modal
       open={open}
       onClose={onClose}
+      onSave={handleSave}
       title={injury ? `Edit log entry — ${injury.name}` : 'Edit log entry'}
       footer={
         <>
           <Button variant="ghost" onClick={onClose}>
             Cancel
+            <Kbd>{cancelShortcutLabel}</Kbd>
           </Button>
           <Button onClick={handleSave} disabled={saving}>
             Save
+            <Kbd>{saveShortcutLabel}</Kbd>
           </Button>
         </>
       }
@@ -91,6 +96,7 @@ export function LogEntryEditModal({ entry, open, onClose }: LogEntryEditModalPro
           placeholder="How does it feel today? What did you notice?"
           rows={3}
           className="min-h-[52px]"
+          autoFocus
         />
       </div>
     </Modal>

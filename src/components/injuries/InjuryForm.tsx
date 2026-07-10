@@ -5,6 +5,9 @@ import { Textarea } from '@/components/ui/Textarea'
 import { Select } from '@/components/ui/Select'
 import { Button } from '@/components/ui/Button'
 import { Label } from '@/components/ui/Label'
+import { Kbd } from '@/components/ui/Kbd'
+import { useFormShortcuts } from '@/hooks/useFormShortcuts'
+import { saveShortcutLabel, cancelShortcutLabel } from '@/lib/shortcuts'
 
 interface InjuryFormValues {
   name: string
@@ -25,9 +28,8 @@ export function InjuryForm({ initial, onSubmit, onCancel, submitLabel }: InjuryF
   const [status, setStatus] = useState<InjuryStatus>(initial?.status ?? 'active')
   const [submitting, setSubmitting] = useState(false)
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault()
-    if (!name.trim()) return
+  const doSubmit = async () => {
+    if (!name.trim() || submitting) return
     setSubmitting(true)
     try {
       await onSubmit({ name: name.trim(), description: description.trim(), status })
@@ -35,6 +37,13 @@ export function InjuryForm({ initial, onSubmit, onCancel, submitLabel }: InjuryF
       setSubmitting(false)
     }
   }
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault()
+    void doSubmit()
+  }
+
+  useFormShortcuts({ onSave: doSubmit, onCancel })
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -45,6 +54,7 @@ export function InjuryForm({ initial, onSubmit, onCancel, submitLabel }: InjuryF
           onChange={(e) => setName(e.target.value)}
           placeholder="e.g. Right hand, pinky-side pain"
           required
+          autoFocus
         />
       </div>
       {initial && (
@@ -69,9 +79,11 @@ export function InjuryForm({ initial, onSubmit, onCancel, submitLabel }: InjuryF
       <div className="flex items-center gap-2">
         <Button type="submit" disabled={submitting || !name.trim()}>
           {submitLabel}
+          <Kbd>{saveShortcutLabel}</Kbd>
         </Button>
         <Button type="button" variant="ghost" onClick={onCancel}>
           Cancel
+          <Kbd>{cancelShortcutLabel}</Kbd>
         </Button>
       </div>
     </form>

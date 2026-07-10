@@ -1,15 +1,19 @@
 import type { ReactNode } from 'react'
 import { createPortal } from 'react-dom'
+import { useFormShortcuts } from '@/hooks/useFormShortcuts'
 
 interface ModalProps {
   open: boolean
   onClose: () => void
+  onSave?: () => void
   title: string
   children: ReactNode
   footer?: ReactNode
 }
 
-export function Modal({ open, onClose, title, children, footer }: ModalProps) {
+export function Modal({ open, onClose, onSave, title, children, footer }: ModalProps) {
+  useFormShortcuts({ onSave, onCancel: onClose, enabled: open })
+
   if (!open) return null
 
   return createPortal(
