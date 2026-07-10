@@ -64,7 +64,7 @@ export function DashboardPage() {
 
   return (
     <div className="space-y-5">
-      <div className="flex items-center justify-between gap-3">
+      <div className="flex justify-between gap-3 mb-4">
         <h1 className="font-heading text-2xl font-semibold text-ink">Your injuries</h1>
         <div className="flex items-center gap-2">
           {selectMode ? (
