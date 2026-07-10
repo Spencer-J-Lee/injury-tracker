@@ -52,7 +52,7 @@ export function InjuryForm({ initial, onSubmit, onCancel, submitLabel }: InjuryF
         <Input
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="e.g. Right hand, pinky-side pain"
+          placeholder="e.g. Right Flexors: RSI"
           required
           autoFocus
         />
@@ -72,7 +72,7 @@ export function InjuryForm({ initial, onSubmit, onCancel, submitLabel }: InjuryF
         <Textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="Any other details worth noting"
+          placeholder="What caused the injury and what are the symptoms?"
           rows={3}
         />
       </div>

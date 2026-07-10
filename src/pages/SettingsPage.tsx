@@ -50,8 +50,10 @@ export function SettingsPage() {
     try {
       const result = await seedTestData()
       setMessage(
-        `Loaded ${result.injuriesCreated} injuries, ${result.remediesCreated} remedies, ${result.triggersCreated} triggers, and ${result.logEntriesCreated} log entries` +
-          (result.injuriesDeleted > 0 ? ` (replaced ${result.injuriesDeleted} previous seed injuries).` : '.'),
+        `Loaded ${result.injuriesCreated} injuries, ${result.remediesCreated} remedies, ${result.triggersCreated} triggers, ${result.logEntriesCreated} log entries, and ${result.journalEntriesCreated} journal entries` +
+          (result.injuriesDeleted > 0 || result.journalEntriesDeleted > 0
+            ? ` (replaced ${result.injuriesDeleted} previous seed injuries and ${result.journalEntriesDeleted} journal entries).`
+            : '.'),
       )
     } finally {
       setBusy(false)
@@ -59,12 +61,14 @@ export function SettingsPage() {
   }
 
   const handleClearSeed = async () => {
-    if (!confirm('Clear seed data? This removes only the example injuries created by "Load example data".')) return
+    if (!confirm('Clear seed data? This removes only the example data created by "Load example data".')) return
     setBusy(true)
     setMessage(null)
     try {
-      const removed = await clearSeedTestData()
-      setMessage(`Cleared ${removed} seed injur${removed === 1 ? 'y' : 'ies'}.`)
+      const { injuriesDeleted, journalEntriesDeleted } = await clearSeedTestData()
+      setMessage(
+        `Cleared ${injuriesDeleted} seed injur${injuriesDeleted === 1 ? 'y' : 'ies'} and ${journalEntriesDeleted} seed journal entr${journalEntriesDeleted === 1 ? 'y' : 'ies'}.`,
+      )
     } finally {
       setBusy(false)
     }

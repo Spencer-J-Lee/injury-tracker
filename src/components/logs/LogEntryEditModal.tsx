@@ -102,7 +102,6 @@ export function LogEntryEditModal({ entry, open, onClose }: LogEntryEditModalPro
         <Textarea
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
-          placeholder="How does it feel today? What did you notice?"
           rows={3}
           className="min-h-[52px]"
           autoFocus

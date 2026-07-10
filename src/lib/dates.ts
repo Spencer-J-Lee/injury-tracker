@@ -1,7 +1,11 @@
-import { format, formatDistanceToNow, subDays, isAfter } from "date-fns";
+import { format, formatDistanceToNow, subDays, isAfter, parseISO } from "date-fns";
 
 export function formatTimestamp(iso: string): string {
   return format(new Date(iso), "MMM d, yyyy • h:mm a");
+}
+
+export function formatFullDate(isoDate: string): string {
+  return format(parseISO(isoDate), "EEEE, MMMM d, yyyy");
 }
 
 export function formatShortDate(iso: string): string {

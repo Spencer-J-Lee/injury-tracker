@@ -1,14 +1,20 @@
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import clsx from 'clsx'
 import { useLogModal } from '@/context/useLogModal'
+import { getLastJournalPage } from '@/lib/journalPage'
 
 export function AppShell() {
   const location = useLocation()
   const { openLogModal } = useLogModal()
 
+  const journalTo = () => {
+    const page = getLastJournalPage()
+    return page > 1 ? `/journal?page=${page}` : '/journal'
+  }
+
   const navLinkMobile = (to: string, label: string) => (
     <Link
-      to={to}
+      to={to === '/journal' ? journalTo() : to}
       className={clsx(
         'rounded-[10px] px-3 py-1.5 text-sm',
         location.pathname === to
@@ -22,7 +28,7 @@ export function AppShell() {
 
   const navLinkSidebar = (to: string, label: string) => (
     <Link
-      to={to}
+      to={to === '/journal' ? journalTo() : to}
       className={clsx(
         'rounded-[10px] px-3 py-[9px] text-sm',
         location.pathname === to
@@ -44,6 +50,7 @@ export function AppShell() {
             </Link>
             <nav className="flex flex-col gap-1">
               {navLinkSidebar('/', 'Dashboard')}
+              {navLinkSidebar('/journal', 'Journal')}
               {navLinkSidebar('/settings', 'Settings')}
             </nav>
           </aside>
@@ -55,6 +62,7 @@ export function AppShell() {
               </Link>
               <nav className="flex gap-1">
                 {navLinkMobile('/', 'Dashboard')}
+                {navLinkMobile('/journal', 'Journal')}
                 {navLinkMobile('/settings', 'Settings')}
               </nav>
             </header>

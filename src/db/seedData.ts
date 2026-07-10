@@ -24,6 +24,21 @@ export interface SeedLogEntry {
   notes?: string
 }
 
+export interface SeedJournalEntry {
+  offsetDays: number
+  text: string
+}
+
+export const SEED_JOURNAL_ENTRIES: SeedJournalEntry[] = [
+  { offsetDays: -1, text: 'Sharp pain when going down stairs. Iced it twice and kept it elevated in the evening.' },
+  { offsetDays: -3, text: 'Physio session went well. Increased resistance band reps to 3x15 without issues.' },
+  { offsetDays: -5, text: 'Mostly stiff after sitting for long periods. Short walk in the afternoon helped loosen it up.' },
+  { offsetDays: -7, text: 'Slept awkwardly and woke up with some tightness. Backed off the heavier exercises today.' },
+  { offsetDays: -9, text: 'First day back at the gym since the injury. Kept it light — bodyweight only, no pain reported.' },
+  { offsetDays: -12, text: 'Overall feeling more confident moving around. Still avoiding heavy lifting.' },
+  { offsetDays: -16, text: 'Rough day — long drive left everything achy. Extra stretching before bed helped.' },
+]
+
 export interface SeedInjury {
   name: string
   description?: string

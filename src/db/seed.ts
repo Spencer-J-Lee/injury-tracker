@@ -1,8 +1,15 @@
+import { format } from "date-fns";
 import { db } from "@/db/schema";
-import type { Injury, LogEntry, Remedy, Trigger } from "@/types/models";
-import { SEED_INJURIES } from "@/db/seedData";
+import type { Injury, LogEntry, Remedy, Trigger, JournalEntry } from "@/types/models";
+import { SEED_INJURIES, SEED_JOURNAL_ENTRIES } from "@/db/seedData";
 
-export const SEED_MARKER = " •";
+export const SEED_MARKER = "꧁꧂";
+
+const LEGACY_SEED_MARKERS: string[] = [];
+
+function isSeedMarked(value: string): boolean {
+  return value.endsWith(SEED_MARKER) || LEGACY_SEED_MARKERS.some((marker) => value.endsWith(marker));
+}
 
 function isoOffsetDays(
   days: number,
@@ -16,26 +23,47 @@ function isoOffsetDays(
   return date.toISOString();
 }
 
-export async function clearSeedTestData(): Promise<number> {
+function dateOffsetDays(days: number): string {
+  return format(new Date(Date.now() + days * 86_400_000), "yyyy-MM-dd");
+}
+
+export interface ClearSeedResult {
+  injuriesDeleted: number;
+  journalEntriesDeleted: number;
+}
+
+export async function clearSeedTestData(): Promise<ClearSeedResult> {
   return db.transaction(
     "rw",
     db.injuries,
     db.remedies,
     db.triggers,
     db.logEntries,
+    db.journalEntries,
     async () => {
       const seedIds = (await db.injuries.toArray())
-        .filter((injury) => injury.name.endsWith(SEED_MARKER))
+        .filter((injury) => isSeedMarked(injury.name))
         .map((injury) => injury.id);
 
-      if (seedIds.length === 0) return 0;
+      if (seedIds.length > 0) {
+        await db.logEntries.where("injuryId").anyOf(seedIds).delete();
+        await db.remedies.where("injuryId").anyOf(seedIds).delete();
+        await db.triggers.where("injuryId").anyOf(seedIds).delete();
+        await db.injuries.bulkDelete(seedIds);
+      }
 
-      await db.logEntries.where("injuryId").anyOf(seedIds).delete();
-      await db.remedies.where("injuryId").anyOf(seedIds).delete();
-      await db.triggers.where("injuryId").anyOf(seedIds).delete();
-      await db.injuries.bulkDelete(seedIds);
+      const seedJournalIds = (await db.journalEntries.toArray())
+        .filter((entry) => isSeedMarked(entry.text))
+        .map((entry) => entry.id);
 
-      return seedIds.length;
+      if (seedJournalIds.length > 0) {
+        await db.journalEntries.bulkDelete(seedJournalIds);
+      }
+
+      return {
+        injuriesDeleted: seedIds.length,
+        journalEntriesDeleted: seedJournalIds.length,
+      };
     },
   );
 }
@@ -45,23 +73,35 @@ export interface SeedResult {
   remediesCreated: number;
   triggersCreated: number;
   logEntriesCreated: number;
+  journalEntriesCreated: number;
   injuriesDeleted: number;
+  journalEntriesDeleted: number;
 }
 
 export async function seedTestData(): Promise<SeedResult> {
-  const injuriesDeleted = await clearSeedTestData();
+  const { injuriesDeleted, journalEntriesDeleted } = await clearSeedTestData();
 
   const injuryRows: Injury[] = [];
   const remedyRows: Remedy[] = [];
   const triggerRows: Trigger[] = [];
   const logEntryRows: LogEntry[] = [];
+  const journalEntryRows: JournalEntry[] = SEED_JOURNAL_ENTRIES.map((seed) => {
+    const now = isoOffsetDays(seed.offsetDays);
+    return {
+      id: crypto.randomUUID(),
+      date: dateOffsetDays(seed.offsetDays),
+      text: `${seed.text}\n\n${SEED_MARKER}`,
+      createdAt: now,
+      updatedAt: now,
+    };
+  });
 
   for (const seed of SEED_INJURIES) {
     const injuryId = crypto.randomUUID();
     const createdAt = isoOffsetDays(-seed.createdDaysAgo);
     injuryRows.push({
       id: injuryId,
-      name: `${seed.name}${SEED_MARKER}`,
+      name: `${seed.name} ${SEED_MARKER}`,
       description: seed.description,
       status: seed.status,
       createdAt,
@@ -129,11 +169,13 @@ export async function seedTestData(): Promise<SeedResult> {
     db.remedies,
     db.triggers,
     db.logEntries,
+    db.journalEntries,
     async () => {
       await db.injuries.bulkAdd(injuryRows);
       await db.remedies.bulkAdd(remedyRows);
       await db.triggers.bulkAdd(triggerRows);
       await db.logEntries.bulkAdd(logEntryRows);
+      await db.journalEntries.bulkAdd(journalEntryRows);
     },
   );
 
@@ -142,6 +184,8 @@ export async function seedTestData(): Promise<SeedResult> {
     remediesCreated: remedyRows.length,
     triggersCreated: triggerRows.length,
     logEntriesCreated: logEntryRows.length,
+    journalEntriesCreated: journalEntryRows.length,
     injuriesDeleted,
+    journalEntriesDeleted,
   };
 }

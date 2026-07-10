@@ -48,3 +48,11 @@ export interface AppMeta {
   key: string
   value: string
 }
+
+export interface JournalEntry {
+  id: string
+  date: string // ISO date (yyyy-mm-dd) — the day the entry is "for"
+  text: string
+  createdAt: string
+  updatedAt: string
+}
