@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/Button'
 import { Kbd } from '@/components/ui/Kbd'
 import { useFormShortcuts } from '@/hooks/useFormShortcuts'
 import { saveShortcutLabel, cancelShortcutLabel } from '@/lib/shortcuts'
+import { Textarea } from './Textarea'
 
 interface EntityFormValues {
   name: string
@@ -47,7 +48,7 @@ export function EntityForm({ nameLabel, initial, submitLabel, onSubmit, onCancel
   return (
     <form onSubmit={handleSubmit} className="space-y-2 rounded-lg border border-dashed border-strong p-3">
       <Input value={name} onChange={(e) => setName(e.target.value)} placeholder={nameLabel} required autoFocus />
-      <Input
+      <Textarea
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         placeholder="Notes (optional)"
