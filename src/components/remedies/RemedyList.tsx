@@ -1,7 +1,9 @@
 import { useMemo, useState } from 'react'
+import { faPen, faBoxArchive } from '@fortawesome/free-solid-svg-icons'
 import type { RemedyType } from '@/types/models'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
+import { IconButton } from '@/components/ui/IconButton'
 import { RemedyForm } from '@/components/remedies/RemedyForm'
 import { useRemedies } from '@/hooks/useRemedies'
 import { useLogEntriesForInjury } from '@/hooks/useLogEntriesForInjury'
@@ -49,25 +51,20 @@ function RemedyGroup({
                 className="flex items-center justify-between gap-2 rounded-[10px] border border-subtle px-3 py-[9px]"
               >
                 <div className="min-w-0 truncate">
-                  <span className="text-[13px] text-ink">{remedy.name}</span>
+                  <p className="text-[13px] text-ink">{remedy.name}</p>
                   {remedy.description && (
-                    <span className="ml-2 text-xs text-ink-muted">{remedy.description}</span>
+                    <p className="text-xs text-ink-muted">{remedy.description}</p>
                   )}
                 </div>
-                <div className="flex shrink-0 items-center gap-2">
-                  <span className="text-xs text-ink-muted">×{usageCounts.get(remedy.id) ?? 0}</span>
-                  <button
-                    onClick={() => setEditingId(remedy.id)}
-                    className="rounded-md px-1.5 py-1 text-xs font-medium text-ink-muted transition-colors hover:bg-accent-soft hover:text-accent-soft-text"
-                  >
-                    edit
-                  </button>
-                  <button
+                <div className="flex shrink-0 items-center gap-1.5">
+                  {/* <span className="text-xs text-ink-muted">×{usageCounts.get(remedy.id) ?? 0}</span> */}
+                  <IconButton icon={faPen} label="Edit remedy" onClick={() => setEditingId(remedy.id)} />
+                  <IconButton
+                    icon={faBoxArchive}
+                    tone="danger"
+                    label="Archive remedy"
                     onClick={() => archiveRemedy(remedy.id)}
-                    className="rounded-md px-1.5 py-1 text-xs font-medium text-ink-muted transition-colors hover:bg-pain-red-bg hover:text-pain-red"
-                  >
-                    archive
-                  </button>
+                  />
                 </div>
               </li>
             ),

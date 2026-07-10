@@ -1,7 +1,9 @@
 import { Link, useNavigate, useParams } from 'react-router-dom'
+import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { useInjury } from '@/hooks/useInjury'
 import { InjuryStatusBadge } from '@/components/injuries/InjuryStatusBadge'
 import { Button } from '@/components/ui/Button'
+import { IconButton } from '@/components/ui/IconButton'
 import { useLogModal } from '@/context/LogModalContext'
 import { RemedyList } from '@/components/remedies/RemedyList'
 import { PainTrendChart } from '@/components/charts/PainTrendChart'
@@ -45,13 +47,11 @@ export function InjuryDetailPage() {
           <div className="flex gap-2.5">
             <Button onClick={() => openLogModal([injury.id])}>Log Entry</Button>
             <Link to={`/injuries/${injury.id}/edit`}>
-              <Button variant="secondary">Edit</Button>
+              <IconButton icon={faPen} size="md" label="Edit injury" />
             </Link>
           </div>
           <div className="flex gap-2.5">
-            <Button variant="danger" onClick={handleDelete} className='justify-self-end'>
-              Delete
-            </Button>
+            <IconButton icon={faTrash} size="md" tone="danger" label="Delete injury" onClick={handleDelete} />
           </div>
         </div>
       </div>

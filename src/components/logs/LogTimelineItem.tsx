@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import clsx from 'clsx'
+import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons'
 import type { LogEntry, Remedy } from '@/types/models'
 import { Badge } from '@/components/ui/Badge'
+import { IconButton } from '@/components/ui/IconButton'
 import { formatTimestamp } from '@/lib/dates'
 import { deleteLogEntry } from '@/db/queries/logEntries'
 import { LogEntryEditModal } from '@/components/logs/LogEntryEditModal'
@@ -44,18 +46,16 @@ export function LogTimelineItem({ entry, remedyMap }: { entry: LogEntry; remedyM
           {entry.painFrequency !== undefined && (
             <Badge tone={freqTone(entry.painFrequency)}>{entry.painFrequency}% freq</Badge>
           )}
-          <button
-            onClick={() => setEditing(true)}
-            className="rounded-md px-1.5 py-1 text-xs font-medium text-ink-muted transition-colors hover:bg-accent-soft hover:text-accent-soft-text"
-          >
-            edit
-          </button>
-          <button
-            onClick={() => deleteLogEntry(entry.id)}
-            className="rounded-md px-1.5 py-1 text-xs font-medium text-ink-muted transition-colors hover:bg-pain-red-bg hover:text-pain-red"
-          >
-            delete
-          </button>
+          <IconButton icon={faPen} label="Edit entry" onClick={() => setEditing(true)} />
+          <IconButton
+            icon={faTrash}
+            tone="danger"
+            label="Delete entry"
+            onClick={() => {
+              if (!confirm('Delete this log entry? This cannot be undone.')) return
+              deleteLogEntry(entry.id)
+            }}
+          />
         </div>
       </div>
 
