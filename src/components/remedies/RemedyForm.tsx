@@ -1,12 +1,6 @@
 import { useState, type FormEvent } from 'react'
-import type { RemedyType } from '@/types/models'
 import { Input } from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
-
-const TYPE_LABELS: Record<RemedyType, string> = {
-  relief: 'Relief (short-term)',
-  longterm: 'Long-term',
-}
 
 interface RemedyFormValues {
   name: string
@@ -14,14 +8,13 @@ interface RemedyFormValues {
 }
 
 interface RemedyFormProps {
-  type: RemedyType
   initial?: RemedyFormValues
   submitLabel: string
   onSubmit: (values: RemedyFormValues) => void | Promise<void>
   onCancel?: () => void
 }
 
-export function RemedyForm({ type, initial, submitLabel, onSubmit, onCancel }: RemedyFormProps) {
+export function RemedyForm({ initial, submitLabel, onSubmit, onCancel }: RemedyFormProps) {
   const [name, setName] = useState(initial?.name ?? '')
   const [description, setDescription] = useState(initial?.description ?? '')
   const [submitting, setSubmitting] = useState(false)

@@ -1,31 +1,31 @@
-import { format, formatDistanceToNow, subDays, isAfter } from 'date-fns'
+import { format, formatDistanceToNow, subDays, isAfter } from "date-fns";
 
 export function formatTimestamp(iso: string): string {
-  return format(new Date(iso), 'MMM d, yyyy · h:mm a')
+  return format(new Date(iso), "MMM d, yyyy • h:mm a");
 }
 
 export function formatShortDate(iso: string): string {
-  return format(new Date(iso), 'MMM d')
+  return format(new Date(iso), "MMM d");
 }
 
 export function formatRelative(iso: string): string {
-  return formatDistanceToNow(new Date(iso), { addSuffix: true })
+  return formatDistanceToNow(new Date(iso), { addSuffix: true });
 }
 
 export function toDatetimeLocalValue(iso: string): string {
-  const date = new Date(iso)
-  const offsetMs = date.getTimezoneOffset() * 60_000
-  return new Date(date.getTime() - offsetMs).toISOString().slice(0, 16)
+  const date = new Date(iso);
+  const offsetMs = date.getTimezoneOffset() * 60_000;
+  return new Date(date.getTime() - offsetMs).toISOString().slice(0, 16);
 }
 
 export function fromDatetimeLocalValue(value: string): string {
-  return new Date(value).toISOString()
+  return new Date(value).toISOString();
 }
 
-export type TrendRange = '7d' | '30d' | '90d' | 'all'
+export type TrendRange = "7d" | "30d" | "90d" | "all";
 
 export function isWithinRange(iso: string, range: TrendRange): boolean {
-  if (range === 'all') return true
-  const days = range === '7d' ? 7 : range === '30d' ? 30 : 90
-  return isAfter(new Date(iso), subDays(new Date(), days))
+  if (range === "all") return true;
+  const days = range === "7d" ? 7 : range === "30d" ? 30 : 90;
+  return isAfter(new Date(iso), subDays(new Date(), days));
 }

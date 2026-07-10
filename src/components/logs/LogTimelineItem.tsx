@@ -41,7 +41,7 @@ export function LogTimelineItem({ entry, remedyMap }: { entry: LogEntry; remedyM
         <span className="text-[13px] text-ink-muted">{formatTimestamp(entry.timestamp)}</span>
         <div className="flex items-center gap-1.5">
           <Badge tone={painTone(entry.painLevel)}>
-            {entry.painLevel === undefined ? 'Not rated' : `${painLabel(entry.painLevel)} · ${entry.painLevel}/10`}
+            {entry.painLevel === undefined ? 'Not rated' : `${painLabel(entry.painLevel)} • ${entry.painLevel}/10`}
           </Badge>
           {entry.painFrequency !== undefined && (
             <Badge tone={freqTone(entry.painFrequency)}>{entry.painFrequency}% freq</Badge>

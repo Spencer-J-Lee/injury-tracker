@@ -15,14 +15,12 @@ interface RemedyCheckboxGroupProps {
 
 function RemedySection({
   title,
-  type,
   remedies,
   selectedRemedyIds,
   onToggle,
   onAdd,
 }: {
   title: string
-  type: RemedyType
   remedies: Remedy[]
   selectedRemedyIds: string[]
   onToggle: (remedyId: string) => void
@@ -49,7 +47,6 @@ function RemedySection({
       {adding && (
         <div className="mt-1.5">
           <RemedyForm
-            type={type}
             submitLabel="Add"
             onCancel={() => setAdding(false)}
             onSubmit={async (values) => {
@@ -82,7 +79,6 @@ export function RemedyCheckboxGroup({ injuryId, selectedRemedyIds, onToggle }: R
     <div className="space-y-3">
       <RemedySection
         title="Relief"
-        type="relief"
         remedies={relief}
         selectedRemedyIds={selectedRemedyIds}
         onToggle={onToggle}
@@ -90,7 +86,6 @@ export function RemedyCheckboxGroup({ injuryId, selectedRemedyIds, onToggle }: R
       />
       <RemedySection
         title="Long-term"
-        type="longterm"
         remedies={longterm}
         selectedRemedyIds={selectedRemedyIds}
         onToggle={onToggle}

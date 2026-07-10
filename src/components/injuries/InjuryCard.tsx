@@ -64,7 +64,7 @@ export function InjuryCard({ injury, selectable, selected, onToggleSelect }: Inj
           {lastLog ? (
             <span>
               Last pain <span className="font-semibold text-ink-emphasis">{lastLog.painLevel ?? '—'}/10</span>{' '}
-              · {formatRelative(lastLog.timestamp)}
+              • {formatRelative(lastLog.timestamp)}
             </span>
           ) : (
             <span>No entries yet</span>
