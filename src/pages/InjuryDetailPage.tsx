@@ -40,7 +40,7 @@ export function InjuryDetailPage() {
           </div>
         </div>
         {injury.description && (
-          <p className="mt-2 max-w-[56ch] text-sm text-ink-secondary">{injury.description}</p>
+          <p className="mt-2 max-w-3/5 text-sm text-ink-secondary">{injury.description}</p>
         )}
 
         <div className="mt-3.5 flex flex-wrap items-center gap-2.5 w-full justify-between">

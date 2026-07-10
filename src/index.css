@@ -45,6 +45,7 @@ body {
   color: var(--color-ink);
   font-family: 'Manrope', sans-serif;
   overflow-y: scroll;
+  zoom: 1.25;
 }
 
 button:not(:disabled) {
