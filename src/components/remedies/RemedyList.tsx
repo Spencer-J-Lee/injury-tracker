@@ -48,24 +48,26 @@ function RemedyGroup({
             ) : (
               <li
                 key={remedy.id}
-                className="flex items-center justify-between gap-2 rounded-[10px] border border-subtle px-3 py-[9px]"
+                className="rounded-[10px] border border-subtle px-3 py-[9px]"
               >
-                <div className="min-w-0 truncate">
-                  <p className="text-[13px] text-ink">{remedy.name}</p>
-                  {remedy.description && (
-                    <p className="text-xs text-ink-muted">{remedy.description}</p>
-                  )}
+                <div className="min-w-0 flex justify-between gap-2 items-center">
+                  <p className="text-[13px] text-ink">
+                    {remedy.name}
+                    {/* <span className="text-xs text-ink-muted">×{usageCounts.get(remedy.id) ?? 0}</span> */}
+                  </p>
+                  <div className="flex shrink-0 items-center gap-1.5">
+                    <IconButton icon={faPen} label="Edit remedy" onClick={() => setEditingId(remedy.id)} />
+                    <IconButton
+                      icon={faBoxArchive}
+                      tone="danger"
+                      label="Archive remedy"
+                      onClick={() => archiveRemedy(remedy.id)}
+                    />
+                  </div>
                 </div>
-                <div className="flex shrink-0 items-center gap-1.5">
-                  {/* <span className="text-xs text-ink-muted">×{usageCounts.get(remedy.id) ?? 0}</span> */}
-                  <IconButton icon={faPen} label="Edit remedy" onClick={() => setEditingId(remedy.id)} />
-                  <IconButton
-                    icon={faBoxArchive}
-                    tone="danger"
-                    label="Archive remedy"
-                    onClick={() => archiveRemedy(remedy.id)}
-                  />
-                </div>
+                {remedy.description && (
+                  <p className="mt-1 text-xs text-ink-muted">{remedy.description}</p>
+                )}
               </li>
             ),
           )}
