@@ -3,8 +3,9 @@ import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons'
 import type { JournalEntry } from '@/types/models'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
-import { Textarea } from '@/components/ui/Textarea'
 import { IconButton } from '@/components/ui/IconButton'
+import { RichTextEditor, RichTextContent } from '@/components/journal/RichTextEditor'
+import { isRichTextHtml } from '@/lib/richText'
 import { Kbd } from '@/components/ui/Kbd'
 import { formatFullDate } from '@/lib/dates'
 import { updateJournalEntry, deleteJournalEntry } from '@/db/queries/journalEntries'
@@ -32,9 +33,8 @@ export function JournalEntryCard({ entry, isEditing, onStartEdit, onStopEdit }: 
   }
 
   const handleSave = async () => {
-    const text = draft.trim()
-    if (!text) return
-    await updateJournalEntry(entry.id, text)
+    if (!draft.trim()) return
+    await updateJournalEntry(entry.id, draft)
     onStopEdit()
   }
 
@@ -59,12 +59,7 @@ export function JournalEntryCard({ entry, isEditing, onStartEdit, onStopEdit }: 
 
       {isEditing ? (
         <>
-          <Textarea
-            value={draft}
-            onChange={(e) => setDraft(e.target.value)}
-            className="min-h-[96px] resize-y text-sm!"
-            autoFocus
-          />
+          <RichTextEditor value={draft} onChange={setDraft} autoFocus />
           <div className="mt-3 flex justify-end gap-2">
             <Button variant="ghost" onClick={cancelEdit}>
               Cancel
@@ -76,6 +71,8 @@ export function JournalEntryCard({ entry, isEditing, onStartEdit, onStopEdit }: 
             </Button>
           </div>
         </>
+      ) : isRichTextHtml(entry.text) ? (
+        <RichTextContent html={entry.text} className="text-[14px] text-ink-secondary" />
       ) : (
         <p className="whitespace-pre-wrap text-[14px] leading-[1.6] text-ink-secondary">{entry.text}</p>
       )}

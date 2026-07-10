@@ -96,3 +96,37 @@ input[type='range'].range-amber::-webkit-slider-thumb {
 input[type='range'].range-amber::-moz-range-thumb {
   background: var(--color-pain-amber);
 }
+
+/* Journal rich text (editor content + rendered entries) */
+.journal-rich-text {
+  line-height: 1.6;
+}
+.journal-rich-text > *:first-child {
+  margin-top: 0;
+}
+.journal-rich-text p {
+  margin: 0;
+}
+.journal-rich-text p + p {
+  margin-top: 0.85em;
+}
+.journal-rich-text ul,
+.journal-rich-text ol {
+  margin: 0.85em 0 0;
+  padding-left: 1.25em;
+}
+.journal-rich-text ul {
+  list-style: disc;
+}
+.journal-rich-text ol {
+  list-style: decimal;
+}
+.journal-rich-text li + li {
+  margin-top: 0.45em;
+}
+.journal-rich-text li p {
+  margin: 0;
+}
+.journal-rich-text li :is(ul, ol) {
+  margin-top: 0.25em;
+}

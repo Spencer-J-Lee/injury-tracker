@@ -5,8 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBackwardFast, faBackwardStep, faForwardStep, faForwardFast } from '@fortawesome/free-solid-svg-icons'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
-import { Textarea } from '@/components/ui/Textarea'
 import { Kbd } from '@/components/ui/Kbd'
+import { RichTextEditor } from '@/components/journal/RichTextEditor'
 import { JournalEntryCard } from '@/components/journal/JournalEntryCard'
 import { useJournalEntries } from '@/hooks/useJournalEntries'
 import { createJournalEntry } from '@/db/queries/journalEntries'
@@ -45,9 +45,8 @@ export function JournalPage() {
   }
 
   const handleSave = async () => {
-    const text = draft.trim()
-    if (!text) return
-    await createJournalEntry(text)
+    if (!draft.trim()) return
+    await createJournalEntry(draft)
     setDraft('')
     goToPage(1)
   }
@@ -65,13 +64,7 @@ export function JournalPage() {
 
       <Card>
         <div className="mb-3 font-heading text-xl font-semibold text-ink">{formatFullDate(today)}</div>
-        <Textarea
-          value={draft}
-          onChange={(e) => setDraft(e.target.value)}
-          placeholder="How's the recovery going today?"
-          className="min-h-[96px] resize-y text-sm!"
-          autoFocus
-        />
+        <RichTextEditor value={draft} onChange={setDraft} placeholder="How are you feeling?" autoFocus />
         <div className="mt-3 flex justify-end">
           <Button onClick={handleSave} disabled={!draft.trim()}>
             Save entry
