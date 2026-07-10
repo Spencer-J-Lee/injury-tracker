@@ -1,32 +1,38 @@
-# React + TypeScript + Vite
+# Injury Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A personal tool for logging injuries, tracking symptoms and remedies over time, and spotting trends before your next PT appointment. Built as a local-first web app — all data lives in your browser (IndexedDB via Dexie), with export/import for backups.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Log injuries and track their status over time
+- Record log entries (pain levels, notes, sessions) per injury
+- Track remedies and see which ones you've tried for a given injury
+- Dashboard with filtering across active injuries
+- Charts for visualizing trends
+- JSON export/import for backups (no server, no account — your data stays on your device)
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React 19 + TypeScript
+- Vite
+- Dexie (IndexedDB) for local persistence
+- React Router
+- Tailwind CSS
+- Recharts
 
-## Expanding the Oxlint configuration
+## Getting Started
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+```bash
+npm run build    # production build
+npm run lint      # oxlint
+npm run preview   # preview production build
+```
+
+## Project Status
+
+This is a personal tool built to solve my own problem, not a polished product. The priority so far has been shipping working functionality quickly rather than production-grade code quality — expect rough edges, thin test coverage, and code that hasn't been heavily reviewed or refactored. Use accordingly.
