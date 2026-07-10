@@ -72,14 +72,14 @@ export function InjuryCard({ injury, selectable, selected, onToggleSelect }: Inj
         </div>
         {!selectable && (
           <Button
-            variant="secondary"
+            variant="primary"
             size="sm"
             onClick={(e) => {
               e.stopPropagation()
               openLogModal([injury.id])
             }}
           >
-            + Log Entry
+            Log Entry
           </Button>
         )}
       </div>
