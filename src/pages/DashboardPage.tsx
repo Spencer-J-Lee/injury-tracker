@@ -1,9 +1,12 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useInjuries } from '@/hooks/useInjuries'
 import { InjuryCard } from '@/components/injuries/InjuryCard'
 import { Button } from '@/components/ui/Button'
 import { TogglePill } from '@/components/ui/TogglePill'
+import { Kbd } from '@/components/ui/Kbd'
+import { useKeyboardShortcut } from '@/hooks/useKeyboardShortcut'
+import { addInjuryShortcutLabel, cancelShortcutLabel } from '@/lib/shortcuts'
 import { deleteInjuries } from '@/db/queries/injuries'
 import type { InjuryStatus } from '@/types/models'
 
@@ -16,9 +19,12 @@ const STATUS_LABELS: Record<InjuryStatus, string> = {
 
 export function DashboardPage() {
   const injuries = useInjuries()
+  const navigate = useNavigate()
   const [statusFilter, setStatusFilter] = useState<InjuryStatus[]>(STATUS_ORDER)
   const [selectMode, setSelectMode] = useState(false)
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
+
+  useKeyboardShortcut('n', () => navigate('/injuries/new'), !selectMode)
 
   const toggleStatus = (status: InjuryStatus) => {
     setStatusFilter((current) =>
@@ -70,7 +76,10 @@ export function DashboardPage() {
                 Select
               </Button>
               <Link to="/injuries/new">
-                <Button>Add Injury</Button>
+                <Button>
+                  Add Injury
+                  <Kbd>{addInjuryShortcutLabel}</Kbd>
+                </Button>
               </Link>
             </>
           )}

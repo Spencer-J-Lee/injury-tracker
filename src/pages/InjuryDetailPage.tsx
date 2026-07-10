@@ -4,6 +4,9 @@ import { useInjury } from '@/hooks/useInjury'
 import { InjuryStatusBadge } from '@/components/injuries/InjuryStatusBadge'
 import { Button } from '@/components/ui/Button'
 import { IconButton } from '@/components/ui/IconButton'
+import { Kbd } from '@/components/ui/Kbd'
+import { useKeyboardShortcut } from '@/hooks/useKeyboardShortcut'
+import { logEntryShortcutLabel } from '@/lib/shortcuts'
 import { useLogModal } from '@/context/LogModalContext'
 import { RemedyList } from '@/components/remedies/RemedyList'
 import { PainTrendChart } from '@/components/charts/PainTrendChart'
@@ -15,6 +18,8 @@ export function InjuryDetailPage() {
   const injury = useInjury(id)
   const { openLogModal } = useLogModal()
   const navigate = useNavigate()
+
+  useKeyboardShortcut('l', () => openLogModal([injury.id]), !!injury)
 
   if (injury === undefined) {
     return <p className="text-ink-muted">Loading…</p>
@@ -40,12 +45,15 @@ export function InjuryDetailPage() {
           </div>
         </div>
         {injury.description && (
-          <p className="mt-2 max-w-3/5 text-sm text-ink-secondary">{injury.description}</p>
+          <p className="mt-2 max-w-3/5 text-sm text-pretty text-ink-secondary">{injury.description}</p>
         )}
 
         <div className="mt-3.5 flex flex-wrap items-center gap-2.5 w-full justify-between">
           <div className="flex gap-2.5">
-            <Button onClick={() => openLogModal([injury.id])}>Log Entry</Button>
+            <Button onClick={() => openLogModal([injury.id])}>
+              Log Entry
+              <Kbd>{logEntryShortcutLabel}</Kbd>
+            </Button>
             <Link to={`/injuries/${injury.id}/edit`}>
               <IconButton icon={faPen} size="md" label="Edit injury" />
             </Link>
