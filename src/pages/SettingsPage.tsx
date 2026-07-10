@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { exportBackup, importBackup, deleteAllData, getLastExportedAt } from '@/db/backup'
-import { seedTestData, clearSeedTestData } from '@/db/seed'
+import { seedTestData, clearSeedTestData, SEED_MARKER } from '@/db/seed'
 import { formatRelative } from '@/lib/dates'
 
 export function SettingsPage() {
@@ -124,6 +124,10 @@ export function SettingsPage() {
           <p className="mt-1 text-[13px] text-ink-muted">
             Loads a set of example injuries, remedies, and log entries for testing. Re-running replaces previous
             seed data.
+          </p>
+          <p className="mt-1 text-[13px] text-ink-muted">
+            Seeded items are tagged with the <span className="font-mono">{SEED_MARKER}</span> marker so they can be
+            identified and cleared later.
           </p>
         </div>
         <div className="flex flex-wrap gap-2.5">
