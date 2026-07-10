@@ -1,39 +1,21 @@
+import { RatingSlider } from '@/components/logs/RatingSlider'
+
 interface PainSliderProps {
   value: number | undefined
   onChange: (value: number | undefined) => void
 }
 
 export function PainSlider({ value, onChange }: PainSliderProps) {
-  const pct = ((value ?? 0) / 10) * 100
-
   return (
-    <div>
-      <div className="mb-1.5 flex items-center justify-between text-[13px] text-ink-muted">
-        <span>Pain intensity</span>
-        <div className="flex items-center gap-2">
-          <span className="font-semibold text-ink-emphasis">
-            {value === undefined ? 'Not rated' : `${value}/10`}
-          </span>
-          {value !== undefined && (
-            <button
-              type="button"
-              onClick={() => onChange(undefined)}
-              className="font-semibold text-accent-soft-text hover:underline"
-            >
-              clear
-            </button>
-          )}
-        </div>
-      </div>
-      <input
-        type="range"
-        min={0}
-        max={10}
-        step={1}
-        value={value ?? 0}
-        onChange={(e) => onChange(Number(e.target.value))}
-        style={{ background: `linear-gradient(to right, var(--color-accent) ${pct}%, var(--color-subtle) ${pct}%)` }}
-      />
-    </div>
+    <RatingSlider
+      label="Pain intensity"
+      value={value}
+      onChange={onChange}
+      max={10}
+      step={1}
+      color="var(--color-accent)"
+      formatValue={(v) => `${v}/10`}
+      ticks={[0, 2, 4, 6, 8, 10]}
+    />
   )
 }
