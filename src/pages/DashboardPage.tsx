@@ -25,6 +25,7 @@ export function DashboardPage() {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
 
   useKeyboardShortcut('n', () => navigate('/injuries/new'), !selectMode)
+  useKeyboardShortcut('Escape', () => exitSelectMode(), selectMode)
 
   const toggleStatus = (status: InjuryStatus) => {
     setStatusFilter((current) =>
@@ -69,6 +70,7 @@ export function DashboardPage() {
           {selectMode ? (
             <Button variant="ghost" onClick={exitSelectMode}>
               Cancel
+              <Kbd>{cancelShortcutLabel}</Kbd>
             </Button>
           ) : (
             <>
