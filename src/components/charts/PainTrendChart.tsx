@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
+import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceLine } from 'recharts'
 import clsx from 'clsx'
 import { Card } from '@/components/ui/Card'
 import { useLogEntriesForInjury } from '@/hooks/useLogEntriesForInjury'
@@ -124,7 +124,7 @@ export function PainTrendChart({ injuryId }: { injuryId: string }) {
                   yAxisId="left"
                   domain={[0, 10]}
                   ticks={[0, 5, 10]}
-                  tick={{ fill: colors.muted, fontSize: 10 }}
+                  tick={{ fill: colors.line, fontSize: 10 }}
                   axisLine={false}
                   tickLine={false}
                   width={20}
@@ -135,11 +135,12 @@ export function PainTrendChart({ injuryId }: { injuryId: string }) {
                   domain={[0, 100]}
                   ticks={[0, 50, 100]}
                   tickFormatter={(v) => `${v}%`}
-                  tick={{ fill: colors.muted, fontSize: 10 }}
+                  tick={{ fill: colors.frequencyLine, fontSize: 10 }}
                   axisLine={false}
                   tickLine={false}
                   width={32}
                 />
+                <ReferenceLine yAxisId="left" y={5} stroke={colors.grid} strokeDasharray="4 4" />
                 <Tooltip content={<ChartTooltip colors={colors} />} />
                 <Line
                   yAxisId="left"

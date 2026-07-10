@@ -43,7 +43,7 @@ export function InjuryCard({ injury, selectable, selected, onToggleSelect }: Inj
         }
       }}
       className={clsx(
-        'relative flex cursor-pointer flex-col gap-[14px] transition-colors hover:border-accent',
+        'relative flex cursor-pointer justify-between flex-col gap-[14px] transition-colors hover:border-accent',
         selectable && selected && 'border-accent! bg-accent-soft/20',
       )}
     >
@@ -54,7 +54,7 @@ export function InjuryCard({ injury, selectable, selected, onToggleSelect }: Inj
       )}
       <div className="flex items-start justify-between gap-2">
         <div className="flex min-w-0 flex-1 items-start gap-2">
-          <h3 className="min-w-0 flex-1 truncate text-base font-semibold text-ink">{injury.name}</h3>
+          <h3 className="min-w-0 flex-1 text-base font-semibold text-ink">{injury.name}</h3>
         </div>
         <InjuryStatusBadge status={injury.status} />
       </div>
