@@ -10,11 +10,11 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantClasses: Record<Variant, string> = {
-  primary: 'bg-accent text-ink font-bold hover:bg-accent-hover',
-  secondary: 'bg-control text-ink border border-strong font-semibold hover:bg-surface-raised',
-  danger: 'bg-[oklch(0.33_0.14_25)] text-[oklch(0.96_0.03_25)] font-bold hover:bg-[oklch(0.37_0.14_25)]',
-  ghost: 'bg-transparent text-ink-secondary font-semibold hover:text-ink',
-  dashed: 'bg-transparent text-accent-soft-text border border-dashed border-strong font-semibold hover:bg-accent-soft/40',
+  primary: 'bg-accent border-accent text-ink font-bold hover:bg-accent-hover',
+  secondary: 'bg-control text-ink border-strong font-semibold hover:bg-surface-raised',
+  danger: 'bg-[oklch(0.33_0.14_25)] border-[oklch(0.33_0.14_25)] text-[oklch(0.96_0.03_25)] font-bold hover:bg-[oklch(0.37_0.14_25)]',
+  ghost: 'bg-transparent border-transparent text-ink-secondary font-semibold hover:text-ink',
+  dashed: 'bg-transparent text-accent-soft-text border-dashed border-strong font-semibold hover:bg-accent-soft/40',
 }
 
 const sizeClasses: Record<Size, string> = {
@@ -27,7 +27,7 @@ export function Button({ variant = 'primary', size = 'md', className, ...props }
   return (
     <button
       className={clsx(
-        'inline-flex items-center justify-center gap-1.5 transition-colors disabled:opacity-50 disabled:pointer-events-none',
+        'inline-flex items-center justify-center gap-1.5 transition-colors disabled:opacity-50 disabled:pointer-events-none border',
         sizeClasses[size],
         variantClasses[variant],
         className,
