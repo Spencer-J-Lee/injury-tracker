@@ -40,3 +40,11 @@ export async function setInjuryStatus(id: string, status: InjuryStatus) {
 export async function archiveInjury(id: string) {
   await db.injuries.update(id, { archivedAt: new Date().toISOString() })
 }
+
+export async function deleteInjuries(ids: string[]) {
+  await db.transaction('rw', db.injuries, db.remedies, db.logEntries, async () => {
+    await db.logEntries.where('injuryId').anyOf(ids).delete()
+    await db.remedies.where('injuryId').anyOf(ids).delete()
+    await db.injuries.bulkDelete(ids)
+  })
+}
