@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react'
+import { useState, type SubmitEvent } from 'react'
 import type { Injury, InjuryStatus } from '@/types/models'
 import { Input } from '@/components/ui/Input'
 import { Textarea } from '@/components/ui/Textarea'
@@ -38,7 +38,7 @@ export function InjuryForm({ initial, onSubmit, onCancel, submitLabel }: InjuryF
     }
   }
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault()
     void doSubmit()
   }

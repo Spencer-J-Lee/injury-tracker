@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react'
+import { useState, type SubmitEvent } from 'react'
 import { Input } from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
 import { Kbd } from '@/components/ui/Kbd'
@@ -37,7 +37,7 @@ export function EntityForm({ nameLabel, initial, submitLabel, onSubmit, onCancel
     }
   }
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault()
     void doSubmit()
   }
