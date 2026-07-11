@@ -51,7 +51,7 @@ export async function clearSeedTestData(): Promise<ClearSeedResult> {
     db.journalEntries,
     async () => {
       const seedIds = (await db.injuries.toArray())
-        .filter((injury) => isSeedMarked(injury.name))
+        .filter((injury) => isSeedMarked(injury.injuryType))
         .map((injury) => injury.id);
 
       if (seedIds.length > 0) {
@@ -110,7 +110,8 @@ export async function seedTestData(): Promise<SeedResult> {
     const createdAt = isoOffsetDays(-seed.createdDaysAgo);
     injuryRows.push({
       id: injuryId,
-      name: `${seed.name} ${SEED_MARKER}`,
+      bodyPart: seed.bodyPart,
+      injuryType: `${seed.injuryType} ${SEED_MARKER}`,
       description: seed.description,
       status: seed.status,
       createdAt,

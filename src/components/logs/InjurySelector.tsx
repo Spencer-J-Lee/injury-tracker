@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Injury } from "@/types/models";
 import { TogglePill } from "@/components/ui/TogglePill";
+import { formatInjuryName } from "@/lib/injuries";
 
 interface InjurySelectorProps {
   injuries: Injury[];
@@ -39,7 +40,7 @@ export function InjurySelector({
               selected={selected}
               onClick={() => onToggle(injury.id)}
             >
-              {injury.name}
+              {formatInjuryName(injury)}
             </TogglePill>
           );
         })}

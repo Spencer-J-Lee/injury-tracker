@@ -10,6 +10,7 @@ import { PainSlider } from "@/components/logs/PainSlider";
 import { PainFrequencySlider } from "@/components/logs/PainFrequencySlider";
 import { RemedyCheckboxGroup } from "@/components/logs/RemedyCheckboxGroup";
 import { TriggerCheckboxGroup } from "@/components/logs/TriggerCheckboxGroup";
+import { InjuryTitle } from "@/components/injuries/InjuryTitle";
 import { useInjury } from "@/hooks/useInjury";
 import { updateLogEntry } from "@/db/queries/logEntries";
 import { toDatetimeLocalValue, fromDatetimeLocalValue } from "@/lib/dates";
@@ -91,7 +92,15 @@ export function LogEntryEditModal({
       open={open}
       onClose={onClose}
       onSave={handleSave}
-      title={injury ? `Edit log entry — ${injury.name}` : "Edit log entry"}
+      title={
+        injury ? (
+          <>
+            Edit log entry — <InjuryTitle injury={injury} />
+          </>
+        ) : (
+          "Edit log entry"
+        )
+      }
       footer={
         <>
           <Button variant="ghost" onClick={onClose}>

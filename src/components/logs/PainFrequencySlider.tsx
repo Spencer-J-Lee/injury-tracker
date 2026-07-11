@@ -11,7 +11,7 @@ export function PainFrequencySlider({
 }: PainFrequencySliderProps) {
   return (
     <RatingSlider
-      label="Frequency"
+      label="Frequency (when using)"
       value={value}
       onChange={onChange}
       max={100}

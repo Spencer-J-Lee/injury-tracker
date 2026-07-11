@@ -6,6 +6,7 @@ import type { Injury } from "@/types/models";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { InjuryStatusBadge } from "@/components/injuries/InjuryStatusBadge";
+import { InjuryTitle } from "@/components/injuries/InjuryTitle";
 import { useLastLogEntryForInjury } from "@/hooks/useLastLogEntryForInjury";
 import { useLogModal } from "@/context/useLogModal";
 import { formatRelative } from "@/lib/dates";
@@ -64,7 +65,7 @@ export function InjuryCard({
       <div className="flex items-start justify-between gap-2">
         <div className="flex min-w-0 flex-1 items-start gap-2">
           <h3 className="text-ink min-w-0 flex-1 text-base font-semibold">
-            {injury.name}
+            <InjuryTitle injury={injury} />
           </h3>
         </div>
         <InjuryStatusBadge status={injury.status} />

@@ -10,6 +10,7 @@ import { PainSlider } from "@/components/logs/PainSlider";
 import { PainFrequencySlider } from "@/components/logs/PainFrequencySlider";
 import { RemedyCheckboxGroup } from "@/components/logs/RemedyCheckboxGroup";
 import { TriggerCheckboxGroup } from "@/components/logs/TriggerCheckboxGroup";
+import { InjuryTitle } from "@/components/injuries/InjuryTitle";
 import { useLogModal } from "@/context/useLogModal";
 import { useInjuries } from "@/hooks/useInjuries";
 import { createLogSession } from "@/db/queries/logEntries";
@@ -183,7 +184,9 @@ export function LogEntryModal() {
             key={injuryId}
             className="border-subtle space-y-[14px] rounded-[14px] border p-[14px]"
           >
-            <p className="text-ink mb-4 text-sm font-semibold">{injury.name}</p>
+            <p className="text-ink mb-4 text-sm font-semibold">
+              <InjuryTitle injury={injury} />
+            </p>
             <PainSlider
               value={perInjury[injuryId]?.painLevel}
               onChange={(value) => setPainLevel(injuryId, value)}

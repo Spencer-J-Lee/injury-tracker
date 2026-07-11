@@ -10,7 +10,8 @@ import { useFormShortcuts } from "@/hooks/useFormShortcuts";
 import { saveShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
 
 interface InjuryFormValues {
-  name: string;
+  bodyPart: string;
+  injuryType: string;
   description: string;
   status: InjuryStatus;
 }
@@ -28,7 +29,8 @@ export function InjuryForm({
   onCancel,
   submitLabel,
 }: InjuryFormProps) {
-  const [name, setName] = useState(initial?.name ?? "");
+  const [bodyPart, setBodyPart] = useState(initial?.bodyPart ?? "");
+  const [injuryType, setInjuryType] = useState(initial?.injuryType ?? "");
   const [description, setDescription] = useState(initial?.description ?? "");
   const [status, setStatus] = useState<InjuryStatus>(
     initial?.status ?? "active",
@@ -36,11 +38,12 @@ export function InjuryForm({
   const [submitting, setSubmitting] = useState(false);
 
   const doSubmit = async () => {
-    if (!name.trim() || submitting) return;
+    if (!bodyPart.trim() || !injuryType.trim() || submitting) return;
     setSubmitting(true);
     try {
       await onSubmit({
-        name: name.trim(),
+        bodyPart: bodyPart.trim(),
+        injuryType: injuryType.trim(),
         description: description.trim(),
         status,
       });
@@ -59,28 +62,35 @@ export function InjuryForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <Label size="md">Name</Label>
+        <Label size="md">Body Part</Label>
         <Input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="e.g. Right Flexors: RSI"
+          value={bodyPart}
+          onChange={(e) => setBodyPart(e.target.value)}
+          placeholder="e.g. Right Flexors"
           required
           autoFocus
         />
       </div>
-      {initial && (
-        <div>
-          <Label size="md">Status</Label>
-          <Select
-            value={status}
-            onChange={(e) => setStatus(e.target.value as InjuryStatus)}
-          >
-            <option value="active">Active</option>
-            <option value="monitoring">Monitoring</option>
-            <option value="resolved">Resolved</option>
-          </Select>
-        </div>
-      )}
+      <div>
+        <Label size="md">Injury Type</Label>
+        <Input
+          value={injuryType}
+          onChange={(e) => setInjuryType(e.target.value)}
+          placeholder="e.g. RSI"
+          required
+        />
+      </div>
+      <div>
+        <Label size="md">Status</Label>
+        <Select
+          value={status}
+          onChange={(e) => setStatus(e.target.value as InjuryStatus)}
+        >
+          <option value="active">Active</option>
+          <option value="monitoring">Monitoring</option>
+          <option value="resolved">Resolved</option>
+        </Select>
+      </div>
       <div>
         <Label size="md">Description</Label>
         <Textarea
@@ -91,7 +101,10 @@ export function InjuryForm({
         />
       </div>
       <div className="flex items-center gap-2">
-        <Button type="submit" disabled={submitting || !name.trim()}>
+        <Button
+          type="submit"
+          disabled={submitting || !bodyPart.trim() || !injuryType.trim()}
+        >
           {submitLabel}
           <Kbd>{saveShortcutLabel}</Kbd>
         </Button>

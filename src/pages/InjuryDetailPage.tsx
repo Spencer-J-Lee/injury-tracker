@@ -2,6 +2,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useInjury } from "@/hooks/useInjury";
 import { InjuryStatusBadge } from "@/components/injuries/InjuryStatusBadge";
+import { InjuryTitle } from "@/components/injuries/InjuryTitle";
 import { Button } from "@/components/ui/Button";
 import { IconButton } from "@/components/ui/IconButton";
 import { Kbd } from "@/components/ui/Kbd";
@@ -13,6 +14,7 @@ import { TriggerList } from "@/components/triggers/TriggerList";
 import { PainTrendChart } from "@/components/charts/PainTrendChart";
 import { LogTimeline } from "@/components/logs/LogTimeline";
 import { deleteInjury } from "@/db/queries/injuries";
+import { formatInjuryName } from "@/lib/injuries";
 
 export function InjuryDetailPage() {
   const { id } = useParams();
@@ -35,7 +37,10 @@ export function InjuryDetailPage() {
   }
 
   const handleDelete = async () => {
-    if (!confirm(`Delete "${injury.name}"? This cannot be undone.`)) return;
+    if (
+      !confirm(`Delete "${formatInjuryName(injury)}"? This cannot be undone.`)
+    )
+      return;
     await deleteInjury(injury.id);
     navigate("/");
   };
@@ -45,7 +50,7 @@ export function InjuryDetailPage() {
       <div>
         <div className="flex items-start justify-between gap-3">
           <h1 className="font-heading text-ink text-2xl font-semibold">
-            {injury.name}
+            <InjuryTitle injury={injury} />
           </h1>
           <div className="mt-1 shrink-0">
             <InjuryStatusBadge status={injury.status} />

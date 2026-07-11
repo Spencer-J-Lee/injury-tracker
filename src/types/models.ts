@@ -3,7 +3,8 @@ export type RemedyType = "relief" | "longterm";
 
 export interface Injury {
   id: string;
-  name: string;
+  bodyPart: string;
+  injuryType: string;
   description?: string;
   status: InjuryStatus;
   createdAt: string;

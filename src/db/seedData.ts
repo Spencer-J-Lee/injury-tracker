@@ -61,7 +61,8 @@ export const SEED_JOURNAL_ENTRIES: SeedJournalEntry[] = [
 ];
 
 export interface SeedInjury {
-  name: string;
+  bodyPart: string;
+  injuryType: string;
   description?: string;
   status: InjuryStatus;
   createdDaysAgo: number;
@@ -74,7 +75,8 @@ export interface SeedInjury {
 export const SEED_INJURIES: SeedInjury[] = [
   // active, improving: frequent logs, declining pain, both remedy types
   {
-    name: "Lower back strain",
+    bodyPart: "Lower back",
+    injuryType: "Strain",
     description:
       "Tweaked while deadlifting, worse when sitting for long periods.",
     status: "active",
@@ -151,7 +153,8 @@ export const SEED_INJURIES: SeedInjury[] = [
   },
   // active, chronic, no remedies yet
   {
-    name: "Tennis elbow",
+    bodyPart: "Elbow",
+    injuryType: "Tennis elbow",
     description: "Dull ache on the outside of the right elbow.",
     status: "active",
     createdDaysAgo: 60,
@@ -185,7 +188,8 @@ export const SEED_INJURIES: SeedInjury[] = [
   },
   // monitoring, low intermittent pain, one relief remedy
   {
-    name: "Occasional knee twinge",
+    bodyPart: "Knee",
+    injuryType: "Twinge",
     description: "Sharp twinge on stairs, otherwise fine.",
     status: "monitoring",
     createdDaysAgo: 90,
@@ -212,7 +216,8 @@ export const SEED_INJURIES: SeedInjury[] = [
   },
   // resolved, full history trending to zero
   {
-    name: "Sprained ankle",
+    bodyPart: "Ankle",
+    injuryType: "Sprain",
     description: "Rolled it stepping off a curb.",
     status: "resolved",
     createdDaysAgo: 35,
@@ -273,7 +278,8 @@ export const SEED_INJURIES: SeedInjury[] = [
   },
   // newly created, no logs yet (empty state)
   {
-    name: "New shoulder tightness",
+    bodyPart: "Shoulder",
+    injuryType: "Tightness",
     description: "Noticed some tightness after a heavy lifting session.",
     status: "active",
     createdDaysAgo: 0,
@@ -283,7 +289,8 @@ export const SEED_INJURIES: SeedInjury[] = [
   },
   // archived
   {
-    name: "Old wrist strain",
+    bodyPart: "Wrist",
+    injuryType: "Strain",
     description: "From a fall a while back, fully healed.",
     status: "resolved",
     createdDaysAgo: 400,

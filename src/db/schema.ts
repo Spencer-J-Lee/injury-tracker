@@ -52,3 +52,31 @@ db.version(3).stores({
   journalEntries: "id, date",
   meta: "key",
 });
+
+db.version(4)
+  .stores({
+    injuries: "id, status, archivedAt",
+    remedies: "id, injuryId, type, archivedAt",
+    triggers: "id, injuryId, archivedAt",
+    logEntries:
+      "id, injuryId, timestamp, sessionId, [injuryId+timestamp], *remedyIds, *triggerIds",
+    journalEntries: "id, date",
+    meta: "key",
+  })
+  .upgrade((tx) =>
+    tx
+      .table("injuries")
+      .toCollection()
+      .modify((injury) => {
+        const raw: string = injury.name ?? "";
+        const idx = raw.indexOf(":");
+        if (idx !== -1) {
+          injury.bodyPart = raw.slice(0, idx).trim();
+          injury.injuryType = raw.slice(idx + 1).trim();
+        } else {
+          injury.bodyPart = raw.trim();
+          injury.injuryType = "";
+        }
+        delete injury.name;
+      }),
+  );
