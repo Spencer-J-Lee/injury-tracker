@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Remedy, RemedyType } from "@/types/models";
+import type { Category, Remedy, RemedyType } from "@/types/models";
 import { useRemedies } from "@/hooks/useRemedies";
 import { createRemedy } from "@/db/queries/remedies";
 import { Label } from "../ui/Label";
@@ -27,6 +27,7 @@ function RemedySection({
   onAdd: (values: {
     name: string;
     description: string;
+    category?: Category;
   }) => void | Promise<void>;
 }) {
   const [adding, setAdding] = useState(false);
@@ -79,13 +80,14 @@ export function RemedyCheckboxGroup({
 
   const handleAdd = async (
     type: RemedyType,
-    values: { name: string; description: string },
+    values: { name: string; description: string; category?: Category },
   ) => {
     const created = await createRemedy({
       injuryId,
       name: values.name,
       description: values.description || undefined,
       type,
+      category: values.category,
     });
     onToggle(created.id);
   };

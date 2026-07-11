@@ -1,16 +1,18 @@
-import type { InjuryStatus, RemedyType } from "@/types/models";
+import type { Category, InjuryStatus, RemedyType } from "@/types/models";
 
 export interface SeedRemedy {
   key: string;
   name: string;
   description?: string;
   type: RemedyType;
+  category?: Category;
 }
 
 export interface SeedTrigger {
   key: string;
   name: string;
   description?: string;
+  category?: Category;
 }
 
 export interface SeedLogEntry {
@@ -82,12 +84,18 @@ export const SEED_INJURIES: SeedInjury[] = [
     status: "active",
     createdDaysAgo: 42,
     remedies: [
-      { key: "heat-pack", name: "Heat pack", type: "relief" },
+      {
+        key: "heat-pack",
+        name: "Heat pack",
+        type: "relief",
+        category: "Lifestyle",
+      },
       {
         key: "physio-exercises",
         name: "Physio stretches",
         description: "15 min routine, morning and evening",
         type: "longterm",
+        category: "Mobility",
       },
     ],
     triggers: [
@@ -193,7 +201,14 @@ export const SEED_INJURIES: SeedInjury[] = [
     description: "Sharp twinge on stairs, otherwise fine.",
     status: "monitoring",
     createdDaysAgo: 90,
-    remedies: [{ key: "knee-brace", name: "Knee brace", type: "relief" }],
+    remedies: [
+      {
+        key: "knee-brace",
+        name: "Knee brace",
+        type: "relief",
+        category: "Lifestyle",
+      },
+    ],
     triggers: [],
     logs: [
       {
@@ -222,11 +237,12 @@ export const SEED_INJURIES: SeedInjury[] = [
     status: "resolved",
     createdDaysAgo: 35,
     remedies: [
-      { key: "ice", name: "Ice pack", type: "relief" },
+      { key: "ice", name: "Ice pack", type: "relief", category: "Lifestyle" },
       {
         key: "ankle-mobility",
         name: "Ankle mobility exercises",
         type: "longterm",
+        category: "Mobility",
       },
     ],
     triggers: [],

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { faPen, faBoxArchive } from "@fortawesome/free-solid-svg-icons";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { Badge } from "@/components/ui/Badge";
 import { IconButton } from "@/components/ui/IconButton";
 import { EntityForm } from "@/components/ui/EntityForm";
 import { useTriggers } from "@/hooks/useTriggers";
@@ -32,6 +33,7 @@ export function TriggerList({ injuryId }: { injuryId: string }) {
                   initial={{
                     name: trigger.name,
                     description: trigger.description ?? "",
+                    category: trigger.category,
                   }}
                   submitLabel="Save"
                   onCancel={() => setEditingId(null)}
@@ -46,9 +48,10 @@ export function TriggerList({ injuryId }: { injuryId: string }) {
                 key={trigger.id}
                 className="border-subtle rounded-[10px] border px-3 py-[9px]"
               >
-                <div className="flex min-w-0 items-center justify-between gap-2">
+                <div className="flex min-w-0 items-start justify-between gap-2">
                   <p className="text-ink text-[13px]">{trigger.name}</p>
-                  <div className="flex shrink-0 items-center gap-1.5">
+                  <div className="flex shrink-0 gap-1.5">
+                    {trigger.category && <Badge>{trigger.category}</Badge>}
                     <IconButton
                       icon={faPen}
                       label="Edit trigger"

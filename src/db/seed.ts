@@ -132,6 +132,7 @@ export async function seedTestData(): Promise<SeedResult> {
         name: remedy.name,
         description: remedy.description,
         type: remedy.type,
+        category: remedy.category,
         createdAt,
       });
     }
@@ -145,6 +146,7 @@ export async function seedTestData(): Promise<SeedResult> {
         injuryId,
         name: trigger.name,
         description: trigger.description,
+        category: trigger.category,
         createdAt,
       });
     }

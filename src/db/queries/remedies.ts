@@ -1,5 +1,5 @@
 import { db } from "@/db/schema";
-import type { Remedy, RemedyType } from "@/types/models";
+import type { Category, Remedy, RemedyType } from "@/types/models";
 
 export function listRemediesForInjury(injuryId: string) {
   return db.remedies
@@ -18,6 +18,7 @@ export async function createRemedy(input: {
   name: string;
   description?: string;
   type: RemedyType;
+  category?: Category;
 }): Promise<Remedy> {
   const remedy: Remedy = {
     id: crypto.randomUUID(),
@@ -25,6 +26,7 @@ export async function createRemedy(input: {
     name: input.name,
     description: input.description,
     type: input.type,
+    category: input.category,
     createdAt: new Date().toISOString(),
   };
   await db.remedies.add(remedy);
@@ -33,7 +35,7 @@ export async function createRemedy(input: {
 
 export async function updateRemedy(
   id: string,
-  changes: Partial<Pick<Remedy, "name" | "description">>,
+  changes: Partial<Pick<Remedy, "name" | "description" | "category">>,
 ) {
   await db.remedies.update(id, changes);
 }

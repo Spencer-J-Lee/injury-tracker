@@ -1,5 +1,5 @@
 import { db } from "@/db/schema";
-import type { Trigger } from "@/types/models";
+import type { Category, Trigger } from "@/types/models";
 
 export function listActiveTriggersForInjury(injuryId: string) {
   return db.triggers
@@ -17,12 +17,14 @@ export async function createTrigger(input: {
   injuryId: string;
   name: string;
   description?: string;
+  category?: Category;
 }): Promise<Trigger> {
   const trigger: Trigger = {
     id: crypto.randomUUID(),
     injuryId: input.injuryId,
     name: input.name,
     description: input.description,
+    category: input.category,
     createdAt: new Date().toISOString(),
   };
   await db.triggers.add(trigger);
@@ -31,7 +33,7 @@ export async function createTrigger(input: {
 
 export async function updateTrigger(
   id: string,
-  changes: Partial<Pick<Trigger, "name" | "description">>,
+  changes: Partial<Pick<Trigger, "name" | "description" | "category">>,
 ) {
   await db.triggers.update(id, changes);
 }

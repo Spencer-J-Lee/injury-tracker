@@ -80,3 +80,57 @@ db.version(4)
         delete injury.name;
       }),
   );
+
+db.version(5)
+  .stores({
+    injuries: "id, status, archivedAt",
+    remedies: "id, injuryId, type, category, archivedAt",
+    triggers: "id, injuryId, category, archivedAt",
+    logEntries:
+      "id, injuryId, timestamp, sessionId, [injuryId+timestamp], *remedyIds, *triggerIds",
+    journalEntries: "id, date",
+    meta: "key",
+  })
+  .upgrade((tx) =>
+    Promise.all([
+      tx
+        .table("remedies")
+        .toCollection()
+        .modify((remedy) => {
+          remedy.category = remedy.category ?? "Other";
+        }),
+      tx
+        .table("triggers")
+        .toCollection()
+        .modify((trigger) => {
+          trigger.category = trigger.category ?? "Other";
+        }),
+    ]),
+  );
+
+db.version(6)
+  .stores({
+    injuries: "id, status, archivedAt",
+    remedies: "id, injuryId, type, category, archivedAt",
+    triggers: "id, injuryId, category, archivedAt",
+    logEntries:
+      "id, injuryId, timestamp, sessionId, [injuryId+timestamp], *remedyIds, *triggerIds",
+    journalEntries: "id, date",
+    meta: "key",
+  })
+  .upgrade((tx) =>
+    Promise.all([
+      tx
+        .table("remedies")
+        .toCollection()
+        .modify((remedy) => {
+          if (remedy.category === "Other") delete remedy.category;
+        }),
+      tx
+        .table("triggers")
+        .toCollection()
+        .modify((trigger) => {
+          if (trigger.category === "Other") delete trigger.category;
+        }),
+    ]),
+  );

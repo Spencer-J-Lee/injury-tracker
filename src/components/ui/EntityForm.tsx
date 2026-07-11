@@ -1,19 +1,31 @@
 import { useState, type SubmitEvent } from "react";
+import type { Category } from "@/types/models";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { Kbd } from "@/components/ui/Kbd";
+import { Select } from "@/components/ui/Select";
 import { useFormShortcuts } from "@/hooks/useFormShortcuts";
 import { saveShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
 import { Textarea } from "./Textarea";
 
+const CATEGORIES: Category[] = [
+  "Mobility",
+  "Strengthening",
+  "Lifestyle",
+  "Rest",
+  "Overuse",
+  "Posture",
+];
+
 interface EntityFormValues {
   name: string;
   description: string;
+  category?: Category;
 }
 
 interface EntityFormProps {
   nameLabel: string;
-  initial?: EntityFormValues;
+  initial?: Partial<EntityFormValues>;
   submitLabel: string;
   onSubmit: (values: EntityFormValues) => void | Promise<void>;
   onCancel?: () => void;
@@ -28,16 +40,24 @@ export function EntityForm({
 }: EntityFormProps) {
   const [name, setName] = useState(initial?.name ?? "");
   const [description, setDescription] = useState(initial?.description ?? "");
+  const [category, setCategory] = useState<Category | undefined>(
+    initial?.category,
+  );
   const [submitting, setSubmitting] = useState(false);
 
   const doSubmit = async () => {
     if (!name.trim() || submitting) return;
     setSubmitting(true);
     try {
-      await onSubmit({ name: name.trim(), description: description.trim() });
+      await onSubmit({
+        name: name.trim(),
+        description: description.trim(),
+        category,
+      });
       if (!initial) {
         setName("");
         setDescription("");
+        setCategory(undefined);
       }
     } finally {
       setSubmitting(false);
@@ -68,6 +88,20 @@ export function EntityForm({
         onChange={(e) => setDescription(e.target.value)}
         placeholder="Notes (optional)"
       />
+      <Select
+        value={category ?? ""}
+        onChange={(e) =>
+          setCategory(e.target.value as Category | undefined)
+        }
+      >
+        <option value="">No category</option>
+        {CATEGORIES.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </Select>
+      
       <div className="flex items-center gap-2">
         <Button
           type="submit"

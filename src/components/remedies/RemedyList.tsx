@@ -3,6 +3,7 @@ import { faPen, faBoxArchive } from "@fortawesome/free-solid-svg-icons";
 import type { RemedyType } from "@/types/models";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { Badge } from "@/components/ui/Badge";
 import { IconButton } from "@/components/ui/IconButton";
 import { EntityForm } from "@/components/ui/EntityForm";
 import { useRemedies } from "@/hooks/useRemedies";
@@ -42,6 +43,7 @@ function RemedyGroup({
                   initial={{
                     name: remedy.name,
                     description: remedy.description ?? "",
+                    category: remedy.category,
                   }}
                   submitLabel="Save"
                   onCancel={() => setEditingId(null)}
@@ -56,9 +58,10 @@ function RemedyGroup({
                 key={remedy.id}
                 className="border-subtle rounded-[10px] border px-3 py-[9px]"
               >
-                <div className="flex min-w-0 items-center justify-between gap-2">
+                <div className="flex min-w-0 items-start justify-between gap-2">
                   <p className="text-ink text-[13px]">{remedy.name}</p>
-                  <div className="flex shrink-0 items-center gap-1.5">
+                  <div className="flex shrink-0 gap-1.5">
+                    {remedy.category && <Badge>{remedy.category}</Badge>}
                     <IconButton
                       icon={faPen}
                       label="Edit remedy"

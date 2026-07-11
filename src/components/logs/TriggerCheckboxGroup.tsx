@@ -1,4 +1,5 @@
 import { useState } from "react";
+import type { Category } from "@/types/models";
 import { useTriggers } from "@/hooks/useTriggers";
 import { createTrigger } from "@/db/queries/triggers";
 import { Label } from "../ui/Label";
@@ -20,11 +21,16 @@ export function TriggerCheckboxGroup({
   const triggers = useTriggers(injuryId) ?? [];
   const [adding, setAdding] = useState(false);
 
-  const handleAdd = async (values: { name: string; description: string }) => {
+  const handleAdd = async (values: {
+    name: string;
+    description: string;
+    category?: Category;
+  }) => {
     const created = await createTrigger({
       injuryId,
       name: values.name,
       description: values.description || undefined,
+      category: values.category,
     });
     onToggle(created.id);
   };
