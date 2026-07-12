@@ -192,13 +192,18 @@ export function PainTrendChart({ injuryId }: { injuryId: string }) {
                 <Tooltip content={<ChartTooltip colors={colors} />} />
                 <Line
                   yAxisId="left"
-                  type="monotone"
+                  type="linear"
                   dataKey="painLevel"
                   stroke={colors.line}
                   strokeWidth={3}
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  dot={false}
+                  dot={{
+                    r: 3,
+                    fill: colors.line,
+                    stroke: colors.surface,
+                    strokeWidth: 1,
+                  }}
                   activeDot={{
                     r: 5,
                     fill: colors.line,
@@ -209,13 +214,18 @@ export function PainTrendChart({ injuryId }: { injuryId: string }) {
                 />
                 <Line
                   yAxisId="right"
-                  type="monotone"
+                  type="linear"
                   dataKey="painFrequency"
                   stroke={colors.frequencyLine}
                   strokeWidth={3}
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  dot={false}
+                  dot={{
+                    r: 3,
+                    fill: colors.frequencyLine,
+                    stroke: colors.surface,
+                    strokeWidth: 1,
+                  }}
                   activeDot={{
                     r: 5,
                     fill: colors.frequencyLine,
