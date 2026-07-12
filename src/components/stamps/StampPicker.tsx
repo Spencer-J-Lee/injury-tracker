@@ -6,13 +6,13 @@ import { useClickOutside } from "@/hooks/useClickOutside";
 import { useFormShortcuts } from "@/hooks/useFormShortcuts";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
-import { getSymbols, setSymbols as persistSymbols } from "@/lib/symbolPicker";
+import { getStamps, setStamps as persistStamps } from "@/lib/stampPicker";
 
-export function SymbolPicker() {
+export function StampPicker() {
   const [open, setOpen] = useState(false);
-  const [symbols, setSymbolsState] = useState<string[]>(() => getSymbols());
-  const [newSymbol, setNewSymbol] = useState("");
-  const [copiedSymbol, setCopiedSymbol] = useState<string | null>(null);
+  const [stamps, setStampsState] = useState<string[]>(() => getStamps());
+  const [newStamp, setNewStamp] = useState("");
+  const [copiedStamp, setCopiedStamp] = useState<string | null>(null);
 
   const buttonRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -23,34 +23,34 @@ export function SymbolPicker() {
   useClickOutside([buttonRef, panelRef], close, open);
   useFormShortcuts({ onCancel: close, enabled: open });
 
-  const updateSymbols = (next: string[]) => {
-    setSymbolsState(next);
-    persistSymbols(next);
+  const updateStamps = (next: string[]) => {
+    setStampsState(next);
+    persistStamps(next);
   };
 
-  const handleCopy = async (symbol: string) => {
+  const handleCopy = async (stamp: string) => {
     try {
-      await navigator.clipboard.writeText(symbol);
+      await navigator.clipboard.writeText(stamp);
     } catch {
       return;
     }
     if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
-    setCopiedSymbol(symbol);
-    copyTimeoutRef.current = setTimeout(() => setCopiedSymbol(null), 1200);
+    setCopiedStamp(stamp);
+    copyTimeoutRef.current = setTimeout(() => setCopiedStamp(null), 1200);
   };
 
-  const handleRemove = (symbol: string) => {
-    updateSymbols(symbols.filter((s) => s !== symbol));
+  const handleRemove = (stamp: string) => {
+    updateStamps(stamps.filter((s) => s !== stamp));
   };
 
   const handleAdd = () => {
-    const trimmed = newSymbol.trim();
-    if (!trimmed || symbols.includes(trimmed)) {
-      setNewSymbol("");
+    const trimmed = newStamp.trim();
+    if (!trimmed || stamps.includes(trimmed)) {
+      setNewStamp("");
       return;
     }
-    updateSymbols([...symbols, trimmed]);
-    setNewSymbol("");
+    updateStamps([...stamps, trimmed]);
+    setNewStamp("");
   };
 
   return (
@@ -59,8 +59,8 @@ export function SymbolPicker() {
         ref={buttonRef}
         type="button"
         onClick={() => setOpen((o) => !o)}
-        aria-label="Copy a symbol"
-        title="Copy a symbol"
+        aria-label="Copy a stamp"
+        title="Copy a stamp"
         className="border-subtle bg-surface-raised text-ink hover:bg-surface fixed bottom-6 left-6 z-[60] flex h-10 w-10 items-center justify-center rounded-full border text-sm shadow-lg"
       >
         <FontAwesomeIcon icon={faStamp} />
@@ -73,33 +73,33 @@ export function SymbolPicker() {
             className="border-subtle bg-surface-raised fixed bottom-20 left-6 z-[60] w-[260px] rounded-[18px] border p-4 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.6)]"
           >
             <h2 className="font-heading text-ink mb-3 text-sm font-semibold">
-              Symbols
+              Stamps
             </h2>
 
             <div className="flex flex-wrap gap-2">
-              {symbols.map((symbol) => (
-                <div key={symbol} className="relative">
+              {stamps.map((stamp) => (
+                <div key={stamp} className="relative">
                   <button
                     type="button"
-                    onClick={() => handleCopy(symbol)}
-                    aria-label={`Copy ${symbol}`}
-                    title={`Copy ${symbol}`}
+                    onClick={() => handleCopy(stamp)}
+                    aria-label={`Copy ${stamp}`}
+                    title={`Copy ${stamp}`}
                     className="border-strong bg-control text-ink hover:bg-canvas flex h-10 w-10 items-center justify-center rounded-[10px] border text-lg"
                   >
-                    {copiedSymbol === symbol ? (
+                    {copiedStamp === stamp ? (
                       <FontAwesomeIcon
                         icon={faCheck}
                         className="text-pain-green text-sm"
                       />
                     ) : (
-                      symbol
+                      stamp
                     )}
                   </button>
                   <button
                     type="button"
-                    onClick={() => handleRemove(symbol)}
-                    aria-label={`Remove ${symbol}`}
-                    title={`Remove ${symbol}`}
+                    onClick={() => handleRemove(stamp)}
+                    aria-label={`Remove ${stamp}`}
+                    title={`Remove ${stamp}`}
                     className="text-ink-faint hover:text-pain-red bg-surface-raised absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full text-[10px] leading-none"
                   >
                     ✕
@@ -110,15 +110,15 @@ export function SymbolPicker() {
 
             <div className="mt-3 flex gap-2">
               <Input
-                value={newSymbol}
-                onChange={(e) => setNewSymbol(e.target.value)}
+                value={newStamp}
+                onChange={(e) => setNewStamp(e.target.value)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     e.preventDefault();
                     handleAdd();
                   }
                 }}
-                placeholder="Add symbol"
+                placeholder="Add stamp"
                 maxLength={8}
                 className="text-base"
               />
