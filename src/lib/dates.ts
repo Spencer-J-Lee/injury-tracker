@@ -3,11 +3,19 @@ import {
   formatDistanceToNow,
   subDays,
   isAfter,
+  isToday,
+  isYesterday,
   parseISO,
 } from "date-fns";
 
 export function formatTimestamp(iso: string): string {
-  return format(new Date(iso), "MMM d, yyyy • h:mm a");
+  const date = new Date(iso);
+  const day = isToday(date)
+    ? "Today"
+    : isYesterday(date)
+      ? "Yesterday"
+      : format(date, "MMM d, yyyy");
+  return `${day} • ${format(date, "h:mm a")}`;
 }
 
 export function formatFullDate(isoDate: string): string {

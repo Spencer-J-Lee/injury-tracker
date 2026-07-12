@@ -117,7 +117,9 @@ export function LogTimelineItem({
       )}
 
       {entry.notes && (
-        <p className="text-ink-secondary text-[13px]">{entry.notes}</p>
+        <p className="text-ink-secondary text-[13px] whitespace-pre-line">
+          {entry.notes}
+        </p>
       )}
 
       <LogEntryEditModal
