@@ -4,7 +4,9 @@ import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { Kbd } from "@/components/ui/Kbd";
 import { Select } from "@/components/ui/Select";
+import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { useFormShortcuts } from "@/hooks/useFormShortcuts";
+import { useUnsavedChangesGuard } from "@/hooks/useUnsavedChangesGuard";
 import { saveShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
 import { Textarea } from "./Textarea";
 
@@ -45,6 +47,14 @@ export function EntityForm({
   );
   const [submitting, setSubmitting] = useState(false);
 
+  const isDirty =
+    name !== (initial?.name ?? "") ||
+    description !== (initial?.description ?? "") ||
+    category !== initial?.category;
+
+  const { isPrompting, guard, confirmLeave, cancelLeave } =
+    useUnsavedChangesGuard(isDirty);
+
   const doSubmit = async () => {
     if (!name.trim() || submitting) return;
     setSubmitting(true);
@@ -69,7 +79,9 @@ export function EntityForm({
     void doSubmit();
   };
 
-  useFormShortcuts({ onSave: doSubmit, onCancel });
+  const guardedCancel = onCancel ? () => guard(onCancel) : undefined;
+
+  useFormShortcuts({ onSave: doSubmit, onCancel: guardedCancel });
 
   return (
     <form
@@ -111,11 +123,11 @@ export function EntityForm({
           {submitLabel}
           <Kbd>{saveShortcutLabel}</Kbd>
         </Button>
-        {onCancel && (
+        {guardedCancel && (
           <Button
             type="button"
             variant="ghost"
-            onClick={onCancel}
+            onClick={guardedCancel}
             className="flex-1"
           >
             Cancel
@@ -123,6 +135,12 @@ export function EntityForm({
           </Button>
         )}
       </div>
+      <ConfirmDialog
+        open={isPrompting}
+        message="You have unsaved changes. Leave without saving?"
+        onConfirm={confirmLeave}
+        onCancel={cancelLeave}
+      />
     </form>
   );
 }

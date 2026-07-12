@@ -2,6 +2,7 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 import clsx from "clsx";
 import { useLogModal } from "@/context/useLogModal";
 import { getLastJournalPage } from "@/lib/journalPage";
+import { LogEntryModal } from "@/components/logs/LogEntryModal";
 
 export function AppShell() {
   const location = useLocation();
@@ -84,6 +85,8 @@ export function AppShell() {
       >
         +
       </button>
+
+      <LogEntryModal />
     </div>
   );
 }

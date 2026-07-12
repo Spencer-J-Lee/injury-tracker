@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/Textarea";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { Kbd } from "@/components/ui/Kbd";
+import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { InjurySelector } from "@/components/logs/InjurySelector";
 import { PainSlider } from "@/components/logs/PainSlider";
 import { PainFrequencySlider } from "@/components/logs/PainFrequencySlider";
@@ -13,6 +14,7 @@ import { TriggerCheckboxGroup } from "@/components/logs/TriggerCheckboxGroup";
 import { InjuryTitle } from "@/components/injuries/InjuryTitle";
 import { useLogModal } from "@/context/useLogModal";
 import { useInjuries } from "@/hooks/useInjuries";
+import { useUnsavedChangesGuard } from "@/hooks/useUnsavedChangesGuard";
 import { createLogSession } from "@/db/queries/logEntries";
 import { toDatetimeLocalValue, fromDatetimeLocalValue } from "@/lib/dates";
 import { saveShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
@@ -37,6 +39,11 @@ export function LogEntryModal() {
     toDatetimeLocalValue(new Date().toISOString()),
   );
   const [saving, setSaving] = useState(false);
+
+  const isDirty =
+    state.open && (selectedIds.length > 0 || notes.trim().length > 0);
+  const { isPrompting, guard, confirmLeave, cancelLeave } =
+    useUnsavedChangesGuard(isDirty);
 
   useEffect(() => {
     if (state.open) {
@@ -151,7 +158,7 @@ export function LogEntryModal() {
   return (
     <Modal
       open={state.open}
-      onClose={closeLogModal}
+      onClose={() => guard(closeLogModal)}
       onSave={handleSave}
       title="Log entry"
       footer={
@@ -163,7 +170,7 @@ export function LogEntryModal() {
             Submit
             <Kbd>{saveShortcutLabel}</Kbd>
           </Button>
-          <Button variant="ghost" onClick={closeLogModal}>
+          <Button variant="ghost" onClick={() => guard(closeLogModal)}>
             Cancel
             <Kbd>{cancelShortcutLabel}</Kbd>
           </Button>
@@ -228,6 +235,13 @@ export function LogEntryModal() {
           autoFocus
         />
       </div>
+
+      <ConfirmDialog
+        open={isPrompting}
+        message="You have unsaved changes to this log entry. Leave without saving?"
+        onConfirm={confirmLeave}
+        onCancel={cancelLeave}
+      />
     </Modal>
   );
 }

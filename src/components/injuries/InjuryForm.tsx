@@ -6,7 +6,9 @@ import { Select } from "@/components/ui/Select";
 import { Button } from "@/components/ui/Button";
 import { Label } from "@/components/ui/Label";
 import { Kbd } from "@/components/ui/Kbd";
+import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { useFormShortcuts } from "@/hooks/useFormShortcuts";
+import { useUnsavedChangesGuard } from "@/hooks/useUnsavedChangesGuard";
 import { saveShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
 
 interface InjuryFormValues {
@@ -37,9 +39,19 @@ export function InjuryForm({
   );
   const [submitting, setSubmitting] = useState(false);
 
+  const isDirty =
+    bodyPart !== (initial?.bodyPart ?? "") ||
+    injuryType !== (initial?.injuryType ?? "") ||
+    description !== (initial?.description ?? "") ||
+    status !== (initial?.status ?? "active");
+
+  const { isPrompting, guard, confirmLeave, cancelLeave, markSaved } =
+    useUnsavedChangesGuard(isDirty);
+
   const doSubmit = async () => {
     if (!bodyPart.trim() || !injuryType.trim() || submitting) return;
     setSubmitting(true);
+    markSaved();
     try {
       await onSubmit({
         bodyPart: bodyPart.trim(),
@@ -57,7 +69,9 @@ export function InjuryForm({
     void doSubmit();
   };
 
-  useFormShortcuts({ onSave: doSubmit, onCancel });
+  const guardedCancel = () => guard(onCancel);
+
+  useFormShortcuts({ onSave: doSubmit, onCancel: guardedCancel });
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -108,11 +122,17 @@ export function InjuryForm({
           {submitLabel}
           <Kbd>{saveShortcutLabel}</Kbd>
         </Button>
-        <Button type="button" variant="ghost" onClick={onCancel}>
+        <Button type="button" variant="ghost" onClick={guardedCancel}>
           Cancel
           <Kbd>{cancelShortcutLabel}</Kbd>
         </Button>
       </div>
+      <ConfirmDialog
+        open={isPrompting}
+        message="You have unsaved changes to this injury. Leave without saving?"
+        onConfirm={confirmLeave}
+        onCancel={cancelLeave}
+      />
     </form>
   );
 }
