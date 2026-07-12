@@ -1,4 +1,5 @@
 const KEY = "stampPicker:stamps";
+const LAST_USED_KEY = "stampPicker:lastUsed";
 
 export const DEFAULT_STAMPS = ["→", "°", "±", "≈"];
 
@@ -18,4 +19,12 @@ export function getStamps(): string[] {
 
 export function setStamps(stamps: string[]) {
   localStorage.setItem(KEY, JSON.stringify(stamps));
+}
+
+export function getLastUsedStamp(): string | null {
+  return localStorage.getItem(LAST_USED_KEY);
+}
+
+export function setLastUsedStamp(stamp: string) {
+  localStorage.setItem(LAST_USED_KEY, stamp);
 }

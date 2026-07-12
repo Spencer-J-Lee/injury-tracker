@@ -6,13 +6,22 @@ import { useClickOutside } from "@/hooks/useClickOutside";
 import { useFormShortcuts } from "@/hooks/useFormShortcuts";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
-import { getStamps, setStamps as persistStamps } from "@/lib/stampPicker";
+import {
+  getLastUsedStamp,
+  getStamps,
+  setLastUsedStamp,
+  setStamps as persistStamps,
+} from "@/lib/stampPicker";
+import clsx from "clsx";
 
 export function StampPicker() {
   const [open, setOpen] = useState(false);
   const [stamps, setStampsState] = useState<string[]>(() => getStamps());
   const [newStamp, setNewStamp] = useState("");
   const [copiedStamp, setCopiedStamp] = useState<string | null>(null);
+  const [lastUsedStamp, setLastUsedStampState] = useState<string | null>(() =>
+    getLastUsedStamp(),
+  );
 
   const buttonRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -37,6 +46,8 @@ export function StampPicker() {
     if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
     setCopiedStamp(stamp);
     copyTimeoutRef.current = setTimeout(() => setCopiedStamp(null), 1200);
+    setLastUsedStampState(stamp);
+    setLastUsedStamp(stamp);
   };
 
   const handleRemove = (stamp: string) => {
@@ -55,16 +66,40 @@ export function StampPicker() {
 
   return (
     <>
-      <button
-        ref={buttonRef}
-        type="button"
-        onClick={() => setOpen((o) => !o)}
-        aria-label="Copy a stamp"
-        title="Copy a stamp"
-        className="border-subtle bg-surface-raised text-ink hover:bg-surface fixed bottom-6 left-6 z-[60] flex h-10 w-10 items-center justify-center rounded-full border text-sm shadow-lg"
-      >
-        <FontAwesomeIcon icon={faStamp} />
-      </button>
+      <div className="fixed bottom-6 left-6 z-[60] flex">
+        <button
+          ref={buttonRef}
+          type="button"
+          onClick={() => setOpen((o) => !o)}
+          aria-label="Copy a stamp"
+          title="Copy a stamp"
+          className={clsx([
+            "border-subtle bg-surface-raised text-ink hover:bg-surface flex h-10 w-10 items-center justify-center rounded-full border text-sm shadow-lg",
+            lastUsedStamp && "rounded-r-none border-r-0",
+          ])}
+        >
+          <FontAwesomeIcon icon={faStamp} />
+        </button>
+
+        {lastUsedStamp && (
+          <button
+            type="button"
+            onClick={() => handleCopy(lastUsedStamp)}
+            aria-label={`Copy ${lastUsedStamp}`}
+            title={`Copy ${lastUsedStamp}`}
+            className="border-subtle bg-surface-raised text-ink hover:bg-surface flex h-10 w-10 items-center justify-center rounded-r-full border text-lg shadow-lg"
+          >
+            {copiedStamp === lastUsedStamp ? (
+              <FontAwesomeIcon
+                icon={faCheck}
+                className="text-pain-green text-sm"
+              />
+            ) : (
+              lastUsedStamp
+            )}
+          </button>
+        )}
+      </div>
 
       {open &&
         createPortal(
