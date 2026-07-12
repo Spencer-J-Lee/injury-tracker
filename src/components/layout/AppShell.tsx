@@ -3,6 +3,7 @@ import clsx from "clsx";
 import { useLogModal } from "@/context/useLogModal";
 import { getLastJournalPage } from "@/lib/journalPage";
 import { LogEntryModal } from "@/components/logs/LogEntryModal";
+import { SymbolPicker } from "@/components/symbols/SymbolPicker";
 
 export function AppShell() {
   const location = useLocation();
@@ -87,6 +88,7 @@ export function AppShell() {
       </button>
 
       <LogEntryModal />
+      <SymbolPicker />
     </div>
   );
 }
