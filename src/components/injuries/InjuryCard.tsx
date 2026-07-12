@@ -5,11 +5,13 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import type { Injury } from "@/types/models";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { Badge } from "@/components/ui/Badge";
 import { InjuryStatusBadge } from "@/components/injuries/InjuryStatusBadge";
 import { InjuryTitle } from "@/components/injuries/InjuryTitle";
 import { useLastLogEntryForInjury } from "@/hooks/useLastLogEntryForInjury";
 import { useLogModal } from "@/context/useLogModal";
 import { formatRelative } from "@/lib/dates";
+import { painTone, freqTone } from "@/lib/pain";
 
 interface InjuryCardProps {
   injury: Injury;
@@ -71,16 +73,20 @@ export function InjuryCard({
         <InjuryStatusBadge status={injury.status} />
       </div>
 
-      <div className="flex items-center justify-between">
-        <div className="text-ink-muted text-[13px]">
+      <div className="flex items-end justify-between">
+        <div className="text-ink-muted flex items-center gap-1.5 text-[13px]">
           {lastLog ? (
-            <span>
-              Last pain{" "}
-              <span className="text-ink-emphasis font-semibold">
+            <>
+              <Badge tone={painTone(lastLog.painLevel)}>
                 {lastLog.painLevel ?? "—"}/10
-              </span>{" "}
-              • {formatRelative(lastLog.timestamp)}
-            </span>
+              </Badge>
+              {lastLog.painFrequency !== undefined && (
+                <Badge tone={freqTone(lastLog.painFrequency)}>
+                  {lastLog.painFrequency}% freq
+                </Badge>
+              )}
+              <span>{formatRelative(lastLog.timestamp)}</span>
+            </>
           ) : (
             <span>No entries yet</span>
           )}

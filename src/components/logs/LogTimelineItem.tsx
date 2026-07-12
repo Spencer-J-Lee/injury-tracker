@@ -5,35 +5,9 @@ import type { LogEntry, Remedy, Trigger } from "@/types/models";
 import { Badge } from "@/components/ui/Badge";
 import { IconButton } from "@/components/ui/IconButton";
 import { formatTimestamp } from "@/lib/dates";
+import { painTone, painLabel, freqTone } from "@/lib/pain";
 import { deleteLogEntry } from "@/db/queries/logEntries";
 import { LogEntryEditModal } from "@/components/logs/LogEntryEditModal";
-
-function painTone(
-  painLevel: number | undefined,
-): "slate" | "green" | "amber" | "red" {
-  if (painLevel === undefined) return "slate";
-  if (painLevel <= 3) return "green";
-  if (painLevel <= 6) return "amber";
-  return "red";
-}
-
-function painLabel(painLevel: number | undefined): string {
-  if (painLevel === undefined) return "Not rated";
-  if (painLevel === 0) return "None";
-  if (painLevel <= 3) return "Mild";
-  if (painLevel <= 6) return "Moderate";
-  if (painLevel <= 9) return "Severe";
-  return "Extreme";
-}
-
-function freqTone(
-  painFrequency: number | undefined,
-): "slate" | "green" | "amber" | "red" {
-  if (painFrequency === undefined) return "slate";
-  if (painFrequency <= 33) return "green";
-  if (painFrequency <= 66) return "amber";
-  return "red";
-}
 
 export function LogTimelineItem({
   entry,
