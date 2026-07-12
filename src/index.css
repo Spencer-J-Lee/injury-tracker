@@ -130,3 +130,11 @@ input[type="range"].range-amber::-moz-range-thumb {
 .journal-rich-text li :is(ul, ol) {
   margin-top: 0.25em;
 }
+.journal-rich-text a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.journal-rich-text a:hover {
+  color: var(--color-accent-hover);
+}
