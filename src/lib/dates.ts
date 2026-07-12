@@ -10,16 +10,21 @@ import {
 
 export function formatTimestamp(iso: string): string {
   const date = new Date(iso);
+  const formattedDate = format(date, "MMM d, yyyy");
   const day = isToday(date)
-    ? "Today"
+    ? `Today • ${formattedDate}`
     : isYesterday(date)
-      ? "Yesterday"
-      : format(date, "MMM d, yyyy");
+      ? `Yesterday • ${formattedDate}`
+      : formattedDate;
   return `${day} • ${format(date, "h:mm a")}`;
 }
 
 export function formatFullDate(isoDate: string): string {
-  return format(parseISO(isoDate), "EEEE, MMMM d, yyyy");
+  const date = parseISO(isoDate);
+  const formattedDate = format(date, "EEEE, MMMM d, yyyy");
+  if (isToday(date)) return `Today • ${formattedDate}`;
+  if (isYesterday(date)) return `Yesterday • ${formattedDate}`;
+  return formattedDate;
 }
 
 export function formatShortDate(iso: string): string {
