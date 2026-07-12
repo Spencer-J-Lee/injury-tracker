@@ -102,9 +102,7 @@ export function EntityForm({
       />
       <Select
         value={category ?? ""}
-        onChange={(e) =>
-          setCategory(e.target.value as Category | undefined)
-        }
+        onChange={(e) => setCategory(e.target.value as Category | undefined)}
       >
         <option value="">No category</option>
         {CATEGORIES.map((option) => (
@@ -113,7 +111,7 @@ export function EntityForm({
           </option>
         ))}
       </Select>
-      
+
       <div className="flex items-center gap-2">
         <Button
           type="submit"

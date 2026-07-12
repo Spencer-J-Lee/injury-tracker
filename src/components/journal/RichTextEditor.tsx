@@ -168,7 +168,9 @@ export function RichTextEditor({
           <IconButton
             icon={faLink}
             label="Insert link"
-            onClick={() => (linkMenuOpen ? setLinkMenuOpen(false) : openLinkMenu())}
+            onClick={() =>
+              linkMenuOpen ? setLinkMenuOpen(false) : openLinkMenu()
+            }
             className={clsx(
               editorState?.isLink && "bg-accent-soft text-accent-soft-text",
             )}

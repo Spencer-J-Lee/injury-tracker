@@ -24,7 +24,7 @@ export function ConfirmDialog({
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[60] flex items-center justify-center p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-60 flex items-center justify-center p-4 backdrop-blur-sm"
       style={{ background: "oklch(0.05 0.007 60 / 0.7)" }}
       onClick={onCancel}
     >

@@ -66,7 +66,7 @@ export function StampPicker() {
 
   return (
     <>
-      <div className="fixed bottom-6 left-6 z-[60] flex">
+      <div className="fixed bottom-6 left-6 z-60 flex">
         <button
           ref={buttonRef}
           type="button"
@@ -105,7 +105,7 @@ export function StampPicker() {
         createPortal(
           <div
             ref={panelRef}
-            className="border-subtle bg-surface-raised fixed bottom-20 left-6 z-[60] w-[260px] rounded-[18px] border p-4 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.6)]"
+            className="border-subtle bg-surface-raised fixed bottom-20 left-6 z-60 w-[260px] rounded-[18px] border p-4 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.6)]"
           >
             <h2 className="font-heading text-ink mb-3 text-sm font-semibold">
               Stamps

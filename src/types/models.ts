@@ -1,12 +1,7 @@
 export type InjuryStatus = "active" | "monitoring" | "resolved";
 export type RemedyType = "relief" | "longterm";
 export type Category =
-  | "Mobility"
-  | "Strengthening"
-  | "Lifestyle"
-  | "Overuse"
-  | "Posture"
-  | "Rest";
+  "Mobility" | "Strengthening" | "Lifestyle" | "Overuse" | "Posture" | "Rest";
 
 export interface Injury {
   id: string;

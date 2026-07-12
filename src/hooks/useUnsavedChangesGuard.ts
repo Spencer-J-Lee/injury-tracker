@@ -17,9 +17,7 @@ export function useUnsavedChangesGuard(isDirty: boolean) {
     useCallback(() => isDirty && !bypassRef.current, [isDirty]),
   );
 
-  const [pendingAction, setPendingAction] = useState<(() => void) | null>(
-    null,
-  );
+  const [pendingAction, setPendingAction] = useState<(() => void) | null>(null);
 
   const guard = useCallback(
     (action: () => void) => {
