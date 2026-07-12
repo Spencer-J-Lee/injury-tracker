@@ -1,18 +1,25 @@
+import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { isToday } from "date-fns";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useInjury } from "@/hooks/useInjury";
+import { useLastLogEntryForInjury } from "@/hooks/useLastLogEntryForInjury";
 import { InjuryStatusBadge } from "@/components/injuries/InjuryStatusBadge";
 import { InjuryTitle } from "@/components/injuries/InjuryTitle";
 import { Button } from "@/components/ui/Button";
 import { IconButton } from "@/components/ui/IconButton";
 import { Kbd } from "@/components/ui/Kbd";
 import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut";
-import { logEntryShortcutLabel } from "@/lib/shortcuts";
+import {
+  logEntryShortcutLabel,
+  updateEntryShortcutLabel,
+} from "@/lib/shortcuts";
 import { useLogModal } from "@/context/useLogModal";
 import { RemedyList } from "@/components/remedies/RemedyList";
 import { TriggerList } from "@/components/triggers/TriggerList";
 import { PainTrendChart } from "@/components/charts/PainTrendChart";
 import { LogTimeline } from "@/components/logs/LogTimeline";
+import { LogEntryEditModal } from "@/components/logs/LogEntryEditModal";
 import { deleteInjury } from "@/db/queries/injuries";
 import { formatInjuryName } from "@/lib/injuries";
 
@@ -21,12 +28,19 @@ export function InjuryDetailPage() {
   const injury = useInjury(id);
   const { openLogModal } = useLogModal();
   const navigate = useNavigate();
+  const lastEntry = useLastLogEntryForInjury(id ?? "");
+  const [editingToday, setEditingToday] = useState(false);
+
+  const todayEntry =
+    lastEntry && isToday(new Date(lastEntry.timestamp)) ? lastEntry : undefined;
 
   useKeyboardShortcut(
     "l",
     () => openLogModal(injury ? [injury.id] : []),
     !!injury,
   );
+
+  useKeyboardShortcut("u", () => setEditingToday(true), !!todayEntry);
 
   if (injury === undefined) {
     return <p className="text-ink-muted">Loading…</p>;
@@ -68,6 +82,12 @@ export function InjuryDetailPage() {
               Log Entry
               <Kbd>{logEntryShortcutLabel}</Kbd>
             </Button>
+            {todayEntry && (
+              <Button onClick={() => setEditingToday(true)}>
+                Update Today's Entry
+                <Kbd>{updateEntryShortcutLabel}</Kbd>
+              </Button>
+            )}
             <Link to={`/injuries/${injury.id}/edit`}>
               <IconButton icon={faPen} size="md" label="Edit injury" />
             </Link>
@@ -94,6 +114,14 @@ export function InjuryDetailPage() {
           <TriggerList injuryId={injury.id} />
         </div>
       </div>
+
+      {todayEntry && (
+        <LogEntryEditModal
+          entry={todayEntry}
+          open={editingToday}
+          onClose={() => setEditingToday(false)}
+        />
+      )}
     </div>
   );
 }
