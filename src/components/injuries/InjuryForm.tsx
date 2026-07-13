@@ -14,6 +14,7 @@ import { saveShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
 interface InjuryFormValues {
   bodyPart: string;
   injuryType: string;
+  locationDetail: string;
   description: string;
   status: InjuryStatus;
 }
@@ -33,6 +34,9 @@ export function InjuryForm({
 }: InjuryFormProps) {
   const [bodyPart, setBodyPart] = useState(initial?.bodyPart ?? "");
   const [injuryType, setInjuryType] = useState(initial?.injuryType ?? "");
+  const [locationDetail, setLocationDetail] = useState(
+    initial?.locationDetail ?? "",
+  );
   const [description, setDescription] = useState(initial?.description ?? "");
   const [status, setStatus] = useState<InjuryStatus>(
     initial?.status ?? "active",
@@ -42,6 +46,7 @@ export function InjuryForm({
   const isDirty =
     bodyPart !== (initial?.bodyPart ?? "") ||
     injuryType !== (initial?.injuryType ?? "") ||
+    locationDetail !== (initial?.locationDetail ?? "") ||
     description !== (initial?.description ?? "") ||
     status !== (initial?.status ?? "active");
 
@@ -56,6 +61,7 @@ export function InjuryForm({
       await onSubmit({
         bodyPart: bodyPart.trim(),
         injuryType: injuryType.trim(),
+        locationDetail: locationDetail.trim(),
         description: description.trim(),
         status,
       });
@@ -80,7 +86,7 @@ export function InjuryForm({
         <Input
           value={bodyPart}
           onChange={(e) => setBodyPart(e.target.value)}
-          placeholder="e.g. Right Flexors"
+          placeholder="e.g. Deltoids"
           required
           autoFocus
         />
@@ -92,6 +98,14 @@ export function InjuryForm({
           onChange={(e) => setInjuryType(e.target.value)}
           placeholder="e.g. RSI"
           required
+        />
+      </div>
+      <div>
+        <Label size="md">Location Detail</Label>
+        <Input
+          value={locationDetail}
+          onChange={(e) => setLocationDetail(e.target.value)}
+          placeholder="e.g. Right, Anterior"
         />
       </div>
       <div>

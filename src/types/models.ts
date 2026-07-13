@@ -7,6 +7,7 @@ export interface Injury {
   id: string;
   bodyPart: string;
   injuryType: string;
+  locationDetail?: string;
   description?: string;
   status: InjuryStatus;
   createdAt: string;

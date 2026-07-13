@@ -65,6 +65,7 @@ export const SEED_JOURNAL_ENTRIES: SeedJournalEntry[] = [
 export interface SeedInjury {
   bodyPart: string;
   injuryType: string;
+  locationDetail?: string;
   description?: string;
   status: InjuryStatus;
   createdDaysAgo: number;
@@ -163,6 +164,7 @@ export const SEED_INJURIES: SeedInjury[] = [
   {
     bodyPart: "Elbow",
     injuryType: "Tennis elbow",
+    locationDetail: "Right, Lateral",
     description: "Dull ache on the outside of the right elbow.",
     status: "active",
     createdDaysAgo: 60,
@@ -233,6 +235,7 @@ export const SEED_INJURIES: SeedInjury[] = [
   {
     bodyPart: "Ankle",
     injuryType: "Sprain",
+    locationDetail: "Left",
     description: "Rolled it stepping off a curb.",
     status: "resolved",
     createdDaysAgo: 35,
@@ -294,8 +297,9 @@ export const SEED_INJURIES: SeedInjury[] = [
   },
   // newly created, no logs yet (empty state)
   {
-    bodyPart: "Shoulder",
+    bodyPart: "Deltoid",
     injuryType: "Tightness",
+    locationDetail: "Posterior",
     description: "Noticed some tightness after a heavy lifting session.",
     status: "active",
     createdDaysAgo: 0,

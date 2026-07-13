@@ -112,6 +112,7 @@ export async function seedTestData(): Promise<SeedResult> {
       id: injuryId,
       bodyPart: seed.bodyPart,
       injuryType: `${seed.injuryType} ${SEED_MARKER}`,
+      locationDetail: seed.locationDetail,
       description: seed.description,
       status: seed.status,
       createdAt,

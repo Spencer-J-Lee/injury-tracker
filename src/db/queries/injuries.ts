@@ -12,6 +12,7 @@ export function getInjury(id: string) {
 export async function createInjury(input: {
   bodyPart: string;
   injuryType: string;
+  locationDetail?: string;
   description?: string;
   status?: InjuryStatus;
 }): Promise<Injury> {
@@ -20,6 +21,7 @@ export async function createInjury(input: {
     id: crypto.randomUUID(),
     bodyPart: input.bodyPart,
     injuryType: input.injuryType,
+    locationDetail: input.locationDetail,
     description: input.description,
     status: input.status ?? "active",
     createdAt: now,
@@ -32,7 +34,10 @@ export async function createInjury(input: {
 export async function updateInjury(
   id: string,
   changes: Partial<
-    Pick<Injury, "bodyPart" | "injuryType" | "description" | "status">
+    Pick<
+      Injury,
+      "bodyPart" | "injuryType" | "locationDetail" | "description" | "status"
+    >
   >,
 ) {
   await db.injuries.update(id, {

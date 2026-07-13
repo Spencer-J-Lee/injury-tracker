@@ -134,3 +134,13 @@ db.version(6)
         }),
     ]),
   );
+
+db.version(7).stores({
+  injuries: "id, status, archivedAt",
+  remedies: "id, injuryId, type, category, archivedAt",
+  triggers: "id, injuryId, category, archivedAt",
+  logEntries:
+    "id, injuryId, timestamp, sessionId, [injuryId+timestamp], *remedyIds, *triggerIds",
+  journalEntries: "id, date",
+  meta: "key",
+});
