@@ -17,9 +17,9 @@ export function BackupBanner() {
   if (dismissed) return null;
   if (!injuries || injuries.length === 0) return null;
 
-  const fourteenDaysAgo = subDays(new Date(), 14);
+  const daysAgo = subDays(new Date(), 1);
   const needsReminder = lastExportedAt
-    ? isBefore(new Date(lastExportedAt), fourteenDaysAgo) &&
+    ? isBefore(new Date(lastExportedAt), daysAgo) &&
       (!recentLog?.[0] ||
         isBefore(new Date(lastExportedAt), new Date(recentLog[0].timestamp)))
     : true;
