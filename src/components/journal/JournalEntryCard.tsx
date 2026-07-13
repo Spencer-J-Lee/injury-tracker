@@ -10,12 +10,14 @@ import {
 } from "@/components/journal/RichTextEditor";
 import { isRichTextHtml } from "@/lib/richText";
 import { Kbd } from "@/components/ui/Kbd";
+import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { formatFullDate } from "@/lib/dates";
 import {
   updateJournalEntry,
   deleteJournalEntry,
 } from "@/db/queries/journalEntries";
 import { useFormShortcuts } from "@/hooks/useFormShortcuts";
+import { useUnsavedChangesGuard } from "@/hooks/useUnsavedChangesGuard";
 import { saveShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
 
 interface JournalEntryCardProps {
@@ -33,6 +35,10 @@ export function JournalEntryCard({
 }: JournalEntryCardProps) {
   const [draft, setDraft] = useState(entry.text);
 
+  const isDirty = isEditing && draft !== entry.text;
+  const { isPrompting, guard, confirmLeave, cancelLeave } =
+    useUnsavedChangesGuard(isDirty);
+
   const startEdit = () => {
     setDraft(entry.text);
     onStartEdit();
@@ -42,6 +48,8 @@ export function JournalEntryCard({
     setDraft(entry.text);
     onStopEdit();
   };
+
+  const guardedCancel = () => guard(cancelEdit);
 
   const handleSave = async () => {
     if (!draft.trim()) return;
@@ -56,7 +64,7 @@ export function JournalEntryCard({
 
   useFormShortcuts({
     onSave: handleSave,
-    onCancel: cancelEdit,
+    onCancel: guardedCancel,
     enabled: isEditing,
   });
 
@@ -83,7 +91,7 @@ export function JournalEntryCard({
         <>
           <RichTextEditor value={draft} onChange={setDraft} autoFocus />
           <div className="mt-3 flex justify-end gap-2">
-            <Button variant="ghost" onClick={cancelEdit}>
+            <Button variant="ghost" onClick={guardedCancel}>
               Cancel
               <Kbd>{cancelShortcutLabel}</Kbd>
             </Button>
@@ -103,6 +111,13 @@ export function JournalEntryCard({
           {entry.text}
         </p>
       )}
+
+      <ConfirmDialog
+        open={isPrompting}
+        message="You have unsaved changes to this journal entry. Leave without saving?"
+        onConfirm={confirmLeave}
+        onCancel={cancelLeave}
+      />
     </Card>
   );
 }
