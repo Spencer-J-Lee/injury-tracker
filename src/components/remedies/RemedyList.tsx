@@ -94,6 +94,7 @@ function RemedyGroup({
             onCancel={() => setAdding(false)}
             onSubmit={async (values) => {
               await createRemedy({ injuryId, type, ...values });
+              setAdding(false);
             }}
           />
         </div>

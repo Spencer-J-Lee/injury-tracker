@@ -84,6 +84,7 @@ export function TriggerList({ injuryId }: { injuryId: string }) {
             onCancel={() => setAdding(false)}
             onSubmit={async (values) => {
               await createTrigger({ injuryId, ...values });
+              setAdding(false);
             }}
           />
         </div>

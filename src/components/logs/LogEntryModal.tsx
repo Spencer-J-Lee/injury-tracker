@@ -230,7 +230,7 @@ export function LogEntryModal() {
         <Textarea
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
-          rows={3}
+          rows={8}
           className="min-h-[52px]"
           autoFocus
         />
