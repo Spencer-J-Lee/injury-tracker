@@ -2,12 +2,12 @@ import { createContext } from "react";
 
 export interface LogModalState {
   open: boolean;
-  initialInjuryIds: string[];
+  initialInjuryId: string | undefined;
 }
 
 export interface LogModalContextValue {
   state: LogModalState;
-  openLogModal: (initialInjuryIds?: string[]) => void;
+  openLogModal: (initialInjuryId?: string) => void;
   closeLogModal: () => void;
 }
 

@@ -4,11 +4,11 @@ import { LogModalContext, type LogModalState } from "@/context/logModalStore";
 export function LogModalProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<LogModalState>({
     open: false,
-    initialInjuryIds: [],
+    initialInjuryId: undefined,
   });
 
-  const openLogModal = useCallback((initialInjuryIds: string[] = []) => {
-    setState({ open: true, initialInjuryIds });
+  const openLogModal = useCallback((initialInjuryId?: string) => {
+    setState({ open: true, initialInjuryId });
   }, []);
 
   const closeLogModal = useCallback(() => {

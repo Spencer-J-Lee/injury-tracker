@@ -5,14 +5,14 @@ import { formatInjuryName } from "@/lib/injuries";
 
 interface InjurySelectorProps {
   injuries: Injury[];
-  selectedIds: string[];
-  onToggle: (injuryId: string) => void;
+  selectedId: string | undefined;
+  onSelect: (injuryId: string) => void;
 }
 
 export function InjurySelector({
   injuries,
-  selectedIds,
-  onToggle,
+  selectedId,
+  onSelect,
 }: InjurySelectorProps) {
   const [showAll, setShowAll] = useState(false);
   const visible = showAll
@@ -22,7 +22,7 @@ export function InjurySelector({
   return (
     <div>
       <div className="text-ink-muted mb-1.5 flex items-center justify-between text-xs font-semibold">
-        <span>Injuries</span>
+        <span>Injury</span>
         <button
           type="button"
           onClick={() => setShowAll((v) => !v)}
@@ -33,12 +33,12 @@ export function InjurySelector({
       </div>
       <div className="flex flex-wrap gap-2">
         {visible.map((injury) => {
-          const selected = selectedIds.includes(injury.id);
+          const selected = injury.id === selectedId;
           return (
             <TogglePill
               key={injury.id}
               selected={selected}
-              onClick={() => onToggle(injury.id)}
+              onClick={() => onSelect(injury.id)}
             >
               {formatInjuryName(injury)}
             </TogglePill>

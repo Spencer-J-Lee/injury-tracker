@@ -6,12 +6,14 @@ import { Textarea } from "@/components/ui/Textarea";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { Kbd } from "@/components/ui/Kbd";
+import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { PainSlider } from "@/components/logs/PainSlider";
 import { PainFrequencySlider } from "@/components/logs/PainFrequencySlider";
 import { RemedyCheckboxGroup } from "@/components/logs/RemedyCheckboxGroup";
 import { TriggerCheckboxGroup } from "@/components/logs/TriggerCheckboxGroup";
 import { InjuryTitle } from "@/components/injuries/InjuryTitle";
 import { useInjury } from "@/hooks/useInjury";
+import { useUnsavedChangesGuard } from "@/hooks/useUnsavedChangesGuard";
 import { updateLogEntry } from "@/db/queries/logEntries";
 import { toDatetimeLocalValue, fromDatetimeLocalValue } from "@/lib/dates";
 import { saveShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
@@ -42,6 +44,18 @@ export function LogEntryEditModal({
     toDatetimeLocalValue(entry.timestamp),
   );
   const [saving, setSaving] = useState(false);
+
+  const isDirty =
+    open &&
+    (painLevel !== entry.painLevel ||
+      painFrequency !== entry.painFrequency ||
+      remedyIds.join(",") !== entry.remedyIds.join(",") ||
+      triggerIds.join(",") !== entry.triggerIds.join(",") ||
+      notes !== (entry.notes ?? "") ||
+      timestamp !== toDatetimeLocalValue(entry.timestamp));
+
+  const { isPrompting, guard, confirmLeave, cancelLeave } =
+    useUnsavedChangesGuard(isDirty);
 
   useEffect(() => {
     if (open) {
@@ -90,7 +104,7 @@ export function LogEntryEditModal({
   return (
     <Modal
       open={open}
-      onClose={onClose}
+      onClose={() => guard(onClose)}
       onSave={handleSave}
       title={
         injury ? (
@@ -103,7 +117,7 @@ export function LogEntryEditModal({
       }
       footer={
         <>
-          <Button variant="ghost" onClick={onClose}>
+          <Button variant="ghost" onClick={() => guard(onClose)}>
             Cancel
             <Kbd>{cancelShortcutLabel}</Kbd>
           </Button>
@@ -141,11 +155,18 @@ export function LogEntryEditModal({
         <Textarea
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
-          rows={3}
+          rows={8}
           className="min-h-[52px]"
           autoFocus
         />
       </div>
+
+      <ConfirmDialog
+        open={isPrompting}
+        message="You have unsaved changes to this log entry. Leave without saving?"
+        onConfirm={confirmLeave}
+        onCancel={cancelLeave}
+      />
     </Modal>
   );
 }

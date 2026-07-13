@@ -97,7 +97,7 @@ export function InjuryCard({
             size="sm"
             onClick={(e) => {
               e.stopPropagation();
-              openLogModal([injury.id]);
+              openLogModal(injury.id);
             }}
           >
             Log Entry

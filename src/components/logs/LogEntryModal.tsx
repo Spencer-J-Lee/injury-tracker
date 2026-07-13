@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Modal } from "@/components/ui/Modal";
 import { Button } from "@/components/ui/Button";
 import { Textarea } from "@/components/ui/Textarea";
@@ -19,135 +19,84 @@ import { createLogSession } from "@/db/queries/logEntries";
 import { toDatetimeLocalValue, fromDatetimeLocalValue } from "@/lib/dates";
 import { saveShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
 
-interface PerInjuryState {
-  painLevel?: number;
-  painFrequency?: number;
-  remedyIds: string[];
-  triggerIds: string[];
-}
-
 export function LogEntryModal() {
   const { state, closeLogModal } = useLogModal();
   const injuries = useInjuries() ?? [];
 
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
-  const [perInjury, setPerInjury] = useState<Record<string, PerInjuryState>>(
-    {},
+  const [selectedId, setSelectedId] = useState<string | undefined>(undefined);
+  const [painLevel, setPainLevel] = useState<number | undefined>(undefined);
+  const [painFrequency, setPainFrequency] = useState<number | undefined>(
+    undefined,
   );
+  const [remedyIds, setRemedyIds] = useState<string[]>([]);
+  const [triggerIds, setTriggerIds] = useState<string[]>([]);
   const [notes, setNotes] = useState("");
   const [timestamp, setTimestamp] = useState(() =>
     toDatetimeLocalValue(new Date().toISOString()),
   );
   const [saving, setSaving] = useState(false);
+  const initialTimestampRef = useRef(timestamp);
 
+  const initialSelectedId = state.initialInjuryId;
   const isDirty =
-    state.open && (selectedIds.length > 0 || notes.trim().length > 0);
+    state.open &&
+    (selectedId !== initialSelectedId ||
+      painLevel !== undefined ||
+      painFrequency !== undefined ||
+      remedyIds.length > 0 ||
+      triggerIds.length > 0 ||
+      notes.trim().length > 0 ||
+      timestamp !== initialTimestampRef.current);
+
   const { isPrompting, guard, confirmLeave, cancelLeave } =
     useUnsavedChangesGuard(isDirty);
 
   useEffect(() => {
     if (state.open) {
-      setSelectedIds(state.initialInjuryIds);
-      setPerInjury(
-        Object.fromEntries(
-          state.initialInjuryIds.map((id) => [
-            id,
-            {
-              painLevel: undefined,
-              painFrequency: undefined,
-              remedyIds: [],
-              triggerIds: [],
-            },
-          ]),
-        ),
-      );
+      setSelectedId(state.initialInjuryId);
+      setPainLevel(undefined);
+      setPainFrequency(undefined);
+      setRemedyIds([]);
+      setTriggerIds([]);
       setNotes("");
-      setTimestamp(toDatetimeLocalValue(new Date().toISOString()));
+      const initialTimestamp = toDatetimeLocalValue(new Date().toISOString());
+      setTimestamp(initialTimestamp);
+      initialTimestampRef.current = initialTimestamp;
     }
-  }, [state.open, state.initialInjuryIds]);
+  }, [state.open, state.initialInjuryId]);
 
-  const toggleInjury = (injuryId: string) => {
-    setSelectedIds((prev) =>
-      prev.includes(injuryId)
-        ? prev.filter((id) => id !== injuryId)
-        : [...prev, injuryId],
-    );
-    setPerInjury((prev) =>
-      prev[injuryId]
-        ? prev
-        : {
-            ...prev,
-            [injuryId]: {
-              painLevel: undefined,
-              painFrequency: undefined,
-              remedyIds: [],
-              triggerIds: [],
-            },
-          },
+  const toggleRemedy = (remedyId: string) => {
+    setRemedyIds((prev) =>
+      prev.includes(remedyId)
+        ? prev.filter((id) => id !== remedyId)
+        : [...prev, remedyId],
     );
   };
 
-  const setPainLevel = (injuryId: string, painLevel: number | undefined) => {
-    setPerInjury((prev) => ({
-      ...prev,
-      [injuryId]: {
-        ...prev[injuryId],
-        painLevel,
-        remedyIds: prev[injuryId]?.remedyIds ?? [],
-        triggerIds: prev[injuryId]?.triggerIds ?? [],
-      },
-    }));
-  };
-
-  const setPainFrequency = (
-    injuryId: string,
-    painFrequency: number | undefined,
-  ) => {
-    setPerInjury((prev) => ({
-      ...prev,
-      [injuryId]: {
-        ...prev[injuryId],
-        painFrequency,
-        remedyIds: prev[injuryId]?.remedyIds ?? [],
-        triggerIds: prev[injuryId]?.triggerIds ?? [],
-      },
-    }));
-  };
-
-  const toggleRemedy = (injuryId: string, remedyId: string) => {
-    setPerInjury((prev) => {
-      const current = prev[injuryId]?.remedyIds ?? [];
-      const remedyIds = current.includes(remedyId)
-        ? current.filter((id) => id !== remedyId)
-        : [...current, remedyId];
-      return { ...prev, [injuryId]: { ...prev[injuryId], remedyIds } };
-    });
-  };
-
-  const toggleTrigger = (injuryId: string, triggerId: string) => {
-    setPerInjury((prev) => {
-      const current = prev[injuryId]?.triggerIds ?? [];
-      const triggerIds = current.includes(triggerId)
-        ? current.filter((id) => id !== triggerId)
-        : [...current, triggerId];
-      return { ...prev, [injuryId]: { ...prev[injuryId], triggerIds } };
-    });
+  const toggleTrigger = (triggerId: string) => {
+    setTriggerIds((prev) =>
+      prev.includes(triggerId)
+        ? prev.filter((id) => id !== triggerId)
+        : [...prev, triggerId],
+    );
   };
 
   const handleSave = async () => {
-    if (selectedIds.length === 0) return;
+    if (!selectedId) return;
     setSaving(true);
     try {
       await createLogSession({
         timestamp: fromDatetimeLocalValue(timestamp),
         notes: notes.trim() || undefined,
-        injuries: selectedIds.map((injuryId) => ({
-          injuryId,
-          painLevel: perInjury[injuryId]?.painLevel,
-          painFrequency: perInjury[injuryId]?.painFrequency,
-          remedyIds: perInjury[injuryId]?.remedyIds ?? [],
-          triggerIds: perInjury[injuryId]?.triggerIds ?? [],
-        })),
+        injuries: [
+          {
+            injuryId: selectedId,
+            painLevel,
+            painFrequency,
+            remedyIds,
+            triggerIds,
+          },
+        ],
       });
       closeLogModal();
     } finally {
@@ -155,18 +104,25 @@ export function LogEntryModal() {
     }
   };
 
+  const selectedInjury = injuries.find((i) => i.id === selectedId);
+
   return (
     <Modal
       open={state.open}
       onClose={() => guard(closeLogModal)}
       onSave={handleSave}
-      title="Log entry"
+      title={
+        selectedInjury ? (
+          <>
+            Log entry — <InjuryTitle injury={selectedInjury} />
+          </>
+        ) : (
+          "Log entry"
+        )
+      }
       footer={
         <>
-          <Button
-            onClick={handleSave}
-            disabled={saving || selectedIds.length === 0}
-          >
+          <Button onClick={handleSave} disabled={saving || !selectedId}>
             Submit
             <Kbd>{saveShortcutLabel}</Kbd>
           </Button>
@@ -177,44 +133,31 @@ export function LogEntryModal() {
         </>
       }
     >
-      <InjurySelector
-        injuries={injuries}
-        selectedIds={selectedIds}
-        onToggle={toggleInjury}
-      />
-
-      {selectedIds.map((injuryId) => {
-        const injury = injuries.find((i) => i.id === injuryId);
-        if (!injury) return null;
-        return (
-          <div
-            key={injuryId}
-            className="border-subtle space-y-[14px] rounded-[14px] border p-[14px]"
-          >
-            <p className="text-ink mb-4 text-sm font-semibold">
-              <InjuryTitle injury={injury} />
-            </p>
-            <PainSlider
-              value={perInjury[injuryId]?.painLevel}
-              onChange={(value) => setPainLevel(injuryId, value)}
-            />
-            <PainFrequencySlider
-              value={perInjury[injuryId]?.painFrequency}
-              onChange={(value) => setPainFrequency(injuryId, value)}
-            />
-            <RemedyCheckboxGroup
-              injuryId={injuryId}
-              selectedRemedyIds={perInjury[injuryId]?.remedyIds ?? []}
-              onToggle={(remedyId) => toggleRemedy(injuryId, remedyId)}
-            />
-            <TriggerCheckboxGroup
-              injuryId={injuryId}
-              selectedTriggerIds={perInjury[injuryId]?.triggerIds ?? []}
-              onToggle={(triggerId) => toggleTrigger(injuryId, triggerId)}
-            />
-          </div>
-        );
-      })}
+      {selectedInjury ? (
+        <>
+          <PainSlider value={painLevel} onChange={setPainLevel} />
+          <PainFrequencySlider
+            value={painFrequency}
+            onChange={setPainFrequency}
+          />
+          <RemedyCheckboxGroup
+            injuryId={selectedInjury.id}
+            selectedRemedyIds={remedyIds}
+            onToggle={toggleRemedy}
+          />
+          <TriggerCheckboxGroup
+            injuryId={selectedInjury.id}
+            selectedTriggerIds={triggerIds}
+            onToggle={toggleTrigger}
+          />
+        </>
+      ) : (
+        <InjurySelector
+          injuries={injuries}
+          selectedId={selectedId}
+          onSelect={setSelectedId}
+        />
+      )}
 
       <div>
         <Label>When</Label>

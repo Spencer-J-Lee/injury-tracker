@@ -36,7 +36,7 @@ export function InjuryDetailPage() {
 
   useKeyboardShortcut(
     "l",
-    () => openLogModal(injury ? [injury.id] : []),
+    () => openLogModal(injury?.id),
     !!injury,
   );
 
@@ -78,7 +78,7 @@ export function InjuryDetailPage() {
 
         <div className="mt-3.5 flex w-full flex-wrap items-center justify-between gap-2.5">
           <div className="flex gap-2.5">
-            <Button onClick={() => openLogModal([injury.id])}>
+            <Button onClick={() => openLogModal(injury.id)}>
               Log Entry
               <Kbd>{logEntryShortcutLabel}</Kbd>
             </Button>
