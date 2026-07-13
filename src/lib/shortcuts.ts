@@ -6,3 +6,5 @@ export const cancelShortcutLabel = "Esc";
 export const addInjuryShortcutLabel = "N";
 export const logEntryShortcutLabel = "L";
 export const updateEntryShortcutLabel = "U";
+export const dashboardShortcutLabel = "D";
+export const journalShortcutLabel = "J";

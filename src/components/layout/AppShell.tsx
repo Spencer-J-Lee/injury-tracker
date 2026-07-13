@@ -1,19 +1,29 @@
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import clsx from "clsx";
 import { useLogModal } from "@/context/useLogModal";
 import { getLastJournalPage } from "@/lib/journalPage";
 import { LogEntryModal } from "@/components/logs/LogEntryModal";
 import { StampPicker } from "@/components/stamps/StampPicker";
 import { BackupBanner } from "./BackupBanner";
+import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut";
+import { Kbd } from "@/components/ui/Kbd";
+import {
+  dashboardShortcutLabel,
+  journalShortcutLabel,
+} from "@/lib/shortcuts";
 
 export function AppShell() {
   const location = useLocation();
+  const navigate = useNavigate();
   const { openLogModal } = useLogModal();
 
   const journalTo = () => {
     const page = getLastJournalPage();
     return page > 1 ? `/journal?page=${page}` : "/journal";
   };
+
+  useKeyboardShortcut("d", () => navigate("/"));
+  useKeyboardShortcut("j", () => navigate(journalTo()));
 
   const navLinkMobile = (to: string, label: string) => (
     <Link
@@ -29,17 +39,18 @@ export function AppShell() {
     </Link>
   );
 
-  const navLinkSidebar = (to: string, label: string) => (
+  const navLinkSidebar = (to: string, label: string, shortcut?: string) => (
     <Link
       to={to === "/journal" ? journalTo() : to}
       className={clsx(
-        "rounded-[10px] px-3 py-[9px] text-sm",
+        "flex items-center justify-between rounded-[10px] px-3 py-[9px] text-sm gap-2",
         location.pathname === to
           ? "bg-accent-soft text-accent-soft-text font-semibold"
           : "text-ink-muted hover:text-ink-secondary font-medium",
       )}
     >
       {label}
+      {shortcut && <Kbd>{shortcut}</Kbd>}
     </Link>
   );
 
@@ -55,8 +66,8 @@ export function AppShell() {
               Rehab Tracker
             </Link>
             <nav className="flex flex-col gap-1">
-              {navLinkSidebar("/", "Dashboard")}
-              {navLinkSidebar("/journal", "Journal")}
+              {navLinkSidebar("/", "Dashboard", dashboardShortcutLabel)}
+              {navLinkSidebar("/journal", "Journal", journalShortcutLabel)}
               {navLinkSidebar("/settings", "Settings")}
             </nav>
           </aside>
