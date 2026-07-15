@@ -4,6 +4,7 @@ import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import type { LogEntry, Remedy, Trigger } from "@/types/models";
 import { Badge } from "@/components/ui/Badge";
 import { IconButton } from "@/components/ui/IconButton";
+import { ToneText } from "@/components/ui/ToneText";
 import { formatTimestamp } from "@/lib/dates";
 import { painTone, painLabel, freqTone } from "@/lib/pain";
 import { deleteLogEntry } from "@/db/queries/logEntries";
@@ -35,16 +36,19 @@ export function LogTimelineItem({
         <span className="text-ink-muted text-[13px]">
           {formatTimestamp(entry.timestamp)}
         </span>
-        <div className="flex items-center gap-1.5">
-          <Badge tone={painTone(entry.painLevel)}>
+        <div className="flex items-center gap-1.5 text-[13px]">
+          <ToneText tone={painTone(entry.painLevel)}>
             {entry.painLevel === undefined
               ? "Not rated"
-              : `${painLabel(entry.painLevel)} • ${entry.painLevel}/10`}
-          </Badge>
+              : `${painLabel(entry.painLevel)} ${entry.painLevel}/10`}
+          </ToneText>
           {entry.painFrequency !== undefined && (
-            <Badge tone={freqTone(entry.painFrequency)}>
-              {entry.painFrequency}% freq
-            </Badge>
+            <>
+              <span className="text-ink-muted">•</span>
+              <ToneText tone={freqTone(entry.painFrequency)}>
+                {entry.painFrequency}% freq
+              </ToneText>
+            </>
           )}
           <IconButton
             icon={faPen}

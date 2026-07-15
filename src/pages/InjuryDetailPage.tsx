@@ -4,7 +4,8 @@ import { isToday } from "date-fns";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useInjury } from "@/hooks/useInjury";
 import { useLastLogEntryForInjury } from "@/hooks/useLastLogEntryForInjury";
-import { InjuryStatusBadge } from "@/components/injuries/InjuryStatusBadge";
+import { statusLabels } from "@/lib/injuryStatus";
+import { InjuryPriorityBadge } from "@/components/injuries/InjuryPriorityBadge";
 import { InjuryTitle } from "@/components/injuries/InjuryTitle";
 import { Button } from "@/components/ui/Button";
 import { IconButton } from "@/components/ui/IconButton";
@@ -72,8 +73,11 @@ export function InjuryDetailPage() {
           <h1 className="font-heading text-ink text-2xl font-semibold">
             <InjuryTitle injury={injury} />
           </h1>
-          <div className="mt-1 shrink-0">
-            <InjuryStatusBadge status={injury.status} />
+          <div className="mt-1 flex shrink-0 items-center gap-1.5">
+            <span className="text-ink-muted text-[10px] font-bold tracking-widest uppercase">
+              {statusLabels[injury.status]}
+            </span>
+            <InjuryPriorityBadge priority={injury.priority} />
           </div>
         </div>
         {injury.description && (

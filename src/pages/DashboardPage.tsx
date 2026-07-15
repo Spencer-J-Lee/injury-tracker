@@ -23,7 +23,7 @@ export function DashboardPage() {
   const injuries = useInjuries();
   const navigate = useNavigate();
   const [statusFilter, setStatusFilter] =
-    useState<InjuryStatus[]>(STATUS_ORDER);
+    useState<InjuryStatus[]>(["active", "monitoring"]);
   const [selectMode, setSelectMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const anyModalOpen = useAnyModalOpen();

@@ -5,14 +5,14 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import type { Injury } from "@/types/models";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Badge";
-import { InjuryStatusBadge } from "@/components/injuries/InjuryStatusBadge";
+import { ToneText } from "@/components/ui/ToneText";
 import { InjuryPriorityBadge } from "@/components/injuries/InjuryPriorityBadge";
+import { statusLabels } from "@/lib/injuryStatus";
 import { InjuryTitle } from "@/components/injuries/InjuryTitle";
 import { useLastLogEntryForInjury } from "@/hooks/useLastLogEntryForInjury";
 import { useLogModal } from "@/context/useLogModal";
 import { formatRelative } from "@/lib/dates";
-import { painTone, freqTone } from "@/lib/pain";
+import { painTone, painLabel, freqTone } from "@/lib/pain";
 
 interface InjuryCardProps {
   injury: Injury;
@@ -72,8 +72,12 @@ export function InjuryCard({
           </h3>
         </div>
         <div className="flex shrink-0 items-center gap-1.5">
+          <span
+            className="text-[10px] font-bold tracking-widest uppercase text-ink-muted"
+          >
+            {statusLabels[injury.status]}
+          </span>
           <InjuryPriorityBadge priority={injury.priority} />
-          <InjuryStatusBadge status={injury.status} />
         </div>
       </div>
 
@@ -81,13 +85,18 @@ export function InjuryCard({
         <div className="text-ink-muted flex items-center gap-1.5 text-[13px]">
           {lastLog ? (
             <>
-              <Badge tone={painTone(lastLog.painLevel)}>
-                {lastLog.painLevel ?? "—"}/10
-              </Badge>
+              <ToneText tone={painTone(lastLog.painLevel)}>
+                {lastLog.painLevel === undefined
+                  ? "Not rated"
+                  : `${painLabel(lastLog.painLevel)} ${lastLog.painLevel}/10`}
+              </ToneText>
               {lastLog.painFrequency !== undefined && (
-                <Badge tone={freqTone(lastLog.painFrequency)}>
-                  {lastLog.painFrequency}% freq
-                </Badge>
+                <>
+                  <span>•</span>
+                  <ToneText tone={freqTone(lastLog.painFrequency)}>
+                    {lastLog.painFrequency}% freq
+                  </ToneText>
+                </>
               )}
               <span>{formatRelative(lastLog.timestamp)}</span>
             </>
@@ -97,7 +106,7 @@ export function InjuryCard({
         </div>
         {!selectable && (
           <Button
-            variant="primary"
+            variant="secondary"
             size="sm"
             onClick={(e) => {
               e.stopPropagation();
