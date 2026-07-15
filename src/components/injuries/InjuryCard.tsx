@@ -52,7 +52,8 @@ export function InjuryCard({
         }
       }}
       className={clsx(
-        "hover:border-accent relative flex cursor-pointer flex-col justify-between gap-[14px] transition-colors",
+        "relative flex cursor-pointer flex-col justify-between gap-[14px] transition-colors",
+        "[&:hover:not(:has(button:hover))]:border-accent",
         selectable && selected && "border-accent! bg-accent-soft/20",
       )}
     >
