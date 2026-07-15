@@ -1,7 +1,7 @@
 import type { HTMLAttributes } from "react";
 import clsx from "clsx";
 
-type Tone = "slate" | "green" | "amber" | "red" | "indigo";
+type Tone = "slate" | "green" | "amber" | "red" | "indigo" | "orange";
 
 interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   tone?: Tone;
@@ -14,6 +14,7 @@ const toneClasses: Record<Tone, string> = {
   amber: "bg-pain-amber-bg text-pain-amber",
   red: "bg-pain-red-bg text-pain-red",
   indigo: "bg-accent-soft text-accent-soft-text",
+  orange: "bg-pain-orange-bg text-pain-orange",
 };
 
 export function Badge({

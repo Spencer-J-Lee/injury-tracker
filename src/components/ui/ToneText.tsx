@@ -9,9 +9,9 @@ interface ToneTextProps extends HTMLAttributes<HTMLSpanElement> {
 
 const toneClasses: Record<Tone, string> = {
   slate: "text-ink-muted",
-  green: "text-pain-green",
-  amber: "text-pain-amber",
-  red: "text-pain-red",
+  green: "text-pain-green-text",
+  amber: "text-pain-amber-text",
+  red: "text-pain-red-text",
 };
 
 export function ToneText({ tone = "slate", className, ...props }: ToneTextProps) {
