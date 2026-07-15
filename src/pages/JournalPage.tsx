@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { format } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,21 +11,25 @@ import {
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Kbd } from "@/components/ui/Kbd";
+import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { RichTextEditor } from "@/components/journal/RichTextEditor";
 import { JournalEntryCard } from "@/components/journal/JournalEntryCard";
 import { useJournalEntries } from "@/hooks/useJournalEntries";
 import { createJournalEntry } from "@/db/queries/journalEntries";
 import { useFormShortcuts } from "@/hooks/useFormShortcuts";
+import { useUnsavedChangesGuard } from "@/hooks/useUnsavedChangesGuard";
 import { formatFullDate } from "@/lib/dates";
 import { saveShortcutLabel } from "@/lib/shortcuts";
 import { getLastJournalPage, setLastJournalPage } from "@/lib/journalPage";
+import { getJournalDraft, setJournalDraft } from "@/lib/journalDraft";
 
 const PAGE_SIZE = 5;
 
 export function JournalPage() {
   const entries = useJournalEntries();
-  const [draft, setDraft] = useState("");
+  const [draft, setDraft] = useState(getJournalDraft);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [isEditingDirty, setIsEditingDirty] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const today = useMemo(() => format(new Date(), "yyyy-MM-dd"), []);
@@ -54,10 +58,22 @@ export function JournalPage() {
     });
   };
 
+  const { isPrompting, guard, confirmLeave, cancelLeave } =
+    useUnsavedChangesGuard(isEditingDirty);
+
+  const handleDirtyChange = useCallback((dirty: boolean) => {
+    setIsEditingDirty(dirty);
+  }, []);
+
+  const updateDraft = (value: string) => {
+    setDraft(value);
+    setJournalDraft(value);
+  };
+
   const handleSave = async () => {
     if (!draft.trim()) return;
     await createJournalEntry(draft);
-    setDraft("");
+    updateDraft("");
     goToPage(1);
   };
 
@@ -83,9 +99,8 @@ export function JournalPage() {
         </div>
         <RichTextEditor
           value={draft}
-          onChange={setDraft}
+          onChange={updateDraft}
           placeholder="How are you feeling?"
-          autoFocus
         />
         <div className="mt-3 flex justify-end">
           <Button onClick={handleSave} disabled={!draft.trim()}>
@@ -108,6 +123,8 @@ export function JournalPage() {
               isEditing={editingId === entry.id}
               onStartEdit={() => setEditingId(entry.id)}
               onStopEdit={() => setEditingId(null)}
+              guard={guard}
+              onDirtyChange={handleDirtyChange}
             />
           ))
         )}
@@ -156,6 +173,13 @@ export function JournalPage() {
           </Button>
         </div>
       )}
+
+      <ConfirmDialog
+        open={isPrompting}
+        message="You have unsaved changes to a journal entry. Leave without saving?"
+        onConfirm={confirmLeave}
+        onCancel={cancelLeave}
+      />
     </div>
   );
 }

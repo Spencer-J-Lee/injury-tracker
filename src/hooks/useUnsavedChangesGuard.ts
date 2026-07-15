@@ -5,7 +5,14 @@ export function useUnsavedChangesGuard(isDirty: boolean) {
   const bypassRef = useRef(false);
 
   useEffect(() => {
-    if (!isDirty || bypassRef.current) return;
+    if (!isDirty) {
+      // Once the form is clean again, re-arm the guard for the next
+      // time it becomes dirty (bypass is only meant to cover the single
+      // navigation that immediately follows a save).
+      bypassRef.current = false;
+      return;
+    }
+    if (bypassRef.current) return;
     const handler = (e: BeforeUnloadEvent) => {
       e.preventDefault();
     };

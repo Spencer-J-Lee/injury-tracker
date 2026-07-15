@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import type { JournalEntry } from "@/types/models";
 import { Card } from "@/components/ui/Card";
@@ -10,14 +10,12 @@ import {
 } from "@/components/journal/RichTextEditor";
 import { isRichTextHtml } from "@/lib/richText";
 import { Kbd } from "@/components/ui/Kbd";
-import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { formatFullDate } from "@/lib/dates";
 import {
   updateJournalEntry,
   deleteJournalEntry,
 } from "@/db/queries/journalEntries";
 import { useFormShortcuts } from "@/hooks/useFormShortcuts";
-import { useUnsavedChangesGuard } from "@/hooks/useUnsavedChangesGuard";
 import { saveShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
 
 interface JournalEntryCardProps {
@@ -25,6 +23,8 @@ interface JournalEntryCardProps {
   isEditing: boolean;
   onStartEdit: () => void;
   onStopEdit: () => void;
+  guard: (action: () => void) => void;
+  onDirtyChange: (isDirty: boolean) => void;
 }
 
 export function JournalEntryCard({
@@ -32,12 +32,17 @@ export function JournalEntryCard({
   isEditing,
   onStartEdit,
   onStopEdit,
+  guard,
+  onDirtyChange,
 }: JournalEntryCardProps) {
   const [draft, setDraft] = useState(entry.text);
 
   const isDirty = isEditing && draft !== entry.text;
-  const { isPrompting, guard, confirmLeave, cancelLeave } =
-    useUnsavedChangesGuard(isDirty);
+
+  useEffect(() => {
+    onDirtyChange(isDirty);
+    return () => onDirtyChange(false);
+  }, [isDirty, onDirtyChange]);
 
   const startEdit = () => {
     setDraft(entry.text);
@@ -111,13 +116,6 @@ export function JournalEntryCard({
           {entry.text}
         </p>
       )}
-
-      <ConfirmDialog
-        open={isPrompting}
-        message="You have unsaved changes to this journal entry. Leave without saving?"
-        onConfirm={confirmLeave}
-        onCancel={cancelLeave}
-      />
     </Card>
   );
 }
