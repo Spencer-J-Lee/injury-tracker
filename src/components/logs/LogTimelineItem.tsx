@@ -1,8 +1,8 @@
 import { useState } from "react";
-import clsx from "clsx";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import type { LogEntry, Remedy, Trigger } from "@/types/models";
 import { Badge } from "@/components/ui/Badge";
+import { Divider } from "@/components/ui/Divider";
 import { IconButton } from "@/components/ui/IconButton";
 import { ToneText } from "@/components/ui/ToneText";
 import { formatTimestamp } from "@/lib/dates";
@@ -20,19 +20,12 @@ export function LogTimelineItem({
   triggerMap: Map<string, Trigger>;
 }) {
   const [editing, setEditing] = useState(false);
-  const hasDetails =
-    entry.remedyIds.length > 0 ||
-    entry.triggerIds.length > 0 ||
-    Boolean(entry.notes);
+  const hasRemediesOrTriggers =
+    entry.remedyIds.length > 0 || entry.triggerIds.length > 0;
 
   return (
     <li className="border-subtle rounded-[12px] border px-[14px] py-3">
-      <div
-        className={clsx(
-          "flex items-center justify-between gap-2",
-          hasDetails && "mb-2",
-        )}
-      >
+      <div className="flex items-center justify-between gap-2">
         <span className="text-ink-muted text-[13px]">
           {formatTimestamp(entry.timestamp)}
         </span>
@@ -68,36 +61,52 @@ export function LogTimelineItem({
         </div>
       </div>
 
-      {entry.remedyIds.length > 0 && (
-        <div className="mb-1.5 flex flex-wrap gap-1.5">
-          {entry.remedyIds.map((remedyId) => {
-            const remedy = remedyMap.get(remedyId);
-            return (
-              <Badge key={remedyId} tone="indigo">
-                {remedy?.name ?? "Unknown remedy"}
-              </Badge>
-            );
-          })}
-        </div>
-      )}
+      {hasRemediesOrTriggers && (
+        <>
+          <Divider />
+          <div className="space-y-1.5 mt-2">
+            {entry.remedyIds.length > 0 && (
+              <div className="flex gap-2">
+                <span className="text-ink-muted w-14 shrink-0 pt-[3px] text-[11px] font-semibold">
+                  Remedies
+                </span>
+                <div className="flex flex-wrap gap-1.5">
+                  {entry.remedyIds.map((remedyId) => (
+                    <Badge key={remedyId} tone="green">
+                      {remedyMap.get(remedyId)?.name ?? "Unknown remedy"}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            )}
 
-      {entry.triggerIds.length > 0 && (
-        <div className="mb-1.5 flex flex-wrap gap-1.5">
-          {entry.triggerIds.map((triggerId) => {
-            const trigger = triggerMap.get(triggerId);
-            return (
-              <Badge key={triggerId} tone="red">
-                {trigger?.name ?? "Unknown trigger"}
-              </Badge>
-            );
-          })}
-        </div>
+            {entry.triggerIds.length > 0 && (
+              <div className="flex gap-2">
+                <span className="text-ink-muted w-14 shrink-0 pt-[3px] text-[11px] font-semibold">
+                  Triggers
+                </span>
+                <div className="flex flex-wrap gap-1.5">
+                  {entry.triggerIds.map((triggerId) => (
+                    <Badge key={triggerId} tone="red">
+                      {triggerMap.get(triggerId)?.name ?? "Unknown trigger"}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </>
       )}
 
       {entry.notes && (
-        <p className="text-ink-secondary text-[13px] whitespace-pre-line">
-          {entry.notes}
-        </p>
+        <>
+          <Divider />
+          <div className="mt-2">
+            <p className="text-ink-secondary text-[13px] whitespace-pre-line">
+              {entry.notes}
+            </p>
+          </div>
+        </>
       )}
 
       <LogEntryEditModal
