@@ -5,14 +5,61 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import type { Injury } from "@/types/models";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import { ToneText } from "@/components/ui/ToneText";
 import { InjuryPriorityBadge } from "@/components/injuries/InjuryPriorityBadge";
 import { statusLabels } from "@/lib/injuryStatus";
 import { InjuryTitle } from "@/components/injuries/InjuryTitle";
 import { useLastLogEntryForInjury } from "@/hooks/useLastLogEntryForInjury";
 import { useLogModal } from "@/context/useLogModal";
 import { formatRelative } from "@/lib/dates";
-import { painTone, painLabel, freqTone } from "@/lib/pain";
+import { painTone, freqTone, type PainTone } from "@/lib/pain";
+
+const meterFillClasses: Record<PainTone, string> = {
+  slate: "bg-ink-faint",
+  green: "bg-pain-green-text",
+  amber: "bg-pain-amber-text",
+  red: "bg-pain-red-text",
+};
+
+const meterTextClasses: Record<PainTone, string> = {
+  slate: "text-ink-muted",
+  green: "text-pain-green-text",
+  amber: "text-pain-amber-text",
+  red: "text-pain-red-text",
+};
+
+function MeterRow({
+  label,
+  value,
+  displayValue,
+  tone,
+}: {
+  label: string;
+  value: number;
+  displayValue: string;
+  tone: PainTone;
+}) {
+  return (
+    <div className="flex items-center gap-2">
+      <span className="text-ink-muted w-14 shrink-0 text-[11px] font-semibold">
+        {label}
+      </span>
+      <div className="bg-control h-1.5 flex-1 rounded-full">
+        <div
+          className={clsx("h-1.5 rounded-full", meterFillClasses[tone])}
+          style={{ width: `${Math.max(0, Math.min(100, value))}%` }}
+        />
+      </div>
+      <span
+        className={clsx(
+          "w-9 shrink-0 text-right text-xs font-bold",
+          meterTextClasses[tone],
+        )}
+      >
+        {displayValue}
+      </span>
+    </div>
+  );
+}
 
 interface InjuryCardProps {
   injury: Injury;
@@ -66,45 +113,42 @@ export function InjuryCard({
           />
         </span>
       )}
-      <div className="flex items-start justify-between gap-2">
-        <div className="flex min-w-0 flex-1 items-start gap-2">
-          <h3 className="text-ink min-w-0 flex-1 text-base font-semibold">
-            <InjuryTitle injury={injury} />
-          </h3>
-        </div>
-        <div className="flex shrink-0 items-center gap-1.5">
-          <span
-            className="text-[10px] font-bold tracking-widest uppercase text-ink-muted"
-          >
+      <h3 className="text-ink min-w-0 text-base font-semibold">
+        <InjuryTitle injury={injury} />
+      </h3>
+
+      {lastLog && lastLog.painLevel !== undefined && (
+        <MeterRow
+          label="Intensity"
+          value={(lastLog.painLevel / 10) * 100}
+          displayValue={`${lastLog.painLevel}/10`}
+          tone={painTone(lastLog.painLevel)}
+        />
+      )}
+      {lastLog && lastLog.painFrequency !== undefined && (
+        <MeterRow
+          label="Frequency"
+          value={lastLog.painFrequency}
+          displayValue={`${lastLog.painFrequency}%`}
+          tone={freqTone(lastLog.painFrequency)}
+        />
+      )}
+
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex min-w-0 items-center gap-1.5">
+          <InjuryPriorityBadge priority={injury.priority} />
+          <span className="text-ink-muted text-[10px] font-bold tracking-widest uppercase">
             {statusLabels[injury.status]}
           </span>
-          <InjuryPriorityBadge priority={injury.priority} />
         </div>
-      </div>
-
-      <div className="flex items-end justify-between">
-        <div className="text-ink-muted flex items-center gap-1.5 text-[13px]">
+        <div className="flex min-w-0 gap-1.5 items-center">
           {lastLog ? (
-            <>
-              <ToneText tone={painTone(lastLog.painLevel)}>
-                {lastLog.painLevel === undefined
-                  ? "Not rated"
-                  : `${painLabel(lastLog.painLevel)} ${lastLog.painLevel}/10`}
-              </ToneText>
-              {lastLog.painFrequency !== undefined && (
-                <>
-                  <span>•</span>
-                  <ToneText tone={freqTone(lastLog.painFrequency)}>
-                    {lastLog.painFrequency}% freq
-                  </ToneText>
-                </>
-              )}
-              <span>{formatRelative(lastLog.timestamp)}</span>
-            </>
+              <span className="text-ink-faint text-[13px]">
+                Logged {formatRelative(lastLog.timestamp)}
+              </span>
           ) : (
-            <span>No entries yet</span>
+            <span className="text-ink-faint text-[13px]">No entries yet</span>
           )}
-        </div>
         {!selectable && (
           <Button
             variant="secondary"
@@ -117,6 +161,7 @@ export function InjuryCard({
             Log Entry
           </Button>
         )}
+        </div>
       </div>
     </Card>
   );
