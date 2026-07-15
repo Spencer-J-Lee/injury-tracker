@@ -104,6 +104,9 @@ input[type="range"].range-amber::-moz-range-thumb {
 .journal-rich-text > *:first-child {
   margin-top: 0;
 }
+.journal-rich-text > *:last-child {
+  margin-bottom: 0;
+}
 .journal-rich-text p {
   margin: 0;
 }
@@ -112,7 +115,7 @@ input[type="range"].range-amber::-moz-range-thumb {
 }
 .journal-rich-text ul,
 .journal-rich-text ol {
-  margin: 0.85em 0 0;
+  margin: 0.75em 0;
   padding-left: 1.25em;
 }
 .journal-rich-text ul {
