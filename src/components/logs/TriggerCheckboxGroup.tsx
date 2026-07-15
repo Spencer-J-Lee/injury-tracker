@@ -61,6 +61,7 @@ export function TriggerCheckboxGroup({
           <EntityForm
             nameLabel="Trigger Name"
             submitLabel="Add"
+            showShortcuts={false}
             onCancel={() => setAdding(false)}
             onSubmit={async (values) => {
               await handleAdd(values);

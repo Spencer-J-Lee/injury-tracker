@@ -57,6 +57,7 @@ function RemedySection({
           <EntityForm
             nameLabel="Remedy Name"
             submitLabel="Add"
+            showShortcuts={false}
             onCancel={() => setAdding(false)}
             onSubmit={async (values) => {
               await onAdd(values);

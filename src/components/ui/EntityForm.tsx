@@ -29,6 +29,7 @@ interface EntityFormProps {
   submitLabel: string;
   onSubmit: (values: EntityFormValues) => void | Promise<void>;
   onCancel?: () => void;
+  showShortcuts?: boolean;
 }
 
 export function EntityForm({
@@ -37,6 +38,7 @@ export function EntityForm({
   submitLabel,
   onSubmit,
   onCancel,
+  showShortcuts = true,
 }: EntityFormProps) {
   const [name, setName] = useState(initial?.name ?? "");
   const [description, setDescription] = useState(initial?.description ?? "");
@@ -69,7 +71,7 @@ export function EntityForm({
     void doSubmit();
   };
 
-  useFormShortcuts({ onSave: doSubmit, onCancel });
+  useFormShortcuts({ onSave: doSubmit, onCancel, enabled: showShortcuts });
 
   return (
     <form
@@ -107,7 +109,7 @@ export function EntityForm({
           className="flex-1"
         >
           {submitLabel}
-          <Kbd>{saveShortcutLabel}</Kbd>
+          {showShortcuts && <Kbd>{saveShortcutLabel}</Kbd>}
         </Button>
         {onCancel && (
           <Button
@@ -117,7 +119,7 @@ export function EntityForm({
             className="flex-1"
           >
             Cancel
-            <Kbd>{cancelShortcutLabel}</Kbd>
+            {showShortcuts && <Kbd>{cancelShortcutLabel}</Kbd>}
           </Button>
         )}
       </div>
