@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { TogglePill } from "@/components/ui/TogglePill";
 import { Kbd } from "@/components/ui/Kbd";
 import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut";
+import { useAnyModalOpen } from "@/lib/modalStore";
 import { addInjuryShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
 import { deleteInjuries } from "@/db/queries/injuries";
 import type { InjuryStatus } from "@/types/models";
@@ -24,9 +25,18 @@ export function DashboardPage() {
     useState<InjuryStatus[]>(STATUS_ORDER);
   const [selectMode, setSelectMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const anyModalOpen = useAnyModalOpen();
 
-  useKeyboardShortcut("n", () => navigate("/injuries/new"), !selectMode);
-  useKeyboardShortcut("Escape", () => exitSelectMode(), selectMode);
+  useKeyboardShortcut(
+    "n",
+    () => navigate("/injuries/new"),
+    !selectMode && !anyModalOpen,
+  );
+  useKeyboardShortcut(
+    "Escape",
+    () => exitSelectMode(),
+    selectMode && !anyModalOpen,
+  );
 
   const toggleStatus = (status: InjuryStatus) => {
     setStatusFilter((current) =>

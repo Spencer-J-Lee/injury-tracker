@@ -6,6 +6,7 @@ import { LogEntryModal } from "@/components/logs/LogEntryModal";
 import { StampPicker } from "@/components/stamps/StampPicker";
 import { BackupBanner } from "./BackupBanner";
 import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut";
+import { useAnyModalOpen } from "@/lib/modalStore";
 import { Kbd } from "@/components/ui/Kbd";
 import {
   dashboardShortcutLabel,
@@ -16,14 +17,15 @@ export function AppShell() {
   const location = useLocation();
   const navigate = useNavigate();
   const { openLogModal } = useLogModal();
+  const anyModalOpen = useAnyModalOpen();
 
   const journalTo = () => {
     const page = getLastJournalPage();
     return page > 1 ? `/journal?page=${page}` : "/journal";
   };
 
-  useKeyboardShortcut("d", () => navigate("/"));
-  useKeyboardShortcut("j", () => navigate(journalTo()));
+  useKeyboardShortcut("d", () => navigate("/"), !anyModalOpen);
+  useKeyboardShortcut("j", () => navigate(journalTo()), !anyModalOpen);
 
   const navLinkMobile = (to: string, label: string) => (
     <Link

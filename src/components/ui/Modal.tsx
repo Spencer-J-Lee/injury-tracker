@@ -1,6 +1,7 @@
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { useFormShortcuts } from "@/hooks/useFormShortcuts";
+import { registerModalOpen } from "@/lib/modalStore";
 
 interface ModalProps {
   open: boolean;
@@ -20,6 +21,11 @@ export function Modal({
   footer,
 }: ModalProps) {
   useFormShortcuts({ onSave, onCancel: onClose, enabled: open });
+
+  useEffect(() => {
+    if (!open) return;
+    return registerModalOpen();
+  }, [open]);
 
   if (!open) return null;
 

@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/Button";
 import { IconButton } from "@/components/ui/IconButton";
 import { Kbd } from "@/components/ui/Kbd";
 import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut";
+import { useAnyModalOpen } from "@/lib/modalStore";
 import {
   logEntryShortcutLabel,
   updateEntryShortcutLabel,
@@ -30,6 +31,7 @@ export function InjuryDetailPage() {
   const navigate = useNavigate();
   const lastEntry = useLastLogEntryForInjury(id ?? "");
   const [editingToday, setEditingToday] = useState(false);
+  const anyModalOpen = useAnyModalOpen();
 
   const todayEntry =
     lastEntry && isToday(new Date(lastEntry.timestamp)) ? lastEntry : undefined;
@@ -37,10 +39,14 @@ export function InjuryDetailPage() {
   useKeyboardShortcut(
     "l",
     () => openLogModal(injury?.id),
-    !!injury,
+    !!injury && !anyModalOpen,
   );
 
-  useKeyboardShortcut("u", () => setEditingToday(true), !!todayEntry);
+  useKeyboardShortcut(
+    "u",
+    () => setEditingToday(true),
+    !!todayEntry && !anyModalOpen,
+  );
 
   if (injury === undefined) {
     return <p className="text-ink-muted">Loading…</p>;
