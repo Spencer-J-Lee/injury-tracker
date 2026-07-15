@@ -1,4 +1,5 @@
 export type InjuryStatus = "active" | "monitoring" | "resolved";
+export type InjuryPriority = "low" | "medium" | "high" | "urgent";
 export type RemedyType = "relief" | "longterm";
 export type Category =
   "Mobility" | "Strengthening" | "Lifestyle" | "Overuse" | "Posture" | "Rest";
@@ -10,6 +11,7 @@ export interface Injury {
   locationDetail?: string;
   description?: string;
   status: InjuryStatus;
+  priority: InjuryPriority | null;
   createdAt: string;
   updatedAt: string;
   archivedAt?: string;

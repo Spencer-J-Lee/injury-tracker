@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { InjuryStatusBadge } from "@/components/injuries/InjuryStatusBadge";
+import { InjuryPriorityBadge } from "@/components/injuries/InjuryPriorityBadge";
 import { InjuryTitle } from "@/components/injuries/InjuryTitle";
 import { useLastLogEntryForInjury } from "@/hooks/useLastLogEntryForInjury";
 import { useLogModal } from "@/context/useLogModal";
@@ -70,7 +71,10 @@ export function InjuryCard({
             <InjuryTitle injury={injury} />
           </h3>
         </div>
-        <InjuryStatusBadge status={injury.status} />
+        <div className="flex shrink-0 items-center gap-1.5">
+          <InjuryPriorityBadge priority={injury.priority} />
+          <InjuryStatusBadge status={injury.status} />
+        </div>
       </div>
 
       <div className="flex items-end justify-between">

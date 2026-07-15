@@ -115,6 +115,7 @@ export async function seedTestData(): Promise<SeedResult> {
       locationDetail: seed.locationDetail,
       description: seed.description,
       status: seed.status,
+      priority: seed.priority,
       createdAt,
       updatedAt: createdAt,
       archivedAt:

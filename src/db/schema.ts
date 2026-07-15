@@ -144,3 +144,22 @@ db.version(7).stores({
   journalEntries: "id, date",
   meta: "key",
 });
+
+db.version(8)
+  .stores({
+    injuries: "id, status, archivedAt",
+    remedies: "id, injuryId, type, category, archivedAt",
+    triggers: "id, injuryId, category, archivedAt",
+    logEntries:
+      "id, injuryId, timestamp, sessionId, [injuryId+timestamp], *remedyIds, *triggerIds",
+    journalEntries: "id, date",
+    meta: "key",
+  })
+  .upgrade((tx) =>
+    tx
+      .table("injuries")
+      .toCollection()
+      .modify((injury) => {
+        injury.priority = injury.priority ?? "medium";
+      }),
+  );

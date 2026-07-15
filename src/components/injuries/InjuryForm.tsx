@@ -1,5 +1,5 @@
 import { useState, type SubmitEvent } from "react";
-import type { Injury, InjuryStatus } from "@/types/models";
+import type { Injury, InjuryPriority, InjuryStatus } from "@/types/models";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 import { Select } from "@/components/ui/Select";
@@ -17,6 +17,7 @@ interface InjuryFormValues {
   locationDetail: string;
   description: string;
   status: InjuryStatus;
+  priority: InjuryPriority | null;
 }
 
 interface InjuryFormProps {
@@ -41,6 +42,9 @@ export function InjuryForm({
   const [status, setStatus] = useState<InjuryStatus>(
     initial?.status ?? "active",
   );
+  const [priority, setPriority] = useState<InjuryPriority | null>(
+    initial?.priority ?? null,
+  );
   const [submitting, setSubmitting] = useState(false);
 
   const isDirty =
@@ -48,7 +52,8 @@ export function InjuryForm({
     injuryType !== (initial?.injuryType ?? "") ||
     locationDetail !== (initial?.locationDetail ?? "") ||
     description !== (initial?.description ?? "") ||
-    status !== (initial?.status ?? "active");
+    status !== (initial?.status ?? "active") ||
+    priority !== (initial?.priority ?? null);
 
   const { isPrompting, guard, confirmLeave, cancelLeave, markSaved } =
     useUnsavedChangesGuard(isDirty);
@@ -64,6 +69,7 @@ export function InjuryForm({
         locationDetail: locationDetail.trim(),
         description: description.trim(),
         status,
+        priority,
       });
     } finally {
       setSubmitting(false);
@@ -117,6 +123,23 @@ export function InjuryForm({
           <option value="active">Active</option>
           <option value="monitoring">Monitoring</option>
           <option value="resolved">Resolved</option>
+        </Select>
+      </div>
+      <div>
+        <Label size="md">Priority</Label>
+        <Select
+          value={priority ?? ""}
+          onChange={(e) =>
+            setPriority(
+              e.target.value === "" ? null : (e.target.value as InjuryPriority),
+            )
+          }
+        >
+          <option value="">None</option>
+          <option value="urgent">Urgent</option>
+          <option value="high">High</option>
+          <option value="medium">Medium</option>
+          <option value="low">Low</option>
         </Select>
       </div>
       <div>

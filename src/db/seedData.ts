@@ -1,4 +1,9 @@
-import type { Category, InjuryStatus, RemedyType } from "@/types/models";
+import type {
+  Category,
+  InjuryPriority,
+  InjuryStatus,
+  RemedyType,
+} from "@/types/models";
 
 export interface SeedRemedy {
   key: string;
@@ -100,6 +105,7 @@ export interface SeedInjury {
   locationDetail?: string;
   description?: string;
   status: InjuryStatus;
+  priority: InjuryPriority;
   createdDaysAgo: number;
   archivedDaysAgo?: number;
   remedies: SeedRemedy[];
@@ -115,6 +121,7 @@ export const SEED_INJURIES: SeedInjury[] = [
     description:
       "Tweaked while deadlifting, worse when sitting for long periods.",
     status: "active",
+    priority: "medium",
     createdDaysAgo: 42,
     remedies: [
       {
@@ -199,6 +206,7 @@ export const SEED_INJURIES: SeedInjury[] = [
     locationDetail: "Right, Lateral",
     description: "Dull ache on the outside of the right elbow.",
     status: "active",
+    priority: "high",
     createdDaysAgo: 60,
     remedies: [],
     triggers: [
@@ -235,6 +243,7 @@ export const SEED_INJURIES: SeedInjury[] = [
     locationDetail: "Left",
     description: "Sharp twinge on stairs, otherwise fine.",
     status: "monitoring",
+    priority: "low",
     createdDaysAgo: 90,
     remedies: [
       {
@@ -271,6 +280,7 @@ export const SEED_INJURIES: SeedInjury[] = [
     locationDetail: "Left",
     description: "Rolled it stepping off a curb.",
     status: "resolved",
+    priority: "low",
     createdDaysAgo: 35,
     remedies: [
       { key: "ice", name: "Ice pack", type: "relief", category: "Lifestyle" },
@@ -335,6 +345,7 @@ export const SEED_INJURIES: SeedInjury[] = [
     locationDetail: "Right, Posterior",
     description: "Noticed some tightness after a heavy lifting session.",
     status: "active",
+    priority: "urgent",
     createdDaysAgo: 0,
     remedies: [],
     triggers: [],
@@ -347,6 +358,7 @@ export const SEED_INJURIES: SeedInjury[] = [
     locationDetail: "Right",
     description: "From a fall a while back, fully healed.",
     status: "resolved",
+    priority: "low",
     createdDaysAgo: 400,
     archivedDaysAgo: 300,
     remedies: [{ key: "wrist-brace", name: "Wrist brace", type: "relief" }],
@@ -377,6 +389,7 @@ export const SEED_INJURIES: SeedInjury[] = [
     description:
       "Aches with overhead motion, likely from bench pressing too heavy without warming up.",
     status: "active",
+    priority: "medium",
     createdDaysAgo: 50,
     remedies: [
       {
@@ -471,6 +484,7 @@ export const SEED_INJURIES: SeedInjury[] = [
     description:
       "Tightness along the outside of the hip that flares up on longer runs.",
     status: "monitoring",
+    priority: "low",
     createdDaysAgo: 70,
     remedies: [
       {
@@ -548,6 +562,7 @@ export const SEED_INJURIES: SeedInjury[] = [
     injuryType: "Whiplash",
     description: "Stiffness and tension headaches after a minor fender bender.",
     status: "resolved",
+    priority: "low",
     createdDaysAgo: 45,
     remedies: [
       {

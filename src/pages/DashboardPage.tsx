@@ -9,7 +9,7 @@ import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut";
 import { useAnyModalOpen } from "@/lib/modalStore";
 import { addInjuryShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
 import { deleteInjuries } from "@/db/queries/injuries";
-import type { InjuryStatus } from "@/types/models";
+import type { InjuryPriority, InjuryStatus } from "@/types/models";
 
 const STATUS_ORDER: InjuryStatus[] = ["active", "monitoring", "resolved"];
 const STATUS_LABELS: Record<InjuryStatus, string> = {
@@ -17,6 +17,7 @@ const STATUS_LABELS: Record<InjuryStatus, string> = {
   monitoring: "Monitoring",
   resolved: "Resolved",
 };
+const PRIORITY_ORDER: InjuryPriority[] = ["urgent", "high", "medium", "low"];
 
 export function DashboardPage() {
   const injuries = useInjuries();
@@ -78,9 +79,18 @@ export function DashboardPage() {
 
   const visibleInjuries = (injuries ?? [])
     .filter((injury) => statusFilter.includes(injury.status))
-    .sort(
-      (a, b) => STATUS_ORDER.indexOf(a.status) - STATUS_ORDER.indexOf(b.status),
-    );
+    .sort((a, b) => {
+      const statusDiff =
+        STATUS_ORDER.indexOf(a.status) - STATUS_ORDER.indexOf(b.status);
+      if (statusDiff !== 0) return statusDiff;
+      const aPriority = a.priority
+        ? PRIORITY_ORDER.indexOf(a.priority)
+        : PRIORITY_ORDER.length;
+      const bPriority = b.priority
+        ? PRIORITY_ORDER.indexOf(b.priority)
+        : PRIORITY_ORDER.length;
+      return aPriority - bPriority;
+    });
 
   return (
     <div className="space-y-5">
