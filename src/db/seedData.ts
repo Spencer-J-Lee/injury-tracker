@@ -28,7 +28,7 @@ export interface SeedLogEntry {
   painFrequency?: number;
   remedyKeys?: string[];
   triggerKeys?: string[];
-  notes?: string;
+  notes?: string; // rendered as HTML via RichTextContent
 }
 
 export interface SeedJournalEntry {
@@ -157,7 +157,7 @@ export const SEED_INJURIES: SeedInjury[] = [
         painFrequency: 80,
         remedyKeys: ["heat-pack"],
         triggerKeys: ["deadlifting-heavy"],
-        notes: "Could barely stand up straight this morning.",
+        notes: "<p>Could barely stand up straight this morning.</p>",
       },
       {
         offsetDays: -33,
@@ -173,7 +173,7 @@ export const SEED_INJURIES: SeedInjury[] = [
         painLevel: 5,
         painFrequency: 60,
         remedyKeys: ["physio-exercises"],
-        notes: "Started the stretch routine, feels a bit looser.",
+        notes: "<p>Started the stretch routine, feels a bit looser.</p>",
       },
       {
         offsetDays: -19,
@@ -195,7 +195,7 @@ export const SEED_INJURIES: SeedInjury[] = [
         painLevel: 2,
         painFrequency: 20,
         remedyKeys: ["physio-exercises"],
-        notes: "Almost back to normal.",
+        notes: "<p>Almost back to normal.</p>",
       },
     ],
   },
@@ -224,7 +224,7 @@ export const SEED_INJURIES: SeedInjury[] = [
         painLevel: 5,
         painFrequency: 60,
         triggerKeys: ["typing-gripping"],
-        notes: "About the same, still bothers me typing a lot.",
+        notes: "<p>About the same, still bothers me typing a lot.</p>",
       },
       {
         offsetDays: -20,
@@ -269,7 +269,7 @@ export const SEED_INJURIES: SeedInjury[] = [
         painLevel: 3,
         painFrequency: 20,
         remedyKeys: ["knee-brace"],
-        notes: "Happened once going down stairs quickly.",
+        notes: "<p>Happened once going down stairs quickly.</p>",
       },
     ],
   },
@@ -299,7 +299,7 @@ export const SEED_INJURIES: SeedInjury[] = [
         painLevel: 8,
         painFrequency: 100,
         remedyKeys: ["ice"],
-        notes: "Pretty swollen, kept it elevated.",
+        notes: "<p>Pretty swollen, kept it elevated.</p>",
       },
       {
         offsetDays: -30,
@@ -334,7 +334,7 @@ export const SEED_INJURIES: SeedInjury[] = [
         atHour: 12,
         painLevel: 0,
         painFrequency: 0,
-        notes: "Fully healed, back to running.",
+        notes: "<p>Fully healed, back to running.</p>",
       },
     ],
   },
@@ -377,7 +377,7 @@ export const SEED_INJURIES: SeedInjury[] = [
         atHour: 10,
         painLevel: 0,
         painFrequency: 0,
-        notes: "Long healed, archiving this.",
+        notes: "<p>Long healed, archiving this.</p>",
       },
     ],
   },
@@ -427,7 +427,7 @@ export const SEED_INJURIES: SeedInjury[] = [
         painFrequency: 80,
         remedyKeys: ["shoulder-ice"],
         triggerKeys: ["bench-press-heavy"],
-        notes: "Felt a sharp pull mid-set, stopped the workout early.",
+        notes: "<p>Felt a sharp pull mid-set, stopped the workout early.</p>",
       },
       {
         offsetDays: -41,
@@ -443,7 +443,7 @@ export const SEED_INJURIES: SeedInjury[] = [
         painLevel: 6,
         painFrequency: 60,
         remedyKeys: ["rotator-cuff-exercises"],
-        notes: "Started the band exercises physio recommended.",
+        notes: "<p>Started the band exercises physio recommended.</p>",
       },
       {
         offsetDays: -27,
@@ -472,7 +472,7 @@ export const SEED_INJURIES: SeedInjury[] = [
         atHour: 17,
         painLevel: 2,
         painFrequency: 20,
-        notes: "Back to light overhead press without pain.",
+        notes: "<p>Back to light overhead press without pain.</p>",
       },
     ],
   },
@@ -521,7 +521,7 @@ export const SEED_INJURIES: SeedInjury[] = [
         painFrequency: 40,
         remedyKeys: ["foam-roller"],
         triggerKeys: ["running-long-distance"],
-        notes: "Flared up on an 8 mile run, had to walk the last stretch.",
+        notes: "<p>Flared up on an 8 mile run, had to walk the last stretch.</p>",
       },
       {
         offsetDays: -52,
@@ -545,7 +545,7 @@ export const SEED_INJURIES: SeedInjury[] = [
         painFrequency: 20,
         remedyKeys: ["hip-strengthening"],
         triggerKeys: ["running-long-distance"],
-        notes: "Held up fine through a 6 mile run this time.",
+        notes: "<p>Held up fine through a 6 mile run this time.</p>",
       },
       {
         offsetDays: -5,
@@ -593,8 +593,7 @@ export const SEED_INJURIES: SeedInjury[] = [
         painLevel: 7,
         painFrequency: 80,
         remedyKeys: ["heat-pack-neck"],
-        notes:
-          "Very stiff the morning after, hard to check blind spots driving.",
+        notes: "<p>Very stiff the morning after, hard to check blind spots driving.</p>",
       },
       {
         offsetDays: -37,
@@ -631,7 +630,7 @@ export const SEED_INJURIES: SeedInjury[] = [
         atHour: 8,
         painLevel: 0,
         painFrequency: 0,
-        notes: "Full range of motion back, calling this resolved.",
+        notes: "<p>Full range of motion back, calling this resolved.</p>",
       },
     ],
   },
