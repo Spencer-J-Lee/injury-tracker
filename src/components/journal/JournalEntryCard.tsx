@@ -8,7 +8,6 @@ import {
   RichTextEditor,
   RichTextContent,
 } from "@/components/journal/RichTextEditor";
-import { isRichTextHtml } from "@/lib/richText";
 import { Kbd } from "@/components/ui/Kbd";
 import { formatFullDate } from "@/lib/dates";
 import {
@@ -106,15 +105,11 @@ export function JournalEntryCard({
             </Button>
           </div>
         </>
-      ) : isRichTextHtml(entry.text) ? (
+      ) : (
         <RichTextContent
           html={entry.text}
           className="text-ink-secondary text-[14px]"
         />
-      ) : (
-        <p className="text-ink-secondary text-[14px] leading-[1.6] whitespace-pre-wrap">
-          {entry.text}
-        </p>
       )}
     </Card>
   );
