@@ -48,7 +48,7 @@ function RemedySection({
             </TogglePill>
           );
         })}
-        <Button variant="dashed" size="sm" onClick={() => setAdding(true)}>
+        <Button variant={remedies.length > 0 ? "ghost" : "dashed"} size="sm" onClick={() => setAdding(true)}>
           + Add
         </Button>
       </div>

@@ -52,7 +52,7 @@ export function TriggerCheckboxGroup({
             </TogglePill>
           );
         })}
-        <Button variant="dashed" size="sm" onClick={() => setAdding(true)}>
+        <Button variant={triggers.length > 0 ? "ghost" : "dashed"} size="sm" onClick={() => setAdding(true)}>
           + Add
         </Button>
       </div>

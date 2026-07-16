@@ -90,7 +90,7 @@ export function TriggerList({ injuryId }: { injuryId: string }) {
         </div>
       ) : (
         <Button
-          variant="dashed"
+          variant={triggers.length > 0 ? "ghost" : "dashed"}
           onClick={() => setAdding(true)}
           className="w-full"
         >

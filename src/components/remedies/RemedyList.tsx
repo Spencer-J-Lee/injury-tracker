@@ -100,7 +100,7 @@ function RemedyGroup({
         </div>
       ) : (
         <Button
-          variant="dashed"
+          variant={remedies.length > 0 ? "ghost" : "dashed"}
           onClick={() => setAdding(true)}
           className="w-full"
         >
