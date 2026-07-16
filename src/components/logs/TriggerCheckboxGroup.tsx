@@ -5,7 +5,7 @@ import { createTrigger } from "@/db/queries/triggers";
 import { Label } from "../ui/Label";
 import { TogglePill } from "@/components/ui/TogglePill";
 import { Button } from "../ui/Button";
-import { EntityForm } from "@/components/ui/EntityForm";
+import { TriggerForm } from "@/components/triggers/TriggerForm";
 
 interface TriggerCheckboxGroupProps {
   injuryId: string;
@@ -58,8 +58,7 @@ export function TriggerCheckboxGroup({
       </div>
       {adding && (
         <div className="mt-1.5">
-          <EntityForm
-            nameLabel="Trigger Name"
+          <TriggerForm
             submitLabel="Add"
             showShortcuts={false}
             onCancel={() => setAdding(false)}

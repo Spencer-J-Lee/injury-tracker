@@ -2,14 +2,13 @@ import type {
   Category,
   InjuryPriority,
   InjuryStatus,
-  RemedyType,
 } from "@/types/models";
 
 export interface SeedRemedy {
   key: string;
   name: string;
   description?: string;
-  type: RemedyType;
+  providesImmediateRelief: boolean;
   category?: Category;
 }
 
@@ -127,14 +126,14 @@ export const SEED_INJURIES: SeedInjury[] = [
       {
         key: "heat-pack",
         name: "Heat pack",
-        type: "relief",
+        providesImmediateRelief: true,
         category: "Lifestyle",
       },
       {
         key: "physio-exercises",
         name: "Physio stretches",
         description: "15 min routine, morning and evening",
-        type: "longterm",
+        providesImmediateRelief: true,
         category: "Mobility",
       },
     ],
@@ -249,7 +248,7 @@ export const SEED_INJURIES: SeedInjury[] = [
       {
         key: "knee-brace",
         name: "Knee brace",
-        type: "relief",
+        providesImmediateRelief: true,
         category: "Lifestyle",
       },
     ],
@@ -283,11 +282,16 @@ export const SEED_INJURIES: SeedInjury[] = [
     priority: "low",
     createdDaysAgo: 35,
     remedies: [
-      { key: "ice", name: "Ice pack", type: "relief", category: "Lifestyle" },
+      {
+        key: "ice",
+        name: "Ice pack",
+        providesImmediateRelief: true,
+        category: "Lifestyle",
+      },
       {
         key: "ankle-mobility",
         name: "Ankle mobility exercises",
-        type: "longterm",
+        providesImmediateRelief: false,
         category: "Mobility",
       },
     ],
@@ -361,7 +365,13 @@ export const SEED_INJURIES: SeedInjury[] = [
     priority: "low",
     createdDaysAgo: 400,
     archivedDaysAgo: 300,
-    remedies: [{ key: "wrist-brace", name: "Wrist brace", type: "relief" }],
+    remedies: [
+      {
+        key: "wrist-brace",
+        name: "Wrist brace",
+        providesImmediateRelief: true,
+      },
+    ],
     triggers: [],
     logs: [
       {
@@ -395,14 +405,14 @@ export const SEED_INJURIES: SeedInjury[] = [
       {
         key: "shoulder-ice",
         name: "Ice pack",
-        type: "relief",
+        providesImmediateRelief: true,
         category: "Lifestyle",
       },
       {
         key: "rotator-cuff-exercises",
         name: "Rotator cuff strengthening",
         description: "Band external rotations, 3x15 each side",
-        type: "longterm",
+        providesImmediateRelief: false,
         category: "Strengthening",
       },
     ],
@@ -490,14 +500,14 @@ export const SEED_INJURIES: SeedInjury[] = [
       {
         key: "foam-roller",
         name: "Foam rolling",
-        type: "relief",
+        providesImmediateRelief: true,
         category: "Lifestyle",
       },
       {
         key: "hip-strengthening",
         name: "Hip abductor strengthening",
         description: "Clamshells and side-lying leg raises, 3x15",
-        type: "longterm",
+        providesImmediateRelief: false,
         category: "Strengthening",
       },
     ],
@@ -568,14 +578,14 @@ export const SEED_INJURIES: SeedInjury[] = [
       {
         key: "heat-pack-neck",
         name: "Heat pack",
-        type: "relief",
+        providesImmediateRelief: true,
         category: "Lifestyle",
       },
       {
         key: "neck-mobility",
         name: "Neck mobility exercises",
         description: "Gentle range-of-motion drills, twice daily",
-        type: "longterm",
+        providesImmediateRelief: false,
         category: "Mobility",
       },
     ],

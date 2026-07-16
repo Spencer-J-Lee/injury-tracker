@@ -163,3 +163,23 @@ db.version(8)
         injury.priority = injury.priority ?? "medium";
       }),
   );
+
+db.version(9)
+  .stores({
+    injuries: "id, status, archivedAt",
+    remedies: "id, injuryId, category, archivedAt",
+    triggers: "id, injuryId, category, archivedAt",
+    logEntries:
+      "id, injuryId, timestamp, sessionId, [injuryId+timestamp], *remedyIds, *triggerIds",
+    journalEntries: "id, date",
+    meta: "key",
+  })
+  .upgrade((tx) =>
+    tx
+      .table("remedies")
+      .toCollection()
+      .modify((remedy) => {
+        remedy.providesImmediateRelief = remedy.type === "relief";
+        delete remedy.type;
+      }),
+  );

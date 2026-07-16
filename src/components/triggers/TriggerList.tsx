@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { IconButton } from "@/components/ui/IconButton";
-import { EntityForm } from "@/components/ui/EntityForm";
+import { TriggerForm } from "@/components/triggers/TriggerForm";
 import { useTriggers } from "@/hooks/useTriggers";
 import {
   createTrigger,
@@ -28,8 +28,7 @@ export function TriggerList({ injuryId }: { injuryId: string }) {
           {triggers.map((trigger) =>
             editingId === trigger.id ? (
               <li key={trigger.id}>
-                <EntityForm
-                  nameLabel="Trigger Name"
+                <TriggerForm
                   initial={{
                     name: trigger.name,
                     description: trigger.description ?? "",
@@ -78,8 +77,7 @@ export function TriggerList({ injuryId }: { injuryId: string }) {
 
       {adding ? (
         <div>
-          <EntityForm
-            nameLabel="Trigger Name"
+          <TriggerForm
             submitLabel="Add"
             onCancel={() => setAdding(false)}
             onSubmit={async (values) => {

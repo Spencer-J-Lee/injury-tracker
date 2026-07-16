@@ -114,7 +114,7 @@ export function InjuryDetailPage() {
         </div>
       </div>
 
-      <div className="grid gap-5 lg:grid-cols-[2fr_1fr]">
+      <div className="grid gap-5 lg:grid-cols-[3fr_2fr]">
         <div className="min-w-0 space-y-5">
           <PainTrendChart injuryId={injury.id} />
           <LogTimeline injuryId={injury.id} />

@@ -1,6 +1,5 @@
 export type InjuryStatus = "active" | "monitoring" | "resolved";
 export type InjuryPriority = "low" | "medium" | "high" | "urgent";
-export type RemedyType = "relief" | "longterm";
 export type Category =
   "Mobility" | "Strengthening" | "Lifestyle" | "Overuse" | "Posture" | "Rest";
 
@@ -22,7 +21,7 @@ export interface Remedy {
   injuryId: string;
   name: string;
   description?: string;
-  type: RemedyType;
+  providesImmediateRelief: boolean;
   category?: Category;
   createdAt: string;
   archivedAt?: string;

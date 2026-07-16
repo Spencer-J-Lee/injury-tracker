@@ -1,11 +1,16 @@
 import { useState } from "react";
-import { faPen, faBoxArchive } from "@fortawesome/free-solid-svg-icons";
-import type { RemedyType } from "@/types/models";
+import {
+  faPen,
+  faBoxArchive,
+  faAsterisk,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import type { Category, Remedy } from "@/types/models";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { IconButton } from "@/components/ui/IconButton";
-import { EntityForm } from "@/components/ui/EntityForm";
+import { RemedyForm } from "@/components/remedies/RemedyForm";
 import { useRemedies } from "@/hooks/useRemedies";
 import {
   createRemedy,
@@ -13,19 +18,25 @@ import {
   updateRemedy,
 } from "@/db/queries/remedies";
 
-function RemedyGroup({
+interface RemedySectionDefaults {
+  category?: Category;
+}
+
+function RemedySection({
   title,
-  type,
+  remedies,
   injuryId,
+  defaults,
+  showCategoryBadge = true,
 }: {
   title: string;
-  type: RemedyType;
+  remedies: Remedy[];
   injuryId: string;
+  defaults: RemedySectionDefaults;
+  showCategoryBadge?: boolean;
 }) {
-  const remedies = useRemedies(injuryId);
   const [adding, setAdding] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const filtered = (remedies ?? []).filter((r) => r.type === type);
 
   return (
     <div>
@@ -33,17 +44,17 @@ function RemedyGroup({
         {title}
       </h4>
 
-      {filtered.length > 0 && (
+      {remedies.length > 0 && (
         <ul className="mb-2 space-y-2">
-          {filtered.map((remedy) =>
+          {remedies.map((remedy) =>
             editingId === remedy.id ? (
               <li key={remedy.id}>
-                <EntityForm
-                  nameLabel="Remedy Name"
+                <RemedyForm
                   initial={{
                     name: remedy.name,
                     description: remedy.description ?? "",
                     category: remedy.category,
+                    providesImmediateRelief: remedy.providesImmediateRelief,
                   }}
                   submitLabel="Save"
                   onCancel={() => setEditingId(null)}
@@ -59,9 +70,20 @@ function RemedyGroup({
                 className="border-subtle rounded-[10px] border px-3 py-[9px]"
               >
                 <div className="flex min-w-0 items-start justify-between gap-2">
-                  <p className="text-ink text-[13px]">{remedy.name}</p>
-                  <div className="flex shrink-0 gap-1.5">
-                    {remedy.category && <Badge>{remedy.category}</Badge>}
+                  <p className="text-ink flex items-center gap-1.5 text-[13px]">
+                    {remedy.providesImmediateRelief && (
+                      <FontAwesomeIcon
+                        icon={faAsterisk}
+                        className="text-pain-green shrink-0 text-[10px]"
+                        title="Provides immediate relief"
+                      />
+                    )}
+                    {remedy.name}
+                  </p>
+                  <div className="flex shrink-0 flex-wrap justify-end gap-1.5">
+                    {showCategoryBadge && remedy.category && (
+                      <Badge>{remedy.category}</Badge>
+                    )}
                     <IconButton
                       icon={faPen}
                       label="Edit remedy"
@@ -88,19 +110,19 @@ function RemedyGroup({
 
       {adding ? (
         <div>
-          <EntityForm
-            nameLabel="Remedy Name"
+          <RemedyForm
+            initial={defaults}
             submitLabel="Add"
             onCancel={() => setAdding(false)}
             onSubmit={async (values) => {
-              await createRemedy({ injuryId, type, ...values });
+              await createRemedy({ injuryId, ...values });
               setAdding(false);
             }}
           />
         </div>
       ) : (
         <Button
-          variant={filtered.length > 0 ? "ghost" : "dashed"}
+          variant={remedies.length > 0 ? "ghost" : "dashed"}
           onClick={() => setAdding(true)}
           className="w-full"
         >
@@ -112,13 +134,52 @@ function RemedyGroup({
 }
 
 export function RemedyList({ injuryId }: { injuryId: string }) {
+  const remedies = useRemedies(injuryId) ?? [];
+  const strengthening = remedies.filter(
+    (r) => r.category === "Strengthening",
+  );
+  const mobility = remedies.filter((r) => r.category === "Mobility");
+  const prevention = remedies
+    .filter((r) => r.category !== "Strengthening" && r.category !== "Mobility")
+    .sort((a, b) => {
+      const categoryCompare = (a.category ?? "").localeCompare(
+        b.category ?? "",
+      );
+      if (categoryCompare !== 0) return categoryCompare;
+      return a.name.localeCompare(b.name);
+    });
+
   return (
     <Card className="space-y-5">
-      <h3 className="font-heading text-ink-emphasis text-sm font-semibold">
-        Remedies
-      </h3>
-      <RemedyGroup title="Relief" type="relief" injuryId={injuryId} />
-      <RemedyGroup title="Long-term" type="longterm" injuryId={injuryId} />
+      <div className="flex items-baseline justify-between gap-2">
+        <h3 className="font-heading text-ink-emphasis text-sm font-semibold">
+          Remedies
+        </h3>
+        <span className="text-ink-faint flex items-center gap-1 text-[11px]">
+          <FontAwesomeIcon icon={faAsterisk} className="text-pain-green text-[10px]" />
+          Immediate relief
+        </span>
+      </div>
+      <RemedySection
+        title="Strengthening"
+        remedies={strengthening}
+        injuryId={injuryId}
+        defaults={{ category: "Strengthening" }}
+        showCategoryBadge={false}
+      />
+      <RemedySection
+        title="Mobility"
+        remedies={mobility}
+        injuryId={injuryId}
+        defaults={{ category: "Mobility" }}
+        showCategoryBadge={false}
+      />
+      <RemedySection
+        title="Prevention"
+        remedies={prevention}
+        injuryId={injuryId}
+        defaults={{}}
+      />
     </Card>
   );
 }

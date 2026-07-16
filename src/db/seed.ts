@@ -133,7 +133,7 @@ export async function seedTestData(): Promise<SeedResult> {
         injuryId,
         name: remedy.name,
         description: remedy.description,
-        type: remedy.type,
+        providesImmediateRelief: remedy.providesImmediateRelief,
         category: remedy.category,
         createdAt,
       });

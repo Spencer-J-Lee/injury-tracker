@@ -6,44 +6,38 @@ import { Kbd } from "@/components/ui/Kbd";
 import { Select } from "@/components/ui/Select";
 import { useFormShortcuts } from "@/hooks/useFormShortcuts";
 import { saveShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
-import { Textarea } from "./Textarea";
+import { Textarea } from "@/components/ui/Textarea";
+import { CATEGORIES } from "@/lib/categories";
 
-const CATEGORIES: Category[] = [
-  "Mobility",
-  "Strengthening",
-  "Lifestyle",
-  "Rest",
-  "Overuse",
-  "Posture",
-];
-
-interface EntityFormValues {
+interface RemedyFormValues {
   name: string;
   description: string;
   category?: Category;
+  providesImmediateRelief: boolean;
 }
 
-interface EntityFormProps {
-  nameLabel: string;
-  initial?: Partial<EntityFormValues>;
+interface RemedyFormProps {
+  initial?: Partial<RemedyFormValues>;
   submitLabel: string;
-  onSubmit: (values: EntityFormValues) => void | Promise<void>;
+  onSubmit: (values: RemedyFormValues) => void | Promise<void>;
   onCancel?: () => void;
   showShortcuts?: boolean;
 }
 
-export function EntityForm({
-  nameLabel,
+export function RemedyForm({
   initial,
   submitLabel,
   onSubmit,
   onCancel,
   showShortcuts = true,
-}: EntityFormProps) {
+}: RemedyFormProps) {
   const [name, setName] = useState(initial?.name ?? "");
   const [description, setDescription] = useState(initial?.description ?? "");
   const [category, setCategory] = useState<Category | undefined>(
     initial?.category,
+  );
+  const [providesImmediateRelief, setProvidesImmediateRelief] = useState(
+    initial?.providesImmediateRelief ?? false,
   );
   const [submitting, setSubmitting] = useState(false);
 
@@ -55,11 +49,13 @@ export function EntityForm({
         name: name.trim(),
         description: description.trim(),
         category,
+        providesImmediateRelief,
       });
       if (!initial) {
         setName("");
         setDescription("");
         setCategory(undefined);
+        setProvidesImmediateRelief(false);
       }
     } finally {
       setSubmitting(false);
@@ -81,7 +77,7 @@ export function EntityForm({
       <Input
         value={name}
         onChange={(e) => setName(e.target.value)}
-        placeholder={nameLabel}
+        placeholder="Remedy Name"
         required
         autoFocus
       />
@@ -101,6 +97,17 @@ export function EntityForm({
           </option>
         ))}
       </Select>
+
+      <div className="space-y-1.5 pt-0.5">
+        <label className="text-ink-secondary flex items-center gap-2 text-[13px]">
+          <input
+            type="checkbox"
+            checked={providesImmediateRelief}
+            onChange={(e) => setProvidesImmediateRelief(e.target.checked)}
+          />
+          Provides immediate relief
+        </label>
+      </div>
 
       <div className="flex items-center gap-2">
         <Button

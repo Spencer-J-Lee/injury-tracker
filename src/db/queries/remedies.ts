@@ -1,5 +1,5 @@
 import { db } from "@/db/schema";
-import type { Category, Remedy, RemedyType } from "@/types/models";
+import type { Category, Remedy } from "@/types/models";
 
 export function listRemediesForInjury(injuryId: string) {
   return db.remedies
@@ -17,7 +17,7 @@ export async function createRemedy(input: {
   injuryId: string;
   name: string;
   description?: string;
-  type: RemedyType;
+  providesImmediateRelief: boolean;
   category?: Category;
 }): Promise<Remedy> {
   const remedy: Remedy = {
@@ -25,7 +25,7 @@ export async function createRemedy(input: {
     injuryId: input.injuryId,
     name: input.name,
     description: input.description,
-    type: input.type,
+    providesImmediateRelief: input.providesImmediateRelief,
     category: input.category,
     createdAt: new Date().toISOString(),
   };
@@ -35,7 +35,15 @@ export async function createRemedy(input: {
 
 export async function updateRemedy(
   id: string,
-  changes: Partial<Pick<Remedy, "name" | "description" | "category">>,
+  changes: Partial<
+    Pick<
+      Remedy,
+      | "name"
+      | "description"
+      | "category"
+      | "providesImmediateRelief"
+    >
+  >,
 ) {
   await db.remedies.update(id, changes);
 }

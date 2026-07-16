@@ -1,7 +1,7 @@
 import type { ButtonHTMLAttributes } from "react";
 import clsx from "clsx";
 
-type TogglePillTone = "accent" | "red";
+type TogglePillTone = "accent" | "red" | "green";
 
 interface TogglePillProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   selected: boolean;
@@ -11,6 +11,7 @@ interface TogglePillProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const selectedToneClasses: Record<TogglePillTone, string> = {
   accent: "border-accent bg-accent-soft text-accent-soft-text",
   red: "border-pain-red bg-pain-red-bg text-pain-red",
+  green: "border-pain-green bg-pain-green-bg text-pain-green",
 };
 
 export function TogglePill({

@@ -1,11 +1,11 @@
 import { useState } from "react";
-import type { Category, Remedy, RemedyType } from "@/types/models";
+import type { Category, Remedy } from "@/types/models";
 import { useRemedies } from "@/hooks/useRemedies";
 import { createRemedy } from "@/db/queries/remedies";
 import { Label } from "../ui/Label";
 import { TogglePill } from "@/components/ui/TogglePill";
 import { Button } from "../ui/Button";
-import { EntityForm } from "@/components/ui/EntityForm";
+import { RemedyForm } from "@/components/remedies/RemedyForm";
 
 interface RemedyCheckboxGroupProps {
   injuryId: string;
@@ -13,21 +13,29 @@ interface RemedyCheckboxGroupProps {
   onToggle: (remedyId: string) => void;
 }
 
+interface RemedyDefaults {
+  category?: Category;
+  providesImmediateRelief?: boolean;
+}
+
 function RemedySection({
   title,
   remedies,
   selectedRemedyIds,
   onToggle,
+  defaults,
   onAdd,
 }: {
   title: string;
   remedies: Remedy[];
   selectedRemedyIds: string[];
   onToggle: (remedyId: string) => void;
+  defaults: RemedyDefaults;
   onAdd: (values: {
     name: string;
     description: string;
     category?: Category;
+    providesImmediateRelief: boolean;
   }) => void | Promise<void>;
 }) {
   const [adding, setAdding] = useState(false);
@@ -36,26 +44,28 @@ function RemedySection({
     <div>
       <Label>{title}</Label>
       <div className="flex flex-wrap gap-2">
-        {remedies.map((remedy) => {
-          const selected = selectedRemedyIds.includes(remedy.id);
-          return (
-            <TogglePill
-              key={remedy.id}
-              selected={selected}
-              onClick={() => onToggle(remedy.id)}
-            >
-              {remedy.name}
-            </TogglePill>
-          );
-        })}
-        <Button variant={remedies.length > 0 ? "ghost" : "dashed"} size="sm" onClick={() => setAdding(true)}>
+        {remedies.map((remedy) => (
+          <TogglePill
+            key={remedy.id}
+            tone="green"
+            selected={selectedRemedyIds.includes(remedy.id)}
+            onClick={() => onToggle(remedy.id)}
+          >
+            {remedy.name}
+          </TogglePill>
+        ))}
+        <Button
+          variant={remedies.length > 0 ? "ghost" : "dashed"}
+          size="sm"
+          onClick={() => setAdding(true)}
+        >
           + Add
         </Button>
       </div>
       {adding && (
         <div className="mt-1.5">
-          <EntityForm
-            nameLabel="Remedy Name"
+          <RemedyForm
+            initial={defaults}
             submitLabel="Add"
             showShortcuts={false}
             onCancel={() => setAdding(false)}
@@ -76,19 +86,32 @@ export function RemedyCheckboxGroup({
   onToggle,
 }: RemedyCheckboxGroupProps) {
   const remedies = useRemedies(injuryId) ?? [];
-  const relief = remedies.filter((r) => r.type === "relief");
-  const longterm = remedies.filter((r) => r.type === "longterm");
+  const strengthening = remedies.filter(
+    (r) => r.category === "Strengthening",
+  );
+  const mobility = remedies.filter((r) => r.category === "Mobility");
+  const prevention = remedies
+    .filter((r) => r.category !== "Strengthening" && r.category !== "Mobility")
+    .sort((a, b) => {
+      const categoryCompare = (a.category ?? "").localeCompare(
+        b.category ?? "",
+      );
+      if (categoryCompare !== 0) return categoryCompare;
+      return a.name.localeCompare(b.name);
+    });
 
-  const handleAdd = async (
-    type: RemedyType,
-    values: { name: string; description: string; category?: Category },
-  ) => {
+  const handleAdd = async (values: {
+    name: string;
+    description: string;
+    category?: Category;
+    providesImmediateRelief: boolean;
+  }) => {
     const created = await createRemedy({
       injuryId,
       name: values.name,
       description: values.description || undefined,
-      type,
       category: values.category,
+      providesImmediateRelief: values.providesImmediateRelief,
     });
     onToggle(created.id);
   };
@@ -96,18 +119,28 @@ export function RemedyCheckboxGroup({
   return (
     <div className="space-y-3">
       <RemedySection
-        title="Relief"
-        remedies={relief}
+        title="Strengthening"
+        remedies={strengthening}
         selectedRemedyIds={selectedRemedyIds}
         onToggle={onToggle}
-        onAdd={(values) => handleAdd("relief", values)}
+        defaults={{ category: "Strengthening" }}
+        onAdd={handleAdd}
       />
       <RemedySection
-        title="Long-term"
-        remedies={longterm}
+        title="Mobility"
+        remedies={mobility}
         selectedRemedyIds={selectedRemedyIds}
         onToggle={onToggle}
-        onAdd={(values) => handleAdd("longterm", values)}
+        defaults={{ category: "Mobility" }}
+        onAdd={handleAdd}
+      />
+      <RemedySection
+        title="Prevention"
+        remedies={prevention}
+        selectedRemedyIds={selectedRemedyIds}
+        onToggle={onToggle}
+        defaults={{}}
+        onAdd={handleAdd}
       />
     </div>
   );
