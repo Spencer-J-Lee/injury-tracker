@@ -94,7 +94,7 @@ export function TriggerList({ injuryId }: { injuryId: string }) {
           onClick={() => setAdding(true)}
           className="w-full"
         >
-          + Add trigger
+          + Add
         </Button>
       )}
     </Card>

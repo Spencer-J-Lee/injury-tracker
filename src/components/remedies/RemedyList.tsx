@@ -104,7 +104,7 @@ function RemedyGroup({
           onClick={() => setAdding(true)}
           className="w-full"
         >
-          + Add {title.toLowerCase()} remedy
+          + Add
         </Button>
       )}
     </div>
