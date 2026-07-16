@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Divider } from "@/components/ui/Divider";
 import { IconButton } from "@/components/ui/IconButton";
 import { ToneText } from "@/components/ui/ToneText";
+import { RichTextContent } from "@/components/journal/RichTextEditor";
 import { formatTimestamp } from "@/lib/dates";
 import { painTone, painLabel, freqTone } from "@/lib/pain";
 import { deleteLogEntry } from "@/db/queries/logEntries";
@@ -102,9 +103,10 @@ export function LogTimelineItem({
         <>
           <Divider />
           <div className="mt-2">
-            <p className="text-ink-secondary text-[13px] whitespace-pre-line">
-              {entry.notes}
-            </p>
+            <RichTextContent
+              html={entry.notes}
+              className="text-ink-secondary text-[13px]"
+            />
           </div>
         </>
       )}

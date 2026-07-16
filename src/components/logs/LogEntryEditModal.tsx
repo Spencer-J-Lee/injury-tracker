@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import type { LogEntry } from "@/types/models";
 import { Modal } from "@/components/ui/Modal";
 import { Button } from "@/components/ui/Button";
-import { Textarea } from "@/components/ui/Textarea";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { Kbd } from "@/components/ui/Kbd";
@@ -12,6 +11,7 @@ import { PainFrequencySlider } from "@/components/logs/PainFrequencySlider";
 import { RemedyCheckboxGroup } from "@/components/logs/RemedyCheckboxGroup";
 import { TriggerCheckboxGroup } from "@/components/logs/TriggerCheckboxGroup";
 import { InjuryTitle } from "@/components/injuries/InjuryTitle";
+import { RichTextEditor } from "@/components/journal/RichTextEditor";
 import { useInjury } from "@/hooks/useInjury";
 import { useUnsavedChangesGuard } from "@/hooks/useUnsavedChangesGuard";
 import { updateLogEntry } from "@/db/queries/logEntries";
@@ -152,13 +152,7 @@ export function LogEntryEditModal({
 
       <div>
         <Label>Notes</Label>
-        <Textarea
-          value={notes}
-          onChange={(e) => setNotes(e.target.value)}
-          rows={8}
-          className="min-h-[52px]"
-          autoFocus
-        />
+        <RichTextEditor value={notes} onChange={setNotes} autoFocus />
       </div>
 
       <ConfirmDialog
