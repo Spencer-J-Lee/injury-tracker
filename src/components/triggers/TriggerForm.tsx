@@ -2,6 +2,7 @@ import { useState, type SubmitEvent } from "react";
 import type { TriggerCategory } from "@/types/models";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
+import { Card } from "@/components/ui/Card";
 import { Kbd } from "@/components/ui/Kbd";
 import { Select } from "@/components/ui/Select";
 import { useFormShortcuts } from "@/hooks/useFormShortcuts";
@@ -64,9 +65,12 @@ export function TriggerForm({
   useFormShortcuts({ onSave: doSubmit, onCancel, enabled: showShortcuts });
 
   return (
-    <form
+    <Card
+      as="form"
+      size="sm"
+      variant="dashed"
       onSubmit={handleSubmit}
-      className="border-strong space-y-2 rounded-lg border border-dashed p-3"
+      className="space-y-2"
     >
       <Input
         value={name}
@@ -115,6 +119,6 @@ export function TriggerForm({
           </Button>
         )}
       </div>
-    </form>
+    </Card>
   );
 }

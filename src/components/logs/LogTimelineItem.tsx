@@ -2,6 +2,7 @@ import { useState } from "react";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import type { LogEntry, Remedy, Trigger } from "@/types/models";
 import { Badge } from "@/components/ui/Badge";
+import { Card } from "@/components/ui/Card";
 import { Divider } from "@/components/ui/Divider";
 import { IconButton } from "@/components/ui/IconButton";
 import { ToneText } from "@/components/ui/ToneText";
@@ -25,7 +26,7 @@ export function LogTimelineItem({
     entry.remedyIds.length > 0 || entry.triggerIds.length > 0;
 
   return (
-    <li className="border-subtle rounded-[12px] border px-[14px] py-3">
+    <Card as="li" size="md" variant="subtle">
       <div className="flex items-center justify-between gap-2">
         <span className="text-ink-muted text-[13px]">
           {formatTimestamp(entry.timestamp)}
@@ -116,6 +117,6 @@ export function LogTimelineItem({
         open={editing}
         onClose={() => setEditing(false)}
       />
-    </li>
+    </Card>
   );
 }

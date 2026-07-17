@@ -65,10 +65,7 @@ function RemedySection({
                 />
               </li>
             ) : (
-              <li
-                key={remedy.id}
-                className="border-subtle rounded-[10px] border px-3 py-[9px]"
-              >
+              <Card as="li" size="md" variant="subtle" key={remedy.id}>
                 <div className="flex min-w-0 items-start justify-between gap-2">
                   <p className="text-ink text-[13px]">
                     {remedy.name}
@@ -101,7 +98,7 @@ function RemedySection({
                     {remedy.description}
                   </p>
                 )}
-              </li>
+              </Card>
             ),
           )}
         </ul>

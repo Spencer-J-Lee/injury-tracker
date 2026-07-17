@@ -129,7 +129,11 @@ export function InjuryCard({
         {lastLog &&
           (lastLog.painLevel !== undefined ||
             lastLog.painFrequency !== undefined) && (
-            <div className="border-subtle flex flex-col justify-between gap-3 rounded-lg border p-3">
+            <Card
+              size="sm"
+              variant="subtle"
+              className="flex flex-col justify-between gap-2.5"
+            >
               {lastLog.painLevel !== undefined && (
                 <MeterRow
                   label="Intensity"
@@ -146,7 +150,7 @@ export function InjuryCard({
                   tone={freqTone(lastLog.painFrequency)}
                 />
               )}
-            </div>
+            </Card>
           )}
 
         <MiniPainTrendChart injuryId={injury.id} />

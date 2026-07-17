@@ -2,6 +2,7 @@ import { useState, type SubmitEvent } from "react";
 import type { RemedyCategory } from "@/types/models";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
+import { Card } from "@/components/ui/Card";
 import { Kbd } from "@/components/ui/Kbd";
 import { Select } from "@/components/ui/Select";
 import { Checkbox } from "@/components/ui/Checkbox";
@@ -71,9 +72,12 @@ export function RemedyForm({
   useFormShortcuts({ onSave: doSubmit, onCancel, enabled: showShortcuts });
 
   return (
-    <form
+    <Card
+      as="form"
+      size="sm"
+      variant="dashed"
       onSubmit={handleSubmit}
-      className="border-strong space-y-2 rounded-lg border border-dashed p-3"
+      className="space-y-2"
     >
       <Input
         value={name}
@@ -129,6 +133,6 @@ export function RemedyForm({
           </Button>
         )}
       </div>
-    </form>
+    </Card>
   );
 }

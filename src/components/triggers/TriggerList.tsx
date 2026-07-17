@@ -43,10 +43,7 @@ export function TriggerList({ injuryId }: { injuryId: string }) {
                 />
               </li>
             ) : (
-              <li
-                key={trigger.id}
-                className="border-subtle rounded-[10px] border px-3 py-[9px]"
-              >
+              <Card as="li" size="md" variant="subtle" key={trigger.id}>
                 <div className="flex min-w-0 items-start justify-between gap-2">
                   <p className="text-ink text-[13px]">{trigger.name}</p>
                   <div className="flex shrink-0 gap-1.5">
@@ -69,7 +66,7 @@ export function TriggerList({ injuryId }: { injuryId: string }) {
                     {trigger.description}
                   </p>
                 )}
-              </li>
+              </Card>
             ),
           )}
         </ul>
