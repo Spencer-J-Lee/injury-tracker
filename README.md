@@ -9,10 +9,11 @@ This is a personal tool built to solve my own problem, not a polished product. T
 ## Features
 
 - Log injuries and track their status over time
-- Record log entries (pain levels, notes, sessions) per injury
-- Track remedies and see which ones you've tried for a given injury
+- Record log entries (pain levels, rich-text notes, sessions) per injury
+- Track remedies and see which ones you've tried, and whether they provide immediate relief
+- Track triggers by category to spot what's aggravating an injury
 - Dashboard with filtering across active injuries
-- Charts for visualizing trends
+- Pain trend charts, including a mini trend chart on each injury card
 - JSON export/import for backups (no server, no account — your data stays on your device)
 
 ## Tech Stack
@@ -23,6 +24,8 @@ This is a personal tool built to solve my own problem, not a polished product. T
 - React Router
 - Tailwind CSS
 - Recharts
+- Tiptap (rich text editing)
+- Font Awesome
 
 ## Getting Started
 
