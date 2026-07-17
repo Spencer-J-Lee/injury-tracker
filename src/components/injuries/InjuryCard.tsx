@@ -120,28 +120,37 @@ export function InjuryCard({
           />
         </span>
       )}
-      <h3 className="text-ink min-w-0 text-base font-semibold">
-        <InjuryTitle injury={injury} />
-      </h3>
 
-      {lastLog && lastLog.painLevel !== undefined && (
-        <MeterRow
-          label="Intensity"
-          value={(lastLog.painLevel / 10) * 100}
-          displayValue={`${lastLog.painLevel}/10`}
-          tone={painTone(lastLog.painLevel)}
-        />
-      )}
-      {lastLog && lastLog.painFrequency !== undefined && (
-        <MeterRow
-          label="Frequency"
-          value={lastLog.painFrequency}
-          displayValue={`${lastLog.painFrequency}%`}
-          tone={freqTone(lastLog.painFrequency)}
-        />
-      )}
+      <div className="flex flex-col gap-[14px]">
+        <h3 className="text-ink min-w-0 text-base font-semibold">
+          <InjuryTitle injury={injury} />
+        </h3>
 
-      <MiniPainTrendChart injuryId={injury.id} />
+        {lastLog &&
+          (lastLog.painLevel !== undefined ||
+            lastLog.painFrequency !== undefined) && (
+            <div className="border-subtle flex flex-col justify-between gap-3 rounded-lg border p-3">
+              {lastLog.painLevel !== undefined && (
+                <MeterRow
+                  label="Intensity"
+                  value={(lastLog.painLevel / 10) * 100}
+                  displayValue={`${lastLog.painLevel}/10`}
+                  tone={painTone(lastLog.painLevel)}
+                />
+              )}
+              {lastLog.painFrequency !== undefined && (
+                <MeterRow
+                  label="Frequency"
+                  value={lastLog.painFrequency}
+                  displayValue={`${lastLog.painFrequency}%`}
+                  tone={freqTone(lastLog.painFrequency)}
+                />
+              )}
+            </div>
+          )}
+
+        <MiniPainTrendChart injuryId={injury.id} />
+      </div>
 
       <div className="flex items-center justify-between gap-2">
         <div className="flex min-w-0 items-center gap-1.5">
@@ -150,30 +159,30 @@ export function InjuryCard({
             {statusLabels[injury.status]}
           </span>
         </div>
-        <div className="flex min-w-0 gap-1.5 items-center">
+        <div className="flex min-w-0 items-center gap-1.5">
           {loggedToday && lastLog ? (
-              <span className="text-ink-faint text-[13px]">
-                Last logged {formatRelative(lastLog.timestamp)}
-              </span>
+            <span className="text-ink-faint text-[13px]">
+              Last logged {formatRelative(lastLog.timestamp)}
+            </span>
           ) : (
             <span className="text-ink-faint text-[13px]">Not logged today</span>
           )}
-        {!selectable && (
-          <Button
-            variant={loggedToday ? "secondary" : "primary"}
-            size="sm"
-            onClick={(e) => {
-              e.stopPropagation();
-              if (todayEntry) {
-                setEditingToday(true);
-              } else {
-                openLogModal(injury.id);
-              }
-            }}
-          >
-            {loggedToday ? "Update Entry" : "Log Entry"}
-          </Button>
-        )}
+          {!selectable && (
+            <Button
+              variant={loggedToday ? "secondary" : "primary"}
+              size="sm"
+              onClick={(e) => {
+                e.stopPropagation();
+                if (todayEntry) {
+                  setEditingToday(true);
+                } else {
+                  openLogModal(injury.id);
+                }
+              }}
+            >
+              {loggedToday ? "Update Entry" : "Log Entry"}
+            </Button>
+          )}
         </div>
       </div>
 
