@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,7 +11,9 @@ import { statusLabels } from "@/lib/injuryStatus";
 import { InjuryTitle } from "@/components/injuries/InjuryTitle";
 import { useLastLogEntryForInjury } from "@/hooks/useLastLogEntryForInjury";
 import { useLogModal } from "@/context/useLogModal";
+import { LogEntryEditModal } from "@/components/logs/LogEntryEditModal";
 import { formatRelative } from "@/lib/dates";
+import { isToday } from "date-fns";
 import { painTone, freqTone, type PainTone } from "@/lib/pain";
 
 const meterFillClasses: Record<PainTone, string> = {
@@ -77,6 +80,9 @@ export function InjuryCard({
   const lastLog = useLastLogEntryForInjury(injury.id);
   const { openLogModal } = useLogModal();
   const navigate = useNavigate();
+  const [editingToday, setEditingToday] = useState(false);
+  const loggedToday = lastLog ? isToday(new Date(lastLog.timestamp)) : false;
+  const todayEntry = loggedToday ? lastLog : undefined;
 
   const handleClick = () => {
     if (selectable) {
@@ -142,27 +148,39 @@ export function InjuryCard({
           </span>
         </div>
         <div className="flex min-w-0 gap-1.5 items-center">
-          {lastLog ? (
+          {loggedToday && lastLog ? (
               <span className="text-ink-faint text-[13px]">
-                Logged {formatRelative(lastLog.timestamp)}
+                Last logged {formatRelative(lastLog.timestamp)}
               </span>
           ) : (
-            <span className="text-ink-faint text-[13px]">No entries yet</span>
+            <span className="text-ink-faint text-[13px]">Not logged today</span>
           )}
         {!selectable && (
           <Button
-            variant="secondary"
+            variant={loggedToday ? "secondary" : "primary"}
             size="sm"
             onClick={(e) => {
               e.stopPropagation();
-              openLogModal(injury.id);
+              if (todayEntry) {
+                setEditingToday(true);
+              } else {
+                openLogModal(injury.id);
+              }
             }}
           >
-            Log Entry
+            {loggedToday ? "Update Entry" : "Log Entry"}
           </Button>
         )}
         </div>
       </div>
+
+      {todayEntry && (
+        <LogEntryEditModal
+          entry={todayEntry}
+          open={editingToday}
+          onClose={() => setEditingToday(false)}
+        />
+      )}
     </Card>
   );
 }
