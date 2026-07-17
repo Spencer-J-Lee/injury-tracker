@@ -183,3 +183,74 @@ db.version(9)
         delete remedy.type;
       }),
   );
+
+const VALID_REMEDY_CATEGORIES = new Set([
+  "Mobility",
+  "Strengthening",
+  "Lifestyle",
+  "Rest",
+]);
+const VALID_TRIGGER_CATEGORIES = new Set([
+  "Overuse",
+  "Load",
+  "Posture",
+  "Activity",
+  "Muscle Tightness",
+]);
+
+db.version(10)
+  .stores({
+    injuries: "id, status, archivedAt",
+    remedies: "id, injuryId, category, archivedAt",
+    triggers: "id, injuryId, category, archivedAt",
+    logEntries:
+      "id, injuryId, timestamp, sessionId, [injuryId+timestamp], *remedyIds, *triggerIds",
+    journalEntries: "id, date",
+    meta: "key",
+  })
+  .upgrade((tx) =>
+    Promise.all([
+      tx
+        .table("remedies")
+        .toCollection()
+        .modify((remedy) => {
+          if (remedy.category && !VALID_REMEDY_CATEGORIES.has(remedy.category)) {
+            delete remedy.category;
+          }
+        }),
+      tx
+        .table("triggers")
+        .toCollection()
+        .modify((trigger) => {
+          if (trigger.category === "Mobility") {
+            trigger.category = "Muscle Tightness";
+          } else if (
+            trigger.category &&
+            !VALID_TRIGGER_CATEGORIES.has(trigger.category)
+          ) {
+            delete trigger.category;
+          }
+        }),
+    ]),
+  );
+
+db.version(11)
+  .stores({
+    injuries: "id, status, archivedAt",
+    remedies: "id, injuryId, category, archivedAt",
+    triggers: "id, injuryId, category, archivedAt",
+    logEntries:
+      "id, injuryId, timestamp, sessionId, [injuryId+timestamp], *remedyIds, *triggerIds",
+    journalEntries: "id, date",
+    meta: "key",
+  })
+  .upgrade((tx) =>
+    tx
+      .table("triggers")
+      .toCollection()
+      .modify((trigger) => {
+        if (trigger.category === "Strengthening") {
+          trigger.category = "Activity";
+        }
+      }),
+  );

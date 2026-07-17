@@ -1,16 +1,19 @@
 import { db } from "@/db/schema";
-import type { Category, Remedy } from "@/types/models";
+import type { RemedyCategory, Remedy } from "@/types/models";
+import { REMEDY_CATEGORIES, sortByCategoryThenName } from "@/lib/categories";
 
-export function listRemediesForInjury(injuryId: string) {
-  return db.remedies
+export async function listRemediesForInjury(injuryId: string) {
+  const remedies = await db.remedies
     .where("injuryId")
     .equals(injuryId)
     .filter((remedy) => !remedy.archivedAt)
     .toArray();
+  return sortByCategoryThenName(remedies, REMEDY_CATEGORIES);
 }
 
-export function listAllRemediesForInjury(injuryId: string) {
-  return db.remedies.where("injuryId").equals(injuryId).toArray();
+export async function listAllRemediesForInjury(injuryId: string) {
+  const remedies = await db.remedies.where("injuryId").equals(injuryId).toArray();
+  return sortByCategoryThenName(remedies, REMEDY_CATEGORIES);
 }
 
 export async function createRemedy(input: {
@@ -18,7 +21,7 @@ export async function createRemedy(input: {
   name: string;
   description?: string;
   providesImmediateRelief: boolean;
-  category?: Category;
+  category?: RemedyCategory;
 }): Promise<Remedy> {
   const remedy: Remedy = {
     id: crypto.randomUUID(),

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Category } from "@/types/models";
+import type { TriggerCategory } from "@/types/models";
 import { useTriggers } from "@/hooks/useTriggers";
 import { createTrigger } from "@/db/queries/triggers";
 import { Label } from "../ui/Label";
@@ -24,7 +24,7 @@ export function TriggerCheckboxGroup({
   const handleAdd = async (values: {
     name: string;
     description: string;
-    category?: Category;
+    category?: TriggerCategory;
   }) => {
     const created = await createTrigger({
       injuryId,

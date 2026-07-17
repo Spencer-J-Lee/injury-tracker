@@ -1,23 +1,26 @@
 import { db } from "@/db/schema";
-import type { Category, Trigger } from "@/types/models";
+import type { TriggerCategory, Trigger } from "@/types/models";
+import { TRIGGER_CATEGORIES, sortByCategoryThenName } from "@/lib/categories";
 
-export function listActiveTriggersForInjury(injuryId: string) {
-  return db.triggers
+export async function listActiveTriggersForInjury(injuryId: string) {
+  const triggers = await db.triggers
     .where("injuryId")
     .equals(injuryId)
     .filter((trigger) => !trigger.archivedAt)
     .toArray();
+  return sortByCategoryThenName(triggers, TRIGGER_CATEGORIES);
 }
 
-export function listAllTriggersForInjury(injuryId: string) {
-  return db.triggers.where("injuryId").equals(injuryId).toArray();
+export async function listAllTriggersForInjury(injuryId: string) {
+  const triggers = await db.triggers.where("injuryId").equals(injuryId).toArray();
+  return sortByCategoryThenName(triggers, TRIGGER_CATEGORIES);
 }
 
 export async function createTrigger(input: {
   injuryId: string;
   name: string;
   description?: string;
-  category?: Category;
+  category?: TriggerCategory;
 }): Promise<Trigger> {
   const trigger: Trigger = {
     id: crypto.randomUUID(),

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Category, Remedy } from "@/types/models";
+import type { RemedyCategory, Remedy } from "@/types/models";
 import { useRemedies } from "@/hooks/useRemedies";
 import { createRemedy } from "@/db/queries/remedies";
 import { Label } from "../ui/Label";
@@ -14,7 +14,7 @@ interface RemedyCheckboxGroupProps {
 }
 
 interface RemedyDefaults {
-  category?: Category;
+  category?: RemedyCategory;
   providesImmediateRelief?: boolean;
 }
 
@@ -34,7 +34,7 @@ function RemedySection({
   onAdd: (values: {
     name: string;
     description: string;
-    category?: Category;
+    category?: RemedyCategory;
     providesImmediateRelief: boolean;
   }) => void | Promise<void>;
 }) {
@@ -103,7 +103,7 @@ export function RemedyCheckboxGroup({
   const handleAdd = async (values: {
     name: string;
     description: string;
-    category?: Category;
+    category?: RemedyCategory;
     providesImmediateRelief: boolean;
   }) => {
     const created = await createRemedy({

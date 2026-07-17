@@ -1,5 +1,6 @@
 import type {
-  Category,
+  RemedyCategory,
+  TriggerCategory,
   InjuryPriority,
   InjuryStatus,
 } from "@/types/models";
@@ -9,14 +10,14 @@ export interface SeedRemedy {
   name: string;
   description?: string;
   providesImmediateRelief: boolean;
-  category?: Category;
+  category?: RemedyCategory;
 }
 
 export interface SeedTrigger {
   key: string;
   name: string;
   description?: string;
-  category?: Category;
+  category?: TriggerCategory;
 }
 
 export interface SeedLogEntry {

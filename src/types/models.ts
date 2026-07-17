@@ -1,7 +1,9 @@
 export type InjuryStatus = "active" | "monitoring" | "resolved";
 export type InjuryPriority = "low" | "medium" | "high" | "urgent";
-export type Category =
-  "Mobility" | "Strengthening" | "Lifestyle" | "Overuse" | "Posture" | "Rest";
+export type RemedyCategory =
+  "Strengthening" | "Mobility" | "Lifestyle" | "Rest";
+export type TriggerCategory =
+  "Activity" | "Overuse" | "Load" | "Posture" | "Muscle Tightness";
 
 export interface Injury {
   id: string;
@@ -22,7 +24,7 @@ export interface Remedy {
   name: string;
   description?: string;
   providesImmediateRelief: boolean;
-  category?: Category;
+  category?: RemedyCategory;
   createdAt: string;
   archivedAt?: string;
 }
@@ -32,7 +34,7 @@ export interface Trigger {
   injuryId: string;
   name: string;
   description?: string;
-  category?: Category;
+  category?: TriggerCategory;
   createdAt: string;
   archivedAt?: string;
 }

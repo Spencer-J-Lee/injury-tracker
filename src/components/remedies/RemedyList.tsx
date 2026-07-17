@@ -5,7 +5,7 @@ import {
   faAsterisk,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import type { Category, Remedy } from "@/types/models";
+import type { RemedyCategory, Remedy } from "@/types/models";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -19,7 +19,7 @@ import {
 } from "@/db/queries/remedies";
 
 interface RemedySectionDefaults {
-  category?: Category;
+  category?: RemedyCategory;
 }
 
 function RemedySection({

@@ -1,5 +1,5 @@
 import { useState, type SubmitEvent } from "react";
-import type { Category } from "@/types/models";
+import type { TriggerCategory } from "@/types/models";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { Kbd } from "@/components/ui/Kbd";
@@ -7,12 +7,12 @@ import { Select } from "@/components/ui/Select";
 import { useFormShortcuts } from "@/hooks/useFormShortcuts";
 import { saveShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
 import { Textarea } from "@/components/ui/Textarea";
-import { CATEGORIES } from "@/lib/categories";
+import { TRIGGER_CATEGORIES } from "@/lib/categories";
 
 interface TriggerFormValues {
   name: string;
   description: string;
-  category?: Category;
+  category?: TriggerCategory;
 }
 
 interface TriggerFormProps {
@@ -32,7 +32,7 @@ export function TriggerForm({
 }: TriggerFormProps) {
   const [name, setName] = useState(initial?.name ?? "");
   const [description, setDescription] = useState(initial?.description ?? "");
-  const [category, setCategory] = useState<Category | undefined>(
+  const [category, setCategory] = useState<TriggerCategory | undefined>(
     initial?.category,
   );
   const [submitting, setSubmitting] = useState(false);
@@ -82,10 +82,12 @@ export function TriggerForm({
       />
       <Select
         value={category ?? ""}
-        onChange={(e) => setCategory(e.target.value as Category | undefined)}
+        onChange={(e) =>
+          setCategory(e.target.value as TriggerCategory | undefined)
+        }
       >
         <option value="">No category</option>
-        {CATEGORIES.map((option) => (
+        {TRIGGER_CATEGORIES.map((option) => (
           <option key={option} value={option}>
             {option}
           </option>

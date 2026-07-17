@@ -1,5 +1,5 @@
 import { useState, type SubmitEvent } from "react";
-import type { Category } from "@/types/models";
+import type { RemedyCategory } from "@/types/models";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { Kbd } from "@/components/ui/Kbd";
@@ -7,12 +7,12 @@ import { Select } from "@/components/ui/Select";
 import { useFormShortcuts } from "@/hooks/useFormShortcuts";
 import { saveShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
 import { Textarea } from "@/components/ui/Textarea";
-import { CATEGORIES } from "@/lib/categories";
+import { REMEDY_CATEGORIES } from "@/lib/categories";
 
 interface RemedyFormValues {
   name: string;
   description: string;
-  category?: Category;
+  category?: RemedyCategory;
   providesImmediateRelief: boolean;
 }
 
@@ -33,7 +33,7 @@ export function RemedyForm({
 }: RemedyFormProps) {
   const [name, setName] = useState(initial?.name ?? "");
   const [description, setDescription] = useState(initial?.description ?? "");
-  const [category, setCategory] = useState<Category | undefined>(
+  const [category, setCategory] = useState<RemedyCategory | undefined>(
     initial?.category,
   );
   const [providesImmediateRelief, setProvidesImmediateRelief] = useState(
@@ -88,17 +88,19 @@ export function RemedyForm({
       />
       <Select
         value={category ?? ""}
-        onChange={(e) => setCategory(e.target.value as Category | undefined)}
+        onChange={(e) =>
+          setCategory(e.target.value as RemedyCategory | undefined)
+        }
       >
         <option value="">No category</option>
-        {CATEGORIES.map((option) => (
+        {REMEDY_CATEGORIES.map((option) => (
           <option key={option} value={option}>
             {option}
           </option>
         ))}
       </Select>
 
-      <div className="space-y-1.5 pt-0.5">
+      <div className="space-y-1.5 py-0.5">
         <label className="text-ink-secondary flex items-center gap-2 text-[13px]">
           <input
             type="checkbox"
