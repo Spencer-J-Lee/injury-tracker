@@ -42,11 +42,11 @@ export function MiniPainTrendChart({ injuryId }: { injuryId: string }) {
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
           data={data}
-          margin={{ top: 4, right: 4, left: 4, bottom: 4 }}
+          margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
         >
           <CartesianGrid stroke={colors.grid} strokeWidth={1} />
-          <YAxis yAxisId="left" domain={[0, 10]} hide />
-          <YAxis yAxisId="right" domain={[0, 100]} hide />
+          <YAxis yAxisId="left" domain={[0, 10]} hide width={0} />
+          <YAxis yAxisId="right" domain={[0, 100]} hide width={0} />
           <ReferenceLine
             yAxisId="left"
             y={5}
@@ -55,7 +55,7 @@ export function MiniPainTrendChart({ injuryId }: { injuryId: string }) {
           />
           <Line
             yAxisId="left"
-            type="linear"
+            type="monotone"
             dataKey="painLevel"
             stroke={colors.line}
             strokeWidth={2}
@@ -66,7 +66,7 @@ export function MiniPainTrendChart({ injuryId }: { injuryId: string }) {
           />
           <Line
             yAxisId="right"
-            type="linear"
+            type="monotone"
             dataKey="painFrequency"
             stroke={colors.frequencyLine}
             strokeWidth={2}

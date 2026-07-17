@@ -157,13 +157,14 @@ export function InjuryCard({
       </div>
 
       <div className="flex items-center justify-between gap-2">
-        <div className="flex min-w-0 items-center gap-1.5">
+        <div className="flex min-w-0 items-center gap-2">
           <InjuryPriorityBadge priority={injury.priority} />
           <span className="text-ink-muted text-[10px] font-bold tracking-widest uppercase">
             {statusLabels[injury.status]}
           </span>
         </div>
-        <div className="flex min-w-0 items-center gap-1.5">
+        
+        <div className="flex min-w-0 items-center gap-2">
           {loggedToday && lastLog ? (
             <span className="text-ink-faint text-[13px]">
               Last logged {formatRelative(lastLog.timestamp)}

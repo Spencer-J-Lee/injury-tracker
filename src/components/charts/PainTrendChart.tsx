@@ -132,7 +132,7 @@ export function PainTrendChart({ injuryId }: { injuryId: string }) {
             <ResponsiveContainer width="100%" height="100%">
               <LineChart
                 data={data}
-                margin={{ top: 4, right: 4, left: 4, bottom: 0 }}
+                margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
               >
                 <CartesianGrid stroke={colors.grid} strokeWidth={1} />
                 <XAxis
@@ -174,7 +174,7 @@ export function PainTrendChart({ injuryId }: { injuryId: string }) {
                 <Tooltip content={<ChartTooltip colors={colors} />} />
                 <Line
                   yAxisId="left"
-                  type="linear"
+                  type="monotone"
                   dataKey="painLevel"
                   stroke={colors.line}
                   strokeWidth={3}
@@ -196,7 +196,7 @@ export function PainTrendChart({ injuryId }: { injuryId: string }) {
                 />
                 <Line
                   yAxisId="right"
-                  type="linear"
+                  type="monotone"
                   dataKey="painFrequency"
                   stroke={colors.frequencyLine}
                   strokeWidth={3}
