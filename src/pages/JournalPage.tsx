@@ -20,7 +20,6 @@ import { useFormShortcuts } from "@/hooks/useFormShortcuts";
 import { useUnsavedChangesGuard } from "@/hooks/useUnsavedChangesGuard";
 import { formatFullDate } from "@/lib/dates";
 import { saveShortcutLabel } from "@/lib/shortcuts";
-import { getLastJournalPage, setLastJournalPage } from "@/lib/journalPage";
 import { getJournalDraft, setJournalDraft } from "@/lib/journalDraft";
 
 const PAGE_SIZE = 5;
@@ -37,7 +36,7 @@ export function JournalPage() {
 
   const rawPage = searchParams.has("page")
     ? Number(searchParams.get("page"))
-    : getLastJournalPage();
+    : 1;
   const page =
     Number.isFinite(rawPage) && rawPage >= 1
       ? Math.min(Math.trunc(rawPage), totalPages)
@@ -46,7 +45,6 @@ export function JournalPage() {
 
   const goToPage = (next: number) => {
     const clamped = Math.min(Math.max(1, next), totalPages);
-    setLastJournalPage(clamped);
     setSearchParams((prev) => {
       const params = new URLSearchParams(prev);
       if (clamped <= 1) {

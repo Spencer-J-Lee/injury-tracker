@@ -1,7 +1,6 @@
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import clsx from "clsx";
 import { useLogModal } from "@/context/useLogModal";
-import { getLastJournalPage } from "@/lib/journalPage";
 import { LogEntryModal } from "@/components/logs/LogEntryModal";
 import { StampPicker } from "@/components/stamps/StampPicker";
 import { BackupBanner } from "./BackupBanner";
@@ -16,17 +15,12 @@ export function AppShell() {
   const { openLogModal } = useLogModal();
   const anyModalOpen = useAnyModalOpen();
 
-  const journalTo = () => {
-    const page = getLastJournalPage();
-    return page > 1 ? `/journal?page=${page}` : "/journal";
-  };
-
   useKeyboardShortcut("d", () => navigate("/"), !anyModalOpen);
-  useKeyboardShortcut("j", () => navigate(journalTo()), !anyModalOpen);
+  useKeyboardShortcut("j", () => navigate("/journal"), !anyModalOpen);
 
   const navLinkMobile = (to: string, label: string) => (
     <Link
-      to={to === "/journal" ? journalTo() : to}
+      to={to}
       className={clsx(
         "rounded-[10px] px-3 py-1.5 text-sm",
         location.pathname === to
@@ -40,7 +34,7 @@ export function AppShell() {
 
   const navLinkSidebar = (to: string, label: string, shortcut?: string) => (
     <Link
-      to={to === "/journal" ? journalTo() : to}
+      to={to}
       className={clsx(
         "flex items-center justify-between gap-2 rounded-[10px] px-3 py-[9px] text-sm",
         location.pathname === to

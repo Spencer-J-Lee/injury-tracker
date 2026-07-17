@@ -38,50 +38,45 @@ export function MiniPainTrendChart({ injuryId }: { injuryId: string }) {
   if (data.length === 0) return null;
 
   return (
-    <div className="flex flex-col gap-1">
-      <span className="text-ink-muted text-[11px] font-semibold">
-        Last 7 days
-      </span>
-      <div className="pointer-events-none h-20">
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart
-            data={data}
-            margin={{ top: 4, right: 4, left: 4, bottom: 4 }}
-          >
-            <CartesianGrid stroke={colors.grid} strokeWidth={1} />
-            <YAxis yAxisId="left" domain={[0, 10]} hide />
-            <YAxis yAxisId="right" domain={[0, 100]} hide />
-            <ReferenceLine
-              yAxisId="left"
-              y={5}
-              stroke={colors.grid}
-              strokeDasharray="4 4"
-            />
-            <Line
-              yAxisId="left"
-              type="linear"
-              dataKey="painLevel"
-              stroke={colors.line}
-              strokeWidth={2}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              dot={false}
-              isAnimationActive={false}
-            />
-            <Line
-              yAxisId="right"
-              type="linear"
-              dataKey="painFrequency"
-              stroke={colors.frequencyLine}
-              strokeWidth={2}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              dot={false}
-              isAnimationActive={false}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
+    <div className="pointer-events-none h-20">
+      <ResponsiveContainer width="100%" height="100%">
+        <LineChart
+          data={data}
+          margin={{ top: 4, right: 4, left: 4, bottom: 4 }}
+        >
+          <CartesianGrid stroke={colors.grid} strokeWidth={1} />
+          <YAxis yAxisId="left" domain={[0, 10]} hide />
+          <YAxis yAxisId="right" domain={[0, 100]} hide />
+          <ReferenceLine
+            yAxisId="left"
+            y={5}
+            stroke={colors.grid}
+            strokeDasharray="4 4"
+          />
+          <Line
+            yAxisId="left"
+            type="linear"
+            dataKey="painLevel"
+            stroke={colors.line}
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            dot={false}
+            isAnimationActive={false}
+          />
+          <Line
+            yAxisId="right"
+            type="linear"
+            dataKey="painFrequency"
+            stroke={colors.frequencyLine}
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            dot={false}
+            isAnimationActive={false}
+          />
+        </LineChart>
+      </ResponsiveContainer>
     </div>
   );
 }
