@@ -136,6 +136,10 @@ export async function seedTestData(): Promise<SeedResult> {
         providesImmediateRelief: remedy.providesImmediateRelief,
         category: remedy.category,
         createdAt,
+        archivedAt:
+          remedy.archivedDaysAgo !== undefined
+            ? isoOffsetDays(-remedy.archivedDaysAgo)
+            : undefined,
       });
     }
 
@@ -150,6 +154,10 @@ export async function seedTestData(): Promise<SeedResult> {
         description: trigger.description,
         category: trigger.category,
         createdAt,
+        archivedAt:
+          trigger.archivedDaysAgo !== undefined
+            ? isoOffsetDays(-trigger.archivedDaysAgo)
+            : undefined,
       });
     }
 
