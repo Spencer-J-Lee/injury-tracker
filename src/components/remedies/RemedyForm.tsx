@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { Kbd } from "@/components/ui/Kbd";
 import { Select } from "@/components/ui/Select";
+import { Checkbox } from "@/components/ui/Checkbox";
 import { useFormShortcuts } from "@/hooks/useFormShortcuts";
 import { saveShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
 import { Textarea } from "@/components/ui/Textarea";
@@ -100,16 +101,12 @@ export function RemedyForm({
         ))}
       </Select>
 
-      <div className="space-y-1.5 py-0.5">
-        <label className="text-ink-secondary flex items-center gap-2 text-[13px]">
-          <input
-            type="checkbox"
-            checked={providesImmediateRelief}
-            onChange={(e) => setProvidesImmediateRelief(e.target.checked)}
-          />
-          Provides immediate relief
-        </label>
-      </div>
+      <Checkbox
+        id="providesImmediateRelief"
+        label="Provides immediate relief"
+        checked={providesImmediateRelief}
+        onChange={(e) => setProvidesImmediateRelief(e.target.checked)}
+      />
 
       <div className="flex items-center gap-2">
         <Button
