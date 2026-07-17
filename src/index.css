@@ -56,6 +56,15 @@ button:not(:disabled) {
   cursor: pointer;
 }
 
+:not(input, textarea) {
+  text-wrap: pretty;
+}
+
+input,
+textarea {
+  text-wrap: auto;
+}
+
 /* Custom range slider (pain intensity / frequency) */
 input[type="range"] {
   -webkit-appearance: none;

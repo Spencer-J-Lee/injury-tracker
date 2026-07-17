@@ -81,7 +81,7 @@ export function InjuryDetailPage() {
           </div>
         </div>
         {injury.description && (
-          <p className="text-ink-secondary mt-2 max-w-3/5 text-sm text-pretty">
+          <p className="text-ink-secondary mt-2 max-w-3/5 text-sm">
             {injury.description}
           </p>
         )}

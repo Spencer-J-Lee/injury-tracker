@@ -65,7 +65,7 @@ export function TriggerList({ injuryId }: { injuryId: string }) {
                   </div>
                 </div>
                 {trigger.description && (
-                  <p className="text-ink-muted mt-1 text-xs text-pretty">
+                  <p className="text-ink-muted mt-1 text-xs">
                     {trigger.description}
                   </p>
                 )}

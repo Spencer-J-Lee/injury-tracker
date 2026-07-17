@@ -70,15 +70,14 @@ function RemedySection({
                 className="border-subtle rounded-[10px] border px-3 py-[9px]"
               >
                 <div className="flex min-w-0 items-start justify-between gap-2">
-                  <p className="text-ink flex items-center gap-1.5 text-[13px]">
+                  <p className="text-ink text-[13px]">
+                    {remedy.name}
                     {remedy.providesImmediateRelief && (
                       <FontAwesomeIcon
                         icon={faAsterisk}
-                        className="text-pain-green shrink-0 text-[10px]"
-                        title="Provides immediate relief"
+                        className="text-pain-green ml-1 align-baseline! text-[10px]"
                       />
                     )}
-                    {remedy.name}
                   </p>
                   <div className="flex shrink-0 flex-wrap justify-end gap-1.5">
                     {showCategoryBadge && remedy.category && (
@@ -98,7 +97,7 @@ function RemedySection({
                   </div>
                 </div>
                 {remedy.description && (
-                  <p className="text-ink-muted mt-1 text-xs text-pretty">
+                  <p className="text-ink-muted mt-1 text-xs">
                     {remedy.description}
                   </p>
                 )}
