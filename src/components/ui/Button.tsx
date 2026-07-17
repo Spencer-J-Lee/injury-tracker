@@ -18,7 +18,7 @@ const variantClasses: Record<Variant, string> = {
   ghost:
     "bg-transparent border-transparent text-ink-secondary font-semibold hover:text-ink",
   dashed:
-    "bg-transparent text-accent-soft-text border-dashed border-strong font-semibold hover:bg-accent-soft/40",
+    "bg-transparent text-ink-secondary border-dashed border-strong font-semibold hover:bg-surface-raised hover:text-ink",
 };
 
 const sizeClasses: Record<Size, string> = {
