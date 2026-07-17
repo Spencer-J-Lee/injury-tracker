@@ -9,8 +9,8 @@ import {
   Tooltip,
   ReferenceLine,
 } from "recharts";
-import clsx from "clsx";
 import { Card } from "@/components/ui/Card";
+import { TogglePill } from "@/components/ui/TogglePill";
 import { useLogEntriesForInjury } from "@/hooks/useLogEntriesForInjury";
 import {
   formatShortDate,
@@ -18,6 +18,7 @@ import {
   isWithinRange,
   type TrendRange,
 } from "@/lib/dates";
+import { chartColors as colors } from "@/components/charts/chartColors";
 
 const RANGES: { value: TrendRange; label: string }[] = [
   { value: "7d", label: "7d" },
@@ -25,16 +26,6 @@ const RANGES: { value: TrendRange; label: string }[] = [
   { value: "90d", label: "90d" },
   { value: "all", label: "All" },
 ];
-
-const colors = {
-  line: "oklch(0.58 0.13 250)",
-  frequencyLine: "oklch(0.82 0.17 85)",
-  surface: "oklch(0.24 0.013 60)",
-  grid: "oklch(0.29 0.013 60)",
-  muted: "oklch(0.65 0.013 60)",
-  primary: "oklch(0.97 0.004 60)",
-  secondary: "oklch(0.81 0.013 60)",
-};
 
 interface ChartPoint {
   timestamp: string;
@@ -78,7 +69,7 @@ function ChartTooltip({ active, payload, colors }: ChartTooltipProps) {
 }
 
 export function PainTrendChart({ injuryId }: { injuryId: string }) {
-  const [range, setRange] = useState<TrendRange>("30d");
+  const [range, setRange] = useState<TrendRange>("7d");
   const entries = useLogEntriesForInjury(injuryId);
 
   const data = useMemo<ChartPoint[]>(() => {
@@ -102,20 +93,15 @@ export function PainTrendChart({ injuryId }: { injuryId: string }) {
         <h3 className="font-heading text-ink-emphasis text-sm font-semibold">
           Pain over time
         </h3>
-        <div className="flex gap-1">
+        <div className="flex gap-2">
           {RANGES.map((r) => (
-            <button
+            <TogglePill
               key={r.value}
+              selected={range === r.value}
               onClick={() => setRange(r.value)}
-              className={clsx(
-                "rounded-full px-[10px] py-[5px] text-xs font-semibold transition-colors",
-                range === r.value
-                  ? "bg-accent-soft text-accent-soft-text"
-                  : "text-ink-muted hover:text-ink-secondary",
-              )}
             >
               {r.label}
-            </button>
+            </TogglePill>
           ))}
         </div>
       </div>
@@ -149,7 +135,6 @@ export function PainTrendChart({ injuryId }: { injuryId: string }) {
                 margin={{ top: 4, right: 4, left: 4, bottom: 0 }}
               >
                 <CartesianGrid
-                  vertical={false}
                   stroke={colors.grid}
                   strokeWidth={1}
                 />

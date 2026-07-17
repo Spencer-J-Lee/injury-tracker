@@ -15,6 +15,7 @@ import { LogEntryEditModal } from "@/components/logs/LogEntryEditModal";
 import { formatRelative } from "@/lib/dates";
 import { isToday } from "date-fns";
 import { painTone, freqTone, type PainTone } from "@/lib/pain";
+import { MiniPainTrendChart } from "@/components/charts/MiniPainTrendChart";
 
 const meterFillClasses: Record<PainTone, string> = {
   slate: "bg-ink-faint",
@@ -139,6 +140,8 @@ export function InjuryCard({
           tone={freqTone(lastLog.painFrequency)}
         />
       )}
+
+      <MiniPainTrendChart injuryId={injury.id} />
 
       <div className="flex items-center justify-between gap-2">
         <div className="flex min-w-0 items-center gap-1.5">

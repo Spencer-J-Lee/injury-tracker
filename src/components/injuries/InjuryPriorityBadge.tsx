@@ -3,12 +3,12 @@ import { Badge } from "@/components/ui/Badge";
 
 const priorityConfig: Record<
   InjuryPriority,
-  { label: string; tone: "indigo" | "amber" | "orange" | "red" }
+  { label: string; tone: "amber" | "orange" | "red" }
 > = {
-  low: { label: "Low", tone: "indigo" },
-  medium: { label: "Medium", tone: "amber" },
-  high: { label: "High", tone: "orange" },
-  urgent: { label: "Urgent", tone: "red" },
+  urgent: { label: "URGENT", tone: "red" },
+  high: { label: "High", tone: "red" },
+  medium: { label: "Medium", tone: "orange" },
+  low: { label: "Low", tone: "amber" },
 };
 
 export function InjuryPriorityBadge({

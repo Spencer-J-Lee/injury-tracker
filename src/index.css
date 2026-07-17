@@ -35,6 +35,8 @@
   --color-pain-red-text: oklch(0.74 0.18 25);
   --color-pain-orange: oklch(0.83 0.13 55);
   --color-pain-orange-bg: oklch(0.3 0.1 55);
+  --color-pain-teal: oklch(0.75 0.13 195);
+  --color-pain-violet: oklch(0.72 0.16 305);
 
   --font-heading: "Lora", serif;
 }
@@ -109,6 +111,18 @@ input[type="range"].range-amber::-webkit-slider-thumb {
 }
 input[type="range"].range-amber::-moz-range-thumb {
   background: var(--color-pain-amber);
+}
+input[type="range"].range-teal::-webkit-slider-thumb {
+  background: var(--color-pain-teal);
+}
+input[type="range"].range-teal::-moz-range-thumb {
+  background: var(--color-pain-teal);
+}
+input[type="range"].range-violet::-webkit-slider-thumb {
+  background: var(--color-pain-violet);
+}
+input[type="range"].range-violet::-moz-range-thumb {
+  background: var(--color-pain-violet);
 }
 
 /* Journal rich text (editor content + rendered entries) */

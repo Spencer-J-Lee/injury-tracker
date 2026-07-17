@@ -13,8 +13,9 @@ export function PainSlider({ value, onChange }: PainSliderProps) {
       onChange={onChange}
       max={10}
       step={1}
-      color="var(--color-accent)"
+      color="var(--color-pain-teal)"
       formatValue={(v) => `${v}/10`}
+      className="range-teal"
       ticks={[0, 2, 4, 6, 8, 10]}
     />
   );

@@ -16,9 +16,9 @@ export function PainFrequencySlider({
       onChange={onChange}
       max={100}
       step={5}
-      color="var(--color-pain-amber)"
+      color="var(--color-pain-violet)"
       formatValue={(v) => `${v}%`}
-      className="range-amber"
+      className="range-violet"
       ticks={[0, 25, 50, 75, 100]}
     />
   );
