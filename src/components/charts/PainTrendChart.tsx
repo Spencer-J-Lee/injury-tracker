@@ -134,10 +134,7 @@ export function PainTrendChart({ injuryId }: { injuryId: string }) {
                 data={data}
                 margin={{ top: 4, right: 4, left: 4, bottom: 0 }}
               >
-                <CartesianGrid
-                  stroke={colors.grid}
-                  strokeWidth={1}
-                />
+                <CartesianGrid stroke={colors.grid} strokeWidth={1} />
                 <XAxis
                   dataKey="timestamp"
                   tickFormatter={formatShortDate}

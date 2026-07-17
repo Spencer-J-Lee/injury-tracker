@@ -65,7 +65,7 @@ export function LogTimelineItem({
       {hasRemediesOrTriggers && (
         <>
           <Divider />
-          <div className="space-y-1.5 mt-2">
+          <div className="mt-2 space-y-1.5">
             {entry.remedyIds.length > 0 && (
               <div className="flex gap-2">
                 <span className="text-ink-muted w-14 shrink-0 pt-[3px] text-[11px] font-semibold">

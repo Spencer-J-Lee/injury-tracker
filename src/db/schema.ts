@@ -214,7 +214,10 @@ db.version(10)
         .table("remedies")
         .toCollection()
         .modify((remedy) => {
-          if (remedy.category && !VALID_REMEDY_CATEGORIES.has(remedy.category)) {
+          if (
+            remedy.category &&
+            !VALID_REMEDY_CATEGORIES.has(remedy.category)
+          ) {
             delete remedy.category;
           }
         }),

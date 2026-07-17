@@ -14,7 +14,11 @@ const toneClasses: Record<Tone, string> = {
   red: "text-pain-red-text",
 };
 
-export function ToneText({ tone = "slate", className, ...props }: ToneTextProps) {
+export function ToneText({
+  tone = "slate",
+  className,
+  ...props
+}: ToneTextProps) {
   return (
     <span
       className={clsx("font-semibold", toneClasses[tone], className)}

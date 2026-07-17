@@ -134,9 +134,7 @@ function RemedySection({
 
 export function RemedyList({ injuryId }: { injuryId: string }) {
   const remedies = useRemedies(injuryId) ?? [];
-  const strengthening = remedies.filter(
-    (r) => r.category === "Strengthening",
-  );
+  const strengthening = remedies.filter((r) => r.category === "Strengthening");
   const mobility = remedies.filter((r) => r.category === "Mobility");
   const prevention = remedies
     .filter((r) => r.category !== "Strengthening" && r.category !== "Mobility")
@@ -155,7 +153,10 @@ export function RemedyList({ injuryId }: { injuryId: string }) {
           Remedies
         </h3>
         <span className="text-ink-faint flex items-center gap-1 text-[11px]">
-          <FontAwesomeIcon icon={faAsterisk} className="text-pain-green text-[10px]" />
+          <FontAwesomeIcon
+            icon={faAsterisk}
+            className="text-pain-green text-[10px]"
+          />
           Immediate relief
         </span>
       </div>

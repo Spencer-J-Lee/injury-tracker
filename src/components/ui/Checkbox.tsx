@@ -1,8 +1,10 @@
 import type { InputHTMLAttributes } from "react";
 import clsx from "clsx";
 
-interface CheckboxProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, "type"> {
+interface CheckboxProps extends Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  "type"
+> {
   label: string;
 }
 
@@ -11,7 +13,7 @@ export function Checkbox({ label, className, id, ...props }: CheckboxProps) {
     <label
       htmlFor={id}
       className={clsx(
-        "text-ink-secondary group flex w-fit items-center gap-2 text-[13px] py-1",
+        "text-ink-secondary group flex w-fit items-center gap-2 py-1 text-[13px]",
         !props.disabled && "cursor-pointer",
         className,
       )}

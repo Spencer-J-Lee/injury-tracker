@@ -12,7 +12,10 @@ export async function listActiveTriggersForInjury(injuryId: string) {
 }
 
 export async function listAllTriggersForInjury(injuryId: string) {
-  const triggers = await db.triggers.where("injuryId").equals(injuryId).toArray();
+  const triggers = await db.triggers
+    .where("injuryId")
+    .equals(injuryId)
+    .toArray();
   return sortByCategoryThenName(triggers, TRIGGER_CATEGORIES);
 }
 

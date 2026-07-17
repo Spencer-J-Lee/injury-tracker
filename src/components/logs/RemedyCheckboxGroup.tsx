@@ -86,9 +86,7 @@ export function RemedyCheckboxGroup({
   onToggle,
 }: RemedyCheckboxGroupProps) {
   const remedies = useRemedies(injuryId) ?? [];
-  const strengthening = remedies.filter(
-    (r) => r.category === "Strengthening",
-  );
+  const strengthening = remedies.filter((r) => r.category === "Strengthening");
   const mobility = remedies.filter((r) => r.category === "Mobility");
   const prevention = remedies
     .filter((r) => r.category !== "Strengthening" && r.category !== "Mobility")

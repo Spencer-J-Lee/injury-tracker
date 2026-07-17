@@ -8,10 +8,7 @@ import { BackupBanner } from "./BackupBanner";
 import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut";
 import { useAnyModalOpen } from "@/lib/modalStore";
 import { Kbd } from "@/components/ui/Kbd";
-import {
-  dashboardShortcutLabel,
-  journalShortcutLabel,
-} from "@/lib/shortcuts";
+import { dashboardShortcutLabel, journalShortcutLabel } from "@/lib/shortcuts";
 
 export function AppShell() {
   const location = useLocation();
@@ -45,7 +42,7 @@ export function AppShell() {
     <Link
       to={to === "/journal" ? journalTo() : to}
       className={clsx(
-        "flex items-center justify-between rounded-[10px] px-3 py-[9px] text-sm gap-2",
+        "flex items-center justify-between gap-2 rounded-[10px] px-3 py-[9px] text-sm",
         location.pathname === to
           ? "bg-accent-soft text-accent-soft-text font-semibold"
           : "text-ink-muted hover:text-ink-secondary font-medium",

@@ -12,7 +12,10 @@ export async function listRemediesForInjury(injuryId: string) {
 }
 
 export async function listAllRemediesForInjury(injuryId: string) {
-  const remedies = await db.remedies.where("injuryId").equals(injuryId).toArray();
+  const remedies = await db.remedies
+    .where("injuryId")
+    .equals(injuryId)
+    .toArray();
   return sortByCategoryThenName(remedies, REMEDY_CATEGORIES);
 }
 
@@ -41,10 +44,7 @@ export async function updateRemedy(
   changes: Partial<
     Pick<
       Remedy,
-      | "name"
-      | "description"
-      | "category"
-      | "providesImmediateRelief"
+      "name" | "description" | "category" | "providesImmediateRelief"
     >
   >,
 ) {
