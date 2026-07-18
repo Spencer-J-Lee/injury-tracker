@@ -8,8 +8,17 @@ import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut";
 import { useAnyModalOpen } from "@/lib/modalStore";
 import { Kbd } from "@/components/ui/Kbd";
 import { dashboardShortcutLabel, journalShortcutLabel } from "@/lib/shortcuts";
+import { UnsavedChangesBlockerProvider } from "@/context/UnsavedChangesBlockerProvider";
 
 export function AppShell() {
+  return (
+    <UnsavedChangesBlockerProvider>
+      <AppShellContent />
+    </UnsavedChangesBlockerProvider>
+  );
+}
+
+function AppShellContent() {
   const location = useLocation();
   const navigate = useNavigate();
   const { openLogModal } = useLogModal();

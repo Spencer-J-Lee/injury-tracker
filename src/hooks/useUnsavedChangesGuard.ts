@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { useBlocker } from "react-router-dom";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { setGuardDirty } from "@/lib/unsavedChangesRegistry";
 
 export function useUnsavedChangesGuard(isDirty: boolean) {
+  const id = useId();
   const bypassRef = useRef(false);
 
   useEffect(() => {
@@ -10,19 +11,24 @@ export function useUnsavedChangesGuard(isDirty: boolean) {
       // time it becomes dirty (bypass is only meant to cover the single
       // navigation that immediately follows a save).
       bypassRef.current = false;
+      setGuardDirty(id, false);
       return;
     }
-    if (bypassRef.current) return;
+    if (bypassRef.current) {
+      setGuardDirty(id, false);
+      return;
+    }
+    setGuardDirty(id, true);
     const handler = (e: BeforeUnloadEvent) => {
       e.preventDefault();
     };
     window.addEventListener("beforeunload", handler);
     return () => window.removeEventListener("beforeunload", handler);
-  }, [isDirty]);
+  }, [id, isDirty]);
 
-  const blocker = useBlocker(
-    useCallback(() => isDirty && !bypassRef.current, [isDirty]),
-  );
+  useEffect(() => {
+    return () => setGuardDirty(id, false);
+  }, [id]);
 
   const [pendingAction, setPendingAction] = useState<(() => void) | null>(null);
 
@@ -38,24 +44,23 @@ export function useUnsavedChangesGuard(isDirty: boolean) {
   );
 
   const confirmLeave = useCallback(() => {
-    if (blocker.state === "blocked") blocker.proceed();
     setPendingAction((current) => {
       current?.();
       return null;
     });
-  }, [blocker]);
+  }, []);
 
   const cancelLeave = useCallback(() => {
-    if (blocker.state === "blocked") blocker.reset();
     setPendingAction(null);
-  }, [blocker]);
+  }, []);
 
   const markSaved = useCallback(() => {
     bypassRef.current = true;
-  }, []);
+    setGuardDirty(id, false);
+  }, [id]);
 
   return {
-    isPrompting: blocker.state === "blocked" || pendingAction !== null,
+    isPrompting: pendingAction !== null,
     guard,
     confirmLeave,
     cancelLeave,
