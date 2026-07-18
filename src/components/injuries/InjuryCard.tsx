@@ -161,7 +161,7 @@ export function InjuryCard({
         <div className="flex min-w-0 items-center gap-2">
           {loggedToday && lastLog ? (
             <span className="text-ink-faint text-[13px]">
-              Last logged {formatRelative(lastLog.timestamp)}
+              Last updated {formatRelative(lastLog.updatedAt)}
             </span>
           ) : (
             <span className="text-ink-faint text-[13px]">Not logged today</span>
