@@ -125,7 +125,7 @@ export function PainTrendChart({ injuryId }: { injuryId: string }) {
                 className="h-2 w-2 rounded-full"
                 style={{ background: colors.frequencyLine }}
               />
-              Frequency (%)
+              Frequency (0-100%)
             </span>
           </div>
           <div className="h-[204px]">
