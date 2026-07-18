@@ -147,12 +147,6 @@ export function StampPicker() {
               <Input
                 value={newStamp}
                 onChange={(e) => setNewStamp(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    handleAdd();
-                  }
-                }}
                 placeholder="Add stamp"
                 maxLength={8}
                 className="text-base"

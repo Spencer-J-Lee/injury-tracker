@@ -99,12 +99,6 @@ export function InjuryCard({
       aria-checked={selectable ? Boolean(selected) : undefined}
       tabIndex={0}
       onClick={handleClick}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          handleClick();
-        }
-      }}
       className={clsx(
         "relative flex cursor-pointer flex-col justify-between gap-[14px] transition-colors",
         "[&:hover:not(:has(button:hover))]:border-accent",
