@@ -9,8 +9,22 @@ import { ToneText } from "@/components/ui/ToneText";
 import { RichTextContent } from "@/components/journal/RichTextEditor";
 import { formatTimestamp } from "@/lib/dates";
 import { painTone, painLabel, freqTone } from "@/lib/pain";
+import { REMEDY_CATEGORIES, sortByCategoryThenName, TRIGGER_CATEGORIES } from "@/lib/categories";
 import { deleteLogEntry } from "@/db/queries/logEntries";
 import { LogEntryEditModal } from "@/components/logs/LogEntryEditModal";
+
+function sortIdsByCategory<T extends { name: string; category?: string }>(
+  ids: string[],
+  map: Map<string, T>,
+  categoryOrder: string[],
+  fallbackName: string,
+): string[] {
+  const items = ids.map((id) => {
+    const item = map.get(id);
+    return { id, category: item?.category, name: item?.name ?? fallbackName };
+  });
+  return sortByCategoryThenName(items, categoryOrder).map((item) => item.id);
+}
 
 export function LogTimelineItem({
   entry,
@@ -24,6 +38,18 @@ export function LogTimelineItem({
   const [editing, setEditing] = useState(false);
   const hasRemediesOrTriggers =
     entry.remedyIds.length > 0 || entry.triggerIds.length > 0;
+  const sortedRemedyIds = sortIdsByCategory(
+    entry.remedyIds,
+    remedyMap,
+    REMEDY_CATEGORIES,
+    "Unknown remedy",
+  );
+  const sortedTriggerIds = sortIdsByCategory(
+    entry.triggerIds,
+    triggerMap,
+    TRIGGER_CATEGORIES,
+    "Unknown trigger",
+  );
 
   return (
     <Card as="li" size="md" variant="subtle">
@@ -73,7 +99,7 @@ export function LogTimelineItem({
                   Remedies
                 </span>
                 <div className="flex flex-wrap gap-1.5">
-                  {entry.remedyIds.map((remedyId) => (
+                  {sortedRemedyIds.map((remedyId) => (
                     <Badge key={remedyId} tone="green">
                       {remedyMap.get(remedyId)?.name ?? "Unknown remedy"}
                     </Badge>
@@ -88,7 +114,7 @@ export function LogTimelineItem({
                   Triggers
                 </span>
                 <div className="flex flex-wrap gap-1.5">
-                  {entry.triggerIds.map((triggerId) => (
+                  {sortedTriggerIds.map((triggerId) => (
                     <Badge key={triggerId} tone="red">
                       {triggerMap.get(triggerId)?.name ?? "Unknown trigger"}
                     </Badge>
