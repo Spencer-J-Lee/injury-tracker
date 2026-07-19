@@ -1,19 +1,13 @@
 import { useCallback, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { format } from "date-fns";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBackwardFast,
-  faBackwardStep,
-  faForwardStep,
-  faForwardFast,
-} from "@fortawesome/free-solid-svg-icons";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Kbd } from "@/components/ui/Kbd";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { RichTextEditor } from "@/components/journal/RichTextEditor";
 import { JournalEntryCard } from "@/components/journal/JournalEntryCard";
+import { PaginationControls } from "@/components/journal/PaginationControls";
 import { useJournalEntries } from "@/hooks/useJournalEntries";
 import { createJournalEntry } from "@/db/queries/journalEntries";
 import { useFormShortcuts } from "@/hooks/useFormShortcuts";
@@ -108,6 +102,14 @@ export function JournalPage() {
         </div>
       </Card>
 
+      {entries.length > PAGE_SIZE && (
+        <PaginationControls
+          page={page}
+          totalPages={totalPages}
+          onPageChange={goToPage}
+        />
+      )}
+
       <div className="flex flex-col gap-3">
         {entries.length === 0 ? (
           <p className="text-ink-muted py-8 text-center text-[14px]">
@@ -129,47 +131,11 @@ export function JournalPage() {
       </div>
 
       {entries.length > PAGE_SIZE && (
-        <div className="flex items-center justify-center gap-2.5">
-          <Button
-            variant="secondary"
-            size="sm"
-            disabled={page === 1}
-            onClick={() => goToPage(1)}
-          >
-            <FontAwesomeIcon icon={faBackwardFast} />
-            First
-          </Button>
-          <Button
-            variant="secondary"
-            size="sm"
-            disabled={page === 1}
-            onClick={() => goToPage(page - 1)}
-          >
-            <FontAwesomeIcon icon={faBackwardStep} />
-            Newer
-          </Button>
-          <span className="text-ink-muted text-[13px]">
-            Page {page} of {totalPages}
-          </span>
-          <Button
-            variant="secondary"
-            size="sm"
-            disabled={page === totalPages}
-            onClick={() => goToPage(page + 1)}
-          >
-            Older
-            <FontAwesomeIcon icon={faForwardStep} />
-          </Button>
-          <Button
-            variant="secondary"
-            size="sm"
-            disabled={page === totalPages}
-            onClick={() => goToPage(totalPages)}
-          >
-            Last
-            <FontAwesomeIcon icon={faForwardFast} />
-          </Button>
-        </div>
+        <PaginationControls
+          page={page}
+          totalPages={totalPages}
+          onPageChange={goToPage}
+        />
       )}
 
       <ConfirmDialog

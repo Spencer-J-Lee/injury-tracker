@@ -1,8 +1,8 @@
 import type { RemedyCategory, TriggerCategory } from "@/types/models";
 
 export const REMEDY_CATEGORIES: RemedyCategory[] = [
-  "Mobility",
   "Strengthening",
+  "Mobility",
   "Lifestyle",
   "Rest",
 ];

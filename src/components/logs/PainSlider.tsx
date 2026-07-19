@@ -12,7 +12,7 @@ export function PainSlider({ value, onChange }: PainSliderProps) {
       value={value}
       onChange={onChange}
       max={10}
-      step={1}
+      step={0.5}
       color="var(--color-pain-teal)"
       formatValue={(v) => `${v}/10`}
       className="range-teal"

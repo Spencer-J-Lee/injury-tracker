@@ -98,7 +98,7 @@ export function DashboardPage() {
     <div className="space-y-5">
       <div className="mb-4 flex justify-between gap-3">
         <h1 className="font-heading text-ink text-2xl font-semibold">
-          Your injuries
+          Injuries
         </h1>
         <div className="flex items-center gap-2">
           {selectMode ? (
