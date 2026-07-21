@@ -9,9 +9,11 @@ interface TogglePillProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const selectedToneClasses: Record<TogglePillTone, string> = {
-  accent: "border-accent bg-accent-soft text-accent-soft-text",
-  red: "border-pain-red bg-pain-red-bg text-pain-red",
-  green: "border-pain-green bg-pain-green-bg text-pain-green",
+  accent:
+    "border-accent bg-accent-soft text-accent-soft-text hover:border-accent-border-hover hover:bg-accent-soft-hover",
+  red: "border-pain-red bg-pain-red-bg text-pain-red hover:border-pain-red-border-hover hover:bg-pain-red-bg-hover",
+  green:
+    "border-pain-green bg-pain-green-bg text-pain-green hover:border-pain-green-border-hover hover:bg-pain-green-bg-hover",
 };
 
 export function TogglePill({
@@ -27,7 +29,7 @@ export function TogglePill({
         "rounded-full border px-3 py-[5px] text-xs font-semibold whitespace-nowrap transition-colors",
         selected
           ? selectedToneClasses[tone]
-          : "border-strong text-ink-secondary hover:bg-surface-raised bg-transparent",
+          : "border-strong text-ink-secondary hover:border-ink-faint hover:bg-surface-raised hover:text-ink bg-transparent",
         className,
       )}
       {...props}
