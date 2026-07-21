@@ -20,7 +20,7 @@ export function InjuryPriorityBadge({
   const config = priorityConfig[priority];
   return (
     <Badge tone={config.tone} weight="bold">
-      {config.label}
+      <span className="font-normal whitespace-break-spaces">Prio: </span>{config.label}
     </Badge>
   );
 }
