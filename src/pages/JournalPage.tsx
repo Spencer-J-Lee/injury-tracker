@@ -26,6 +26,10 @@ export function JournalPage() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const today = useMemo(() => format(new Date(), "yyyy-MM-dd"), []);
+  const hasTodayEntry = useMemo(
+    () => entries.some((entry) => entry.date === today),
+    [entries, today],
+  );
   const totalPages = Math.max(1, Math.ceil(entries.length / PAGE_SIZE));
 
   const rawPage = searchParams.has("page")
@@ -71,7 +75,7 @@ export function JournalPage() {
 
   useFormShortcuts({
     onSave: handleSave,
-    enabled: editingId === null && draft.trim().length > 0,
+    enabled: editingId === null && !hasTodayEntry && draft.trim().length > 0,
   });
 
   return (
@@ -85,22 +89,24 @@ export function JournalPage() {
         </div>
       </div>
 
-      <Card>
-        <div className="font-heading text-ink mb-3 text-xl font-semibold">
-          {formatFullDate(today)}
-        </div>
-        <RichTextEditor
-          value={draft}
-          onChange={updateDraft}
-          placeholder="How are you feeling?"
-        />
-        <div className="mt-3 flex justify-end">
-          <Button onClick={handleSave} disabled={!draft.trim()}>
-            Save entry
-            <Kbd>{saveShortcutLabel}</Kbd>
-          </Button>
-        </div>
-      </Card>
+      {!hasTodayEntry && (
+        <Card>
+          <div className="font-heading text-ink mb-3 text-xl font-semibold">
+            {formatFullDate(today)}
+          </div>
+          <RichTextEditor
+            value={draft}
+            onChange={updateDraft}
+            placeholder="How are you feeling?"
+          />
+          <div className="mt-3 flex justify-end">
+            <Button onClick={handleSave} disabled={!draft.trim()}>
+              Save entry
+              <Kbd>{saveShortcutLabel}</Kbd>
+            </Button>
+          </div>
+        </Card>
+      )}
 
       {entries.length > PAGE_SIZE && (
         <PaginationControls
