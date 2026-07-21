@@ -76,15 +76,10 @@ function DayColumn({
       <div
         className={clsx(
           "flex items-center gap-1.5 text-[11px] font-semibold tracking-wide uppercase",
-          today ? "text-accent-soft-text" : "text-ink-muted",
+          today ? "text-ink" : "text-ink-muted",
         )}
       >
         <span className="leading-relaxed">{formatShortDateWithDay(date)}</span>
-        {today && (
-          <span className="bg-accent-soft-text/15 rounded-full px-1.5 py-0.5 text-[9px] normal-case">
-            Today
-          </span>
-        )}
       </div>
 
       <Button
