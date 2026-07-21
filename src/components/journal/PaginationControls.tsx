@@ -38,7 +38,10 @@ export function PaginationControls({
         <FontAwesomeIcon icon={faBackwardStep} />
         Newer
       </Button>
-      <span className="text-ink-muted text-[13px]">
+      <span
+        className="text-ink-muted inline-block text-center text-[13px] tabular-nums"
+        style={{ minWidth: `${9 + String(totalPages).length * 2}ch` }}
+      >
         Page {page} of {totalPages}
       </span>
       <Button

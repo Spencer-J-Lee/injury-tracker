@@ -1,3 +1,8 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faChevronLeft,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@/components/ui/Button";
 import { formatWeekRangeLabel } from "@/lib/weeks";
 
@@ -21,11 +26,10 @@ export function WeekNav({
       <div className="flex items-center gap-3">
         <Button
           variant="secondary"
-          size="sm"
           onClick={onPrevious}
           aria-label="Previous week"
         >
-          ←
+          <FontAwesomeIcon icon={faChevronLeft} />
         </Button>
 
         <h2 className="font-heading text-ink w-56 text-center text-xl font-semibold">
@@ -34,11 +38,10 @@ export function WeekNav({
 
         <Button
           variant="secondary"
-          size="sm"
           onClick={onNext}
           aria-label="Next week"
         >
-          →
+          <FontAwesomeIcon icon={faChevronRight} />
         </Button>
       </div>
 

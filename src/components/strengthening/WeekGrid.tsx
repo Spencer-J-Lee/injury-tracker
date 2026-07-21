@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import clsx from "clsx";
 import { isToday, parseISO } from "date-fns";
 import { Button } from "@/components/ui/Button";
 import { EditExercisesModal } from "@/components/strengthening/EditExercisesModal";
@@ -71,19 +72,12 @@ function DayColumn({
   };
 
   return (
-    <div
-      className={
-        today
-          ? "bg-accent-soft/20 flex flex-col gap-2 px-3 py-2"
-          : "flex flex-col gap-2 px-3 py-2"
-      }
-    >
+    <div className="flex flex-col gap-2 px-3 py-2">
       <div
-        className={
-          today
-            ? "text-accent-soft-text flex items-center gap-1.5 text-[11px] font-semibold tracking-wide uppercase"
-            : "text-ink-muted text-[11px] font-semibold tracking-wide uppercase"
-        }
+        className={clsx(
+          "flex items-center gap-1.5 text-[11px] font-semibold tracking-wide uppercase",
+          today ? "text-accent-soft-text" : "text-ink-muted",
+        )}
       >
         <span className="leading-relaxed">{formatShortDateWithDay(date)}</span>
         {today && (
@@ -103,9 +97,9 @@ function DayColumn({
       </Button>
 
       {exercises.length > 0 && (
-        <ul className="flex flex-col">
+        <ul className="flex flex-col divide-subtle divide-y">
           {exercises.map((exercise) => (
-            <li key={exercise.id} className="border-subtle border-b py-2">
+            <li key={exercise.id} className="py-3">
               <div className="text-ink truncate text-xs font-medium">
                 {exercise.remedy?.name ?? "Exercise"}
               </div>
