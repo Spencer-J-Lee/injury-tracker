@@ -3,6 +3,7 @@ import clsx from "clsx";
 
 interface LabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
   size?: "sm" | "md";
+  noMargin?: boolean;
 }
 
 const SIZE_STYLES: Record<NonNullable<LabelProps["size"]>, string> = {
@@ -10,10 +11,20 @@ const SIZE_STYLES: Record<NonNullable<LabelProps["size"]>, string> = {
   md: "text-sm font-medium text-ink-secondary",
 };
 
-export function Label({ className, size = "sm", ...props }: LabelProps) {
+export function Label({
+  className,
+  size = "sm",
+  noMargin = false,
+  ...props
+}: LabelProps) {
   return (
     <label
-      className={clsx("mb-1.5 block", SIZE_STYLES[size], className)}
+      className={clsx(
+        "block",
+        !noMargin && "mb-1.5",
+        SIZE_STYLES[size],
+        className,
+      )}
       {...props}
     />
   );

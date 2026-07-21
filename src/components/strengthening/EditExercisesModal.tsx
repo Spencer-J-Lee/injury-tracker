@@ -3,6 +3,7 @@ import { Modal } from "@/components/ui/Modal";
 import { Button } from "@/components/ui/Button";
 import { Kbd } from "@/components/ui/Kbd";
 import { Label } from "@/components/ui/Label";
+import { LinkButton } from "@/components/ui/LinkButton";
 import { TogglePill } from "@/components/ui/TogglePill";
 import { useInjuries } from "@/hooks/useInjuries";
 import { useProgramExercisePool } from "@/hooks/useProgramExercisePool";
@@ -94,15 +95,11 @@ export function EditExercisesModal({
         );
         return (
           <div key={injury.id}>
-            <div className="mb-1.5 flex items-center justify-between">
-              <Label className="mb-0">{formatInjuryName(injury)}</Label>
-              <button
-                type="button"
-                onClick={() => toggleGroup(groupRemedyIds)}
-                className="text-ink-muted hover:text-ink text-xs font-semibold"
-              >
-                {allSelected ? "Clear" : "Select all"}
-              </button>
+            <div className="mb-1.5 flex items-center justify-between text-xs">
+              <Label noMargin>{formatInjuryName(injury)}</Label>
+              <LinkButton onClick={() => toggleGroup(groupRemedyIds)}>
+                {allSelected ? "clear" : "select all"}
+              </LinkButton>
             </div>
             <div className="flex flex-wrap gap-2">
               {remedies.map((remedy) => (

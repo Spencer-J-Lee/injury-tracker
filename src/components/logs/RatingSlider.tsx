@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { LinkButton } from "@/components/ui/LinkButton";
 
 const THUMB_RADIUS_PX = 8;
 
@@ -49,13 +50,7 @@ export function RatingSlider({
             {value === undefined ? "Not rated" : formatValue(value)}
           </span>
           {value !== undefined && (
-            <button
-              type="button"
-              onClick={() => onChange(undefined)}
-              className="text-accent-soft-text font-semibold hover:underline"
-            >
-              clear
-            </button>
+            <LinkButton onClick={() => onChange(undefined)}>clear</LinkButton>
           )}
         </div>
       </div>
