@@ -93,7 +93,7 @@ export function LogTimelineItem({
 
       {hasRemediesOrTriggers && (
         <>
-          <Divider />
+          <Divider className="mt-2" />
           <div className="mt-2 space-y-1.5">
             {entry.remedyIds.length > 0 && (
               <div className="flex gap-2">
@@ -130,7 +130,7 @@ export function LogTimelineItem({
 
       {entry.notes && (
         <>
-          <Divider />
+          <Divider className="mt-2" />
           <div className="mt-2">
             <RichTextContent
               html={entry.notes}
