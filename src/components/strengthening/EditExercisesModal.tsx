@@ -31,7 +31,7 @@ export function EditExercisesModal({
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    setRemedyIds(open ? existingRemedyIds : [])
+    setRemedyIds(open ? existingRemedyIds : []);
   }, [open, existingRemedyIds]);
 
   const groups = [...injuries]

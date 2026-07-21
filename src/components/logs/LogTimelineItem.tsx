@@ -10,7 +10,11 @@ import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { RichTextContent } from "@/components/journal/RichTextEditor";
 import { formatTimestamp } from "@/lib/dates";
 import { painTone, painLabel, freqTone } from "@/lib/pain";
-import { REMEDY_CATEGORIES, sortByCategoryThenName, TRIGGER_CATEGORIES } from "@/lib/categories";
+import {
+  REMEDY_CATEGORIES,
+  sortByCategoryThenName,
+  TRIGGER_CATEGORIES,
+} from "@/lib/categories";
 import { deleteLogEntry } from "@/db/queries/logEntries";
 import { LogEntryEditModal } from "@/components/logs/LogEntryEditModal";
 

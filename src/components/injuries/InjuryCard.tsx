@@ -157,7 +157,7 @@ export function InjuryCard({
             {statusLabels[injury.status]}
           </span>
         </div>
-        
+
         <div className="flex min-w-0 items-center gap-2">
           {loggedToday && lastLog ? (
             <span className="text-ink-faint text-[13px]">

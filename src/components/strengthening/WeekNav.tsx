@@ -36,11 +36,7 @@ export function WeekNav({
           {formatWeekRangeLabel(weekStart)}
         </h2>
 
-        <Button
-          variant="secondary"
-          onClick={onNext}
-          aria-label="Next week"
-        >
+        <Button variant="secondary" onClick={onNext} aria-label="Next week">
           <FontAwesomeIcon icon={faChevronRight} />
         </Button>
       </div>

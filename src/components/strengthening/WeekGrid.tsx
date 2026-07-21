@@ -97,7 +97,7 @@ function DayColumn({
       </Button>
 
       {exercises.length > 0 && (
-        <ul className="flex flex-col divide-subtle divide-y">
+        <ul className="divide-subtle flex flex-col divide-y">
           {exercises.map((exercise) => (
             <li key={exercise.id} className="py-3">
               <div className="text-ink truncate text-xs font-medium">
