@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/Card";
 import { Divider } from "@/components/ui/Divider";
 import { IconButton } from "@/components/ui/IconButton";
 import { ToneText } from "@/components/ui/ToneText";
+import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { RichTextContent } from "@/components/journal/RichTextEditor";
 import { formatTimestamp } from "@/lib/dates";
 import { painTone, painLabel, freqTone } from "@/lib/pain";
@@ -36,6 +37,7 @@ export function LogTimelineItem({
   triggerMap: Map<string, Trigger>;
 }) {
   const [editing, setEditing] = useState(false);
+  const [confirmingDelete, setConfirmingDelete] = useState(false);
   const hasRemediesOrTriggers =
     entry.remedyIds.length > 0 || entry.triggerIds.length > 0;
   const sortedRemedyIds = sortIdsByCategory(
@@ -80,11 +82,7 @@ export function LogTimelineItem({
             icon={faTrash}
             tone="danger"
             label="Delete entry"
-            onClick={() => {
-              if (!confirm("Delete this log entry? This cannot be undone."))
-                return;
-              deleteLogEntry(entry.id);
-            }}
+            onClick={() => setConfirmingDelete(true)}
           />
         </div>
       </div>
@@ -142,6 +140,18 @@ export function LogTimelineItem({
         entry={entry}
         open={editing}
         onClose={() => setEditing(false)}
+      />
+
+      <ConfirmDialog
+        open={confirmingDelete}
+        title="Delete log entry?"
+        message="This cannot be undone."
+        confirmLabel="Delete"
+        onConfirm={() => {
+          setConfirmingDelete(false);
+          deleteLogEntry(entry.id);
+        }}
+        onCancel={() => setConfirmingDelete(false)}
       />
     </Card>
   );

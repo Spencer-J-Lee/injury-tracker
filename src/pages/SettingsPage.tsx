@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import {
   exportBackup,
   importBackup,
@@ -14,6 +15,9 @@ export function SettingsPage() {
   const [lastExportedAt, setLastExportedAt] = useState<string | undefined>();
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
+  const [confirmAction, setConfirmAction] = useState<
+    "clearSeed" | "deleteAll" | null
+  >(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -66,12 +70,6 @@ export function SettingsPage() {
   };
 
   const handleClearSeed = async () => {
-    if (
-      !confirm(
-        'Clear seed data? This removes only the example data created by "Load example data".',
-      )
-    )
-      return;
     setBusy(true);
     setMessage(null);
     try {
@@ -86,12 +84,6 @@ export function SettingsPage() {
   };
 
   const handleDeleteAll = async () => {
-    if (
-      !confirm(
-        "Delete all injuries, remedies, and log entries? This cannot be undone.",
-      )
-    )
-      return;
     setBusy(true);
     setMessage(null);
     try {
@@ -159,7 +151,11 @@ export function SettingsPage() {
           <Button onClick={handleSeed} disabled={busy}>
             Load example data
           </Button>
-          <Button variant="secondary" onClick={handleClearSeed} disabled={busy}>
+          <Button
+            variant="danger"
+            onClick={() => setConfirmAction("clearSeed")}
+            disabled={busy}
+          >
             Clear seed data
           </Button>
         </div>
@@ -177,10 +173,37 @@ export function SettingsPage() {
             Permanently delete every injury, remedy, and log entry.
           </p>
         </div>
-        <Button variant="danger" onClick={handleDeleteAll} disabled={busy}>
+        <Button
+          variant="danger"
+          onClick={() => setConfirmAction("deleteAll")}
+          disabled={busy}
+        >
           Delete all data
         </Button>
       </Card>
+
+      <ConfirmDialog
+        open={confirmAction === "clearSeed"}
+        title="Clear seed data?"
+        message='This removes only the example data created by "Load example data".'
+        confirmLabel="Clear"
+        onConfirm={() => {
+          setConfirmAction(null);
+          handleClearSeed();
+        }}
+        onCancel={() => setConfirmAction(null)}
+      />
+      <ConfirmDialog
+        open={confirmAction === "deleteAll"}
+        title="Delete all data?"
+        message="Delete all injuries, remedies, and log entries? This cannot be undone."
+        confirmLabel="Delete all"
+        onConfirm={() => {
+          setConfirmAction(null);
+          handleDeleteAll();
+        }}
+        onCancel={() => setConfirmAction(null)}
+      />
     </div>
   );
 }

@@ -9,6 +9,7 @@ import { InjuryPriorityBadge } from "@/components/injuries/InjuryPriorityBadge";
 import { InjuryTitle } from "@/components/injuries/InjuryTitle";
 import { Button } from "@/components/ui/Button";
 import { IconButton } from "@/components/ui/IconButton";
+import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { Kbd } from "@/components/ui/Kbd";
 import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut";
 import { useAnyModalOpen } from "@/lib/modalStore";
@@ -32,6 +33,7 @@ export function InjuryDetailPage() {
   const navigate = useNavigate();
   const lastEntry = useLastLogEntryForInjury(id ?? "");
   const [editingToday, setEditingToday] = useState(false);
+  const [confirmingDelete, setConfirmingDelete] = useState(false);
   const anyModalOpen = useAnyModalOpen();
 
   const todayEntry =
@@ -58,10 +60,7 @@ export function InjuryDetailPage() {
   }
 
   const handleDelete = async () => {
-    if (
-      !confirm(`Delete "${formatInjuryName(injury)}"? This cannot be undone.`)
-    )
-      return;
+    setConfirmingDelete(false);
     await deleteInjury(injury.id);
     navigate("/");
   };
@@ -109,7 +108,7 @@ export function InjuryDetailPage() {
               size="md"
               tone="danger"
               label="Delete injury"
-              onClick={handleDelete}
+              onClick={() => setConfirmingDelete(true)}
             />
           </div>
         </div>
@@ -133,6 +132,15 @@ export function InjuryDetailPage() {
           onClose={() => setEditingToday(false)}
         />
       )}
+
+      <ConfirmDialog
+        open={confirmingDelete}
+        title="Delete injury?"
+        message={`Delete "${formatInjuryName(injury)}"? This cannot be undone.`}
+        confirmLabel="Delete"
+        onConfirm={handleDelete}
+        onCancel={() => setConfirmingDelete(false)}
+      />
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { useInjuries } from "@/hooks/useInjuries";
 import { InjuryCard } from "@/components/injuries/InjuryCard";
 import { Button } from "@/components/ui/Button";
 import { TogglePill } from "@/components/ui/TogglePill";
+import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { Kbd } from "@/components/ui/Kbd";
 import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut";
 import { useAnyModalOpen } from "@/lib/modalStore";
@@ -28,6 +29,7 @@ export function DashboardPage() {
   ]);
   const [selectMode, setSelectMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [confirmingDelete, setConfirmingDelete] = useState(false);
   const anyModalOpen = useAnyModalOpen();
 
   useKeyboardShortcut(
@@ -68,13 +70,11 @@ export function DashboardPage() {
 
   const handleDeleteSelected = async () => {
     if (selectedIds.size === 0) return;
-    const count = selectedIds.size;
-    if (
-      !confirm(
-        `Delete ${count} injur${count === 1 ? "y" : "ies"}? This cannot be undone.`,
-      )
-    )
-      return;
+    setConfirmingDelete(true);
+  };
+
+  const confirmDeleteSelected = async () => {
+    setConfirmingDelete(false);
     await deleteInjuries([...selectedIds]);
     exitSelectMode();
   };
@@ -176,6 +176,15 @@ export function DashboardPage() {
           ))}
         </div>
       )}
+
+      <ConfirmDialog
+        open={confirmingDelete}
+        title="Delete injuries?"
+        message={`Delete ${selectedIds.size} injur${selectedIds.size === 1 ? "y" : "ies"}? This cannot be undone.`}
+        confirmLabel="Delete"
+        onConfirm={confirmDeleteSelected}
+        onCancel={() => setConfirmingDelete(false)}
+      />
     </div>
   );
 }

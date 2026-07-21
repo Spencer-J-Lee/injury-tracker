@@ -4,6 +4,7 @@ import type { JournalEntry } from "@/types/models";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { IconButton } from "@/components/ui/IconButton";
+import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import {
   RichTextEditor,
   RichTextContent,
@@ -35,6 +36,7 @@ export function JournalEntryCard({
   onDirtyChange,
 }: JournalEntryCardProps) {
   const [draft, setDraft] = useState(entry.text);
+  const [confirmingDelete, setConfirmingDelete] = useState(false);
 
   const isDirty = isEditing && draft !== entry.text;
 
@@ -62,7 +64,7 @@ export function JournalEntryCard({
   };
 
   const handleDelete = async () => {
-    if (!confirm("Delete this journal entry? This cannot be undone.")) return;
+    setConfirmingDelete(false);
     await deleteJournalEntry(entry.id);
   };
 
@@ -85,7 +87,7 @@ export function JournalEntryCard({
               icon={faTrash}
               tone="danger"
               label="Delete entry"
-              onClick={handleDelete}
+              onClick={() => setConfirmingDelete(true)}
             />
           </div>
         )}
@@ -111,6 +113,15 @@ export function JournalEntryCard({
           className="text-ink-secondary text-[14px]"
         />
       )}
+
+      <ConfirmDialog
+        open={confirmingDelete}
+        title="Delete journal entry?"
+        message="This cannot be undone."
+        confirmLabel="Delete"
+        onConfirm={handleDelete}
+        onCancel={() => setConfirmingDelete(false)}
+      />
     </Card>
   );
 }
