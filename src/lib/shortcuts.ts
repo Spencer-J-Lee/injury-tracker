@@ -8,3 +8,4 @@ export const logEntryShortcutLabel = "L";
 export const updateEntryShortcutLabel = "U";
 export const dashboardShortcutLabel = "D";
 export const journalShortcutLabel = "J";
+export const strengtheningShortcutLabel = "S";

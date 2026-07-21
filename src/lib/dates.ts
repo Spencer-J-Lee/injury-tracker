@@ -28,7 +28,11 @@ export function formatFullDate(isoDate: string): string {
 }
 
 export function formatShortDate(iso: string): string {
-  return format(new Date(iso), "MMM d");
+  return format(parseISO(iso), "MMM d");
+}
+
+export function formatShortDateWithDay(iso: string): string {
+  return format(parseISO(iso), "EEE, MMM d");
 }
 
 export function formatRelative(iso: string): string {

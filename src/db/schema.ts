@@ -6,6 +6,7 @@ import type {
   LogEntry,
   JournalEntry,
   AppMeta,
+  PlannedExercise,
 } from "@/types/models";
 
 export const db = new Dexie("injury-tracker") as Dexie & {
@@ -15,6 +16,7 @@ export const db = new Dexie("injury-tracker") as Dexie & {
   logEntries: EntityTable<LogEntry, "id">;
   journalEntries: EntityTable<JournalEntry, "id">;
   meta: EntityTable<AppMeta, "key">;
+  plannedExercises: EntityTable<PlannedExercise, "id">;
 };
 
 db.version(1).stores({
@@ -257,3 +259,14 @@ db.version(11)
         }
       }),
   );
+
+db.version(12).stores({
+  injuries: "id, status, archivedAt",
+  remedies: "id, injuryId, category, archivedAt",
+  triggers: "id, injuryId, category, archivedAt",
+  logEntries:
+    "id, injuryId, timestamp, sessionId, [injuryId+timestamp], *remedyIds, *triggerIds",
+  journalEntries: "id, date",
+  meta: "key",
+  plannedExercises: "id, date, remedyId",
+});

@@ -10,7 +10,13 @@ interface ModalProps {
   title: ReactNode;
   children: ReactNode;
   footer?: ReactNode;
+  size?: "default" | "narrow";
 }
+
+const maxWidthBySize = {
+  default: "sm:max-w-[640px]",
+  narrow: "sm:max-w-[440px]",
+};
 
 export function Modal({
   open,
@@ -19,6 +25,7 @@ export function Modal({
   title,
   children,
   footer,
+  size = "default",
 }: ModalProps) {
   useFormShortcuts({ onSave, onCancel: onClose, enabled: open });
 
@@ -36,7 +43,7 @@ export function Modal({
       onClick={onClose}
     >
       <div
-        className="border-subtle bg-surface-raised max-h-[90vh] w-full max-w-[640px] overflow-y-auto rounded-t-[18px] border p-[22px] shadow-[0_30px_70px_-20px_rgba(0,0,0,0.6)] sm:rounded-[18px]"
+        className={`border-subtle bg-surface-raised max-h-[90vh] w-full ${maxWidthBySize[size]} overflow-y-auto rounded-t-[18px] border p-[22px] shadow-[0_30px_70px_-20px_rgba(0,0,0,0.6)] sm:rounded-[18px]`}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-4 flex items-center justify-between">

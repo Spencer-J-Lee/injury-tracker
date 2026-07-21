@@ -3,6 +3,7 @@ import {
   faPen,
   faBoxArchive,
   faAsterisk,
+  faDumbbell,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { RemedyCategory, Remedy } from "@/types/models";
@@ -55,6 +56,7 @@ function RemedySection({
                     description: remedy.description ?? "",
                     category: remedy.category,
                     providesImmediateRelief: remedy.providesImmediateRelief,
+                    isProgramExercise: remedy.isProgramExercise ?? false,
                   }}
                   submitLabel="Save"
                   onCancel={() => setEditingId(null)}
@@ -73,6 +75,12 @@ function RemedySection({
                       <FontAwesomeIcon
                         icon={faAsterisk}
                         className="text-pain-green ml-1 align-baseline! text-[10px]"
+                      />
+                    )}
+                    {remedy.isProgramExercise && (
+                      <FontAwesomeIcon
+                        icon={faDumbbell}
+                        className="text-accent-soft-text ml-1 align-baseline! text-[10px]"
                       />
                     )}
                   </p>
@@ -149,12 +157,21 @@ export function RemedyList({ injuryId }: { injuryId: string }) {
         <h3 className="font-heading text-ink-emphasis text-sm font-semibold">
           Remedies
         </h3>
-        <span className="text-ink-faint flex items-center gap-1 text-[11px]">
-          <FontAwesomeIcon
-            icon={faAsterisk}
-            className="text-pain-green text-[10px]"
-          />
-          Immediate relief
+        <span className="text-ink-faint flex items-center gap-3 text-[11px]">
+          <span className="flex items-center gap-1">
+            <FontAwesomeIcon
+              icon={faAsterisk}
+              className="text-pain-green text-[10px]"
+            />
+            Immediate relief
+          </span>
+          <span className="flex items-center gap-1">
+            <FontAwesomeIcon
+              icon={faDumbbell}
+              className="text-accent-soft-text text-[10px]"
+            />
+            In strengthening program
+          </span>
         </span>
       </div>
       <RemedySection

@@ -10,6 +10,7 @@ import { DashboardPage } from "@/pages/DashboardPage";
 import { InjuryDetailPage } from "@/pages/InjuryDetailPage";
 import { InjuryFormPage } from "@/pages/InjuryFormPage";
 import { JournalPage } from "@/pages/JournalPage";
+import { StrengtheningWeekPage } from "@/pages/StrengtheningWeekPage";
 import { SettingsPage } from "@/pages/SettingsPage";
 import { NotFoundPage } from "@/pages/NotFoundPage";
 
@@ -21,6 +22,7 @@ const router = createBrowserRouter(
       <Route path="/injuries/:id" element={<InjuryDetailPage />} />
       <Route path="/injuries/:id/edit" element={<InjuryFormPage />} />
       <Route path="/journal" element={<JournalPage />} />
+      <Route path="/strengthening" element={<StrengtheningWeekPage />} />
       <Route path="/settings" element={<SettingsPage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Route>,

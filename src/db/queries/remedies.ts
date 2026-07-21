@@ -25,6 +25,7 @@ export async function createRemedy(input: {
   description?: string;
   providesImmediateRelief: boolean;
   category?: RemedyCategory;
+  isProgramExercise?: boolean;
 }): Promise<Remedy> {
   const remedy: Remedy = {
     id: crypto.randomUUID(),
@@ -33,6 +34,7 @@ export async function createRemedy(input: {
     description: input.description,
     providesImmediateRelief: input.providesImmediateRelief,
     category: input.category,
+    isProgramExercise: input.isProgramExercise,
     createdAt: new Date().toISOString(),
   };
   await db.remedies.add(remedy);
@@ -44,11 +46,22 @@ export async function updateRemedy(
   changes: Partial<
     Pick<
       Remedy,
-      "name" | "description" | "category" | "providesImmediateRelief"
+      | "name"
+      | "description"
+      | "category"
+      | "providesImmediateRelief"
+      | "isProgramExercise"
     >
   >,
 ) {
   await db.remedies.update(id, changes);
+}
+
+export async function listProgramExerciseRemedies(): Promise<Remedy[]> {
+  const remedies = await db.remedies
+    .filter((remedy) => !!remedy.isProgramExercise && !remedy.archivedAt)
+    .toArray();
+  return sortByCategoryThenName(remedies, REMEDY_CATEGORIES);
 }
 
 export async function archiveRemedy(id: string) {

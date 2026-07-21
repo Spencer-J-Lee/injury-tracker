@@ -7,7 +7,11 @@ import { BackupBanner } from "./BackupBanner";
 import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut";
 import { useAnyModalOpen } from "@/lib/modalStore";
 import { Kbd } from "@/components/ui/Kbd";
-import { dashboardShortcutLabel, journalShortcutLabel } from "@/lib/shortcuts";
+import {
+  dashboardShortcutLabel,
+  journalShortcutLabel,
+  strengtheningShortcutLabel,
+} from "@/lib/shortcuts";
 import { UnsavedChangesBlockerProvider } from "@/context/UnsavedChangesBlockerProvider";
 
 export function AppShell() {
@@ -26,6 +30,7 @@ function AppShellContent() {
 
   useKeyboardShortcut("d", () => navigate("/"), !anyModalOpen);
   useKeyboardShortcut("j", () => navigate("/journal"), !anyModalOpen);
+  useKeyboardShortcut("s", () => navigate("/strengthening"), !anyModalOpen);
 
   const navLinkMobile = (to: string, label: string) => (
     <Link
@@ -70,6 +75,11 @@ function AppShellContent() {
             <nav className="flex flex-col gap-1">
               {navLinkSidebar("/", "Dashboard", dashboardShortcutLabel)}
               {navLinkSidebar("/journal", "Journal", journalShortcutLabel)}
+              {navLinkSidebar(
+                "/strengthening",
+                "Strengthening",
+                strengtheningShortcutLabel,
+              )}
               {navLinkSidebar("/settings", "Settings")}
             </nav>
           </aside>
@@ -82,6 +92,7 @@ function AppShellContent() {
               <nav className="flex gap-1">
                 {navLinkMobile("/", "Dashboard")}
                 {navLinkMobile("/journal", "Journal")}
+                {navLinkMobile("/strengthening", "Strengthening")}
                 {navLinkMobile("/settings", "Settings")}
               </nav>
             </header>

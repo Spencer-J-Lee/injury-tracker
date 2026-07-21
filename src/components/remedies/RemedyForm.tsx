@@ -16,6 +16,7 @@ interface RemedyFormValues {
   description: string;
   category?: RemedyCategory;
   providesImmediateRelief: boolean;
+  isProgramExercise: boolean;
 }
 
 interface RemedyFormProps {
@@ -41,6 +42,9 @@ export function RemedyForm({
   const [providesImmediateRelief, setProvidesImmediateRelief] = useState(
     initial?.providesImmediateRelief ?? false,
   );
+  const [isProgramExercise, setIsProgramExercise] = useState(
+    initial?.isProgramExercise ?? false,
+  );
   const [submitting, setSubmitting] = useState(false);
 
   const doSubmit = async () => {
@@ -52,12 +56,14 @@ export function RemedyForm({
         description: description.trim(),
         category,
         providesImmediateRelief,
+        isProgramExercise: category === "Strengthening" && isProgramExercise,
       });
       if (!initial) {
         setName("");
         setDescription("");
         setCategory(undefined);
         setProvidesImmediateRelief(false);
+        setIsProgramExercise(false);
       }
     } finally {
       setSubmitting(false);
@@ -111,6 +117,15 @@ export function RemedyForm({
         checked={providesImmediateRelief}
         onChange={(e) => setProvidesImmediateRelief(e.target.checked)}
       />
+
+      {category === "Strengthening" && (
+        <Checkbox
+          id="isProgramExercise"
+          label="Include in strengthening program"
+          checked={isProgramExercise}
+          onChange={(e) => setIsProgramExercise(e.target.checked)}
+        />
+      )}
 
       <div className="flex items-center gap-2">
         <Button

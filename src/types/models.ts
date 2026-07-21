@@ -25,6 +25,7 @@ export interface Remedy {
   description?: string;
   providesImmediateRelief: boolean;
   category?: RemedyCategory;
+  isProgramExercise?: boolean;
   createdAt: string;
   archivedAt?: string;
 }
@@ -64,4 +65,11 @@ export interface JournalEntry {
   text: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface PlannedExercise {
+  id: string;
+  date: string; // yyyy-MM-dd — the day this exercise is done/planned
+  remedyId: string;
+  createdAt: string;
 }
