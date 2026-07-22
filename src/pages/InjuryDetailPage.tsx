@@ -8,6 +8,7 @@ import { statusLabels } from "@/lib/injuryStatus";
 import { InjuryPriorityBadge } from "@/components/injuries/InjuryPriorityBadge";
 import { InjuryTitle } from "@/components/injuries/InjuryTitle";
 import { Button } from "@/components/ui/Button";
+import { PageTitle } from "@/components/ui/PageTitle";
 import { IconButton } from "@/components/ui/IconButton";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { Kbd } from "@/components/ui/Kbd";
@@ -68,17 +69,18 @@ export function InjuryDetailPage() {
   return (
     <div className="space-y-6">
       <div>
-        <div className="flex items-start justify-between gap-4">
-          <h1 className="font-heading text-ink text-3xl font-semibold">
-            <InjuryTitle injury={injury} />
-          </h1>
-          <div className="flex shrink-0 items-center gap-2">
-            <span className="text-ink-muted text-xs font-bold tracking-widest uppercase">
-              {statusLabels[injury.status]}
-            </span>
-            <InjuryPriorityBadge priority={injury.priority} />
-          </div>
-        </div>
+        <PageTitle
+          actions={
+            <div className="flex shrink-0 items-center gap-2">
+              <span className="text-ink-muted text-xs font-bold tracking-widest uppercase">
+                {statusLabels[injury.status]}
+              </span>
+              <InjuryPriorityBadge priority={injury.priority} />
+            </div>
+          }
+        >
+          <InjuryTitle injury={injury} />
+        </PageTitle>
         {injury.description && (
           <p className="text-ink-secondary mt-2.5 max-w-3/5 text-lg">
             {injury.description}

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Card } from "@/components/ui/Card";
+import { PageTitle } from "@/components/ui/PageTitle";
 import { Button } from "@/components/ui/Button";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import {
@@ -96,7 +97,7 @@ export function SettingsPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="font-heading text-ink text-3xl font-semibold">Settings</h1>
+      <PageTitle>Settings</PageTitle>
       {message && <p className="text-pain-green">{message}</p>}
 
       <Card className="space-y-4">

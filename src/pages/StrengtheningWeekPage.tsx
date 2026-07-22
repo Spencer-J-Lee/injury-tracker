@@ -2,6 +2,7 @@ import { useSearchParams } from "react-router-dom";
 import { WeekNav } from "@/components/strengthening/WeekNav";
 import { WeekGrid } from "@/components/strengthening/WeekGrid";
 import { TogglePill } from "@/components/ui/TogglePill";
+import { PageTitle } from "@/components/ui/PageTitle";
 import { useWeekPlannedExercises } from "@/hooks/useWeekPlannedExercises";
 import {
   get4DayWindowStart,
@@ -66,23 +67,23 @@ export function StrengtheningWeekPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="font-heading text-ink text-3xl font-semibold">
-          Strengthening
-        </h1>
-
-        <div className="flex gap-2.5">
-          {VIEW_OPTIONS.map((option) => (
-            <TogglePill
-              key={option.value}
-              selected={view === option.value}
-              onClick={() => setView(option.value)}
-            >
-              {option.label}
-            </TogglePill>
-          ))}
-        </div>
-      </div>
+      <PageTitle
+        actions={
+          <div className="flex gap-2.5">
+            {VIEW_OPTIONS.map((option) => (
+              <TogglePill
+                key={option.value}
+                selected={view === option.value}
+                onClick={() => setView(option.value)}
+              >
+                {option.label}
+              </TogglePill>
+            ))}
+          </div>
+        }
+      >
+        Strengthening
+      </PageTitle>
 
       <WeekNav
         windowStart={windowStart}

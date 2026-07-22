@@ -2,6 +2,7 @@ import { useCallback, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { format } from "date-fns";
 import { Card } from "@/components/ui/Card";
+import { PageTitle } from "@/components/ui/PageTitle";
 import { Button } from "@/components/ui/Button";
 import { Kbd } from "@/components/ui/Kbd";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
@@ -80,14 +81,15 @@ export function JournalPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="font-heading text-ink text-3xl font-semibold">
-          Journal
-        </h1>
-        <div className="text-ink-muted">
-          {entries.length} {entries.length === 1 ? "entry" : "entries"}
-        </div>
-      </div>
+      <PageTitle
+        actions={
+          <div className="text-ink-muted">
+            {entries.length} {entries.length === 1 ? "entry" : "entries"}
+          </div>
+        }
+      >
+        Journal
+      </PageTitle>
 
       {!hasTodayEntry && (
         <Card>

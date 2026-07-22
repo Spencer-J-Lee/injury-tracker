@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useInjuries } from "@/hooks/useInjuries";
 import { InjuryCard } from "@/components/injuries/InjuryCard";
 import { Button } from "@/components/ui/Button";
+import { PageTitle } from "@/components/ui/PageTitle";
 import { TogglePill } from "@/components/ui/TogglePill";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { Kbd } from "@/components/ui/Kbd";
@@ -84,31 +85,36 @@ export function DashboardPage() {
 
   return (
     <div className="space-y-6">
-      <div className="mb-5 flex justify-between gap-4">
-        <h1 className="font-heading text-ink text-3xl font-semibold">
-          Injuries
-        </h1>
-        <div className="flex items-center gap-2.5">
-          {selectMode ? (
-            <Button variant="ghost" onClick={exitSelectMode}>
-              Cancel
-              <Kbd>{cancelShortcutLabel}</Kbd>
-            </Button>
-          ) : (
-            <>
-              <Button variant="secondary" onClick={() => setSelectMode(true)}>
-                Select
+      <PageTitle
+        className="mb-5"
+        actions={
+          <div className="flex items-center gap-2.5">
+            {selectMode ? (
+              <Button variant="ghost" onClick={exitSelectMode}>
+                Cancel
+                <Kbd>{cancelShortcutLabel}</Kbd>
               </Button>
-              <Link to="/injuries/new">
-                <Button>
-                  Add Injury
-                  <Kbd>{addInjuryShortcutLabel}</Kbd>
+            ) : (
+              <>
+                <Button
+                  variant="secondary"
+                  onClick={() => setSelectMode(true)}
+                >
+                  Select
                 </Button>
-              </Link>
-            </>
-          )}
-        </div>
-      </div>
+                <Link to="/injuries/new">
+                  <Button>
+                    Add Injury
+                    <Kbd>{addInjuryShortcutLabel}</Kbd>
+                  </Button>
+                </Link>
+              </>
+            )}
+          </div>
+        }
+      >
+        Injuries
+      </PageTitle>
 
       <div className="flex items-center gap-x-2.5">
         <div className="text-ink-muted font-semibold">

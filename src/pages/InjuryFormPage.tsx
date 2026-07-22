@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useInjury } from "@/hooks/useInjury";
 import { InjuryForm } from "@/components/injuries/InjuryForm";
+import { PageTitle } from "@/components/ui/PageTitle";
 import { createInjury, updateInjury } from "@/db/queries/injuries";
 
 export function InjuryFormPage() {
@@ -15,9 +16,7 @@ export function InjuryFormPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="font-heading text-ink text-3xl font-semibold">
-        {isEdit ? "Edit injury" : "Add injury"}
-      </h1>
+      <PageTitle>{isEdit ? "Edit injury" : "Add injury"}</PageTitle>
       <InjuryForm
         initial={injury ?? undefined}
         submitLabel={isEdit ? "Save" : "Submit"}
