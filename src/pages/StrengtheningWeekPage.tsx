@@ -3,6 +3,7 @@ import { WeekNav } from "@/components/strengthening/WeekNav";
 import { WeekGrid } from "@/components/strengthening/WeekGrid";
 import { TogglePill } from "@/components/ui/TogglePill";
 import { PageTitle } from "@/components/ui/PageTitle";
+import { ExerciseAdjustmentTips } from "@/components/strengthening/ExerciseAdjustmentTips";
 import { useWeekPlannedExercises } from "@/hooks/useWeekPlannedExercises";
 import {
   get4DayWindowStart,
@@ -85,20 +86,24 @@ export function StrengtheningWeekPage() {
         Strengthening
       </PageTitle>
 
-      <WeekNav
-        windowStart={windowStart}
-        size={size}
-        isCurrentWindow={isCurrentWindow}
-        onPrevious={() => goToWindow(getPreviousWindowStart(windowStart, size))}
-        onNext={() => goToWindow(getNextWindowStart(windowStart, size))}
-        onToday={() => goToWindow(currentWindowStart)}
-      />
+      <div className="flex flex-col gap-1">
+        <WeekNav
+          windowStart={windowStart}
+          size={size}
+          isCurrentWindow={isCurrentWindow}
+          onPrevious={() => goToWindow(getPreviousWindowStart(windowStart, size))}
+          onNext={() => goToWindow(getNextWindowStart(windowStart, size))}
+          onToday={() => goToWindow(currentWindowStart)}
+        />
 
-      <WeekGrid
-        windowStart={windowStart}
-        size={size}
-        plannedExercises={plannedExercises}
-      />
+        <WeekGrid
+          windowStart={windowStart}
+          size={size}
+          plannedExercises={plannedExercises}
+        />
+      </div>
+
+      <ExerciseAdjustmentTips />
     </div>
   );
 }

@@ -30,7 +30,7 @@ export function WeekGrid({ windowStart, size, plannedExercises }: WeekGridProps)
   return (
     <div
       className={clsx(
-        "divide-subtle grid grid-cols-1 divide-x sm:grid-cols-2",
+        "divide-subtle grid grid-cols-1 divide-x sm:grid-cols-2 min-h-96",
         size === 4 ? "lg:grid-cols-4" : "lg:grid-cols-7",
       )}
     >

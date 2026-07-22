@@ -158,7 +158,7 @@ export function InjuryCard({
           </span>
         </div>
 
-        <div className="flex min-w-0 items-center text-right gap-2.5 text-xs">
+        <div className="flex min-w-0 items-center text-right gap-2.5 text-sm">
           {loggedToday && lastLog ? (
             <span className="text-ink-faint">
               Updated {formatRelative(lastLog.updatedAt)}
