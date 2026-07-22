@@ -1,7 +1,9 @@
 import { useEffect, type ReactNode } from "react";
 import { createPortal } from "react-dom";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useFormShortcuts } from "@/hooks/useFormShortcuts";
 import { registerModalOpen } from "@/lib/modalStore";
+import { IconButton } from "@/components/ui/IconButton";
 
 interface ModalProps {
   open: boolean;
@@ -46,18 +48,16 @@ export function Modal({
         className={`border-subtle bg-surface-raised max-h-[90vh] w-full ${maxWidthBySize[size]} overflow-y-auto rounded-t-3xl border p-7 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.6)] sm:rounded-3xl`}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="mb-8 flex items-center justify-between">
+        <div className="mb-8 flex items-start justify-between">
           <h2 className="font-heading text-ink text-2xl font-semibold">
             {title}
           </h2>
-          <button
-            type="button"
+          <IconButton
+            icon={faXmark}
+            variant="ghost"
+            label="Close"
             onClick={onClose}
-            aria-label="Close"
-            className="text-ink-muted hover:text-ink text-xl transition-colors"
-          >
-            ✕
-          </button>
+          />
         </div>
         <div className="space-y-5">{children}</div>
         {footer && (

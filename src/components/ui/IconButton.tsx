@@ -16,8 +16,8 @@ interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const sizeClasses: Record<Size, string> = {
-  sm: "rounded-lg w-7 h-7",
-  md: "h-[42px] w-[42px] rounded-xl border",
+  sm: "w-7 h-7 rounded-lg",
+  md: "h-[42px] w-[42px] rounded-xl",
 };
 
 const iconSizeClasses: Record<Size, string> = {
@@ -27,13 +27,12 @@ const iconSizeClasses: Record<Size, string> = {
 
 const toneClasses: Record<Size, Record<Tone, string>> = {
   sm: {
-    neutral: "text-ink-muted hover:bg-accent-soft hover:text-accent-soft-text",
+    neutral: "text-ink-muted hover:bg-surface-raised hover:text-ink",
     danger: "text-ink-muted hover:bg-pain-red-bg hover:text-pain-red",
   },
   md: {
-    neutral: "border-strong bg-control text-ink hover:bg-surface-raised",
-    danger:
-      "border-[oklch(0.33_0.14_25)] bg-[oklch(0.33_0.14_25)] text-[oklch(0.96_0.03_25)] hover:bg-[oklch(0.37_0.14_25)]",
+    neutral: "border border-strong bg-control text-ink hover:bg-surface-raised",
+    danger: "bg-[oklch(0.33_0.14_25)] text-[oklch(0.96_0.03_25)] hover:bg-[oklch(0.37_0.14_25)]",
   },
 };
 
