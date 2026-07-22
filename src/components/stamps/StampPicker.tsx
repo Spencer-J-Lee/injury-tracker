@@ -66,7 +66,7 @@ export function StampPicker() {
 
   return (
     <>
-      <div className="fixed bottom-6 left-6 z-60 flex">
+      <div className="fixed bottom-5 left-5 z-60 flex">
         <button
           ref={buttonRef}
           type="button"
@@ -74,7 +74,7 @@ export function StampPicker() {
           aria-label="Copy a stamp"
           title="Copy a stamp"
           className={clsx([
-            "border-subtle bg-surface-raised text-ink hover:bg-surface flex h-10 w-10 items-center justify-center rounded-full border text-sm shadow-lg",
+            "border-subtle bg-surface-raised text-ink hover:bg-surface flex h-10 w-10 items-center justify-center rounded-full border shadow-lg",
             lastUsedStamp && "rounded-r-none border-r-0",
           ])}
         >
@@ -87,12 +87,12 @@ export function StampPicker() {
             onClick={() => handleCopy(lastUsedStamp)}
             aria-label={`Copy ${lastUsedStamp}`}
             title={`Copy ${lastUsedStamp}`}
-            className="border-subtle bg-surface-raised text-ink hover:bg-surface flex h-10 w-10 items-center justify-center rounded-r-full border text-lg shadow-lg"
+            className="border-subtle bg-surface-raised text-ink hover:bg-surface flex h-10 w-10 items-center justify-center rounded-r-full border text-xl shadow-lg"
           >
             {copiedStamp === lastUsedStamp ? (
               <FontAwesomeIcon
                 icon={faCheck}
-                className="text-pain-green text-sm"
+                className="text-pain-green"
               />
             ) : (
               lastUsedStamp
@@ -105,13 +105,13 @@ export function StampPicker() {
         createPortal(
           <div
             ref={panelRef}
-            className="border-subtle bg-surface-raised fixed bottom-20 left-6 z-60 w-[260px] rounded-[18px] border p-4 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.6)]"
+            className="border-subtle bg-surface-raised fixed bottom-18 left-5 z-60 w-[314px] rounded-2xl border p-4 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.6)]"
           >
-            <h2 className="font-heading text-ink mb-3 text-sm font-semibold">
+            <h2 className="font-heading text-ink mb-4 font-semibold">
               Stamps
             </h2>
 
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2.5">
               {stamps.map((stamp) => (
                 <div key={stamp} className="relative">
                   <button
@@ -119,12 +119,12 @@ export function StampPicker() {
                     onClick={() => handleCopy(stamp)}
                     aria-label={`Copy ${stamp}`}
                     title={`Copy ${stamp}`}
-                    className="border-strong bg-control text-ink hover:bg-canvas flex h-10 w-10 items-center justify-center rounded-[10px] border text-lg"
+                    className="border-strong bg-control text-ink hover:bg-canvas flex h-12 w-12 items-center justify-center rounded-xl border text-xl"
                   >
                     {copiedStamp === stamp ? (
                       <FontAwesomeIcon
                         icon={faCheck}
-                        className="text-pain-green text-sm"
+                        className="text-pain-green"
                       />
                     ) : (
                       stamp
@@ -135,7 +135,7 @@ export function StampPicker() {
                     onClick={() => handleRemove(stamp)}
                     aria-label={`Remove ${stamp}`}
                     title={`Remove ${stamp}`}
-                    className="text-ink-faint hover:text-pain-red bg-surface-raised absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full text-[10px] leading-none"
+                    className="text-ink-faint border border-subtle hover:text-pain-red bg-surface-raised absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full text-xs leading-none"
                   >
                     ✕
                   </button>
@@ -143,18 +143,16 @@ export function StampPicker() {
               ))}
             </div>
 
-            <div className="mt-3 flex gap-2">
+            <div className="mt-3 flex gap-3">
               <Input
                 value={newStamp}
                 onChange={(e) => setNewStamp(e.target.value)}
                 placeholder="Add stamp"
                 maxLength={8}
-                className="text-base"
               />
               <Button
                 type="button"
                 variant="secondary"
-                size="md"
                 onClick={handleAdd}
               >
                 Add

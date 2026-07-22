@@ -83,7 +83,7 @@ export function RemedyForm({
       size="sm"
       variant="dashed"
       onSubmit={handleSubmit}
-      className="space-y-2"
+      className="space-y-2.5"
     >
       <Input
         value={name}
@@ -127,7 +127,7 @@ export function RemedyForm({
         />
       )}
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2.5">
         <Button
           type="submit"
           disabled={submitting || !name.trim()}

@@ -86,7 +86,7 @@ export function InjuryForm({
   useFormShortcuts({ onSave: doSubmit, onCancel: guardedCancel });
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-5">
       <div>
         <Label size="md">Body Part</Label>
         <Input
@@ -151,7 +151,7 @@ export function InjuryForm({
           rows={3}
         />
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2.5">
         <Button
           type="submit"
           disabled={submitting || !bodyPart.trim() || !injuryType.trim()}

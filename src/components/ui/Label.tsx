@@ -7,8 +7,8 @@ interface LabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
 }
 
 const SIZE_STYLES: Record<NonNullable<LabelProps["size"]>, string> = {
-  sm: "text-xs font-semibold text-ink-muted",
-  md: "text-sm font-medium text-ink-secondary",
+  sm: "text-sm font-semibold text-ink-muted",
+  md: "text-lg font-medium text-ink-secondary",
 };
 
 export function Label({
@@ -21,7 +21,7 @@ export function Label({
     <label
       className={clsx(
         "block",
-        !noMargin && "mb-1.5",
+        !noMargin && "mb-2",
         SIZE_STYLES[size],
         className,
       )}

@@ -43,7 +43,7 @@ function RemedySection({
   return (
     <div>
       <Label>{title}</Label>
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2.5">
         {remedies.map((remedy) => (
           <TogglePill
             key={remedy.id}
@@ -63,7 +63,7 @@ function RemedySection({
         </Button>
       </div>
       {adding && (
-        <div className="mt-1.5">
+        <div className="mt-2">
           <RemedyForm
             initial={defaults}
             submitLabel="Add"
@@ -115,7 +115,7 @@ export function RemedyCheckboxGroup({
   };
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       <RemedySection
         title="Strengthening"
         remedies={strengthening}

@@ -38,7 +38,7 @@ export function TriggerCheckboxGroup({
   return (
     <div>
       <Label>Triggers</Label>
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2.5">
         {triggers.map((trigger) => {
           const selected = selectedTriggerIds.includes(trigger.id);
           return (
@@ -61,7 +61,7 @@ export function TriggerCheckboxGroup({
         </Button>
       </div>
       {adding && (
-        <div className="mt-1.5">
+        <div className="mt-2">
           <TriggerForm
             submitLabel="Add"
             showShortcuts={false}

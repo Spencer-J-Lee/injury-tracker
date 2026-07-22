@@ -38,7 +38,7 @@ export function MiniPainTrendChart({ injuryId }: { injuryId: string }) {
   if (data.length === 0) return null;
 
   return (
-    <div className="pointer-events-none h-20">
+    <div className="pointer-events-none h-24">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
           data={data}

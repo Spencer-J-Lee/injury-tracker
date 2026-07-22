@@ -95,13 +95,13 @@ export function EditExercisesModal({
         );
         return (
           <div key={injury.id}>
-            <div className="mb-1.5 flex items-center justify-between text-xs">
+            <div className="mb-2 flex items-center justify-between text-sm">
               <Label noMargin>{formatInjuryName(injury)}</Label>
               <LinkButton onClick={() => toggleGroup(groupRemedyIds)}>
                 {allSelected ? "clear" : "select all"}
               </LinkButton>
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2.5">
               {remedies.map((remedy) => (
                 <TogglePill
                   key={remedy.id}

@@ -44,14 +44,14 @@ function ChartTooltip({ active, payload, colors }: ChartTooltipProps) {
   const point = payload[0].payload;
   return (
     <div
-      className="rounded-lg border px-3 py-2 text-sm shadow-md"
+      className="rounded-lg border px-4 py-3 text-lg shadow-md"
       style={{
         background: colors.surface,
         borderColor: colors.grid,
         color: colors.secondary,
       }}
     >
-      <p style={{ color: colors.muted }} className="text-xs">
+      <p style={{ color: colors.muted }}>
         {formatTimestamp(point.timestamp)}
       </p>
       {point.painLevel !== undefined && (
@@ -89,11 +89,11 @@ export function PainTrendChart({ injuryId }: { injuryId: string }) {
 
   return (
     <Card>
-      <div className="mb-3 flex items-center justify-between">
-        <h3 className="font-heading text-ink-emphasis text-sm font-semibold">
+      <div className="mb-4 flex items-center justify-between">
+        <h3 className="font-heading text-ink-emphasis text-lg font-semibold">
           Pain over time
         </h3>
-        <div className="flex gap-2">
+        <div className="flex gap-2.5">
           {RANGES.map((r) => (
             <TogglePill
               key={r.value}
@@ -107,28 +107,28 @@ export function PainTrendChart({ injuryId }: { injuryId: string }) {
       </div>
 
       {data.length === 0 ? (
-        <p className="text-ink-muted text-sm">
+        <p className="text-ink-muted text-lg">
           No rated entries in this range yet.
         </p>
       ) : (
         <>
-          <div className="text-ink-muted mb-2.5 flex items-center gap-4 text-xs">
-            <span className="flex items-center gap-1.5">
+          <div className="text-ink-muted mb-3.5 flex items-center gap-5">
+            <span className="flex items-center gap-2">
               <span
-                className="h-2 w-2 rounded-full"
+                className="h-2.5 w-2.5 rounded-full"
                 style={{ background: colors.line }}
               />
               Pain intensity (0–10)
             </span>
-            <span className="flex items-center gap-1.5">
+            <span className="flex items-center gap-2">
               <span
-                className="h-2 w-2 rounded-full"
+                className="h-2.5 w-2.5 rounded-full"
                 style={{ background: colors.frequencyLine }}
               />
               Frequency (0-100%)
             </span>
           </div>
-          <div className="h-[204px]">
+          <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart
                 data={data}
@@ -140,7 +140,7 @@ export function PainTrendChart({ injuryId }: { injuryId: string }) {
                   tickFormatter={formatShortDate}
                   interval="preserveStartEnd"
                   minTickGap={32}
-                  tick={{ fill: colors.muted, fontSize: 10 }}
+                  tick={{ fill: colors.muted, fontSize: 12 }}
                   axisLine={{ stroke: colors.grid }}
                   tickLine={false}
                   tickMargin={6}
@@ -149,10 +149,10 @@ export function PainTrendChart({ injuryId }: { injuryId: string }) {
                   yAxisId="left"
                   domain={[0, 10]}
                   ticks={[0, 5, 10]}
-                  tick={{ fill: colors.line, fontSize: 10 }}
+                  tick={{ fill: colors.line, fontSize: 12 }}
                   axisLine={false}
                   tickLine={false}
-                  width={20}
+                  width="auto"
                 />
                 <YAxis
                   yAxisId="right"
@@ -160,10 +160,10 @@ export function PainTrendChart({ injuryId }: { injuryId: string }) {
                   domain={[0, 100]}
                   ticks={[0, 50, 100]}
                   tickFormatter={(v) => `${v}%`}
-                  tick={{ fill: colors.frequencyLine, fontSize: 10 }}
+                  tick={{ fill: colors.frequencyLine, fontSize: 12 }}
                   axisLine={false}
                   tickLine={false}
-                  width={32}
+                  width="auto"
                 />
                 <ReferenceLine
                   yAxisId="left"

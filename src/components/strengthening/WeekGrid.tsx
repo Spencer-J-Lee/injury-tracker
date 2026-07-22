@@ -72,10 +72,10 @@ function DayColumn({
   };
 
   return (
-    <div className="flex flex-col gap-2 px-3 py-2">
+    <div className="flex flex-col gap-2.5 px-4 py-3 first:pl-0 last:pr-0">
       <div
         className={clsx(
-          "flex items-center gap-1.5 text-[11px] font-semibold tracking-wide uppercase",
+          "flex items-center gap-2 text-sm font-semibold tracking-wide uppercase",
           today ? "text-ink" : "text-ink-muted",
         )}
       >
@@ -92,12 +92,10 @@ function DayColumn({
       </Button>
 
       {exercises.length > 0 && (
-        <ul className="divide-subtle flex flex-col divide-y">
+        <ul className="divide-subtle flex flex-col divide-y text-ink text-sm">
           {exercises.map((exercise) => (
             <li key={exercise.id} className="py-3">
-              <div className="text-ink truncate text-xs font-medium">
-                {exercise.remedy?.name ?? "Exercise"}
-              </div>
+              {exercise.remedy?.name ?? "Exercise"}
             </li>
           ))}
         </ul>

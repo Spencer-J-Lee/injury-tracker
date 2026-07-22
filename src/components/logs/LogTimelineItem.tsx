@@ -59,48 +59,52 @@ export function LogTimelineItem({
 
   return (
     <Card as="li" size="md" variant="subtle">
-      <div className="flex items-center justify-between gap-2">
-        <span className="text-ink-muted text-[13px]">
+      <div className="flex items-center justify-between gap-2.5">
+        <span className="text-ink-muted">
           {formatTimestamp(entry.timestamp)}
         </span>
-        <div className="flex items-center gap-1.5 text-[13px]">
-          <ToneText tone={painTone(entry.painLevel)}>
-            {entry.painLevel === undefined
-              ? "Not rated"
-              : `${painLabel(entry.painLevel)} ${entry.painLevel}/10`}
-          </ToneText>
-          {entry.painFrequency !== undefined && (
-            <>
-              <span className="text-ink-muted">•</span>
-              <ToneText tone={freqTone(entry.painFrequency)}>
-                {entry.painFrequency}% freq
-              </ToneText>
-            </>
-          )}
-          <IconButton
-            icon={faPen}
-            label="Edit entry"
-            onClick={() => setEditing(true)}
-          />
-          <IconButton
-            icon={faTrash}
-            tone="danger"
-            label="Delete entry"
-            onClick={() => setConfirmingDelete(true)}
-          />
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1.5">
+            <ToneText tone={painTone(entry.painLevel)}>
+              {entry.painLevel === undefined
+                ? "Not rated"
+                : `${painLabel(entry.painLevel)} ${entry.painLevel}/10`}
+            </ToneText>
+            {entry.painFrequency !== undefined && (
+              <>
+                <span className="text-ink-muted">•</span>
+                <ToneText tone={freqTone(entry.painFrequency)}>
+                  {entry.painFrequency}% freq
+                </ToneText>
+              </>
+            )}
+          </div>
+          <div className="flex items-center gap-1">
+            <IconButton
+              icon={faPen}
+              label="Edit entry"
+              onClick={() => setEditing(true)}
+            />
+            <IconButton
+              icon={faTrash}
+              tone="danger"
+              label="Delete entry"
+              onClick={() => setConfirmingDelete(true)}
+            />
+          </div>
         </div>
       </div>
 
       {hasRemediesOrTriggers && (
         <>
-          <Divider className="mt-2" />
-          <div className="mt-2 space-y-1.5">
+          <Divider className="mt-2.5" />
+          <div className="mt-2.5 space-y-2">
             {entry.remedyIds.length > 0 && (
-              <div className="flex gap-2">
-                <span className="text-ink-muted w-14 shrink-0 pt-[3px] text-[11px] font-semibold">
+              <div className="flex gap-2.5">
+                <span className="text-ink-muted w-[72px] shrink-0 pt-1 text-sm font-semibold">
                   Remedies
                 </span>
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-2">
                   {sortedRemedyIds.map((remedyId) => (
                     <Badge key={remedyId} tone="green">
                       {remedyMap.get(remedyId)?.name ?? "Unknown remedy"}
@@ -111,11 +115,11 @@ export function LogTimelineItem({
             )}
 
             {entry.triggerIds.length > 0 && (
-              <div className="flex gap-2">
-                <span className="text-ink-muted w-14 shrink-0 pt-[3px] text-[11px] font-semibold">
+              <div className="flex gap-2.5">
+                <span className="text-ink-muted w-[72px] shrink-0 pt-1 text-sm font-semibold">
                   Triggers
                 </span>
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-2">
                   {sortedTriggerIds.map((triggerId) => (
                     <Badge key={triggerId} tone="red">
                       {triggerMap.get(triggerId)?.name ?? "Unknown trigger"}
@@ -130,11 +134,11 @@ export function LogTimelineItem({
 
       {entry.notes && (
         <>
-          <Divider className="mt-2" />
-          <div className="mt-2">
+          <Divider className="mt-2.5" />
+          <div className="mt-2.5">
             <RichTextContent
               html={entry.notes}
-              className="text-ink-secondary text-[13px]"
+              className="text-ink-secondary"
             />
           </div>
         </>

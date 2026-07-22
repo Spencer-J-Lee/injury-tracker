@@ -13,12 +13,12 @@ export function Checkbox({ label, className, id, ...props }: CheckboxProps) {
     <label
       htmlFor={id}
       className={clsx(
-        "text-ink-secondary group flex w-fit items-center gap-2 py-1 text-[13px]",
+        "text-ink-secondary group flex w-fit items-center gap-2.5 py-1.5",
         !props.disabled && "cursor-pointer",
         className,
       )}
     >
-      <span className="relative flex h-[18px] w-[18px] shrink-0 items-center justify-center">
+      <span className="relative flex h-6 w-6 shrink-0 items-center justify-center">
         <input
           id={id}
           type="checkbox"
@@ -28,7 +28,7 @@ export function Checkbox({ label, className, id, ...props }: CheckboxProps) {
         <svg
           viewBox="0 0 16 16"
           fill="none"
-          className="pointer-events-none relative h-[13px] w-[13px] scale-75 text-white opacity-0 transition-all peer-checked:scale-100 peer-checked:opacity-100"
+          className="pointer-events-none relative h-4 w-4 scale-75 text-white opacity-0 transition-all peer-checked:scale-100 peer-checked:opacity-100"
         >
           <path
             d="M3.5 8.5L6.5 11.5L12.5 4.5"

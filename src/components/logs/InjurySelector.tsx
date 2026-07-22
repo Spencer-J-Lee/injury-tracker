@@ -21,7 +21,7 @@ export function InjurySelector({
 
   return (
     <div>
-      <div className="text-ink-muted mb-1.5 flex items-center justify-between text-xs font-semibold">
+      <div className="text-ink-muted mb-2 flex items-center justify-between font-semibold">
         <span>Injury</span>
         <button
           type="button"
@@ -31,7 +31,7 @@ export function InjurySelector({
           {showAll ? "Show active only" : "Show all"}
         </button>
       </div>
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2.5">
         {visible.map((injury) => {
           const selected = injury.id === selectedId;
           return (
@@ -45,7 +45,7 @@ export function InjurySelector({
           );
         })}
         {visible.length === 0 && (
-          <p className="text-ink-muted text-sm">
+          <p className="text-ink-muted text-lg">
             No injuries yet — add one first.
           </p>
         )}

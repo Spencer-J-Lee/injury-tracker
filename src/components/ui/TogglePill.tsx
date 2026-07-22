@@ -26,7 +26,7 @@ export function TogglePill({
     <button
       type="button"
       className={clsx(
-        "rounded-full border px-3 py-[5px] text-xs font-semibold whitespace-nowrap transition-colors",
+        "rounded-full border px-3 py-1 text-sm font-semibold whitespace-nowrap transition-colors",
         selected
           ? selectedToneClasses[tone]
           : "border-strong text-ink-secondary hover:border-ink-faint hover:bg-surface-raised hover:text-ink bg-transparent",

@@ -16,13 +16,13 @@ interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const sizeClasses: Record<Size, string> = {
-  sm: "rounded-md w-6 h-6",
-  md: "h-10 w-10 rounded-[10px] border",
+  sm: "rounded-lg w-7 h-7",
+  md: "h-[42px] w-[42px] rounded-xl border",
 };
 
 const iconSizeClasses: Record<Size, string> = {
-  sm: "text-xs",
-  md: "text-base",
+  sm: "text-sm",
+  md: "text-lg",
 };
 
 const toneClasses: Record<Size, Record<Tone, string>> = {

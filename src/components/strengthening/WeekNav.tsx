@@ -32,7 +32,7 @@ export function WeekNav({
           <FontAwesomeIcon icon={faChevronLeft} />
         </Button>
 
-        <h2 className="font-heading text-ink w-56 text-center text-xl font-semibold">
+        <h2 className="font-heading text-ink w-[280px] text-center text-2xl font-semibold">
           {formatWeekRangeLabel(weekStart)}
         </h2>
 
@@ -41,7 +41,7 @@ export function WeekNav({
         </Button>
       </div>
 
-      <div className="flex h-7 items-center">
+      <div className="flex h-9 items-center">
         {!isCurrentWeek && (
           <Button variant="ghost" size="sm" onClick={onToday}>
             Jump to this week

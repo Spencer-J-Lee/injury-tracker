@@ -41,12 +41,12 @@ function RemedySection({
 
   return (
     <div>
-      <h4 className="text-ink-faint mb-2.5 text-[11px] font-semibold tracking-wide uppercase">
+      <h4 className="text-ink-faint mb-3 text-sm font-semibold tracking-wide uppercase">
         {title}
       </h4>
 
       {remedies.length > 0 && (
-        <ul className="mb-2 space-y-2">
+        <ul className="mb-2.5 space-y-2.5">
           {remedies.map((remedy) =>
             editingId === remedy.id ? (
               <li key={remedy.id}>
@@ -68,23 +68,23 @@ function RemedySection({
               </li>
             ) : (
               <Card as="li" size="md" variant="subtle" key={remedy.id}>
-                <div className="flex min-w-0 items-start justify-between gap-2">
-                  <p className="text-ink text-[13px]">
+                <div className="flex min-w-0 items-start justify-between gap-2.5">
+                  <p className="text-ink">
                     {remedy.name}
                     {remedy.providesImmediateRelief && (
                       <FontAwesomeIcon
                         icon={faAsterisk}
-                        className="text-pain-green ml-1 align-baseline! text-[10px]"
+                        className="text-pain-green ml-1.5 align-baseline! text-xs"
                       />
                     )}
                     {remedy.isProgramExercise && (
                       <FontAwesomeIcon
                         icon={faDumbbell}
-                        className="text-accent-soft-text ml-1 align-baseline! text-[10px]"
+                        className="text-accent-soft-text ml-1.5 align-baseline! text-xs"
                       />
                     )}
                   </p>
-                  <div className="flex shrink-0 flex-wrap justify-end gap-1.5">
+                  <div className="flex shrink-0 flex-wrap justify-end gap-2">
                     {showCategoryBadge && remedy.category && (
                       <Badge>{remedy.category}</Badge>
                     )}
@@ -102,7 +102,7 @@ function RemedySection({
                   </div>
                 </div>
                 {remedy.description && (
-                  <p className="text-ink-muted mt-1 text-xs">
+                  <p className="text-ink-muted mt-1.5 text-sm">
                     {remedy.description}
                   </p>
                 )}
@@ -128,6 +128,7 @@ function RemedySection({
         <Button
           variant={remedies.length > 0 ? "ghost" : "dashed"}
           onClick={() => setAdding(true)}
+          size="sm"
           className="w-full"
         >
           + Add
@@ -152,23 +153,23 @@ export function RemedyList({ injuryId }: { injuryId: string }) {
     });
 
   return (
-    <Card className="space-y-5">
-      <div className="flex items-baseline justify-between gap-2">
-        <h3 className="font-heading text-ink-emphasis text-sm font-semibold">
+    <Card className="space-y-4">
+      <div className="flex items-baseline justify-between gap-2.5">
+        <h3 className="font-heading text-ink-emphasis text-lg font-semibold">
           Remedies
         </h3>
-        <span className="text-ink-faint flex items-center gap-3 text-[11px]">
+        <span className="text-ink-faint flex items-center gap-4 text-xs">
           <span className="flex items-center gap-1">
             <FontAwesomeIcon
               icon={faAsterisk}
-              className="text-pain-green text-[10px]"
+              className="text-pain-green text-xs"
             />
             Immediate relief
           </span>
           <span className="flex items-center gap-1">
             <FontAwesomeIcon
               icon={faDumbbell}
-              className="text-accent-soft-text text-[10px]"
+              className="text-accent-soft-text text-xs"
             />
             In strengthening program
           </span>

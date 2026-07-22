@@ -19,12 +19,12 @@ export function TriggerList({ injuryId }: { injuryId: string }) {
 
   return (
     <Card>
-      <h3 className="font-heading text-ink-emphasis mb-5 text-sm font-semibold">
+      <h3 className="font-heading text-ink-emphasis mb-6 text-lg font-semibold">
         Triggers
       </h3>
 
       {triggers.length > 0 && (
-        <ul className="mb-2 space-y-2">
+        <ul className="mb-2.5 space-y-2.5">
           {triggers.map((trigger) =>
             editingId === trigger.id ? (
               <li key={trigger.id}>
@@ -44,9 +44,9 @@ export function TriggerList({ injuryId }: { injuryId: string }) {
               </li>
             ) : (
               <Card as="li" size="md" variant="subtle" key={trigger.id}>
-                <div className="flex min-w-0 items-start justify-between gap-2">
-                  <p className="text-ink text-[13px]">{trigger.name}</p>
-                  <div className="flex shrink-0 gap-1.5">
+                <div className="flex min-w-0 items-start justify-between gap-2.5">
+                  <p className="text-ink">{trigger.name}</p>
+                  <div className="flex shrink-0 gap-2">
                     {trigger.category && <Badge>{trigger.category}</Badge>}
                     <IconButton
                       icon={faPen}
@@ -62,7 +62,7 @@ export function TriggerList({ injuryId }: { injuryId: string }) {
                   </div>
                 </div>
                 {trigger.description && (
-                  <p className="text-ink-muted mt-1 text-xs">
+                  <p className="text-ink-muted mt-1.5 text-sm">
                     {trigger.description}
                   </p>
                 )}

@@ -26,7 +26,7 @@ export function Badge({
   return (
     <span
       className={clsx(
-        "inline-flex items-center rounded-full px-[9px] py-[3px] text-[11px] whitespace-nowrap",
+        "inline-flex items-center rounded-full px-3 py-1 text-sm whitespace-nowrap",
         weight === "bold" ? "font-bold" : "font-semibold",
         toneClasses[tone],
         className,

@@ -19,7 +19,7 @@ export function PaginationControls({
   onPageChange,
 }: PaginationControlsProps) {
   return (
-    <div className="flex items-center justify-center gap-2.5">
+    <div className="flex items-center justify-center gap-3">
       <Button
         variant="secondary"
         size="sm"
@@ -39,7 +39,7 @@ export function PaginationControls({
         Newer
       </Button>
       <span
-        className="text-ink-muted inline-block text-center text-[13px] tabular-nums"
+        className="text-ink-muted inline-block text-center tabular-nums"
         style={{ minWidth: `${9 + String(totalPages).length * 2}ch` }}
       >
         Page {page} of {totalPages}

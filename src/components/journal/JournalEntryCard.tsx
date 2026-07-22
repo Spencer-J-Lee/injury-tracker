@@ -76,8 +76,8 @@ export function JournalEntryCard({
 
   return (
     <Card>
-      <div className="mb-2.5 flex items-center justify-between gap-2">
-        <div className="font-heading text-ink text-xl font-semibold">
+      <div className="mb-4 flex items-center justify-between gap-2.5">
+        <div className="font-heading text-ink text-2xl font-semibold">
           {formatFullDate(entry.date)}
         </div>
         {!isEditing && (
@@ -96,7 +96,7 @@ export function JournalEntryCard({
       {isEditing ? (
         <>
           <RichTextEditor value={draft} onChange={setDraft} autoFocus />
-          <div className="mt-3 flex justify-end gap-2">
+          <div className="mt-4 flex justify-end gap-2.5">
             <Button variant="ghost" onClick={guardedCancel}>
               Cancel
               <Kbd>{cancelShortcutLabel}</Kbd>
@@ -110,7 +110,7 @@ export function JournalEntryCard({
       ) : (
         <RichTextContent
           html={entry.text}
-          className="text-ink-secondary text-[14px]"
+          className="text-ink-secondary"
         />
       )}
 

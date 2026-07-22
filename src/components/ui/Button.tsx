@@ -22,9 +22,9 @@ const variantClasses: Record<Variant, string> = {
 };
 
 const sizeClasses: Record<Size, string> = {
-  sm: "rounded-[9px] px-3 py-1.5 text-xs",
-  md: "rounded-[10px] px-[15px] py-[9px] text-[13px]",
-  lg: "rounded-xl px-4 py-[11px] text-sm",
+  sm: "rounded-lg px-2.5 py-1.5 text-sm",
+  md: "rounded-xl px-3.5 py-2 text-base",
+  lg: "rounded-2xl px-4 py-3 text-lg",
 };
 
 export function Button({
@@ -36,7 +36,7 @@ export function Button({
   return (
     <button
       className={clsx(
-        "inline-flex items-center justify-center gap-1.5 border transition-colors disabled:pointer-events-none disabled:opacity-50",
+        "inline-flex items-center justify-center gap-2 border transition-colors disabled:pointer-events-none disabled:opacity-50",
         sizeClasses[size],
         variantClasses[variant],
         className,

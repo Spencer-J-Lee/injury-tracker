@@ -83,12 +83,12 @@ export function DashboardPage() {
     .sort(compareInjuries);
 
   return (
-    <div className="space-y-5">
-      <div className="mb-4 flex justify-between gap-3">
-        <h1 className="font-heading text-ink text-2xl font-semibold">
+    <div className="space-y-6">
+      <div className="mb-5 flex justify-between gap-4">
+        <h1 className="font-heading text-ink text-3xl font-semibold">
           Injuries
         </h1>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
           {selectMode ? (
             <Button variant="ghost" onClick={exitSelectMode}>
               Cancel
@@ -110,9 +110,11 @@ export function DashboardPage() {
         </div>
       </div>
 
-      <div className="flex items-center gap-x-2">
-        <div className="text-ink-muted text-xs font-semibold">Filter by:</div>
-        <div className="flex flex-wrap gap-2">
+      <div className="flex items-center gap-x-2.5">
+        <div className="text-ink-muted font-semibold">
+          Filter by:
+        </div>
+        <div className="flex flex-wrap gap-2.5">
           {STATUS_ORDER.map((status) => (
             <TogglePill
               key={status}
@@ -126,8 +128,8 @@ export function DashboardPage() {
       </div>
 
       {selectMode && (
-        <div className="border-subtle bg-surface-raised flex items-center justify-between gap-3 rounded-[12px] border px-[14px] py-2.5">
-          <span className="text-ink-secondary text-[13px]">
+        <div className="border-subtle bg-surface-raised flex items-center justify-between gap-4 rounded-xl border px-4 py-3">
+          <span className="text-ink-secondary">
             {selectedIds.size} selected
           </span>
           <Button
@@ -152,7 +154,7 @@ export function DashboardPage() {
           No injuries match the selected filters.
         </p>
       ) : (
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
           {visibleInjuries.map((injury) => (
             <InjuryCard
               key={injury.id}

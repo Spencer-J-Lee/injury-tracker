@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { LinkButton } from "@/components/ui/LinkButton";
+import { Label } from "../ui/Label";
 
 const THUMB_RADIUS_PX = 8;
 
@@ -43,9 +44,9 @@ export function RatingSlider({
 
   return (
     <div>
-      <div className="text-ink-muted mb-1 flex items-center justify-between text-[13px]">
-        <span>{label}</span>
-        <div className="flex items-center gap-2">
+      <div className="text-ink-muted flex items-center text-sm justify-between">
+        <Label noMargin>{label}</Label>
+        <div className="flex items-center gap-2.5">
           <span className="text-ink-emphasis font-semibold">
             {value === undefined ? "Not rated" : formatValue(value)}
           </span>
@@ -73,16 +74,16 @@ export function RatingSlider({
           <option key={tick} value={tick} />
         ))}
       </datalist>
-      <div className="relative h-1">
+      <div className="relative h-1.5">
         {tickPositions.map(({ tick, left }) => (
           <span
             key={tick}
-            className="bg-ink-muted/40 absolute top-0 h-1.5 w-px -translate-x-1/2"
+            className="bg-ink-muted/40 absolute top-0 h-2 w-px -translate-x-1/2"
             style={{ left }}
           />
         ))}
       </div>
-      <div className="text-ink-muted relative mt-0.5 h-4 text-[11px]">
+      <div className="text-ink-muted relative mt-0.5 h-5 text-sm">
         {tickPositions.map(({ tick, left }) => (
           <span
             key={tick}

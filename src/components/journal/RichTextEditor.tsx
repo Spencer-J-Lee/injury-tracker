@@ -63,7 +63,7 @@ export function RichTextEditor({
     editorProps: {
       attributes: {
         class:
-          "journal-rich-text min-h-[78px] text-[13px] text-ink-emphasis focus:outline-none",
+          "journal-rich-text min-h-20 text-ink-emphasis focus:outline-none",
       },
     },
     immediatelyRender: false,
@@ -142,11 +142,11 @@ export function RichTextEditor({
   return (
     <div
       className={clsx(
-        "border-strong bg-input focus-within:border-accent rounded-[10px] border",
+        "border-strong bg-input focus-within:border-accent rounded-xl border",
         className,
       )}
     >
-      <div className="border-subtle flex items-center gap-1 border-b px-2 py-1">
+      <div className="border-subtle flex items-center gap-1 border-b px-2.5 py-1.5">
         <IconButton
           icon={faListUl}
           label="Bulleted list"
@@ -176,8 +176,8 @@ export function RichTextEditor({
             )}
           />
           {linkMenuOpen && (
-            <div className="border-subtle bg-surface-raised absolute top-full left-0 z-10 mt-1 flex w-64 items-center gap-1 rounded-[10px] border p-2 shadow-lg">
-              <form onSubmit={applyLink} className="flex flex-1 gap-1">
+            <div className="border-subtle bg-surface-raised absolute top-full left-0 z-10 mt-1 flex w-80 items-center gap-1 rounded-lg border p-3 shadow-lg">
+              <form onSubmit={applyLink} className="flex flex-1 gap-3">
                 <Input
                   autoFocus
                   type="text"
@@ -185,7 +185,7 @@ export function RichTextEditor({
                   value={linkUrl}
                   onChange={(e) => setLinkUrl(e.target.value)}
                   placeholder="https://example.com"
-                  className="px-2 py-1 text-xs"
+                  className="px-3 py-2"
                 />
                 <Button type="submit" size="sm" className="shrink-0">
                   {editorState?.isLink ? "Update" : "Add"}
@@ -203,7 +203,11 @@ export function RichTextEditor({
           )}
         </div>
       </div>
-      <EditorContent editor={editor} spellCheck className="px-3 py-[9px]" />
+      <EditorContent
+        editor={editor}
+        spellCheck
+        className="px-4 py-3"
+      />
     </div>
   );
 }

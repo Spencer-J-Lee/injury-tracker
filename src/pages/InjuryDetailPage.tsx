@@ -66,27 +66,27 @@ export function InjuryDetailPage() {
   };
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       <div>
-        <div className="flex items-start justify-between gap-3">
-          <h1 className="font-heading text-ink text-2xl font-semibold">
+        <div className="flex items-start justify-between gap-4">
+          <h1 className="font-heading text-ink text-3xl font-semibold">
             <InjuryTitle injury={injury} />
           </h1>
-          <div className="mt-1 flex shrink-0 items-center gap-1.5">
-            <span className="text-ink-muted text-[10px] font-bold tracking-widest uppercase">
+          <div className="flex shrink-0 items-center gap-2">
+            <span className="text-ink-muted text-xs font-bold tracking-widest uppercase">
               {statusLabels[injury.status]}
             </span>
             <InjuryPriorityBadge priority={injury.priority} />
           </div>
         </div>
         {injury.description && (
-          <p className="text-ink-secondary mt-2 max-w-3/5 text-sm">
+          <p className="text-ink-secondary mt-2.5 max-w-3/5 text-lg">
             {injury.description}
           </p>
         )}
 
-        <div className="mt-3.5 flex w-full flex-wrap items-center justify-between gap-2.5">
-          <div className="flex gap-2.5">
+        <div className="mt-4 flex w-full flex-wrap items-center justify-between gap-4">
+          <div className="flex gap-3">
             {todayEntry ? (
               <Button onClick={() => setEditingToday(true)}>
                 Update Today's Entry
@@ -102,7 +102,7 @@ export function InjuryDetailPage() {
               <IconButton icon={faPen} size="md" label="Edit injury" />
             </Link>
           </div>
-          <div className="flex gap-2.5">
+          <div className="flex gap-3">
             <IconButton
               icon={faTrash}
               size="md"
@@ -114,12 +114,12 @@ export function InjuryDetailPage() {
         </div>
       </div>
 
-      <div className="grid gap-5 lg:grid-cols-[3fr_2fr]">
-        <div className="min-w-0 space-y-5">
+      <div className="grid gap-6 lg:grid-cols-[3fr_2fr]">
+        <div className="min-w-0 space-y-6">
           <PainTrendChart injuryId={injury.id} />
           <LogTimeline injuryId={injury.id} />
         </div>
-        <div className="min-w-0 space-y-5 lg:self-start">
+        <div className="min-w-0 space-y-6 lg:self-start">
           <RemedyList injuryId={injury.id} />
           <TriggerList injuryId={injury.id} />
         </div>

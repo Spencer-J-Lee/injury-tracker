@@ -79,19 +79,19 @@ export function JournalPage() {
   });
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="font-heading text-ink text-2xl font-semibold">
+        <h1 className="font-heading text-ink text-3xl font-semibold">
           Journal
         </h1>
-        <div className="text-ink-muted text-[13px]">
+        <div className="text-ink-muted">
           {entries.length} {entries.length === 1 ? "entry" : "entries"}
         </div>
       </div>
 
       {!hasTodayEntry && (
         <Card>
-          <div className="font-heading text-ink mb-3 text-xl font-semibold">
+          <div className="font-heading text-ink mb-4 text-2xl font-semibold">
             {formatFullDate(today)}
           </div>
           <RichTextEditor
@@ -99,7 +99,7 @@ export function JournalPage() {
             onChange={updateDraft}
             placeholder="How are you feeling?"
           />
-          <div className="mt-3 flex justify-end">
+          <div className="mt-4 flex justify-end">
             <Button onClick={handleSave} disabled={!draft.trim()}>
               Save entry
               <Kbd>{saveShortcutLabel}</Kbd>
@@ -116,9 +116,9 @@ export function JournalPage() {
         />
       )}
 
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-4">
         {entries.length === 0 ? (
-          <p className="text-ink-muted py-8 text-center text-[14px]">
+          <p className="text-ink-muted py-10 text-center text-lg">
             No entries yet. Write your first one above.
           </p>
         ) : (

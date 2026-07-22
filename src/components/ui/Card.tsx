@@ -14,9 +14,9 @@ type CardProps<T extends ElementType> = CardOwnProps & {
 } & Omit<ComponentPropsWithoutRef<T>, keyof CardOwnProps | "as">;
 
 const sizeClasses: Record<Size, string> = {
-  sm: "rounded-lg p-3",
-  md: "rounded-[12px] px-3.5 py-3",
-  lg: "rounded-[16px] p-[18px]",
+  sm: "rounded-lg p-3.5",
+  md: "rounded-2xl px-[18px] py-4",
+  lg: "rounded-[20px] p-5",
 };
 
 const variantClasses: Record<Variant, string> = {

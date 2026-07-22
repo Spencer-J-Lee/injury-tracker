@@ -26,13 +26,13 @@ export function LogTimeline({ injuryId }: { injuryId: string }) {
 
   return (
     <Card>
-      <h3 className="font-heading text-ink-emphasis mb-3 text-sm font-semibold">
+      <h3 className="font-heading text-ink-emphasis mb-4 text-lg font-semibold">
         History
       </h3>
       {visibleEntries.length === 0 ? (
-        <p className="text-ink-muted text-sm">No log entries yet.</p>
+        <p className="text-ink-muted text-lg">No log entries yet.</p>
       ) : (
-        <ul className="space-y-2.5">
+        <ul className="space-y-4">
           {visibleEntries.map((entry) => (
             <LogTimelineItem
               key={entry.id}
@@ -46,7 +46,7 @@ export function LogTimeline({ injuryId }: { injuryId: string }) {
       {hasMore && (
         <button
           onClick={() => setVisibleCount((v) => v + PAGE_SIZE)}
-          className="text-accent-soft-text mt-3 text-[13px] font-semibold hover:underline"
+          className="text-accent-soft-text mt-4 font-semibold hover:underline"
         >
           Load more
         </button>

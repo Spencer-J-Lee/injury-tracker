@@ -43,19 +43,19 @@ function MeterRow({
   tone: PainTone;
 }) {
   return (
-    <div className="flex items-center gap-2">
-      <span className="text-ink-muted w-14 shrink-0 text-[11px] font-semibold">
+    <div className="flex items-center gap-4 text-sm">
+      <span className="text-ink-muted w-[72px] shrink-0 font-semibold">
         {label}
       </span>
-      <div className="bg-control h-1.5 flex-1 rounded-full">
+      <div className="bg-control h-2 flex-1 rounded-full">
         <div
-          className={clsx("h-1.5 rounded-full", meterFillClasses[tone])}
+          className={clsx("h-2 rounded-full", meterFillClasses[tone])}
           style={{ width: `${Math.max(0, Math.min(100, value))}%` }}
         />
       </div>
       <span
         className={clsx(
-          "w-9 shrink-0 text-right text-xs font-bold",
+          "w-11 shrink-0 text-right font-bold",
           meterTextClasses[tone],
         )}
       >
@@ -100,13 +100,13 @@ export function InjuryCard({
       tabIndex={0}
       onClick={handleClick}
       className={clsx(
-        "relative flex cursor-pointer flex-col justify-between gap-[14px] transition-colors",
+        "relative flex cursor-pointer flex-col justify-between gap-[18px] transition-colors",
         "[&:hover:not(:has(button:hover))]:border-accent",
         selectable && selected && "border-accent! bg-accent-soft/20",
       )}
     >
       {selectable && selected && (
-        <span className="border-canvas bg-accent text-accent-on absolute -top-2 -left-2 flex h-5 w-5 items-center justify-center rounded-full border-2">
+        <span className="border-canvas bg-accent text-accent-on absolute -top-2.5 -left-2.5 flex h-6 w-6 items-center justify-center rounded-full border-2">
           <FontAwesomeIcon
             icon={faCheck}
             className="text-ink text-[0.625rem]"
@@ -115,8 +115,8 @@ export function InjuryCard({
         </span>
       )}
 
-      <div className="flex flex-col gap-[14px]">
-        <h3 className="text-ink min-w-0 text-base font-semibold">
+      <div className="flex flex-col gap-[18px]">
+        <h3 className="text-ink min-w-0 text-xl font-semibold">
           <InjuryTitle injury={injury} />
         </h3>
 
@@ -126,7 +126,7 @@ export function InjuryCard({
             <Card
               size="sm"
               variant="subtle"
-              className="flex flex-col justify-between gap-2.5"
+              className="flex flex-col justify-between gap-3"
             >
               {lastLog.painLevel !== undefined && (
                 <MeterRow
@@ -150,21 +150,21 @@ export function InjuryCard({
         <MiniPainTrendChart injuryId={injury.id} />
       </div>
 
-      <div className="flex items-center justify-between gap-2">
-        <div className="flex min-w-0 items-center gap-2">
+      <div className="flex items-center justify-between gap-2.5">
+        <div className="flex min-w-0 items-center gap-2.5">
           <InjuryPriorityBadge priority={injury.priority} />
-          <span className="text-ink-muted text-[10px] font-bold tracking-widest uppercase">
+          <span className="text-ink-muted text-xs font-bold tracking-widest uppercase">
             {statusLabels[injury.status]}
           </span>
         </div>
 
-        <div className="flex min-w-0 items-center gap-2">
+        <div className="flex min-w-0 items-center text-right gap-2.5 text-xs">
           {loggedToday && lastLog ? (
-            <span className="text-ink-faint text-[13px]">
+            <span className="text-ink-faint">
               Updated {formatRelative(lastLog.updatedAt)}
             </span>
           ) : (
-            <span className="text-ink-faint text-[13px]">Not logged today</span>
+            <span className="text-ink-faint">Not logged today</span>
           )}
           {!selectable && (
             <Button

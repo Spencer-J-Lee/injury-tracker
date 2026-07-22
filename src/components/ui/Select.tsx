@@ -11,14 +11,14 @@ export function Select({
     <div className="relative">
       <select
         className={clsx(
-          "border-strong bg-input text-ink-emphasis focus:border-accent w-full appearance-none rounded-[10px] border px-3 py-[9px] pr-8 text-[13px] focus:outline-none",
+          "border-strong bg-input text-ink-emphasis focus:border-accent w-full appearance-none rounded-xl border px-4 py-3 pr-10 focus:outline-none",
           className,
         )}
         {...props}
       />
       <FontAwesomeIcon
         icon={faChevronDown}
-        className="text-ink-faint pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-[10px]"
+        className="text-ink-faint pointer-events-none absolute top-1/2 right-3.5 -translate-y-1/2 text-xs"
       />
     </div>
   );

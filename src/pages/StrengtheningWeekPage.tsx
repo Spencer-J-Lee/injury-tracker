@@ -30,8 +30,8 @@ export function StrengtheningWeekPage() {
   };
 
   return (
-    <div className="space-y-5">
-      <h1 className="font-heading text-ink text-2xl font-semibold">
+    <div className="space-y-6">
+      <h1 className="font-heading text-ink text-3xl font-semibold">
         Strengthening
       </h1>
 

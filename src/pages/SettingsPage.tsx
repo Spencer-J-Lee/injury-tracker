@@ -95,24 +95,24 @@ export function SettingsPage() {
   };
 
   return (
-    <div className="space-y-5">
-      <h1 className="font-heading text-ink text-2xl font-semibold">Settings</h1>
-      {message && <p className="text-pain-green text-[13px]">{message}</p>}
+    <div className="space-y-6">
+      <h1 className="font-heading text-ink text-3xl font-semibold">Settings</h1>
+      {message && <p className="text-pain-green">{message}</p>}
 
-      <Card className="space-y-3">
+      <Card className="space-y-4">
         <div>
-          <h3 className="text-ink text-[15px] font-semibold">Backup</h3>
-          <p className="text-ink-muted mt-1 text-[13px]">
+          <h3 className="text-ink text-xl font-semibold">Backup</h3>
+          <p className="text-ink-muted mt-2">
             All data is stored only in this browser. Export regularly to avoid
             losing it.
           </p>
-          <p className="text-ink-faint mt-1.5 text-xs">
+          <p className="text-ink-faint mt-2 text-sm">
             {lastExportedAt
               ? `Last exported ${formatRelative(lastExportedAt)}`
               : "Never exported"}
           </p>
         </div>
-        <div className="flex flex-wrap gap-2.5">
+        <div className="flex flex-wrap gap-3">
           <Button onClick={handleExport} disabled={busy}>
             Export data
           </Button>
@@ -134,20 +134,20 @@ export function SettingsPage() {
         </div>
       </Card>
 
-      <Card className="space-y-3">
+      <Card className="space-y-4">
         <div>
-          <h3 className="text-ink text-[15px] font-semibold">Seed data</h3>
-          <p className="text-ink-muted mt-1 text-[13px]">
+          <h3 className="text-ink text-xl font-semibold">Seed data</h3>
+          <p className="text-ink-muted mt-2">
             Loads a set of example injuries, remedies, and log entries for
             testing. Re-running replaces previous seed data.
           </p>
-          <p className="text-ink-muted mt-1 text-[13px]">
+          <p className="text-ink-muted mt-2">
             Seeded items are tagged with the{" "}
             <span className="font-mono">{SEED_MARKER}</span> marker so they can
             be identified and cleared later.
           </p>
         </div>
-        <div className="flex flex-wrap gap-2.5">
+        <div className="flex flex-wrap gap-3">
           <Button onClick={handleSeed} disabled={busy}>
             Load example data
           </Button>
@@ -162,14 +162,14 @@ export function SettingsPage() {
       </Card>
 
       <Card
-        className="space-y-3"
+        className="space-y-4"
         style={{ borderColor: "oklch(0.40 0.08 25)" }}
       >
         <div>
-          <h3 className="text-pain-red text-[15px] font-semibold">
+          <h3 className="text-pain-red text-xl font-semibold">
             Danger zone
           </h3>
-          <p className="text-ink-muted mt-1 text-[13px]">
+          <p className="text-ink-muted mt-2">
             Permanently delete every injury, remedy, and log entry.
           </p>
         </div>

@@ -14,8 +14,8 @@ export function InjuryFormPage() {
   }
 
   return (
-    <div className="space-y-5">
-      <h1 className="font-heading text-ink text-2xl font-semibold">
+    <div className="space-y-6">
+      <h1 className="font-heading text-ink text-3xl font-semibold">
         {isEdit ? "Edit injury" : "Add injury"}
       </h1>
       <InjuryForm

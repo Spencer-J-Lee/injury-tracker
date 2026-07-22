@@ -36,7 +36,7 @@ function AppShellContent() {
     <Link
       to={to}
       className={clsx(
-        "rounded-[10px] px-3 py-1.5 text-sm",
+        "rounded-xl px-4 py-2 text-lg",
         location.pathname === to
           ? "bg-accent-soft text-accent-soft-text font-semibold"
           : "text-ink-muted font-medium",
@@ -50,7 +50,7 @@ function AppShellContent() {
     <Link
       to={to}
       className={clsx(
-        "flex items-center justify-between gap-2 rounded-[10px] px-3 py-[9px] text-sm",
+        "flex items-center justify-between gap-2.5 rounded-xl px-3.5 py-2.5 text-lg",
         location.pathname === to
           ? "bg-accent-soft text-accent-soft-text font-semibold"
           : "text-ink-muted hover:text-ink-secondary font-medium",
@@ -63,12 +63,12 @@ function AppShellContent() {
 
   return (
     <div className="bg-canvas-page min-h-screen">
-      <div className="mx-auto max-w-[1400px] lg:p-6">
-        <div className="bg-canvas lg:border-subtle lg:grid lg:grid-cols-[220px_1fr] lg:overflow-hidden lg:rounded-[20px] lg:border lg:shadow-[0_24px_60px_-20px_rgba(0,0,0,0.5)]">
-          <aside className="border-subtle bg-canvas-sidebar hidden border-r lg:flex lg:flex-col lg:gap-5 lg:p-6">
+      <div className="mx-auto max-w-[1750px] lg:p-8">
+        <div className="bg-canvas lg:border-subtle lg:grid lg:grid-cols-[252px_1fr] lg:overflow-hidden lg:rounded-3xl lg:border lg:shadow-[0_24px_60px_-20px_rgba(0,0,0,0.5)]">
+          <aside className="border-subtle bg-canvas-sidebar hidden border-r lg:flex lg:flex-col lg:gap-6 lg:p-6">
             <Link
               to="/"
-              className="font-heading text-ink text-[19px] font-semibold"
+              className="font-heading text-ink text-2xl font-semibold"
             >
               Rehab Tracker
             </Link>
@@ -85,7 +85,7 @@ function AppShellContent() {
           </aside>
 
           <div className="bg-canvas">
-            <header className="border-subtle bg-canvas/90 sticky top-0 z-10 flex items-center justify-between border-b px-4 py-3 backdrop-blur lg:hidden">
+            <header className="border-subtle bg-canvas/90 sticky top-0 z-10 flex items-center justify-between border-b px-5 py-4 backdrop-blur lg:hidden">
               <Link to="/" className="font-heading text-ink font-semibold">
                 Rehab Tracker
               </Link>
@@ -97,7 +97,7 @@ function AppShellContent() {
               </nav>
             </header>
 
-            <main className="mx-auto max-w-6xl px-4 py-5 sm:px-6 lg:max-w-none lg:p-6">
+            <main className="mx-auto max-w-[1440px] px-5 py-6 sm:px-7 lg:max-w-none lg:p-6">
               <BackupBanner />
               <Outlet />
             </main>
@@ -107,7 +107,7 @@ function AppShellContent() {
 
       <button
         onClick={() => openLogModal()}
-        className="bg-accent text-accent-on hover:bg-accent-hover fixed right-6 bottom-6 flex h-14 w-14 items-center justify-center rounded-full text-2xl shadow-lg lg:hidden"
+        className="bg-accent text-accent-on hover:bg-accent-hover fixed right-7 bottom-7 flex h-16 w-16 items-center justify-center rounded-full text-3xl shadow-lg lg:hidden"
       >
         +
       </button>
