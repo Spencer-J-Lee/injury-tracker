@@ -14,6 +14,9 @@ This is a personal tool built to solve my own problem, not a polished product. T
 - Track triggers by category to spot what's aggravating an injury
 - Dashboard with filtering across active injuries
 - Pain trend charts, including a mini trend chart on each injury card
+- Strengthening exercise planner with weekly/4-day grid views, grouped by injury
+- Freeform journal with rich-text entries, pagination, and draft autosave
+- Quick "stamp" picker for reusable snippets of text
 - JSON export/import for backups (no server, no account — your data stays on your device)
 
 ## Tech Stack
