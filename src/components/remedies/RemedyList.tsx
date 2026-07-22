@@ -127,8 +127,8 @@ function RemedySection({
       ) : (
         <Button
           variant={remedies.length > 0 ? "ghost" : "dashed"}
+          size={remedies.length > 0 ? "sm" : "md"}
           onClick={() => setAdding(true)}
-          size="sm"
           className="w-full"
         >
           + Add

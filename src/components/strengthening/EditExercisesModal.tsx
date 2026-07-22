@@ -107,6 +107,7 @@ export function EditExercisesModal({
                   key={remedy.id}
                   selected={remedyIds.includes(remedy.id)}
                   onClick={() => toggleRemedy(remedy.id)}
+                  tone="green"
                 >
                   {remedy.name}
                 </TogglePill>

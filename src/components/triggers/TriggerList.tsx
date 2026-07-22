@@ -86,6 +86,7 @@ export function TriggerList({ injuryId }: { injuryId: string }) {
       ) : (
         <Button
           variant={triggers.length > 0 ? "ghost" : "dashed"}
+          size={triggers.length > 0 ? "sm" : "md"}
           onClick={() => setAdding(true)}
           className="w-full"
         >
