@@ -2,12 +2,15 @@ import { useMemo, useState } from "react";
 import clsx from "clsx";
 import { isToday, parseISO } from "date-fns";
 import { Button } from "@/components/ui/Button";
+import { Label } from "@/components/ui/Label";
 import { EditExercisesModal } from "@/components/strengthening/EditExercisesModal";
 import {
   createPlannedExercise,
   deletePlannedExercise,
 } from "@/db/queries/plannedExercises";
 import { getRemediesByIds } from "@/db/queries/remedies";
+import { useInjuries } from "@/hooks/useInjuries";
+import { compareInjuries } from "@/lib/injuries";
 import { formatShortDateWithDay } from "@/lib/dates";
 import { getWeekDates } from "@/lib/weeks";
 import type { PlannedExerciseWithRemedy } from "@/hooks/useWeekPlannedExercises";
@@ -50,6 +53,19 @@ function DayColumn({
     [remedyIdsKey],
   );
 
+  const injuries = useInjuries() ?? [];
+  const groups = useMemo(() => {
+    return [...injuries]
+      .sort(compareInjuries)
+      .map((injury) => ({
+        injury,
+        exercises: exercises.filter(
+          (exercise) => exercise.remedy?.injuryId === injury.id,
+        ),
+      }))
+      .filter((group) => group.exercises.length > 0);
+  }, [injuries, exercises]);
+
   const handleSave = async (remedyIds: string[]) => {
     const toRemove = exercises.filter(
       (exercise) => !remedyIds.includes(exercise.remedyId),
@@ -91,14 +107,19 @@ function DayColumn({
         Edit
       </Button>
 
-      {exercises.length > 0 && (
-        <ul className="divide-subtle flex flex-col divide-y text-ink text-sm">
-          {exercises.map((exercise) => (
-            <li key={exercise.id} className="py-3">
-              {exercise.remedy?.name ?? "Exercise"}
-            </li>
+      {groups.length > 0 && (
+        <div className="divide-subtle flex flex-col divide-dashed divide-y wrap-break-word">
+          {groups.map(({ injury, exercises }) => (
+            <div key={injury.id} className="py-3">
+              <Label noMargin>{injury.bodyPart}</Label>
+              <ul className="mt-2 flex flex-col gap-1.5 text-ink text-sm">
+                {exercises.map((exercise) => (
+                  <li key={exercise.id}>{exercise.remedy?.name ?? "Exercise"}</li>
+                ))}
+              </ul>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
 
       <EditExercisesModal
