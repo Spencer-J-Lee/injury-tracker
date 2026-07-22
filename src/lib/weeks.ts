@@ -1,11 +1,10 @@
 import {
   addDays,
-  addWeeks,
   eachDayOfInterval,
   format,
   parseISO,
   startOfWeek,
-  subWeeks,
+  subDays,
 } from "date-fns";
 
 const DATE_FORMAT = "yyyy-MM-dd";
@@ -17,28 +16,41 @@ export function getWeekStart(dateStr: string): string {
   );
 }
 
-export function getWeekEnd(weekStartStr: string): string {
-  return format(addDays(parseISO(weekStartStr), 6), DATE_FORMAT);
+export function get4DayWindowStart(dateStr: string): string {
+  return format(subDays(parseISO(dateStr), 2), DATE_FORMAT);
 }
 
-export function getWeekDates(weekStartStr: string): string[] {
-  const start = parseISO(weekStartStr);
-  return eachDayOfInterval({ start, end: addDays(start, 6) }).map((date) =>
-    format(date, DATE_FORMAT),
+export function getWindowEnd(windowStartStr: string, size: number): string {
+  return format(addDays(parseISO(windowStartStr), size - 1), DATE_FORMAT);
+}
+
+export function getWindowDates(windowStartStr: string, size: number): string[] {
+  const start = parseISO(windowStartStr);
+  return eachDayOfInterval({ start, end: addDays(start, size - 1) }).map(
+    (date) => format(date, DATE_FORMAT),
   );
 }
 
-export function getPreviousWeekStart(weekStartStr: string): string {
-  return format(subWeeks(parseISO(weekStartStr), 1), DATE_FORMAT);
+export function getPreviousWindowStart(
+  windowStartStr: string,
+  size: number,
+): string {
+  return format(subDays(parseISO(windowStartStr), size), DATE_FORMAT);
 }
 
-export function getNextWeekStart(weekStartStr: string): string {
-  return format(addWeeks(parseISO(weekStartStr), 1), DATE_FORMAT);
+export function getNextWindowStart(
+  windowStartStr: string,
+  size: number,
+): string {
+  return format(addDays(parseISO(windowStartStr), size), DATE_FORMAT);
 }
 
-export function formatWeekRangeLabel(weekStartStr: string): string {
-  const start = parseISO(weekStartStr);
-  const end = addDays(start, 6);
+export function formatWindowRangeLabel(
+  windowStartStr: string,
+  size: number,
+): string {
+  const start = parseISO(windowStartStr);
+  const end = addDays(start, size - 1);
   const sameYear = format(start, "yyyy") === format(end, "yyyy");
   const startLabel = format(start, sameYear ? "MMM d" : "MMM d, yyyy");
   const endLabel = format(end, "MMM d, yyyy");

@@ -1,18 +1,18 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import { listPlannedExercisesForWeek } from "@/db/queries/plannedExercises";
 import { getRemediesByIds } from "@/db/queries/remedies";
-import { getWeekEnd } from "@/lib/weeks";
+import { getWindowEnd } from "@/lib/weeks";
 import type { PlannedExercise, Remedy } from "@/types/models";
 
 export interface PlannedExerciseWithRemedy extends PlannedExercise {
   remedy: Remedy | undefined;
 }
 
-export function useWeekPlannedExercises(weekStart: string) {
+export function useWeekPlannedExercises(windowStart: string, size: number) {
   return useLiveQuery(
     async (): Promise<PlannedExerciseWithRemedy[]> => {
-      const weekEnd = getWeekEnd(weekStart);
-      const planned = await listPlannedExercisesForWeek(weekStart, weekEnd);
+      const windowEnd = getWindowEnd(windowStart, size);
+      const planned = await listPlannedExercisesForWeek(windowStart, windowEnd);
       const remedies = await getRemediesByIds([
         ...new Set(planned.map((entry) => entry.remedyId)),
       ]);
@@ -22,7 +22,7 @@ export function useWeekPlannedExercises(weekStart: string) {
         remedy: byId.get(entry.remedyId),
       }));
     },
-    [weekStart],
+    [windowStart, size],
     [],
   );
 }

@@ -4,19 +4,22 @@ import {
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@/components/ui/Button";
-import { formatWeekRangeLabel } from "@/lib/weeks";
+import { formatWindowRangeLabel } from "@/lib/weeks";
+import { LinkButton } from "../ui/LinkButton";
 
 interface WeekNavProps {
-  weekStart: string;
-  isCurrentWeek: boolean;
+  windowStart: string;
+  size: number;
+  isCurrentWindow: boolean;
   onPrevious: () => void;
   onNext: () => void;
   onToday: () => void;
 }
 
 export function WeekNav({
-  weekStart,
-  isCurrentWeek,
+  windowStart,
+  size,
+  isCurrentWindow,
   onPrevious,
   onNext,
   onToday,
@@ -27,25 +30,27 @@ export function WeekNav({
         <Button
           variant="secondary"
           onClick={onPrevious}
-          aria-label="Previous week"
+          aria-label={`Previous ${size} days`}
         >
           <FontAwesomeIcon icon={faChevronLeft} />
         </Button>
 
         <h2 className="font-heading text-ink w-[280px] text-center text-2xl font-semibold">
-          {formatWeekRangeLabel(weekStart)}
+          {formatWindowRangeLabel(windowStart, size)}
         </h2>
 
-        <Button variant="secondary" onClick={onNext} aria-label="Next week">
+        <Button
+          variant="secondary"
+          onClick={onNext}
+          aria-label={`Next ${size} days`}
+        >
           <FontAwesomeIcon icon={faChevronRight} />
         </Button>
       </div>
 
       <div className="flex h-9 items-center">
-        {!isCurrentWeek && (
-          <Button variant="ghost" size="sm" onClick={onToday}>
-            Jump to this week
-          </Button>
+        {!isCurrentWindow && (
+          <LinkButton onClick={onToday}>Jump to today</LinkButton>
         )}
       </div>
     </div>
