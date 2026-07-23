@@ -1,5 +1,10 @@
 import { db } from "@/db/schema";
-import type { Injury, InjuryPriority, InjuryStatus } from "@/types/models";
+import type {
+  Injury,
+  InjuryPriority,
+  InjuryStatus,
+  PainMechanism,
+} from "@/types/models";
 
 export function listInjuries() {
   return db.injuries.filter((injury) => !injury.archivedAt).toArray();
@@ -16,6 +21,7 @@ export async function createInjury(input: {
   description?: string;
   status?: InjuryStatus;
   priority?: InjuryPriority | null;
+  painMechanisms?: PainMechanism[];
 }): Promise<Injury> {
   const now = new Date().toISOString();
   const injury: Injury = {
@@ -26,6 +32,7 @@ export async function createInjury(input: {
     description: input.description,
     status: input.status ?? "active",
     priority: input.priority ?? null,
+    painMechanisms: input.painMechanisms ?? [],
     createdAt: now,
     updatedAt: now,
   };
@@ -44,6 +51,7 @@ export async function updateInjury(
       | "description"
       | "status"
       | "priority"
+      | "painMechanisms"
     >
   >,
 ) {
@@ -67,9 +75,11 @@ export async function deleteInjuries(ids: string[]) {
     db.injuries,
     db.remedies,
     db.logEntries,
+    db.morningCheckIns,
     async () => {
       await db.logEntries.where("injuryId").anyOf(ids).delete();
       await db.remedies.where("injuryId").anyOf(ids).delete();
+      await db.morningCheckIns.where("injuryId").anyOf(ids).delete();
       await db.injuries.bulkDelete(ids);
     },
   );

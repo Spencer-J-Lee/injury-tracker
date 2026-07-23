@@ -10,10 +10,11 @@ import { InjuryPriorityBadge } from "@/components/injuries/InjuryPriorityBadge";
 import { statusLabels } from "@/lib/injuryStatus";
 import { InjuryTitle } from "@/components/injuries/InjuryTitle";
 import { useLastLogEntryForInjury } from "@/hooks/useLastLogEntryForInjury";
+import { useMorningCheckInsForInjury } from "@/hooks/useMorningCheckInsForInjury";
 import { useLogModal } from "@/context/useLogModal";
 import { LogEntryEditModal } from "@/components/logs/LogEntryEditModal";
-import { formatRelative } from "@/lib/dates";
-import { isToday } from "date-fns";
+import { MorningCheckInModal } from "@/components/logs/MorningCheckInModal";
+import { formatRelative, todayEntryOnly } from "@/lib/dates";
 import { painTone, freqTone, type PainTone } from "@/lib/pain";
 import { MiniPainTrendChart } from "@/components/charts/MiniPainTrendChart";
 
@@ -79,11 +80,14 @@ export function InjuryCard({
   onToggleSelect,
 }: InjuryCardProps) {
   const lastLog = useLastLogEntryForInjury(injury.id);
+  const recentMorningCheckIns = useMorningCheckInsForInjury(injury.id, 1);
   const { openLogModal } = useLogModal();
   const navigate = useNavigate();
   const [editingToday, setEditingToday] = useState(false);
-  const loggedToday = lastLog ? isToday(new Date(lastLog.timestamp)) : false;
-  const todayEntry = loggedToday ? lastLog : undefined;
+  const [editingMorning, setEditingMorning] = useState(false);
+  const todayEntry = todayEntryOnly(lastLog);
+  const loggedToday = !!todayEntry;
+  const todayMorningEntry = todayEntryOnly(recentMorningCheckIns?.[0]);
 
   const handleClick = () => {
     if (selectable) {
@@ -168,18 +172,26 @@ export function InjuryCard({
           )}
           {!selectable && (
             <Button
-              variant={loggedToday ? "secondary" : "primary"}
+              variant={
+                !todayMorningEntry || !loggedToday ? "primary" : "secondary"
+              }
               size="sm"
               onClick={(e) => {
                 e.stopPropagation();
-                if (todayEntry) {
+                if (!todayMorningEntry) {
+                  setEditingMorning(true);
+                } else if (todayEntry) {
                   setEditingToday(true);
                 } else {
                   openLogModal(injury.id);
                 }
               }}
             >
-              {loggedToday ? "Update Entry" : "Log Entry"}
+              {!todayMorningEntry
+                ? "Morning Check-In"
+                : loggedToday
+                  ? "Update Entry"
+                  : "Log Entry"}
             </Button>
           )}
         </div>
@@ -192,6 +204,15 @@ export function InjuryCard({
           onClose={() => setEditingToday(false)}
         />
       )}
+
+      <MorningCheckInModal
+        injuryId={injury.id}
+        injury={injury}
+        painMechanisms={injury.painMechanisms}
+        entry={todayMorningEntry}
+        open={editingMorning}
+        onClose={() => setEditingMorning(false)}
+      />
     </Card>
   );
 }

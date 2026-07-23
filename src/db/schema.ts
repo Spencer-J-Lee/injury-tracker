@@ -7,6 +7,7 @@ import type {
   JournalEntry,
   AppMeta,
   PlannedExercise,
+  MorningCheckIn,
 } from "@/types/models";
 
 export const db = new Dexie("injury-tracker") as Dexie & {
@@ -17,6 +18,7 @@ export const db = new Dexie("injury-tracker") as Dexie & {
   journalEntries: EntityTable<JournalEntry, "id">;
   meta: EntityTable<AppMeta, "key">;
   plannedExercises: EntityTable<PlannedExercise, "id">;
+  morningCheckIns: EntityTable<MorningCheckIn, "id">;
 };
 
 db.version(1).stores({
@@ -270,3 +272,44 @@ db.version(12).stores({
   meta: "key",
   plannedExercises: "id, date, remedyId",
 });
+
+const V13_STORES = {
+  injuries: "id, status, archivedAt",
+  remedies: "id, injuryId, category, archivedAt",
+  triggers: "id, injuryId, category, archivedAt",
+  logEntries:
+    "id, injuryId, timestamp, sessionId, [injuryId+timestamp], *remedyIds, *triggerIds",
+  journalEntries: "id, date",
+  meta: "key",
+  plannedExercises: "id, date, remedyId",
+  morningCheckIns: "id, injuryId, timestamp, [injuryId+timestamp]",
+};
+
+db.version(13).stores(V13_STORES);
+
+db.version(14)
+  .stores(V13_STORES)
+  .upgrade((tx) =>
+    tx
+      .table("injuries")
+      .toCollection()
+      .modify((injury) => {
+        injury.painMechanisms = injury.painMechanisms ?? [];
+      }),
+  );
+
+db.version(15)
+  .stores(V13_STORES)
+  .upgrade(async (tx) => {
+    const injuries = await tx.table("injuries").toArray();
+    const mechanismsByInjuryId = new Map(
+      injuries.map((injury) => [injury.id, injury.painMechanisms ?? []]),
+    );
+    await tx
+      .table("morningCheckIns")
+      .toCollection()
+      .modify((entry) => {
+        entry.painMechanisms =
+          entry.painMechanisms ?? mechanismsByInjuryId.get(entry.injuryId) ?? [];
+      });
+  });

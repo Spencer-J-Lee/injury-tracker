@@ -49,6 +49,12 @@ export function fromDatetimeLocalValue(value: string): string {
   return new Date(value).toISOString();
 }
 
+export function todayEntryOnly<T extends { timestamp: string }>(
+  entry: T | undefined,
+): T | undefined {
+  return entry && isToday(new Date(entry.timestamp)) ? entry : undefined;
+}
+
 export type TrendRange = "7d" | "30d" | "90d" | "all";
 
 export function isWithinRange(iso: string, range: TrendRange): boolean {

@@ -5,6 +5,8 @@ export type RemedyCategory =
 export type TriggerCategory =
   "Activity" | "Overuse" | "Load" | "Posture" | "Muscle Tightness";
 
+export type PainMechanism = "nociceptive" | "neuropathic" | "nociplastic";
+
 export interface Injury {
   id: string;
   bodyPart: string;
@@ -13,6 +15,7 @@ export interface Injury {
   description?: string;
   status: InjuryStatus;
   priority: InjuryPriority | null;
+  painMechanisms: PainMechanism[];
   createdAt: string;
   updatedAt: string;
   archivedAt?: string;
@@ -72,4 +75,24 @@ export interface PlannedExercise {
   date: string; // yyyy-MM-dd — the day this exercise is done/planned
   remedyId: string;
   createdAt: string;
+}
+
+export type StiffnessDuration = "immediate" | "5-10min" | "15-30min" | "30plus";
+export type NumbnessDuration = "brief" | "lingering" | "persistent";
+export type NumbnessSuspectedCause = "sleep-posture" | "load-related" | "unsure";
+
+export interface MorningCheckIn {
+  id: string;
+  injuryId: string;
+  timestamp: string;
+  painMechanisms: PainMechanism[]; // snapshot of the injury's mechanisms when this entry was logged
+  painLevel?: number; // resting pain, same 0-10 scale as LogEntry.painLevel
+  stiffnessLevel?: number; // stiffness severity, same 0-10 scale as painLevel
+  stiffnessDuration?: StiffnessDuration;
+  numbnessPresent?: boolean;
+  numbnessDuration?: NumbnessDuration; // only meaningful when numbnessPresent
+  numbnessSuspectedCause?: NumbnessSuspectedCause; // only meaningful when numbnessPresent
+  notes?: string;
+  createdAt: string;
+  updatedAt: string;
 }

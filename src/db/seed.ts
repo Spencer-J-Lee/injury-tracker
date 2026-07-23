@@ -116,6 +116,7 @@ export async function seedTestData(): Promise<SeedResult> {
       description: seed.description,
       status: seed.status,
       priority: seed.priority,
+      painMechanisms: [],
       createdAt,
       updatedAt: createdAt,
       archivedAt:

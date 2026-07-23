@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { isToday } from "date-fns";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useInjury } from "@/hooks/useInjury";
 import { useLastLogEntryForInjury } from "@/hooks/useLastLogEntryForInjury";
+import { useMorningCheckInsForInjury } from "@/hooks/useMorningCheckInsForInjury";
 import { statusLabels } from "@/lib/injuryStatus";
 import { InjuryPriorityBadge } from "@/components/injuries/InjuryPriorityBadge";
 import { InjuryTitle } from "@/components/injuries/InjuryTitle";
@@ -17,13 +17,19 @@ import { useAnyModalOpen } from "@/lib/modalStore";
 import {
   logEntryShortcutLabel,
   updateEntryShortcutLabel,
+  morningCheckInShortcutLabel,
 } from "@/lib/shortcuts";
 import { useLogModal } from "@/context/useLogModal";
+import { todayEntryOnly } from "@/lib/dates";
 import { RemedyList } from "@/components/remedies/RemedyList";
 import { TriggerList } from "@/components/triggers/TriggerList";
 import { PainTrendChart } from "@/components/charts/PainTrendChart";
+import { MorningTrendChart } from "@/components/charts/MorningTrendChart";
 import { LogTimeline } from "@/components/logs/LogTimeline";
+import { MorningCheckInTimeline } from "@/components/logs/MorningCheckInTimeline";
 import { LogEntryEditModal } from "@/components/logs/LogEntryEditModal";
+import { MorningCheckInModal } from "@/components/logs/MorningCheckInModal";
+import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import { deleteInjury } from "@/db/queries/injuries";
 import { formatInjuryName } from "@/lib/injuries";
 
@@ -33,23 +39,30 @@ export function InjuryDetailPage() {
   const { openLogModal } = useLogModal();
   const navigate = useNavigate();
   const lastEntry = useLastLogEntryForInjury(id ?? "");
+  const recentMorningCheckIns = useMorningCheckInsForInjury(id, 1);
   const [editingToday, setEditingToday] = useState(false);
+  const [editingMorning, setEditingMorning] = useState(false);
   const [confirmingDelete, setConfirmingDelete] = useState(false);
+  const [view, setView] = useState<"main" | "morning">("main");
+  const viewOptions = [
+    { value: "main", label: "Main History" },
+    { value: "morning", label: "Morning" },
+  ] as const;
   const anyModalOpen = useAnyModalOpen();
 
-  const todayEntry =
-    lastEntry && isToday(new Date(lastEntry.timestamp)) ? lastEntry : undefined;
+  const todayEntry = todayEntryOnly(lastEntry);
+  const todayMorningEntry = todayEntryOnly(recentMorningCheckIns?.[0]);
 
   useKeyboardShortcut(
-    "l",
-    () => openLogModal(injury?.id),
-    !!injury && !todayEntry && !anyModalOpen,
+    "t",
+    () => (todayEntry ? setEditingToday(true) : openLogModal(injury?.id)),
+    !!injury && !!todayMorningEntry && !anyModalOpen,
   );
 
   useKeyboardShortcut(
-    "u",
-    () => setEditingToday(true),
-    !!todayEntry && !anyModalOpen,
+    "m",
+    () => setEditingMorning(true),
+    !!injury && !anyModalOpen,
   );
 
   if (injury === undefined) {
@@ -89,8 +102,13 @@ export function InjuryDetailPage() {
 
         <div className="mt-4 flex w-full flex-wrap items-center justify-between gap-4">
           <div className="flex gap-3">
-            {todayEntry ? (
-              <Button onClick={() => setEditingToday(true)}>
+            {!todayMorningEntry ? (
+              <Button onClick={() => setEditingMorning(true)}>
+                Morning Check-In
+                <Kbd>{morningCheckInShortcutLabel}</Kbd>
+              </Button>
+            ) : todayEntry ? (
+              <Button variant="secondary" onClick={() => setEditingToday(true)}>
                 Update Today's Entry
                 <Kbd>{updateEntryShortcutLabel}</Kbd>
               </Button>
@@ -98,6 +116,15 @@ export function InjuryDetailPage() {
               <Button onClick={() => openLogModal(injury.id)}>
                 Log Entry
                 <Kbd>{logEntryShortcutLabel}</Kbd>
+              </Button>
+            )}
+            {todayMorningEntry && (
+              <Button
+                variant="secondary"
+                onClick={() => setEditingMorning(true)}
+              >
+                Update Morning Check-In
+                <Kbd>{morningCheckInShortcutLabel}</Kbd>
               </Button>
             )}
             <Link to={`/injuries/${injury.id}/edit`}>
@@ -116,10 +143,28 @@ export function InjuryDetailPage() {
         </div>
       </div>
 
+
       <div className="grid gap-6 lg:grid-cols-[3fr_2fr]">
         <div className="min-w-0 space-y-6">
-          <PainTrendChart injuryId={injury.id} />
-          <LogTimeline injuryId={injury.id} />
+          <SegmentedControl
+            options={viewOptions}
+            value={view}
+            onChange={setView}
+            size="lg"
+            className="w-full"
+          />
+
+          {view === "main" ? (
+            <>
+              <PainTrendChart injuryId={injury.id} />
+              <LogTimeline injuryId={injury.id} />
+            </>
+          ) : (
+            <>
+              <MorningTrendChart injuryId={injury.id} />
+              <MorningCheckInTimeline injuryId={injury.id} />
+            </>
+          )}
         </div>
         <div className="min-w-0 space-y-6 lg:self-start">
           <RemedyList injuryId={injury.id} />
@@ -134,6 +179,15 @@ export function InjuryDetailPage() {
           onClose={() => setEditingToday(false)}
         />
       )}
+
+      <MorningCheckInModal
+        injuryId={injury.id}
+        injury={injury}
+        painMechanisms={injury.painMechanisms}
+        entry={todayMorningEntry}
+        open={editingMorning}
+        onClose={() => setEditingMorning(false)}
+      />
 
       <ConfirmDialog
         open={confirmingDelete}

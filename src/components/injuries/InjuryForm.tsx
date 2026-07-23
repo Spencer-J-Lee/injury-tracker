@@ -1,15 +1,22 @@
 import { useState, type SubmitEvent } from "react";
-import type { Injury, InjuryPriority, InjuryStatus } from "@/types/models";
+import type {
+  Injury,
+  InjuryPriority,
+  InjuryStatus,
+  PainMechanism,
+} from "@/types/models";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 import { Select } from "@/components/ui/Select";
 import { Button } from "@/components/ui/Button";
 import { Label } from "@/components/ui/Label";
 import { Kbd } from "@/components/ui/Kbd";
+import { TogglePill } from "@/components/ui/TogglePill";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { useFormShortcuts } from "@/hooks/useFormShortcuts";
 import { useUnsavedChangesGuard } from "@/hooks/useUnsavedChangesGuard";
 import { saveShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
+import { PAIN_MECHANISM_OPTIONS } from "@/lib/morningCheckInOptions";
 
 interface InjuryFormValues {
   bodyPart: string;
@@ -18,6 +25,7 @@ interface InjuryFormValues {
   description: string;
   status: InjuryStatus;
   priority: InjuryPriority | null;
+  painMechanisms: PainMechanism[];
 }
 
 interface InjuryFormProps {
@@ -45,7 +53,18 @@ export function InjuryForm({
   const [priority, setPriority] = useState<InjuryPriority | null>(
     initial?.priority ?? null,
   );
+  const [painMechanisms, setPainMechanisms] = useState<PainMechanism[]>(
+    initial?.painMechanisms ?? [],
+  );
   const [submitting, setSubmitting] = useState(false);
+
+  const toggleMechanism = (mechanism: PainMechanism) => {
+    setPainMechanisms((prev) =>
+      prev.includes(mechanism)
+        ? prev.filter((m) => m !== mechanism)
+        : [...prev, mechanism],
+    );
+  };
 
   const isDirty =
     bodyPart !== (initial?.bodyPart ?? "") ||
@@ -53,7 +72,9 @@ export function InjuryForm({
     locationDetail !== (initial?.locationDetail ?? "") ||
     description !== (initial?.description ?? "") ||
     status !== (initial?.status ?? "active") ||
-    priority !== (initial?.priority ?? null);
+    priority !== (initial?.priority ?? null) ||
+    [...painMechanisms].sort().join(",") !==
+      [...(initial?.painMechanisms ?? [])].sort().join(",");
 
   const { isPrompting, guard, confirmLeave, cancelLeave, markSaved } =
     useUnsavedChangesGuard(isDirty);
@@ -70,6 +91,7 @@ export function InjuryForm({
         description: description.trim(),
         status,
         priority,
+        painMechanisms,
       });
     } finally {
       setSubmitting(false);
@@ -105,6 +127,21 @@ export function InjuryForm({
           placeholder="e.g. RSI"
           required
         />
+      </div>
+      <div>
+        <Label size="md">Likely Pain Mechanism</Label>
+        <div className="mt-2 flex flex-wrap gap-2">
+          {PAIN_MECHANISM_OPTIONS.map((opt) => (
+            <TogglePill
+              key={opt.value}
+              type="button"
+              selected={painMechanisms.includes(opt.value)}
+              onClick={() => toggleMechanism(opt.value)}
+            >
+              {opt.label}
+            </TogglePill>
+          ))}
+        </div>
       </div>
       <div>
         <Label size="md">Location Detail</Label>
