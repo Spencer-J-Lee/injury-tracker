@@ -8,8 +8,9 @@ This is a personal tool built to solve my own problem, not a polished product. T
 
 ## Features
 
-- Log injuries and track their status over time
+- Log injuries and track their status over time, with pain mechanism classification (nociceptive, neuropathic, nociplastic)
 - Record log entries (pain levels, rich-text notes, sessions) per injury
+- Morning check-ins to track resting pain, stiffness, and numbness separately from day-to-day logs
 - Track remedies and see which ones you've tried, and whether they provide immediate relief
 - Track triggers by category to spot what's aggravating an injury
 - Dashboard with filtering across active injuries
