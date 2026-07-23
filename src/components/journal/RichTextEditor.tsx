@@ -203,11 +203,7 @@ export function RichTextEditor({
           )}
         </div>
       </div>
-      <EditorContent
-        editor={editor}
-        spellCheck
-        className="px-4 py-3"
-      />
+      <EditorContent editor={editor} spellCheck className="px-4 py-3" />
     </div>
   );
 }

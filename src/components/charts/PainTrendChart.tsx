@@ -51,9 +51,7 @@ function ChartTooltip({ active, payload, colors }: ChartTooltipProps) {
         color: colors.secondary,
       }}
     >
-      <p style={{ color: colors.muted }}>
-        {formatTimestamp(point.timestamp)}
-      </p>
+      <p style={{ color: colors.muted }}>{formatTimestamp(point.timestamp)}</p>
       {point.painLevel !== undefined && (
         <p className="font-semibold" style={{ color: colors.line }}>
           {point.painLevel}/10 intensity

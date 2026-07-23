@@ -44,7 +44,7 @@ export function RatingSlider({
 
   return (
     <div>
-      <div className="text-ink-muted flex items-center text-sm justify-between">
+      <div className="text-ink-muted flex items-center justify-between text-sm">
         <Label noMargin>{label}</Label>
         <div className="flex items-center gap-2.5">
           <span className="text-ink-emphasis font-semibold">

@@ -96,10 +96,7 @@ export function DashboardPage() {
               </Button>
             ) : (
               <>
-                <Button
-                  variant="secondary"
-                  onClick={() => setSelectMode(true)}
-                >
+                <Button variant="secondary" onClick={() => setSelectMode(true)}>
                   Select
                 </Button>
                 <Link to="/injuries/new">
@@ -117,9 +114,7 @@ export function DashboardPage() {
       </PageTitle>
 
       <div className="flex items-center gap-x-2.5">
-        <div className="text-ink-muted font-semibold">
-          Filter by:
-        </div>
+        <div className="text-ink-muted font-semibold">Filter by:</div>
         <div className="flex flex-wrap gap-2.5">
           {STATUS_ORDER.map((status) => (
             <TogglePill

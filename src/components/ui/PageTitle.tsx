@@ -9,9 +9,7 @@ interface PageTitleProps {
 
 export function PageTitle({ children, actions, className }: PageTitleProps) {
   const heading = (
-    <h1 className="font-heading text-ink text-3xl font-semibold">
-      {children}
-    </h1>
+    <h1 className="font-heading text-ink text-3xl font-semibold">{children}</h1>
   );
 
   if (!actions) {
@@ -19,9 +17,7 @@ export function PageTitle({ children, actions, className }: PageTitleProps) {
   }
 
   return (
-    <div
-      className={clsx("flex items-start justify-between gap-4", className)}
-    >
+    <div className={clsx("flex items-start justify-between gap-4", className)}>
       {heading}
       {actions}
     </div>

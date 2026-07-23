@@ -108,15 +108,11 @@ export function ExerciseAdjustmentTips() {
 
       <div className="mt-3 grid gap-4 text-sm sm:grid-cols-2">
         <div>
-          <Label>
-            Adjust form
-          </Label>
+          <Label>Adjust form</Label>
           <TipList tips={FORM_TIPS} checked={checked} onToggle={toggle} />
         </div>
         <div>
-          <Label>
-            Adjust volume
-          </Label>
+          <Label>Adjust volume</Label>
           <TipList tips={VOLUME_TIPS} checked={checked} onToggle={toggle} />
         </div>
       </div>

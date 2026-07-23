@@ -32,7 +32,8 @@ const toneClasses: Record<Size, Record<Tone, string>> = {
   },
   md: {
     neutral: "border border-strong bg-control text-ink hover:bg-surface-raised",
-    danger: "bg-[oklch(0.33_0.14_25)] text-[oklch(0.96_0.03_25)] hover:bg-[oklch(0.37_0.14_25)]",
+    danger:
+      "bg-[oklch(0.33_0.14_25)] text-[oklch(0.96_0.03_25)] hover:bg-[oklch(0.37_0.14_25)]",
   },
 };
 

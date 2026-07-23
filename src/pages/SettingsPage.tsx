@@ -167,9 +167,7 @@ export function SettingsPage() {
         style={{ borderColor: "oklch(0.40 0.08 25)" }}
       >
         <div>
-          <h3 className="text-pain-red text-xl font-semibold">
-            Danger zone
-          </h3>
+          <h3 className="text-pain-red text-xl font-semibold">Danger zone</h3>
           <p className="text-ink-muted mt-2">
             Permanently delete every injury, remedy, and log entry.
           </p>

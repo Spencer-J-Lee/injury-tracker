@@ -122,7 +122,9 @@ export function StrengtheningWeekPage() {
           windowStart={windowStart}
           size={size}
           isCurrentWindow={isCurrentWindow}
-          onPrevious={() => goToWindow(getPreviousWindowStart(windowStart, size))}
+          onPrevious={() =>
+            goToWindow(getPreviousWindowStart(windowStart, size))
+          }
           onNext={() => goToWindow(getNextWindowStart(windowStart, size))}
           onToday={() => goToWindow(currentWindowStart)}
         />

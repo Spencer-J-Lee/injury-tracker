@@ -108,10 +108,7 @@ export function JournalEntryCard({
           </div>
         </>
       ) : (
-        <RichTextContent
-          html={entry.text}
-          className="text-ink-secondary"
-        />
+        <RichTextContent html={entry.text} className="text-ink-secondary" />
       )}
 
       <ConfirmDialog

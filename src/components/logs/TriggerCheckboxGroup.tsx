@@ -38,7 +38,7 @@ export function TriggerCheckboxGroup({
   return (
     <div>
       <Label>Triggers</Label>
-      <div className="flex flex-wrap gap-2.5">
+      <div className="flex flex-wrap items-center gap-x-2.5 gap-y-2">
         {triggers.map((trigger) => {
           const selected = selectedTriggerIds.includes(trigger.id);
           return (

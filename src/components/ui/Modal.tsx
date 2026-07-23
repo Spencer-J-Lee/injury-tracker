@@ -52,11 +52,7 @@ export function Modal({
           <h2 className="font-heading text-ink text-2xl font-semibold">
             {title}
           </h2>
-          <IconButton
-            icon={faXmark}
-            label="Close"
-            onClick={onClose}
-          />
+          <IconButton icon={faXmark} label="Close" onClick={onClose} />
         </div>
         <div className="space-y-5">{children}</div>
         {footer && (

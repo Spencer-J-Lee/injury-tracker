@@ -23,14 +23,18 @@ interface WeekGridProps {
   plannedExercises: PlannedExerciseWithRemedy[];
 }
 
-export function WeekGrid({ windowStart, size, plannedExercises }: WeekGridProps) {
+export function WeekGrid({
+  windowStart,
+  size,
+  plannedExercises,
+}: WeekGridProps) {
   const dates = getWindowDates(windowStart, size);
   const injuries = useInjuries() ?? [];
 
   return (
     <div
       className={clsx(
-        "divide-subtle grid grid-cols-1 divide-x sm:grid-cols-2 min-h-96",
+        "divide-subtle grid min-h-96 grid-cols-1 divide-x sm:grid-cols-2",
         size === 4 ? "lg:grid-cols-4" : "lg:grid-cols-7",
       )}
     >
@@ -100,16 +104,20 @@ function DayColumn({
 
   return (
     <div className="first:pl-0 last:pr-0">
-      <div className={clsx("flex flex-col gap-2.5 px-4 pt-2 pb-4", today && "bg-accent-soft/40")}>
+      <div
+        className={clsx(
+          "flex flex-col gap-2.5 px-4 pt-2 pb-4",
+          today && "bg-accent-soft/40",
+        )}
+      >
         <div
           className={clsx(
             "flex flex-col text-sm font-semibold tracking-wide uppercase",
             today ? "text-ink" : "text-ink-muted",
           )}
         >
-          
-          <p className="text-[10px] h-[1em] tracking-[0.2em] mb-0.5 uppercase text-accent">
-            {today && 'Today'}
+          <p className="text-accent mb-0.5 h-[1em] text-[10px] tracking-[0.2em] uppercase">
+            {today && "Today"}
           </p>
           <p className="leading-relaxed">{formatShortDateWithDay(date)}</p>
         </div>
@@ -125,11 +133,11 @@ function DayColumn({
       </div>
 
       {groups.length > 0 && (
-        <div className="divide-subtle flex flex-col divide-dashed divide-y wrap-break-word px-4 mt-3">
+        <div className="divide-subtle mt-3 flex flex-col divide-y divide-dashed px-4 wrap-break-word">
           {groups.map(({ injury, exercises }) => (
             <div className="py-3 first:pt-0 last:pb-0" key={injury.id}>
               <Label noMargin>{injury.bodyPart}</Label>
-              <ul className="mt-2 flex flex-col items-start gap-1.5 text-ink text-sm">
+              <ul className="text-ink mt-2 flex flex-col items-start gap-1.5 text-sm">
                 {exercises.map((exercise) => (
                   <li key={exercise.id}>
                     <Badge tone="green">

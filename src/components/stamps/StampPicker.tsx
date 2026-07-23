@@ -90,10 +90,7 @@ export function StampPicker() {
             className="border-subtle bg-surface-raised text-ink hover:bg-surface flex h-10 w-10 items-center justify-center rounded-r-full border text-xl shadow-lg"
           >
             {copiedStamp === lastUsedStamp ? (
-              <FontAwesomeIcon
-                icon={faCheck}
-                className="text-pain-green"
-              />
+              <FontAwesomeIcon icon={faCheck} className="text-pain-green" />
             ) : (
               lastUsedStamp
             )}
@@ -107,9 +104,7 @@ export function StampPicker() {
             ref={panelRef}
             className="border-subtle bg-surface-raised fixed bottom-18 left-5 z-60 w-[314px] rounded-2xl border p-4 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.6)]"
           >
-            <h2 className="font-heading text-ink mb-4 font-semibold">
-              Stamps
-            </h2>
+            <h2 className="font-heading text-ink mb-4 font-semibold">Stamps</h2>
 
             <div className="flex flex-wrap gap-2.5">
               {stamps.map((stamp) => (
@@ -135,7 +130,7 @@ export function StampPicker() {
                     onClick={() => handleRemove(stamp)}
                     aria-label={`Remove ${stamp}`}
                     title={`Remove ${stamp}`}
-                    className="text-ink-faint border border-subtle hover:text-pain-red bg-surface-raised absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full text-xs leading-none"
+                    className="text-ink-faint border-subtle hover:text-pain-red bg-surface-raised absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full border text-xs leading-none"
                   >
                     ✕
                   </button>
@@ -150,11 +145,7 @@ export function StampPicker() {
                 placeholder="Add stamp"
                 maxLength={8}
               />
-              <Button
-                type="button"
-                variant="secondary"
-                onClick={handleAdd}
-              >
+              <Button type="button" variant="secondary" onClick={handleAdd}>
                 Add
               </Button>
             </div>

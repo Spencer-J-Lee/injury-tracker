@@ -10,7 +10,7 @@ const CHECKS: { title: string; text: string; science?: string }[] = [
     title: "During the set",
     text: "Mild symptoms are okay, but should not climb rep after rep. If it's escalating, stop.",
     science:
-      "Progressively worsening pain during a task suggests the tissue is being pushed past its momentary load tolerance rather than just \"waking up.\" This is a common clinical heuristic to prevent acute overload, though it's based more on pattern-recognition in practice than a single controlled trial.",
+      'Progressively worsening pain during a task suggests the tissue is being pushed past its momentary load tolerance rather than just "waking up." This is a common clinical heuristic to prevent acute overload, though it\'s based more on pattern-recognition in practice than a single controlled trial.',
   },
   {
     title: "5-10 minutes after",
@@ -30,7 +30,10 @@ const PAIN_SCALE: { range: string; text: string }[] = [
     range: "3-5 (target zone)",
     text: "Noticeable ache/pull, but form holds and you could talk through it",
   },
-  { range: "6-7", text: "Sharp/distracting, changes your form — stop the exercise" },
+  {
+    range: "6-7",
+    text: "Sharp/distracting, changes your form — stop the exercise",
+  },
   { range: "8-10", text: "Severe — should never be reached" },
 ];
 
@@ -42,7 +45,7 @@ const RULES: { title: string; text: string; science?: string }[] = [
       "Nerve tissue doesn't follow the same \"safe to load through discomfort\" logic as muscle/tendon. Compressive or tensile nerve irritation (e.g., ulnar nerve entrapment) can worsen with repeated provocation, and unlike muscle soreness, nerve symptoms don't reliably self-limit — they're a marker of mechanical irritation, not just fatigue. Standard neurodynamic and orthopedic guidelines treat any neural symptom as an immediate stop signal.",
   },
   {
-    title: "Always warm up first, even for \"easy\" sessions",
+    title: 'Always warm up first, even for "easy" sessions',
     text: "It's important to be extra careful since your body's tolerance for load is extremely low. A proper warm-up can be the difference between a productive set and a flare up.",
   },
   {
@@ -90,7 +93,9 @@ function GuidelineItem({
     <div className={variant === "heading" ? "mt-5" : undefined}>
       {variant === "heading" ? (
         <>
-          <p className="font-heading text-ink font-medium mb-1 text-lg">{title}</p>
+          <p className="font-heading text-ink mb-1 text-lg font-medium">
+            {title}
+          </p>
           <p className="text-ink-muted">{text}</p>
         </>
       ) : (
@@ -113,23 +118,28 @@ export function StrengtheningGuidelines() {
         <div className="font-heading text-ink text-2xl font-semibold">
           Strengthening Guidelines for Rehabilitation
         </div>
-        <Button variant="secondary" onClick={() => setShowScience((prev) => !prev)}>
+        <Button
+          variant="secondary"
+          onClick={() => setShowScience((prev) => !prev)}
+        >
           {showScience ? "Hide scientific basis" : "Show scientific basis"}
         </Button>
       </div>
 
       <div>
-        <p className="font-heading text-ink font-medium mb-1 text-lg">
+        <p className="font-heading text-ink mb-1 text-lg font-medium">
           Pain is okay, escalating pain is not
         </p>
         <p className="text-ink-muted">
-          Mild-to-moderate symptoms (roughly 3-5/10) during exercise are normal and fine. The
-          goal isn't zero pain, it's pain that doesn't get worse.
+          Mild-to-moderate symptoms (roughly 3-5/10) during exercise are normal
+          and fine. The goal isn't zero pain, it's pain that doesn't get worse.
         </p>
         {showScience && <ScienceNote text={INTRO_SCIENCE} />}
         <div className="pl-8">
           <div className="mt-3">
-            <p className="font-heading text-ink font-medium mb-1 text-lg">Pain scale</p>
+            <p className="font-heading text-ink mb-1 text-lg font-medium">
+              Pain scale
+            </p>
             <div className="mt-1 space-y-1 pl-8">
               {PAIN_SCALE.map((level) => (
                 <p key={level.range}>
@@ -141,10 +151,17 @@ export function StrengtheningGuidelines() {
           </div>
 
           <div className="mt-3">
-            <p className="font-heading text-ink font-medium mb-1 text-lg">Check three times</p>
+            <p className="font-heading text-ink mb-1 text-lg font-medium">
+              Check three times
+            </p>
             <div className="mt-1 space-y-2 pl-8">
               {CHECKS.map((check) => (
-                <GuidelineItem key={check.title} variant="inline" showScience={showScience} {...check} />
+                <GuidelineItem
+                  key={check.title}
+                  variant="inline"
+                  showScience={showScience}
+                  {...check}
+                />
               ))}
             </div>
           </div>
@@ -152,7 +169,12 @@ export function StrengtheningGuidelines() {
       </div>
 
       {RULES.map((rule) => (
-        <GuidelineItem key={rule.title} variant="heading" showScience={showScience} {...rule} />
+        <GuidelineItem
+          key={rule.title}
+          variant="heading"
+          showScience={showScience}
+          {...rule}
+        />
       ))}
     </Card>
   );

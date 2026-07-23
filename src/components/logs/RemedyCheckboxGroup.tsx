@@ -43,7 +43,7 @@ function RemedySection({
   return (
     <div>
       <Label>{title}</Label>
-      <div className="flex flex-wrap gap-2.5">
+      <div className="flex flex-wrap items-center gap-x-2.5 gap-y-2">
         {remedies.map((remedy) => (
           <TogglePill
             key={remedy.id}
