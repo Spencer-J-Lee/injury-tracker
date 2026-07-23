@@ -1,10 +1,17 @@
+import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { WeekNav } from "@/components/strengthening/WeekNav";
 import { WeekGrid } from "@/components/strengthening/WeekGrid";
 import { TogglePill } from "@/components/ui/TogglePill";
 import { PageTitle } from "@/components/ui/PageTitle";
+import { Button } from "@/components/ui/Button";
 import { ExerciseAdjustmentTips } from "@/components/strengthening/ExerciseAdjustmentTips";
+import { StrengtheningGuidelines } from "@/components/strengthening/StrengtheningGuidelines";
 import { useWeekPlannedExercises } from "@/hooks/useWeekPlannedExercises";
+import {
+  getGuidelinesAckDate,
+  setGuidelinesAckDate,
+} from "@/lib/strengtheningGuidelinesAck";
 import {
   get4DayWindowStart,
   getNextWindowStart,
@@ -27,7 +34,10 @@ export function StrengtheningWeekPage() {
   const view: ViewMode = searchParams.get("view") === "4day" ? "4day" : "week";
   const size = WINDOW_SIZE[view];
 
+  const [ackDate, setAckDate] = useState(getGuidelinesAckDate);
+
   const today = getTodayDateString();
+  const hasReadGuidelinesToday = ackDate === today;
   const currentWindowStart =
     view === "week" ? getWeekStart(today) : get4DayWindowStart(today);
 
@@ -65,6 +75,27 @@ export function StrengtheningWeekPage() {
       return params;
     });
   };
+
+  const acknowledgeGuidelines = () => {
+    setGuidelinesAckDate(today);
+    setAckDate(today);
+  };
+
+  if (!hasReadGuidelinesToday) {
+    return (
+      <div className="space-y-6">
+        <PageTitle>Strengthening</PageTitle>
+
+        <div className="space-y-4">
+          <StrengtheningGuidelines />
+
+          <Button onClick={acknowledgeGuidelines}>
+            I've read this, continue
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -104,6 +135,8 @@ export function StrengtheningWeekPage() {
       </div>
 
       <ExerciseAdjustmentTips />
+
+      <StrengtheningGuidelines />
     </div>
   );
 }
