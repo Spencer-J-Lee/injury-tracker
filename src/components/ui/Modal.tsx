@@ -54,7 +54,6 @@ export function Modal({
           </h2>
           <IconButton
             icon={faXmark}
-            variant="ghost"
             label="Close"
             onClick={onClose}
           />
