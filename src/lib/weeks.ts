@@ -54,7 +54,7 @@ export function formatWindowRangeLabel(
   const sameYear = format(start, "yyyy") === format(end, "yyyy");
   const startLabel = format(start, sameYear ? "MMM d" : "MMM d, yyyy");
   const endLabel = format(end, "MMM d, yyyy");
-  return `${startLabel} – ${endLabel}`;
+  return `${startLabel} - ${endLabel}`;
 }
 
 export function getTodayDateString(): string {

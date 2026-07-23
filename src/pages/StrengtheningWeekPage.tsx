@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { WeekNav } from "@/components/strengthening/WeekNav";
 import { WeekGrid } from "@/components/strengthening/WeekGrid";
-import { TogglePill } from "@/components/ui/TogglePill";
+import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import { PageTitle } from "@/components/ui/PageTitle";
 import { Button } from "@/components/ui/Button";
 import { ExerciseAdjustmentTips } from "@/components/strengthening/ExerciseAdjustmentTips";
@@ -101,17 +101,7 @@ export function StrengtheningWeekPage() {
     <div className="space-y-6">
       <PageTitle
         actions={
-          <div className="flex gap-2.5">
-            {VIEW_OPTIONS.map((option) => (
-              <TogglePill
-                key={option.value}
-                selected={view === option.value}
-                onClick={() => setView(option.value)}
-              >
-                {option.label}
-              </TogglePill>
-            ))}
-          </div>
+          <SegmentedControl options={VIEW_OPTIONS} value={view} onChange={setView} />
         }
       >
         Strengthening

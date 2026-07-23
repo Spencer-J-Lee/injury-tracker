@@ -1,15 +1,18 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Card } from "@/components/ui/Card";
-import { useLogEntriesForInjury } from "@/hooks/useLogEntriesForInjury";
+import { LoadMoreButton } from "@/components/ui/LoadMoreButton";
+import { listLogEntriesForInjury } from "@/db/queries/logEntries";
+import { usePaginatedEntitiesForInjury } from "@/hooks/usePaginatedEntitiesForInjury";
 import { useAllRemediesForInjury } from "@/hooks/useAllRemediesForInjury";
 import { useAllTriggersForInjury } from "@/hooks/useAllTriggersForInjury";
 import { LogTimelineItem } from "@/components/logs/LogTimelineItem";
 
-const PAGE_SIZE = 15;
-
 export function LogTimeline({ injuryId }: { injuryId: string }) {
-  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
-  const entries = useLogEntriesForInjury(injuryId, visibleCount + 1);
+  const {
+    visibleRows: visibleEntries,
+    hasMore,
+    loadMore,
+  } = usePaginatedEntitiesForInjury(listLogEntriesForInjury, injuryId);
   const remedies = useAllRemediesForInjury(injuryId);
   const triggers = useAllTriggersForInjury(injuryId);
 
@@ -21,13 +24,11 @@ export function LogTimeline({ injuryId }: { injuryId: string }) {
     () => new Map((triggers ?? []).map((t) => [t.id, t])),
     [triggers],
   );
-  const hasMore = (entries?.length ?? 0) > visibleCount;
-  const visibleEntries = (entries ?? []).slice(0, visibleCount);
 
   return (
     <Card>
       <h3 className="font-heading text-ink-emphasis mb-4 text-lg font-semibold">
-        History
+        Main History
       </h3>
       {visibleEntries.length === 0 ? (
         <p className="text-ink-muted text-lg">No log entries yet.</p>
@@ -43,14 +44,7 @@ export function LogTimeline({ injuryId }: { injuryId: string }) {
           ))}
         </ul>
       )}
-      {hasMore && (
-        <button
-          onClick={() => setVisibleCount((v) => v + PAGE_SIZE)}
-          className="text-accent-soft-text mt-4 font-semibold hover:underline"
-        >
-          Load more
-        </button>
-      )}
+      {hasMore && <LoadMoreButton onClick={loadMore} />}
     </Card>
   );
 }

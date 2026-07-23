@@ -1,5 +1,6 @@
 import { db } from "@/db/schema";
 import type { LogEntry } from "@/types/models";
+import { listForInjuryOrderedByTimestamp } from "@/db/queries/shared";
 
 export interface LogSessionInjuryInput {
   injuryId: string;
@@ -38,11 +39,7 @@ export async function createLogSession(
 }
 
 export function listLogEntriesForInjury(injuryId: string, limit?: number) {
-  const collection = db.logEntries
-    .where("[injuryId+timestamp]")
-    .between([injuryId, ""], [injuryId, "￿"])
-    .reverse();
-  return limit ? collection.limit(limit).toArray() : collection.toArray();
+  return listForInjuryOrderedByTimestamp(db.logEntries, injuryId, limit);
 }
 
 export function listRecentLogEntries(limit = 10) {
