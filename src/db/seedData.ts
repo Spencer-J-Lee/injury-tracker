@@ -3,6 +3,10 @@ import type {
   TriggerCategory,
   InjuryPriority,
   InjuryStatus,
+  PainMechanism,
+  StiffnessDuration,
+  NumbnessDuration,
+  NumbnessSuspectedCause,
 } from "@/types/models";
 
 export interface SeedRemedy {
@@ -36,6 +40,19 @@ export interface SeedLogEntry {
 export interface SeedJournalEntry {
   offsetDays: number;
   text: string;
+}
+
+export interface SeedMorningCheckIn {
+  offsetDays: number;
+  atHour?: number;
+  atMinute?: number;
+  painLevel?: number;
+  stiffnessLevel?: number;
+  stiffnessDuration?: StiffnessDuration;
+  numbnessPresent?: boolean;
+  numbnessDuration?: NumbnessDuration;
+  numbnessSuspectedCause?: NumbnessSuspectedCause;
+  notes?: string;
 }
 
 export const SEED_JOURNAL_ENTRIES: SeedJournalEntry[] = [
@@ -100,11 +117,13 @@ export interface SeedInjury {
   description?: string;
   status: InjuryStatus;
   priority: InjuryPriority;
+  painMechanisms?: PainMechanism[];
   createdDaysAgo: number;
   archivedDaysAgo?: number;
   remedies: SeedRemedy[];
   triggers: SeedTrigger[];
   logs: SeedLogEntry[];
+  morningCheckIns?: SeedMorningCheckIn[];
 }
 
 export const SEED_INJURIES: SeedInjury[] = [
@@ -117,6 +136,7 @@ export const SEED_INJURIES: SeedInjury[] = [
       "Comes and goes over the years from overuse — these days mostly driven by computer and phone use. When present it's typically constant and dull, and seems tied to tight chest muscles too.",
     status: "active",
     priority: "medium",
+    painMechanisms: ["nociceptive"],
     createdDaysAgo: 50,
     remedies: [
       {
@@ -264,6 +284,7 @@ export const SEED_INJURIES: SeedInjury[] = [
       "Initially hurt it doing bodyweight squats, though the real cause is probably too much volume over a few weeks — new walking habit, swimming, and squats every other day all stacked up at once.",
     status: "active",
     priority: "urgent",
+    painMechanisms: ["nociceptive"],
     createdDaysAgo: 45,
     remedies: [
       {
@@ -368,6 +389,40 @@ export const SEED_INJURIES: SeedInjury[] = [
         triggerKeys: [],
       },
     ],
+    morningCheckIns: [
+      {
+        offsetDays: -44,
+        atHour: 7,
+        painLevel: 3,
+        stiffnessLevel: 4,
+        stiffnessDuration: "15-30min",
+        notes:
+          "<p>Stiff getting out of bed, took a while to loosen up before the stretching circuit helped.</p>",
+      },
+      {
+        offsetDays: -32,
+        atHour: 7,
+        painLevel: 2,
+        stiffnessLevel: 3,
+        stiffnessDuration: "5-10min",
+      },
+      {
+        offsetDays: -18,
+        atHour: 7,
+        painLevel: 1,
+        stiffnessLevel: 2,
+        stiffnessDuration: "5-10min",
+        notes:
+          "<p>Brace before bed seems to be paying off — much less stiffness first thing now.</p>",
+      },
+      {
+        offsetDays: -4,
+        atHour: 7,
+        painLevel: 1,
+        stiffnessLevel: 1,
+        stiffnessDuration: "immediate",
+      },
+    ],
   },
   // resolved, short history, no clear cause, resolved on its own
   {
@@ -378,6 +433,7 @@ export const SEED_INJURIES: SeedInjury[] = [
       "Not sure what caused this, but pain tended to be dull and constant when present.",
     status: "resolved",
     priority: "low",
+    painMechanisms: ["nociceptive"],
     createdDaysAgo: 60,
     remedies: [
       {
@@ -452,6 +508,7 @@ export const SEED_INJURIES: SeedInjury[] = [
       "Originally strained years ago during rock climbing. Likely aggravated over the years by repeatedly twisting the torso.",
     status: "monitoring",
     priority: "low",
+    painMechanisms: ["nociceptive"],
     createdDaysAgo: 55,
     remedies: [
       {
@@ -539,6 +596,7 @@ export const SEED_INJURIES: SeedInjury[] = [
       "Caused by overuse of a gaming controller. When present it tends to be dull and constant, typically resolved by resting and gently massaging the thumb muscles.",
     status: "active",
     priority: "high",
+    painMechanisms: ["nociceptive"],
     createdDaysAgo: 40,
     remedies: [
       {
@@ -668,6 +726,7 @@ export const SEED_INJURIES: SeedInjury[] = [
       "Don't remember the initial cause but it's been around for most of the last few months. Tends to flare up the more the forearm stays pronated.",
     status: "active",
     priority: "high",
+    painMechanisms: ["neuropathic", "nociplastic"],
     createdDaysAgo: 60,
     remedies: [
       {
@@ -876,6 +935,52 @@ export const SEED_INJURIES: SeedInjury[] = [
           "<p>Noticed this tends to get triggered specifically by the foam roller routine for loosening the chest muscles — need to watch the angle on that.</p>",
       },
     ],
+    morningCheckIns: [
+      {
+        offsetDays: -55,
+        atHour: 7,
+        painLevel: 2,
+        numbnessPresent: true,
+        numbnessDuration: "lingering",
+        numbnessSuspectedCause: "sleep-posture",
+        notes:
+          "<p>Woke up with numbness on the left side, probably slept with the arm bent again.</p>",
+      },
+      {
+        offsetDays: -40,
+        atHour: 7,
+        painLevel: 1,
+        numbnessPresent: true,
+        numbnessDuration: "brief",
+        numbnessSuspectedCause: "sleep-posture",
+      },
+      {
+        offsetDays: -25,
+        atHour: 7,
+        painLevel: 1,
+        numbnessPresent: false,
+        notes:
+          "<p>No numbness this morning, first time in a while. Might be the new sitting setup carrying over into sleep posture too.</p>",
+      },
+      {
+        offsetDays: -10,
+        atHour: 7,
+        painLevel: 1,
+        numbnessPresent: true,
+        numbnessDuration: "brief",
+        numbnessSuspectedCause: "unsure",
+      },
+      {
+        offsetDays: -1,
+        atHour: 7,
+        painLevel: 2,
+        numbnessPresent: true,
+        numbnessDuration: "lingering",
+        numbnessSuspectedCause: "load-related",
+        notes:
+          "<p>Numbness lingered a bit longer than usual — probably from the dumbbell rows yesterday.</p>",
+      },
+    ],
   },
   // active, medium priority, tied to lat/trap tightness and posture, longest running
   {
@@ -886,6 +991,7 @@ export const SEED_INJURIES: SeedInjury[] = [
       "Had this on and off for years, heavily tied to prolonged computer use and seems correlated with tight lats.",
     status: "active",
     priority: "medium",
+    painMechanisms: ["nociceptive", "nociplastic"],
     createdDaysAgo: 35,
     remedies: [
       {
@@ -1040,6 +1146,33 @@ export const SEED_INJURIES: SeedInjury[] = [
         triggerKeys: [],
       },
     ],
+    morningCheckIns: [
+      {
+        offsetDays: -33,
+        atHour: 7,
+        painLevel: 2,
+        stiffnessLevel: 4,
+        stiffnessDuration: "30plus",
+        notes:
+          "<p>Really stiff this morning, took most of the stretching session to loosen up.</p>",
+      },
+      {
+        offsetDays: -21,
+        atHour: 7,
+        painLevel: 1,
+        stiffnessLevel: 2,
+        stiffnessDuration: "15-30min",
+      },
+      {
+        offsetDays: -7,
+        atHour: 7,
+        painLevel: 1,
+        stiffnessLevel: 1,
+        stiffnessDuration: "5-10min",
+        notes:
+          "<p>Loosens up fast now that the lats/rhomboids massage is a regular thing.</p>",
+      },
+    ],
   },
   // resolved and archived, old overuse strain fully healed
   {
@@ -1050,6 +1183,7 @@ export const SEED_INJURIES: SeedInjury[] = [
       "Old overuse strain from a period of heavy keyboard use, fully resolved.",
     status: "resolved",
     priority: "low",
+    painMechanisms: ["nociceptive"],
     createdDaysAgo: 240,
     archivedDaysAgo: 150,
     remedies: [
@@ -1095,6 +1229,7 @@ export const SEED_INJURIES: SeedInjury[] = [
       "Noticed some tightness/tension after an especially long stretch of screen time.",
     status: "active",
     priority: "urgent",
+    painMechanisms: ["nociplastic"],
     createdDaysAgo: 0,
     remedies: [],
     triggers: [],

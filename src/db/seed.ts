@@ -6,6 +6,7 @@ import type {
   Remedy,
   Trigger,
   JournalEntry,
+  MorningCheckIn,
 } from "@/types/models";
 import { SEED_INJURIES, SEED_JOURNAL_ENTRIES } from "@/db/seedData";
 
@@ -48,6 +49,7 @@ export async function clearSeedTestData(): Promise<ClearSeedResult> {
     db.remedies,
     db.triggers,
     db.logEntries,
+    db.morningCheckIns,
     db.journalEntries,
     async () => {
       const seedIds = (await db.injuries.toArray())
@@ -56,6 +58,7 @@ export async function clearSeedTestData(): Promise<ClearSeedResult> {
 
       if (seedIds.length > 0) {
         await db.logEntries.where("injuryId").anyOf(seedIds).delete();
+        await db.morningCheckIns.where("injuryId").anyOf(seedIds).delete();
         await db.remedies.where("injuryId").anyOf(seedIds).delete();
         await db.triggers.where("injuryId").anyOf(seedIds).delete();
         await db.injuries.bulkDelete(seedIds);
@@ -82,6 +85,7 @@ export interface SeedResult {
   remediesCreated: number;
   triggersCreated: number;
   logEntriesCreated: number;
+  morningCheckInsCreated: number;
   journalEntriesCreated: number;
   injuriesDeleted: number;
   journalEntriesDeleted: number;
@@ -94,6 +98,7 @@ export async function seedTestData(): Promise<SeedResult> {
   const remedyRows: Remedy[] = [];
   const triggerRows: Trigger[] = [];
   const logEntryRows: LogEntry[] = [];
+  const morningCheckInRows: MorningCheckIn[] = [];
   const journalEntryRows: JournalEntry[] = SEED_JOURNAL_ENTRIES.map((seed) => {
     const now = isoOffsetDays(seed.offsetDays);
     return {
@@ -116,7 +121,7 @@ export async function seedTestData(): Promise<SeedResult> {
       description: seed.description,
       status: seed.status,
       priority: seed.priority,
-      painMechanisms: [],
+      painMechanisms: seed.painMechanisms ?? [],
       createdAt,
       updatedAt: createdAt,
       archivedAt:
@@ -184,6 +189,29 @@ export async function seedTestData(): Promise<SeedResult> {
         updatedAt: timestamp,
       });
     }
+
+    for (const checkIn of seed.morningCheckIns ?? []) {
+      const timestamp = isoOffsetDays(
+        checkIn.offsetDays,
+        checkIn.atHour,
+        checkIn.atMinute,
+      );
+      morningCheckInRows.push({
+        id: crypto.randomUUID(),
+        injuryId,
+        timestamp,
+        painMechanisms: seed.painMechanisms ?? [],
+        painLevel: checkIn.painLevel,
+        stiffnessLevel: checkIn.stiffnessLevel,
+        stiffnessDuration: checkIn.stiffnessDuration,
+        numbnessPresent: checkIn.numbnessPresent,
+        numbnessDuration: checkIn.numbnessDuration,
+        numbnessSuspectedCause: checkIn.numbnessSuspectedCause,
+        notes: checkIn.notes,
+        createdAt: timestamp,
+        updatedAt: timestamp,
+      });
+    }
   }
 
   await db.transaction(
@@ -192,12 +220,14 @@ export async function seedTestData(): Promise<SeedResult> {
     db.remedies,
     db.triggers,
     db.logEntries,
+    db.morningCheckIns,
     db.journalEntries,
     async () => {
       await db.injuries.bulkAdd(injuryRows);
       await db.remedies.bulkAdd(remedyRows);
       await db.triggers.bulkAdd(triggerRows);
       await db.logEntries.bulkAdd(logEntryRows);
+      await db.morningCheckIns.bulkAdd(morningCheckInRows);
       await db.journalEntries.bulkAdd(journalEntryRows);
     },
   );
@@ -207,6 +237,7 @@ export async function seedTestData(): Promise<SeedResult> {
     remediesCreated: remedyRows.length,
     triggersCreated: triggerRows.length,
     logEntriesCreated: logEntryRows.length,
+    morningCheckInsCreated: morningCheckInRows.length,
     journalEntriesCreated: journalEntryRows.length,
     injuriesDeleted,
     journalEntriesDeleted,
