@@ -63,6 +63,14 @@ export function RatingSlider({
         step={step}
         value={value ?? 0}
         onChange={(e) => onChange(Number(e.target.value))}
+        onClick={(e) => {
+          if (value !== undefined) return;
+          const rect = e.currentTarget.getBoundingClientRect();
+          const ratio = (e.clientX - rect.left) / rect.width;
+          if (ratio * max < step / 2) {
+            onChange(0);
+          }
+        }}
         className={className}
         list={listId}
         style={{
