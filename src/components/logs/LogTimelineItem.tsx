@@ -65,6 +65,9 @@ export function LogTimelineItem({
         </span>
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1.5">
+            <span className="text-ink-muted text-sm font-semibold">
+              Intensity:
+            </span>
             <ToneText tone={painTone(entry.painLevel)}>
               {entry.painLevel === undefined
                 ? "Not rated"
@@ -73,8 +76,11 @@ export function LogTimelineItem({
             {entry.painFrequency !== undefined && (
               <>
                 <span className="text-ink-muted">•</span>
+                <span className="text-ink-muted text-sm font-semibold">
+                  Freq:
+                </span>
                 <ToneText tone={freqTone(entry.painFrequency)}>
-                  {entry.painFrequency}% freq
+                  {entry.painFrequency}%
                 </ToneText>
               </>
             )}
