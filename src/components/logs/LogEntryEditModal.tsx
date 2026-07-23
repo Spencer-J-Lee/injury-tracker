@@ -142,17 +142,17 @@ export function LogEntryEditModal({
       />
 
       <div>
+        <Label>Notes</Label>
+        <RichTextEditor value={notes} onChange={setNotes} autoFocus />
+      </div>
+
+      <div>
         <Label>When</Label>
         <Input
           type="datetime-local"
           value={timestamp}
           onChange={(e) => setTimestamp(e.target.value)}
         />
-      </div>
-
-      <div>
-        <Label>Notes</Label>
-        <RichTextEditor value={notes} onChange={setNotes} autoFocus />
       </div>
 
       <ConfirmDialog
