@@ -15,6 +15,7 @@ export interface SeedRemedy {
   description?: string;
   providesImmediateRelief: boolean;
   category?: RemedyCategory;
+  isProgramExercise?: boolean;
   archivedDaysAgo?: number;
 }
 
@@ -40,6 +41,11 @@ export interface SeedLogEntry {
 export interface SeedJournalEntry {
   offsetDays: number;
   text: string;
+}
+
+export interface SeedPlannedExercise {
+  offsetDays: number;
+  remedyKey: string;
 }
 
 export interface SeedMorningCheckIn {
@@ -124,6 +130,7 @@ export interface SeedInjury {
   triggers: SeedTrigger[];
   logs: SeedLogEntry[];
   morningCheckIns?: SeedMorningCheckIn[];
+  plannedExercises?: SeedPlannedExercise[];
 }
 
 export const SEED_INJURIES: SeedInjury[] = [
@@ -161,6 +168,7 @@ export const SEED_INJURIES: SeedInjury[] = [
           "Strengthens the flexors directly to help prevent tightness and pain.",
         providesImmediateRelief: false,
         category: "Strengthening",
+        isProgramExercise: true,
       },
       {
         key: "reverse-wrist-curls",
@@ -168,6 +176,7 @@ export const SEED_INJURIES: SeedInjury[] = [
         description: "Strengthens the extensors to offload the flexors.",
         providesImmediateRelief: false,
         category: "Strengthening",
+        isProgramExercise: true,
       },
       {
         key: "brace-rest",
@@ -262,6 +271,46 @@ export const SEED_INJURIES: SeedInjury[] = [
           "<p>Didn't notice it much today, maybe a little tightness/discomfort. Played about an hour of games with no pain yet.</p>",
       },
       {
+        offsetDays: -6,
+        atHour: 20,
+        painLevel: 1,
+        painFrequency: 10,
+        remedyKeys: ["massage-stretch-flexors-extensors"],
+        triggerKeys: ["prolonged-computer-usage"],
+      },
+      {
+        offsetDays: -5,
+        atHour: 19,
+        painLevel: 1,
+        painFrequency: 5,
+        remedyKeys: [],
+        triggerKeys: [],
+      },
+      {
+        offsetDays: -4,
+        atHour: 18,
+        painLevel: 2,
+        painFrequency: 15,
+        remedyKeys: ["massage-stretch-chest"],
+        triggerKeys: ["phone-usage"],
+      },
+      {
+        offsetDays: -3,
+        atHour: 20,
+        painLevel: 1,
+        painFrequency: 10,
+        remedyKeys: ["wrist-curls", "reverse-wrist-curls"],
+        triggerKeys: [],
+      },
+      {
+        offsetDays: -2,
+        atHour: 19,
+        painLevel: 1,
+        painFrequency: 5,
+        remedyKeys: [],
+        triggerKeys: [],
+      },
+      {
         offsetDays: -1,
         atHour: 17,
         painLevel: 2,
@@ -273,6 +322,24 @@ export const SEED_INJURIES: SeedInjury[] = [
         ],
         triggerKeys: [],
       },
+      {
+        offsetDays: 0,
+        atHour: 17,
+        painLevel: 1,
+        painFrequency: 5,
+        remedyKeys: ["massage-stretch-chest"],
+        triggerKeys: [],
+      },
+    ],
+    plannedExercises: [
+      { offsetDays: -18, remedyKey: "wrist-curls" },
+      { offsetDays: -18, remedyKey: "reverse-wrist-curls" },
+      { offsetDays: -11, remedyKey: "wrist-curls" },
+      { offsetDays: -11, remedyKey: "reverse-wrist-curls" },
+      { offsetDays: -4, remedyKey: "wrist-curls" },
+      { offsetDays: -4, remedyKey: "reverse-wrist-curls" },
+      { offsetDays: 2, remedyKey: "wrist-curls" },
+      { offsetDays: 2, remedyKey: "reverse-wrist-curls" },
     ],
   },
   // active, urgent, overuse from a burst of new activity, improving with brace + strengthening
@@ -294,6 +361,7 @@ export const SEED_INJURIES: SeedInjury[] = [
           "Strengthens the anterior tibialis, the muscle attached to the tendon where the pain is felt.",
         providesImmediateRelief: false,
         category: "Strengthening",
+        isProgramExercise: true,
       },
       {
         key: "brace-before-bed",
@@ -377,6 +445,30 @@ export const SEED_INJURIES: SeedInjury[] = [
           "<p>Feeling fairly good overall. Some tightness/discomfort walking outside today (5-10 min on flat ground), but seems to be trending better over time. Did feel some moments of strain on the front-outer part of both ankles — might just be transient but noting it.</p>",
       },
       {
+        offsetDays: -6,
+        atHour: 6,
+        painLevel: 1,
+        painFrequency: 10,
+        remedyKeys: ["stretching-circuit-lower-body"],
+        triggerKeys: [],
+      },
+      {
+        offsetDays: -5,
+        atHour: 6,
+        painLevel: 1,
+        painFrequency: 5,
+        remedyKeys: [],
+        triggerKeys: [],
+      },
+      {
+        offsetDays: -4,
+        atHour: 6,
+        painLevel: 1,
+        painFrequency: 10,
+        remedyKeys: ["brace-before-bed"],
+        triggerKeys: [],
+      },
+      {
         offsetDays: -3,
         atHour: 17,
         painLevel: 1,
@@ -386,6 +478,30 @@ export const SEED_INJURIES: SeedInjury[] = [
           "brace-before-bed",
           "resistance-banded-dorsiflexion",
         ],
+        triggerKeys: [],
+      },
+      {
+        offsetDays: -2,
+        atHour: 6,
+        painLevel: 1,
+        painFrequency: 10,
+        remedyKeys: ["stretching-circuit-lower-body"],
+        triggerKeys: [],
+      },
+      {
+        offsetDays: -1,
+        atHour: 6,
+        painLevel: 1,
+        painFrequency: 5,
+        remedyKeys: ["brace-before-bed", "resistance-banded-dorsiflexion"],
+        triggerKeys: [],
+      },
+      {
+        offsetDays: 0,
+        atHour: 6,
+        painLevel: 1,
+        painFrequency: 5,
+        remedyKeys: ["stretching-circuit-lower-body", "brace-before-bed"],
         triggerKeys: [],
       },
     ],
@@ -422,6 +538,12 @@ export const SEED_INJURIES: SeedInjury[] = [
         stiffnessLevel: 1,
         stiffnessDuration: "1-2min",
       },
+    ],
+    plannedExercises: [
+      { offsetDays: -19, remedyKey: "resistance-banded-dorsiflexion" },
+      { offsetDays: -12, remedyKey: "resistance-banded-dorsiflexion" },
+      { offsetDays: -5, remedyKey: "resistance-banded-dorsiflexion" },
+      { offsetDays: 3, remedyKey: "resistance-banded-dorsiflexion" },
     ],
   },
   // resolved, short history, no clear cause, resolved on its own
@@ -517,6 +639,7 @@ export const SEED_INJURIES: SeedInjury[] = [
         description: "Targets the upper abs and obliques.",
         providesImmediateRelief: false,
         category: "Strengthening",
+        isProgramExercise: true,
       },
       {
         key: "leg-raises",
@@ -524,6 +647,7 @@ export const SEED_INJURIES: SeedInjury[] = [
         description: "Targets the lower abs.",
         providesImmediateRelief: false,
         category: "Strengthening",
+        isProgramExercise: true,
       },
     ],
     triggers: [
@@ -576,6 +700,46 @@ export const SEED_INJURIES: SeedInjury[] = [
           "<p>Some strain on one side whenever I extend the back a lot, like lying back on the foam roller.</p>",
       },
       {
+        offsetDays: -6,
+        atHour: 6,
+        painLevel: 0,
+        painFrequency: 0,
+        remedyKeys: [],
+        triggerKeys: [],
+      },
+      {
+        offsetDays: -5,
+        atHour: 6,
+        painLevel: 1,
+        painFrequency: 5,
+        remedyKeys: [],
+        triggerKeys: ["trunk-flexion-supine"],
+      },
+      {
+        offsetDays: -4,
+        atHour: 6,
+        painLevel: 0,
+        painFrequency: 0,
+        remedyKeys: [],
+        triggerKeys: [],
+      },
+      {
+        offsetDays: -3,
+        atHour: 17,
+        painLevel: 0,
+        painFrequency: 0,
+        remedyKeys: ["upper-circle-crunch"],
+        triggerKeys: [],
+      },
+      {
+        offsetDays: -2,
+        atHour: 6,
+        painLevel: 1,
+        painFrequency: 5,
+        remedyKeys: [],
+        triggerKeys: [],
+      },
+      {
         offsetDays: -1,
         atHour: 17,
         painLevel: 0,
@@ -585,6 +749,20 @@ export const SEED_INJURIES: SeedInjury[] = [
         notes:
           "<p>Added dedicated ab strengthening this week to see if building up the surrounding muscles reduces how often this gets irritated by everyday twisting.</p>",
       },
+      {
+        offsetDays: 0,
+        atHour: 17,
+        painLevel: 0,
+        painFrequency: 0,
+        remedyKeys: ["leg-raises"],
+        triggerKeys: [],
+      },
+    ],
+    plannedExercises: [
+      { offsetDays: -1, remedyKey: "upper-circle-crunch" },
+      { offsetDays: -1, remedyKey: "leg-raises" },
+      { offsetDays: 4, remedyKey: "upper-circle-crunch" },
+      { offsetDays: 4, remedyKey: "leg-raises" },
     ],
   },
   // active, high priority, gaming/controller driven, remedies split relief vs longterm
@@ -620,6 +798,7 @@ export const SEED_INJURIES: SeedInjury[] = [
         description: "Strengthens the thenar muscles to help prevent pain.",
         providesImmediateRelief: false,
         category: "Strengthening",
+        isProgramExercise: true,
       },
       {
         key: "massage-stretch-thenar",
@@ -700,12 +879,52 @@ export const SEED_INJURIES: SeedInjury[] = [
           "<p>Felt this a lot today from a mix of driving, phone, and computer use. Need a consistent way to take breaks between activities that cause pain — maybe having a specific low-effort thing to do instead so the break actually happens.</p>",
       },
       {
+        offsetDays: -6,
+        atHour: 20,
+        painLevel: 2,
+        painFrequency: 20,
+        remedyKeys: ["massage-stretch-thenar"],
+        triggerKeys: ["prolonged-controller-usage"],
+      },
+      {
+        offsetDays: -5,
+        atHour: 19,
+        painLevel: 1,
+        painFrequency: 10,
+        remedyKeys: [],
+        triggerKeys: [],
+      },
+      {
+        offsetDays: -4,
+        atHour: 18,
+        painLevel: 2,
+        painFrequency: 15,
+        remedyKeys: ["sit-in-bed"],
+        triggerKeys: ["phone-usage"],
+      },
+      {
         offsetDays: -3,
         atHour: 17,
         painLevel: 2,
         painFrequency: 15,
         remedyKeys: ["massage-stretch-thenar"],
         triggerKeys: [],
+      },
+      {
+        offsetDays: -2,
+        atHour: 19,
+        painLevel: 1,
+        painFrequency: 10,
+        remedyKeys: ["massage-stretch-thenar"],
+        triggerKeys: [],
+      },
+      {
+        offsetDays: -1,
+        atHour: 20,
+        painLevel: 2,
+        painFrequency: 20,
+        remedyKeys: ["3-point-pinch"],
+        triggerKeys: ["driving"],
       },
       {
         offsetDays: 0,
@@ -715,6 +934,11 @@ export const SEED_INJURIES: SeedInjury[] = [
         remedyKeys: ["massage-stretch-thenar"],
         triggerKeys: [],
       },
+    ],
+    plannedExercises: [
+      { offsetDays: -8, remedyKey: "3-point-pinch" },
+      { offsetDays: -1, remedyKey: "3-point-pinch" },
+      { offsetDays: 6, remedyKey: "3-point-pinch" },
     ],
   },
   // active, high priority, nerve irritation tied to forearm position, most remedies/triggers
@@ -790,6 +1014,7 @@ export const SEED_INJURIES: SeedInjury[] = [
           "Strengthens and helps prevent tightness in the lats, which correlate heavily with the pain.",
         providesImmediateRelief: false,
         category: "Strengthening",
+        isProgramExercise: true,
         archivedDaysAgo: 6,
       },
       {
@@ -799,6 +1024,7 @@ export const SEED_INJURIES: SeedInjury[] = [
           "Improves posture and decreases tightness in chest muscles that seem correlated with symptoms.",
         providesImmediateRelief: false,
         category: "Strengthening",
+        isProgramExercise: true,
       },
     ],
     triggers: [
@@ -920,6 +1146,46 @@ export const SEED_INJURIES: SeedInjury[] = [
           "<p>Felt this more today compared to yesterday, probably because the left back and neck felt tighter than usual. Massaging and stretching helped after a few minutes.</p><p>Noticed some minor numbness spreading to other fingers too — might not be worth worrying about, but noting it just in case.</p>",
       },
       {
+        offsetDays: -5,
+        atHour: 19,
+        painLevel: 1,
+        painFrequency: 15,
+        remedyKeys: ["sitting-setup-computer"],
+        triggerKeys: [],
+      },
+      {
+        offsetDays: -4,
+        atHour: 20,
+        painLevel: 1,
+        painFrequency: 10,
+        remedyKeys: ["massage-stretch-back-neck"],
+        triggerKeys: ["prolonged-computer-usage"],
+      },
+      {
+        offsetDays: -3,
+        atHour: 19,
+        painLevel: 1,
+        painFrequency: 20,
+        remedyKeys: ["foam-roller-chest-routine"],
+        triggerKeys: [],
+      },
+      {
+        offsetDays: -2,
+        atHour: 20,
+        painLevel: 2,
+        painFrequency: 25,
+        remedyKeys: ["sitting-setup-car"],
+        triggerKeys: ["driving"],
+      },
+      {
+        offsetDays: -1,
+        atHour: 19,
+        painLevel: 1,
+        painFrequency: 15,
+        remedyKeys: ["massage-stretch-back-neck", "sitting-setup-computer"],
+        triggerKeys: [],
+      },
+      {
         offsetDays: 0,
         atHour: 17,
         painLevel: 2,
@@ -934,6 +1200,12 @@ export const SEED_INJURIES: SeedInjury[] = [
         notes:
           "<p>Noticed this tends to get triggered specifically by the foam roller routine for loosening the chest muscles — need to watch the angle on that.</p>",
       },
+    ],
+    plannedExercises: [
+      { offsetDays: -20, remedyKey: "dumbbell-bent-over-rows" },
+      { offsetDays: -13, remedyKey: "dumbbell-bent-over-rows" },
+      { offsetDays: -6, remedyKey: "chest-press" },
+      { offsetDays: 1, remedyKey: "chest-press" },
     ],
     morningCheckIns: [
       {
@@ -1038,6 +1310,7 @@ export const SEED_INJURIES: SeedInjury[] = [
           "Strengthens and helps prevent tightness in the lats, which correlate heavily with the pain.",
         providesImmediateRelief: false,
         category: "Strengthening",
+        isProgramExercise: true,
       },
       {
         key: "face-pulls",
@@ -1046,6 +1319,7 @@ export const SEED_INJURIES: SeedInjury[] = [
           "Strengthens the postural muscles and prevents tightness in the rhomboids, which correlate heavily with the pain.",
         providesImmediateRelief: false,
         category: "Strengthening",
+        isProgramExercise: true,
       },
     ],
     triggers: [
@@ -1134,6 +1408,46 @@ export const SEED_INJURIES: SeedInjury[] = [
           "<p>Feeling pretty good overall today, mostly tightness and discomfort. Massaging and stretching the lats and rhomboids is really helping. Slightly concerned the wall pull stretches might be straining the shoulder a bit — need to find a way to keep doing them without aggravating that.</p>",
       },
       {
+        offsetDays: -5,
+        atHour: 19,
+        painLevel: 1,
+        painFrequency: 10,
+        remedyKeys: ["massage-stretch-left-lats"],
+        triggerKeys: [],
+      },
+      {
+        offsetDays: -4,
+        atHour: 20,
+        painLevel: 1,
+        painFrequency: 5,
+        remedyKeys: [],
+        triggerKeys: [],
+      },
+      {
+        offsetDays: -3,
+        atHour: 19,
+        painLevel: 1,
+        painFrequency: 10,
+        remedyKeys: ["massage-stretch-rhomboids-traps"],
+        triggerKeys: ["prolonged-computer-usage-2"],
+      },
+      {
+        offsetDays: -2,
+        atHour: 20,
+        painLevel: 1,
+        painFrequency: 5,
+        remedyKeys: [],
+        triggerKeys: [],
+      },
+      {
+        offsetDays: -1,
+        atHour: 19,
+        painLevel: 1,
+        painFrequency: 10,
+        remedyKeys: ["sitting-setup-computer-2"],
+        triggerKeys: [],
+      },
+      {
         offsetDays: 0,
         atHour: 17,
         painLevel: 1,
@@ -1145,6 +1459,13 @@ export const SEED_INJURIES: SeedInjury[] = [
         ],
         triggerKeys: [],
       },
+    ],
+    plannedExercises: [
+      { offsetDays: -22, remedyKey: "face-pulls" },
+      { offsetDays: -22, remedyKey: "dumbbell-bent-over-rows-2" },
+      { offsetDays: -6, remedyKey: "face-pulls" },
+      { offsetDays: 3, remedyKey: "face-pulls" },
+      { offsetDays: 3, remedyKey: "dumbbell-bent-over-rows-2" },
     ],
     morningCheckIns: [
       {
@@ -1172,6 +1493,229 @@ export const SEED_INJURIES: SeedInjury[] = [
         notes:
           "<p>Loosens up fast now that the lats/rhomboids massage is a regular thing.</p>",
       },
+    ],
+  },
+  // active, urgent, every field populated — all pain mechanisms, all remedy/trigger
+  // categories, and every morning check-in option represented at least once
+  {
+    bodyPart: "Deltoids",
+    injuryType: "Unsure, maybe RSI",
+    locationDetail: "Medial, mostly right side",
+    description:
+      "Most likely a dormant injury flaring back up. Comes in twinges rather than being constant, and seems to involve both muscle and nerve irritation.",
+    status: "active",
+    priority: "urgent",
+    painMechanisms: ["nociceptive", "neuropathic", "nociplastic"],
+    createdDaysAgo: 15,
+    remedies: [
+      {
+        key: "lateral-raises",
+        name: "Lateral raises",
+        description:
+          "Targets the medial delts which seem correlated with symptoms.",
+        providesImmediateRelief: false,
+        category: "Strengthening",
+        isProgramExercise: true,
+      },
+      {
+        key: "massage-stretch-delts",
+        name: "Massage & stretch: delts",
+        description:
+          "Soft then hard foam roller, followed by a cross-body arm stretch.",
+        providesImmediateRelief: true,
+        category: "Mobility",
+      },
+      {
+        key: "sitting-setup-desk",
+        name: "Sitting setup: desk",
+        description: "Armrests raised to shoulder height to avoid reaching.",
+        providesImmediateRelief: false,
+        category: "Lifestyle",
+      },
+      {
+        key: "ice-pack",
+        name: "Ice pack",
+        description: "Helped take the edge off early on, less necessary now.",
+        providesImmediateRelief: true,
+        category: "Rest",
+        archivedDaysAgo: 10,
+      },
+    ],
+    triggers: [
+      {
+        key: "overhead-reaching",
+        name: "Overhead reaching",
+        description: "Reaching for high shelves or overhead storage.",
+        category: "Activity",
+      },
+      {
+        key: "prolonged-typing",
+        name: "Prolonged typing",
+        description: "30+ min of continuous keyboard use.",
+        category: "Overuse",
+      },
+      {
+        key: "carrying-backpack",
+        name: "Carrying a loaded backpack",
+        description: "Worse on the right shoulder strap specifically.",
+        category: "Load",
+      },
+      {
+        key: "rounded-shoulders",
+        name: "Rounded shoulder posture",
+        description: "Slouching forward at the desk for long stretches.",
+        category: "Posture",
+      },
+      {
+        key: "tight-pec-minor",
+        name: "Tight pec minor",
+        description: "Tightness here seems to refer pain into the delt.",
+        category: "Muscle Tightness",
+      },
+    ],
+    logs: [
+      {
+        offsetDays: -14,
+        atHour: 8,
+        painLevel: 3,
+        painFrequency: 40,
+        remedyKeys: ["massage-stretch-delts"],
+        triggerKeys: ["overhead-reaching", "tight-pec-minor"],
+        notes:
+          "<p>Twinges came on while reaching for a box on a high shelf. Massaging and stretching the delts brought it down within a few minutes.</p>",
+      },
+      {
+        offsetDays: -10,
+        atHour: 19,
+        painLevel: 2.5,
+        painFrequency: 30,
+        remedyKeys: ["massage-stretch-delts", "sitting-setup-desk"],
+        triggerKeys: ["prolonged-typing", "rounded-shoulders"],
+      },
+      {
+        offsetDays: -7,
+        atHour: 9,
+        painLevel: 1.5,
+        painFrequency: 20,
+        remedyKeys: ["lateral-raises"],
+        triggerKeys: ["carrying-backpack"],
+        notes:
+          "<p>Only able to do bodyweight lateral raises so far without aggravating the nerve piece of this, but it seems to be helping overall.</p>",
+      },
+      {
+        offsetDays: -6,
+        atHour: 19,
+        painLevel: 1.5,
+        painFrequency: 15,
+        remedyKeys: ["massage-stretch-delts"],
+        triggerKeys: ["prolonged-typing"],
+      },
+      {
+        offsetDays: -5,
+        atHour: 18,
+        painLevel: 1,
+        painFrequency: 10,
+        remedyKeys: ["lateral-raises"],
+        triggerKeys: [],
+      },
+      {
+        offsetDays: -4,
+        atHour: 19,
+        painLevel: 1,
+        painFrequency: 10,
+        remedyKeys: ["sitting-setup-desk"],
+        triggerKeys: ["rounded-shoulders"],
+      },
+      {
+        offsetDays: -3,
+        atHour: 18,
+        painLevel: 1,
+        painFrequency: 10,
+        remedyKeys: ["sitting-setup-desk", "massage-stretch-delts"],
+        triggerKeys: ["rounded-shoulders", "tight-pec-minor"],
+      },
+      {
+        offsetDays: -2,
+        atHour: 18,
+        painLevel: 1,
+        painFrequency: 10,
+        remedyKeys: ["massage-stretch-delts"],
+        triggerKeys: ["tight-pec-minor"],
+      },
+      {
+        offsetDays: -1,
+        atHour: 18,
+        painLevel: 0.5,
+        painFrequency: 5,
+        remedyKeys: ["lateral-raises"],
+        triggerKeys: [],
+      },
+      {
+        offsetDays: 0,
+        atHour: 17,
+        painLevel: 0.5,
+        painFrequency: 5,
+        remedyKeys: ["lateral-raises"],
+        triggerKeys: [],
+        notes:
+          "<p>Barely noticing it today. Continuing bodyweight lateral raises and will add light resistance if it keeps holding steady.</p>",
+      },
+    ],
+    morningCheckIns: [
+      {
+        offsetDays: -14,
+        atHour: 7,
+        painLevel: 3,
+        stiffnessLevel: 4,
+        stiffnessDuration: "30plus",
+        numbnessPresent: true,
+        numbnessDuration: "persistent",
+        numbnessSuspectedCause: "load-related",
+        notes:
+          "<p>Numbness lasted well into the morning, probably from carrying the backpack around yesterday.</p>",
+      },
+      {
+        offsetDays: -10,
+        atHour: 7,
+        painLevel: 2,
+        stiffnessLevel: 3,
+        stiffnessDuration: "15-30min",
+        numbnessPresent: true,
+        numbnessDuration: "lingering",
+        numbnessSuspectedCause: "sleep-posture",
+      },
+      {
+        offsetDays: -7,
+        atHour: 7,
+        painLevel: 1.5,
+        stiffnessLevel: 2,
+        stiffnessDuration: "5-10min",
+        numbnessPresent: true,
+        numbnessDuration: "brief",
+        numbnessSuspectedCause: "unsure",
+      },
+      {
+        offsetDays: -3,
+        atHour: 7,
+        painLevel: 1,
+        stiffnessLevel: 1,
+        stiffnessDuration: "1-2min",
+        numbnessPresent: false,
+      },
+      {
+        offsetDays: 0,
+        atHour: 7,
+        painLevel: 0.5,
+        stiffnessLevel: 0,
+        numbnessPresent: false,
+        notes:
+          "<p>No stiffness or numbness this morning — best it's felt in the last couple weeks.</p>",
+      },
+    ],
+    plannedExercises: [
+      { offsetDays: -7, remedyKey: "lateral-raises" },
+      { offsetDays: 0, remedyKey: "lateral-raises" },
+      { offsetDays: 4, remedyKey: "lateral-raises" },
     ],
   },
   // resolved and archived, old overuse strain fully healed

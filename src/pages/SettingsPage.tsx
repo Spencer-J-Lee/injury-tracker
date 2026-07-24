@@ -60,7 +60,7 @@ export function SettingsPage() {
     try {
       const result = await seedTestData();
       setMessage(
-        `Loaded ${result.injuriesCreated} injuries, ${result.remediesCreated} remedies, ${result.triggersCreated} triggers, ${result.logEntriesCreated} log entries, ${result.morningCheckInsCreated} morning check-ins, and ${result.journalEntriesCreated} journal entries` +
+        `Loaded ${result.injuriesCreated} injuries, ${result.remediesCreated} remedies, ${result.triggersCreated} triggers, ${result.logEntriesCreated} log entries, ${result.morningCheckInsCreated} morning check-ins, ${result.plannedExercisesCreated} planned exercises, and ${result.journalEntriesCreated} journal entries` +
           (result.injuriesDeleted > 0 || result.journalEntriesDeleted > 0
             ? ` (replaced ${result.injuriesDeleted} previous seed injuries and ${result.journalEntriesDeleted} journal entries).`
             : "."),

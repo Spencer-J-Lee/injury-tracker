@@ -7,6 +7,7 @@ import type {
   Trigger,
   JournalEntry,
   MorningCheckIn,
+  PlannedExercise,
 } from "@/types/models";
 import { SEED_INJURIES, SEED_JOURNAL_ENTRIES } from "@/db/seedData";
 
@@ -51,14 +52,24 @@ export async function clearSeedTestData(): Promise<ClearSeedResult> {
     db.logEntries,
     db.morningCheckIns,
     db.journalEntries,
+    db.plannedExercises,
     async () => {
       const seedIds = (await db.injuries.toArray())
         .filter((injury) => isSeedMarked(injury.injuryType))
         .map((injury) => injury.id);
 
       if (seedIds.length > 0) {
+        const seedRemedyIds = await db.remedies
+          .where("injuryId")
+          .anyOf(seedIds)
+          .primaryKeys();
+
         await db.logEntries.where("injuryId").anyOf(seedIds).delete();
         await db.morningCheckIns.where("injuryId").anyOf(seedIds).delete();
+        await db.plannedExercises
+          .where("remedyId")
+          .anyOf(seedRemedyIds)
+          .delete();
         await db.remedies.where("injuryId").anyOf(seedIds).delete();
         await db.triggers.where("injuryId").anyOf(seedIds).delete();
         await db.injuries.bulkDelete(seedIds);
@@ -87,6 +98,7 @@ export interface SeedResult {
   logEntriesCreated: number;
   morningCheckInsCreated: number;
   journalEntriesCreated: number;
+  plannedExercisesCreated: number;
   injuriesDeleted: number;
   journalEntriesDeleted: number;
 }
@@ -99,6 +111,7 @@ export async function seedTestData(): Promise<SeedResult> {
   const triggerRows: Trigger[] = [];
   const logEntryRows: LogEntry[] = [];
   const morningCheckInRows: MorningCheckIn[] = [];
+  const plannedExerciseRows: PlannedExercise[] = [];
   const journalEntryRows: JournalEntry[] = SEED_JOURNAL_ENTRIES.map((seed) => {
     const now = isoOffsetDays(seed.offsetDays);
     return {
@@ -141,6 +154,7 @@ export async function seedTestData(): Promise<SeedResult> {
         description: remedy.description,
         providesImmediateRelief: remedy.providesImmediateRelief,
         category: remedy.category,
+        isProgramExercise: remedy.isProgramExercise,
         createdAt,
         archivedAt:
           remedy.archivedDaysAgo !== undefined
@@ -212,6 +226,17 @@ export async function seedTestData(): Promise<SeedResult> {
         updatedAt: timestamp,
       });
     }
+
+    for (const planned of seed.plannedExercises ?? []) {
+      const remedyId = remedyIdByKey.get(planned.remedyKey);
+      if (remedyId === undefined) continue;
+      plannedExerciseRows.push({
+        id: crypto.randomUUID(),
+        date: dateOffsetDays(planned.offsetDays),
+        remedyId,
+        createdAt: isoOffsetDays(planned.offsetDays, 8),
+      });
+    }
   }
 
   await db.transaction(
@@ -222,6 +247,7 @@ export async function seedTestData(): Promise<SeedResult> {
     db.logEntries,
     db.morningCheckIns,
     db.journalEntries,
+    db.plannedExercises,
     async () => {
       await db.injuries.bulkAdd(injuryRows);
       await db.remedies.bulkAdd(remedyRows);
@@ -229,6 +255,7 @@ export async function seedTestData(): Promise<SeedResult> {
       await db.logEntries.bulkAdd(logEntryRows);
       await db.morningCheckIns.bulkAdd(morningCheckInRows);
       await db.journalEntries.bulkAdd(journalEntryRows);
+      await db.plannedExercises.bulkAdd(plannedExerciseRows);
     },
   );
 
@@ -239,6 +266,7 @@ export async function seedTestData(): Promise<SeedResult> {
     logEntriesCreated: logEntryRows.length,
     morningCheckInsCreated: morningCheckInRows.length,
     journalEntriesCreated: journalEntryRows.length,
+    plannedExercisesCreated: plannedExerciseRows.length,
     injuriesDeleted,
     journalEntriesDeleted,
   };
