@@ -9,7 +9,7 @@ import {
 
 interface NumbnessCheckInProps {
   present: boolean | undefined;
-  onPresentChange: (present: boolean) => void;
+  onPresentChange: (present: boolean | undefined) => void;
   duration: NumbnessDuration | undefined;
   onDurationChange: (duration: NumbnessDuration | undefined) => void;
   suspectedCause: NumbnessSuspectedCause | undefined;

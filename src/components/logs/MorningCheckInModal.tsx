@@ -45,7 +45,7 @@ export function MorningCheckInModal({
   onClose,
 }: MorningCheckInModalProps) {
   const { showNociceptive, showNeuropathic, showNociplastic } =
-    getMechanismVisibility(entry?.painMechanisms ?? painMechanisms);
+    getMechanismVisibility(painMechanisms);
   const showPain = showNociceptive || showNociplastic;
 
   const [painLevel, setPainLevel] = useState<number | undefined>(
@@ -97,7 +97,7 @@ export function MorningCheckInModal({
     }
   };
 
-  const handleNumbnessPresentChange = (present: boolean) => {
+  const handleNumbnessPresentChange = (present: boolean | undefined) => {
     setNumbnessPresent(present);
     if (present !== true) {
       setNumbnessDuration(undefined);
