@@ -42,7 +42,10 @@ export function Modal({
     <div
       className="fixed inset-0 z-50 flex items-end justify-center backdrop-blur-sm sm:items-center sm:p-7"
       style={{ background: "oklch(0.05 0.007 60 / 0.7)" }}
-      onClick={onClose}
+      onClick={(e) => {
+        e.stopPropagation();
+        onClose();
+      }}
     >
       <div
         className={`border-subtle bg-surface-raised max-h-[90vh] w-full ${maxWidthBySize[size]} overflow-y-auto rounded-t-3xl border p-7 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.6)] sm:rounded-3xl`}
