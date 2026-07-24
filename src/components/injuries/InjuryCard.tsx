@@ -15,56 +15,9 @@ import { useLogModal } from "@/context/useLogModal";
 import { LogEntryEditModal } from "@/components/logs/LogEntryEditModal";
 import { MorningCheckInModal } from "@/components/logs/MorningCheckInModal";
 import { formatRelative, todayEntryOnly } from "@/lib/dates";
-import { painTone, freqTone, type PainTone } from "@/lib/pain";
+import { painTone, freqTone } from "@/lib/pain";
 import { MiniPainTrendChart } from "@/components/charts/MiniPainTrendChart";
-
-const meterFillClasses: Record<PainTone, string> = {
-  slate: "bg-ink-faint",
-  green: "bg-pain-green-text",
-  amber: "bg-pain-amber-text",
-  red: "bg-pain-red-text",
-};
-
-const meterTextClasses: Record<PainTone, string> = {
-  slate: "text-ink-muted",
-  green: "text-pain-green-text",
-  amber: "text-pain-amber-text",
-  red: "text-pain-red-text",
-};
-
-function MeterRow({
-  label,
-  value,
-  displayValue,
-  tone,
-}: {
-  label: string;
-  value: number;
-  displayValue: string;
-  tone: PainTone;
-}) {
-  return (
-    <div className="flex items-center gap-4 text-sm">
-      <span className="text-ink-muted w-18 shrink-0 font-semibold">
-        {label}
-      </span>
-      <div className="bg-control h-2 flex-1 rounded-full">
-        <div
-          className={clsx("h-2 rounded-full", meterFillClasses[tone])}
-          style={{ width: `${Math.max(0, Math.min(100, value))}%` }}
-        />
-      </div>
-      <span
-        className={clsx(
-          "w-11 shrink-0 text-right font-bold",
-          meterTextClasses[tone],
-        )}
-      >
-        {displayValue}
-      </span>
-    </div>
-  );
-}
+import { MeterRow } from "@/components/ui/MeterRow";
 
 interface InjuryCardProps {
   injury: Injury;
