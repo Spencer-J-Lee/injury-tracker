@@ -420,7 +420,7 @@ export const SEED_INJURIES: SeedInjury[] = [
         atHour: 7,
         painLevel: 1,
         stiffnessLevel: 1,
-        stiffnessDuration: "immediate",
+        stiffnessDuration: "1-2min",
       },
     ],
   },

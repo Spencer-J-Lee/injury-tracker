@@ -29,14 +29,14 @@ export const STIFFNESS_DURATION_OPTIONS: {
   value: StiffnessDuration;
   label: string;
 }[] = [
-  { value: "immediate", label: "Immediate (within 1-2 mins)" },
+  { value: "1-2min", label: "~1-2 min" },
   { value: "5-10min", label: "~5-10 min" },
   { value: "15-30min", label: "~15-30 min" },
   { value: "30plus", label: "30+ min" },
 ];
 
 const stiffnessDurationTones: Record<StiffnessDuration, PainTone> = {
-  immediate: "green",
+  "1-2min": "green",
   "5-10min": "amber",
   "15-30min": "amber",
   "30plus": "red",
