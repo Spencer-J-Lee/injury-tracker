@@ -62,7 +62,7 @@ export function SegmentedControl<T extends string>({
               buttonSizeClasses[size],
               option.value === value
                 ? activeToneClasses[option.tone ?? "accent"]
-                : "border-transparent bg-transparent text-ink-secondary hover:bg-surface-raised hover:text-ink",
+                : "text-ink-secondary hover:bg-surface-raised hover:text-ink border-transparent bg-transparent",
             )}
           >
             {option.label}

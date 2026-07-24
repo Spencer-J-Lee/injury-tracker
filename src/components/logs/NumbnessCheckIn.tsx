@@ -64,7 +64,7 @@ export function NumbnessCheckIn({
               ))}
             </Select>
           </div>
-          
+
           <div>
             <Label>Suspected cause</Label>
             <Select
@@ -72,8 +72,7 @@ export function NumbnessCheckIn({
               onChange={(e) =>
                 onSuspectedCauseChange(
                   (e.target.value || undefined) as
-                    | NumbnessSuspectedCause
-                    | undefined,
+                    NumbnessSuspectedCause | undefined,
                 )
               }
             >

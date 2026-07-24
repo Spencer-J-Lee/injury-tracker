@@ -105,22 +105,23 @@ export function MorningCheckInModal({
     }
   };
 
-  const isDirty = open && entry
-    ? painLevel !== entry.painLevel ||
-      stiffnessLevel !== entry.stiffnessLevel ||
-      stiffnessDuration !== entry.stiffnessDuration ||
-      numbnessPresent !== entry.numbnessPresent ||
-      numbnessDuration !== entry.numbnessDuration ||
-      numbnessSuspectedCause !== entry.numbnessSuspectedCause ||
-      notes !== (entry.notes ?? "") ||
-      timestamp !== toDatetimeLocalValue(entry.timestamp)
-    : open &&
-      (painLevel !== undefined ||
-        stiffnessLevel !== undefined ||
-        stiffnessDuration !== undefined ||
-        numbnessPresent !== undefined ||
-        notes.trim().length > 0 ||
-        timestamp !== initialTimestamp);
+  const isDirty =
+    open && entry
+      ? painLevel !== entry.painLevel ||
+        stiffnessLevel !== entry.stiffnessLevel ||
+        stiffnessDuration !== entry.stiffnessDuration ||
+        numbnessPresent !== entry.numbnessPresent ||
+        numbnessDuration !== entry.numbnessDuration ||
+        numbnessSuspectedCause !== entry.numbnessSuspectedCause ||
+        notes !== (entry.notes ?? "") ||
+        timestamp !== toDatetimeLocalValue(entry.timestamp)
+      : open &&
+        (painLevel !== undefined ||
+          stiffnessLevel !== undefined ||
+          stiffnessDuration !== undefined ||
+          numbnessPresent !== undefined ||
+          notes.trim().length > 0 ||
+          timestamp !== initialTimestamp);
 
   const { isPrompting, guard, confirmLeave, cancelLeave } =
     useUnsavedChangesGuard(isDirty);

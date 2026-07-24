@@ -12,7 +12,9 @@ export function PainTrendChart({ injuryId }: { injuryId: string }) {
       emptyText="No rated entries in this range yet."
       entries={entries}
       getTimestamp={(e) => e.timestamp}
-      isRated={(e) => e.painLevel !== undefined || e.painFrequency !== undefined}
+      isRated={(e) =>
+        e.painLevel !== undefined || e.painFrequency !== undefined
+      }
       toPoint={(e) => ({
         painLevel: e.painLevel,
         painFrequency: e.painFrequency,

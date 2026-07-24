@@ -310,6 +310,8 @@ db.version(15)
       .toCollection()
       .modify((entry) => {
         entry.painMechanisms =
-          entry.painMechanisms ?? mechanismsByInjuryId.get(entry.injuryId) ?? [];
+          entry.painMechanisms ??
+          mechanismsByInjuryId.get(entry.injuryId) ??
+          [];
       });
   });

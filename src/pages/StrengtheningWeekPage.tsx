@@ -101,7 +101,11 @@ export function StrengtheningWeekPage() {
     <div className="space-y-6">
       <PageTitle
         actions={
-          <SegmentedControl options={VIEW_OPTIONS} value={view} onChange={setView} />
+          <SegmentedControl
+            options={VIEW_OPTIONS}
+            value={view}
+            onChange={setView}
+          />
         }
       >
         Strengthening

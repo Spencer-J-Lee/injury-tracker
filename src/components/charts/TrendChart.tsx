@@ -42,7 +42,10 @@ export interface TrendChartSeries {
   tooltipFormatter: (value: number) => string;
 }
 
-type ChartPoint = { timestamp: string } & Record<string, string | number | undefined>;
+type ChartPoint = { timestamp: string } & Record<
+  string,
+  string | number | undefined
+>;
 
 interface ChartTooltipProps {
   active?: boolean;

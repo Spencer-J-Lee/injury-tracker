@@ -137,7 +137,7 @@ function DayColumn({
           {groups.map(({ injury, exercises }) => (
             <div className="py-3 first:pt-0 last:pb-0" key={injury.id}>
               <Label noMargin>{injury.bodyPart}</Label>
-              <ul className="text-ink mt-2 flex flex-col items-start gap-1.5 text-sm pl-2">
+              <ul className="text-ink mt-2 flex flex-col items-start gap-1.5 pl-2 text-sm">
                 {exercises.map((exercise) => (
                   <li className="font-medium" key={exercise.id}>
                     {exercise.remedy?.name ?? "Exercise"}

@@ -12,7 +12,9 @@ export function MorningTrendChart({ injuryId }: { injuryId: string }) {
       emptyText="No rated check-ins in this range yet."
       entries={entries}
       getTimestamp={(e) => e.timestamp}
-      isRated={(e) => e.painLevel !== undefined || e.stiffnessLevel !== undefined}
+      isRated={(e) =>
+        e.painLevel !== undefined || e.stiffnessLevel !== undefined
+      }
       toPoint={(e) => ({
         painLevel: e.painLevel,
         stiffnessLevel: e.stiffnessLevel,

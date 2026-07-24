@@ -79,7 +79,8 @@ export interface PlannedExercise {
 
 export type StiffnessDuration = "immediate" | "5-10min" | "15-30min" | "30plus";
 export type NumbnessDuration = "brief" | "lingering" | "persistent";
-export type NumbnessSuspectedCause = "sleep-posture" | "load-related" | "unsure";
+export type NumbnessSuspectedCause =
+  "sleep-posture" | "load-related" | "unsure";
 
 export interface MorningCheckIn {
   id: string;

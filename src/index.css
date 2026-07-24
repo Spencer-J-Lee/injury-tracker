@@ -190,7 +190,11 @@ input[type="range"].range-violet::-moz-range-thumb {
   flex-shrink: 0;
   user-select: none;
 }
-.journal-rich-text ul[data-type="taskList"] li > label > input[type="checkbox"] {
+.journal-rich-text
+  ul[data-type="taskList"]
+  li
+  > label
+  > input[type="checkbox"] {
   position: absolute;
   inset: 0;
   margin: 0;
@@ -208,11 +212,19 @@ input[type="range"].range-violet::-moz-range-thumb {
     border-color 150ms;
   pointer-events: none;
 }
-.journal-rich-text ul[data-type="taskList"] li[data-checked="true"] > label > span {
+.journal-rich-text
+  ul[data-type="taskList"]
+  li[data-checked="true"]
+  > label
+  > span {
   background: var(--color-accent);
   border-color: var(--color-accent);
 }
-.journal-rich-text ul[data-type="taskList"] li[data-checked="true"] > label > span::after {
+.journal-rich-text
+  ul[data-type="taskList"]
+  li[data-checked="true"]
+  > label
+  > span::after {
   content: "";
   position: absolute;
   inset: 0;

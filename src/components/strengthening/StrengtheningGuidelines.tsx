@@ -132,7 +132,8 @@ export function StrengtheningGuidelines() {
         </p>
         <p className="text-ink-muted">
           Mild-to-moderate symptoms (roughly 3-5/10) during exercise are normal
-          and fine. The goal isn't zero pain, but rather pain that doesn't get worse.
+          and fine. The goal isn't zero pain, but rather pain that doesn't get
+          worse.
         </p>
         {showScience && <ScienceNote text={INTRO_SCIENCE} />}
         <div className="pl-8">
@@ -143,7 +144,9 @@ export function StrengtheningGuidelines() {
             <div className="mt-1 space-y-1 pl-8">
               {PAIN_SCALE.map((level) => (
                 <p key={level.range}>
-                  <span className="text-ink font-medium w-10 mr-1.5 inline-block">{level.range}: </span>
+                  <span className="text-ink mr-1.5 inline-block w-10 font-medium">
+                    {level.range}:{" "}
+                  </span>
                   <span className="text-ink-muted">{level.text}</span>
                 </p>
               ))}
