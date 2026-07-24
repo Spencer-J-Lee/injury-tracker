@@ -14,7 +14,7 @@ export function StiffnessDurationSelect({
 }: StiffnessDurationSelectProps) {
   return (
     <div>
-      <Label>Morning stiffness duration</Label>
+      <Label>Stiffness duration</Label>
       <Select
         value={value ?? ""}
         onChange={(e) =>

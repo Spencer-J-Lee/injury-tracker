@@ -28,7 +28,7 @@ export function NumbnessCheckIn({
   return (
     <>
       <div className="mb-2 flex items-center justify-between text-sm">
-        <Label noMargin>Numbness/tingling present</Label>
+        <Label noMargin>Numbness present?</Label>
         {present !== undefined && (
           <LinkButton onClick={() => onPresentChange(undefined)}>
             clear
@@ -47,7 +47,7 @@ export function NumbnessCheckIn({
       {present === true && (
         <>
           <div>
-            <Label>Duration</Label>
+            <Label>Numbness duration</Label>
             <Select
               value={duration ?? ""}
               onChange={(e) =>
@@ -66,7 +66,7 @@ export function NumbnessCheckIn({
           </div>
 
           <div>
-            <Label>Suspected cause</Label>
+            <Label>Suspected cause of numbness</Label>
             <Select
               value={suspectedCause ?? ""}
               onChange={(e) =>
