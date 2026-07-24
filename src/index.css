@@ -65,10 +65,6 @@ button:not(:disabled) {
   cursor: pointer;
 }
 
-:not(input, textarea) {
-  text-wrap: pretty;
-}
-
 input,
 textarea {
   text-wrap: auto;
@@ -175,4 +171,65 @@ input[type="range"].range-violet::-moz-range-thumb {
 }
 .journal-rich-text a:hover {
   color: var(--color-accent-hover);
+}
+.journal-rich-text ul[data-type="taskList"] {
+  list-style: none;
+  padding-left: 0;
+}
+.journal-rich-text ul[data-type="taskList"] li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6em;
+}
+.journal-rich-text ul[data-type="taskList"] li > label {
+  position: relative;
+  display: flex;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 0.18em;
+  flex-shrink: 0;
+  user-select: none;
+}
+.journal-rich-text ul[data-type="taskList"] li > label > input[type="checkbox"] {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.journal-rich-text ul[data-type="taskList"] li > label > span {
+  position: absolute;
+  inset: 0;
+  border-radius: 0.25rem;
+  border: 1px solid var(--color-strong);
+  background: var(--color-input);
+  transition:
+    background-color 150ms,
+    border-color 150ms;
+  pointer-events: none;
+}
+.journal-rich-text ul[data-type="taskList"] li[data-checked="true"] > label > span {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+.journal-rich-text ul[data-type="taskList"] li[data-checked="true"] > label > span::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: white;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M3.5 8.5L6.5 11.5L12.5 4.5' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: 75%;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M3.5 8.5L6.5 11.5L12.5 4.5' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: 75%;
+}
+.journal-rich-text ul[data-type="taskList"] li > div {
+  flex: 1;
+}
+.journal-rich-text ul[data-type="taskList"] li[data-checked="true"] > div {
+  color: var(--color-ink-muted);
+  text-decoration: line-through;
 }

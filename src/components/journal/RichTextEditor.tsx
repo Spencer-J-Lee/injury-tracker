@@ -3,10 +3,14 @@ import { EditorContent, useEditor, useEditorState } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Placeholder from "@tiptap/extension-placeholder";
 import Link from "@tiptap/extension-link";
+import { TaskList } from "@tiptap/extension-task-list";
+import { TaskItem } from "@tiptap/extension-task-item";
 import clsx from "clsx";
 import {
+  faBold,
   faLink,
   faLinkSlash,
+  faListCheck,
   faListOl,
   faListUl,
 } from "@fortawesome/free-solid-svg-icons";
@@ -39,7 +43,6 @@ export function RichTextEditor({
     extensions: [
       StarterKit.configure({
         blockquote: false,
-        bold: false,
         code: false,
         codeBlock: false,
         heading: false,
@@ -50,6 +53,8 @@ export function RichTextEditor({
         underline: false,
       }),
       Placeholder.configure({ placeholder }),
+      TaskList,
+      TaskItem.configure({ nested: true }),
       Link.configure({
         openOnClick: false,
         autolink: true,
@@ -85,8 +90,10 @@ export function RichTextEditor({
   const editorState = useEditorState({
     editor,
     selector: (ctx) => ({
+      isBold: ctx.editor?.isActive("bold") ?? false,
       isBulletList: ctx.editor?.isActive("bulletList") ?? false,
       isOrderedList: ctx.editor?.isActive("orderedList") ?? false,
+      isTaskList: ctx.editor?.isActive("taskList") ?? false,
       isLink: ctx.editor?.isActive("link") ?? false,
     }),
   });
@@ -148,6 +155,14 @@ export function RichTextEditor({
     >
       <div className="border-subtle flex items-center gap-1 border-b px-2.5 py-1.5">
         <IconButton
+          icon={faBold}
+          label="Bold"
+          onClick={() => editor?.chain().focus().toggleBold().run()}
+          className={clsx(
+            editorState?.isBold && "bg-accent-soft text-accent-soft-text",
+          )}
+        />
+        <IconButton
           icon={faListUl}
           label="Bulleted list"
           onClick={() => editor?.chain().focus().toggleBulletList().run()}
@@ -162,6 +177,14 @@ export function RichTextEditor({
           className={clsx(
             editorState?.isOrderedList &&
               "bg-accent-soft text-accent-soft-text",
+          )}
+        />
+        <IconButton
+          icon={faListCheck}
+          label="Checklist"
+          onClick={() => editor?.chain().focus().toggleTaskList().run()}
+          className={clsx(
+            editorState?.isTaskList && "bg-accent-soft text-accent-soft-text",
           )}
         />
         <div className="relative" ref={linkMenuRef}>
