@@ -45,7 +45,7 @@ function MeterRow({
 }) {
   return (
     <div className="flex items-center gap-4 text-sm">
-      <span className="text-ink-muted w-[72px] shrink-0 font-semibold">
+      <span className="text-ink-muted w-18 shrink-0 font-semibold">
         {label}
       </span>
       <div className="bg-control h-2 flex-1 rounded-full">
@@ -123,7 +123,7 @@ export function InjuryCard({
       tabIndex={0}
       onClick={handleClick}
       className={clsx(
-        "relative flex cursor-pointer flex-col justify-between gap-[18px] transition-colors",
+        "relative flex cursor-pointer flex-col justify-between gap-4.5 transition-colors",
         "[&:hover:not(:has(button:hover))]:border-accent",
         selectable && selected && "border-accent! bg-accent-soft/20",
       )}
@@ -137,7 +137,7 @@ export function InjuryCard({
         </span>
       )}
 
-      <div className="flex flex-col gap-[18px]">
+      <div className="flex flex-col gap-4.5">
         <h3 className="text-ink min-w-0 text-xl font-semibold">
           <InjuryTitle injury={injury} />
         </h3>

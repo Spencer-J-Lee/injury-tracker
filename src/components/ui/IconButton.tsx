@@ -17,7 +17,7 @@ interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const sizeClasses: Record<Size, string> = {
   sm: "w-7 h-7 rounded-lg",
-  md: "h-[42px] w-[42px] rounded-xl",
+  md: "h-10.5 w-10.5 rounded-xl",
 };
 
 const iconSizeClasses: Record<Size, string> = {

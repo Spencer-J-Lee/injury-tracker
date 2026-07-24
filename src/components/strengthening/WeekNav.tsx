@@ -34,7 +34,7 @@ export function WeekNav({
           aria-label={`Previous ${size} days`}
         />
 
-        <h2 className="font-heading text-ink w-[280px] text-center text-2xl font-semibold">
+        <h2 className="font-heading text-ink w-70 text-center text-2xl font-semibold">
           {formatWindowRangeLabel(windowStart, size)}
         </h2>
 

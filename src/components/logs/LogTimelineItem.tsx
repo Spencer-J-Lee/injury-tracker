@@ -107,7 +107,7 @@ export function LogTimelineItem({
           <div className="mt-2.5 space-y-2">
             {entry.remedyIds.length > 0 && (
               <div className="flex gap-2.5">
-                <span className="text-ink-muted w-[72px] shrink-0 pt-1 text-sm font-semibold">
+                <span className="text-ink-muted w-18 shrink-0 pt-1 text-sm font-semibold">
                   Remedies
                 </span>
                 <div className="flex flex-wrap gap-2">
@@ -122,7 +122,7 @@ export function LogTimelineItem({
 
             {entry.triggerIds.length > 0 && (
               <div className="flex gap-2.5">
-                <span className="text-ink-muted w-[72px] shrink-0 pt-1 text-sm font-semibold">
+                <span className="text-ink-muted w-18 shrink-0 pt-1 text-sm font-semibold">
                   Triggers
                 </span>
                 <div className="flex flex-wrap gap-2">

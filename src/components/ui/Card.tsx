@@ -15,7 +15,7 @@ type CardProps<T extends ElementType> = CardOwnProps & {
 
 const sizeClasses: Record<Size, string> = {
   sm: "rounded-lg p-3.5",
-  md: "rounded-2xl px-[18px] py-4",
+  md: "rounded-2xl px-4.5 py-4",
   lg: "rounded-[20px] p-5",
 };
 

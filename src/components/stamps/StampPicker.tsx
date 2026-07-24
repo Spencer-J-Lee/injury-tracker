@@ -102,7 +102,7 @@ export function StampPicker() {
         createPortal(
           <div
             ref={panelRef}
-            className="border-subtle bg-surface-raised fixed bottom-18 left-5 z-60 w-[314px] rounded-2xl border p-4 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.6)]"
+            className="border-subtle bg-surface-raised fixed bottom-18 left-5 z-60 w-78.5 rounded-2xl border p-4 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.6)]"
           >
             <h2 className="font-heading text-ink mb-4 font-semibold">Stamps</h2>
 

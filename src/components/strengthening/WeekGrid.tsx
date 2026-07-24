@@ -15,7 +15,6 @@ import { formatShortDateWithDay } from "@/lib/dates";
 import { getWindowDates } from "@/lib/weeks";
 import type { PlannedExerciseWithRemedy } from "@/hooks/useWeekPlannedExercises";
 import type { Injury } from "@/types/models";
-import { Badge } from "../ui/Badge";
 
 interface WeekGridProps {
   windowStart: string;
