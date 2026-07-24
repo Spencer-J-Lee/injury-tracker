@@ -173,7 +173,11 @@ export function InjuryCard({
           {!selectable && (
             <Button
               variant={
-                !todayMorningEntry || !loggedToday ? "primary" : "secondary"
+                !todayMorningEntry
+                  ? "orange"
+                  : !loggedToday
+                    ? "primary"
+                    : "secondary"
               }
               size="sm"
               onClick={(e) => {

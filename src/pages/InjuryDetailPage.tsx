@@ -46,7 +46,7 @@ export function InjuryDetailPage() {
   const [view, setView] = useState<"main" | "morning">("main");
   const viewOptions = [
     { value: "main", label: "Main History" },
-    { value: "morning", label: "Morning Check-Ins" },
+    { value: "morning", label: "Morning Check-Ins", tone: "orange" },
   ] as const;
   const anyModalOpen = useAnyModalOpen();
 
@@ -103,7 +103,7 @@ export function InjuryDetailPage() {
         <div className="mt-4 flex w-full flex-wrap items-center justify-between gap-4">
           <div className="flex gap-3">
             {!todayMorningEntry ? (
-              <Button onClick={() => setEditingMorning(true)}>
+              <Button variant="orange" onClick={() => setEditingMorning(true)}>
                 Morning Check-In
                 <Kbd>{morningCheckInShortcutLabel}</Kbd>
               </Button>

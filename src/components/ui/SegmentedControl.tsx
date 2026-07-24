@@ -1,8 +1,11 @@
 import clsx from "clsx";
 
+type SegmentedControlTone = "accent" | "orange";
+
 interface SegmentedControlOption<T extends string> {
   value: T;
   label: string;
+  tone?: SegmentedControlTone;
 }
 
 type SegmentedControlSize = "md" | "lg";
@@ -14,6 +17,12 @@ interface SegmentedControlProps<T extends string> {
   size?: SegmentedControlSize;
   className?: string;
 }
+
+const activeToneClasses: Record<SegmentedControlTone, string> = {
+  accent: "border-accent bg-accent-soft text-accent-soft-text",
+  orange:
+    "border-[oklch(0.6_0.15_55)] bg-[oklch(0.6_0.15_55)]/20 text-[oklch(0.75_0.15_55)]",
+};
 
 const dividerSizeClasses: Record<SegmentedControlSize, string> = {
   md: "h-4",
@@ -51,7 +60,7 @@ export function SegmentedControl<T extends string>({
               "w-full rounded-md border font-semibold whitespace-nowrap transition-colors",
               buttonSizeClasses[size],
               option.value === value
-                ? "border-accent bg-accent-soft text-accent-soft-text"
+                ? activeToneClasses[option.tone ?? "accent"]
                 : "border-transparent bg-transparent text-ink-secondary hover:bg-surface-raised hover:text-ink",
             )}
           >
