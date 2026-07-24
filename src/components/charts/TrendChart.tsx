@@ -113,7 +113,7 @@ export function TrendChart<T>({
 
   return (
     <Card>
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-4 flex items-start justify-between">
         <h3 className="font-heading text-ink-emphasis text-lg font-semibold">
           {title}
         </h3>

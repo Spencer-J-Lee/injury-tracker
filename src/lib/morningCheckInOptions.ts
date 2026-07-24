@@ -4,12 +4,13 @@ import type {
   NumbnessSuspectedCause,
   PainMechanism,
 } from "@/types/models";
+import type { PainTone } from "@/lib/pain";
 
 export const PAIN_MECHANISM_OPTIONS: { value: PainMechanism; label: string }[] =
   [
-    { value: "nociceptive", label: "Nociceptive (Mechanical)" },
-    { value: "neuropathic", label: "Neuropathic" },
-    { value: "nociplastic", label: "Nociplastic (Nervous system)" },
+    { value: "nociceptive", label: "Nociceptive (Mechanical damage)" },
+    { value: "neuropathic", label: "Neuropathic (Nerve damage)" },
+    { value: "nociplastic", label: "Nociplastic (Nervous system malfunction)" },
   ];
 
 // An injury with no pain mechanisms recorded yet (e.g. migrated from before
@@ -33,6 +34,37 @@ export const STIFFNESS_DURATION_OPTIONS: {
   { value: "15-30min", label: "~15-30 min" },
   { value: "30plus", label: "30+ min" },
 ];
+
+const stiffnessDurationTones: Record<StiffnessDuration, PainTone> = {
+  immediate: "green",
+  "5-10min": "amber",
+  "15-30min": "amber",
+  "30plus": "red",
+};
+
+export function stiffnessDurationTone(
+  duration: StiffnessDuration | undefined,
+): PainTone {
+  if (duration === undefined) return "slate";
+  return stiffnessDurationTones[duration];
+}
+
+const numbnessDurationTones: Record<NumbnessDuration, PainTone> = {
+  brief: "green",
+  lingering: "amber",
+  persistent: "red",
+};
+
+export function numbnessPresenceTone(present: boolean | undefined): PainTone {
+  return present ? "red" : "green";
+}
+
+export function numbnessDurationTone(
+  duration: NumbnessDuration | undefined,
+): PainTone {
+  if (duration === undefined) return "slate";
+  return numbnessDurationTones[duration];
+}
 
 export const NUMBNESS_DURATION_OPTIONS: {
   value: NumbnessDuration;

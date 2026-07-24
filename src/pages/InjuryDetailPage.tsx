@@ -46,7 +46,7 @@ export function InjuryDetailPage() {
   const [view, setView] = useState<"main" | "morning">("main");
   const viewOptions = [
     { value: "main", label: "Main History" },
-    { value: "morning", label: "Morning" },
+    { value: "morning", label: "Morning Check-Ins" },
   ] as const;
   const anyModalOpen = useAnyModalOpen();
 
