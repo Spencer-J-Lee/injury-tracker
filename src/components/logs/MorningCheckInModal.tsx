@@ -178,13 +178,19 @@ export function MorningCheckInModal({
       }
       footer={
         <>
-          <Button variant="ghost" onClick={() => guard(onClose)}>
+          <Button
+            variant="ghost"
+            iconAfter={<Kbd>{cancelShortcutLabel}</Kbd>}
+            onClick={() => guard(onClose)}
+          >
             Cancel
-            <Kbd>{cancelShortcutLabel}</Kbd>
           </Button>
-          <Button onClick={handleSave} disabled={saving}>
+          <Button
+            iconAfter={<Kbd>{saveShortcutLabel}</Kbd>}
+            onClick={handleSave}
+            disabled={saving}
+          >
             Save
-            <Kbd>{saveShortcutLabel}</Kbd>
           </Button>
         </>
       }

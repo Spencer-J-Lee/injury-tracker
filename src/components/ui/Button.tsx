@@ -1,4 +1,4 @@
-import type { ButtonHTMLAttributes } from "react";
+import type { ButtonHTMLAttributes, ReactNode } from "react";
 import clsx from "clsx";
 
 type Variant = "primary" | "secondary" | "danger" | "ghost" | "dashed" | "orange";
@@ -7,6 +7,8 @@ type Size = "sm" | "md" | "lg";
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: Variant;
   size?: Size;
+  iconBefore?: ReactNode;
+  iconAfter?: ReactNode;
 }
 
 const variantClasses: Record<Variant, string> = {
@@ -33,6 +35,9 @@ export function Button({
   variant = "primary",
   size = "md",
   className,
+  iconBefore,
+  iconAfter,
+  children,
   ...props
 }: ButtonProps) {
   return (
@@ -44,6 +49,10 @@ export function Button({
         className,
       )}
       {...props}
-    />
+    >
+      {iconBefore}
+      {children}
+      {iconAfter}
+    </button>
   );
 }

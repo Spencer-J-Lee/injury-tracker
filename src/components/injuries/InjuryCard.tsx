@@ -92,12 +92,8 @@ export function InjuryCard({
   const actionButtonProps = !todayMorningEntry
     ? {
         variant: "orange" as const,
-        label: (
-          <>
-            <FontAwesomeIcon icon={faSun} aria-hidden="true" />
-            Morning Check-In
-          </>
-        ),
+        iconBefore: <FontAwesomeIcon icon={faSun} />,
+        label: "Morning Check-In",
         onClick: () => setEditingMorning(true),
       }
     : todayEntry
@@ -137,7 +133,6 @@ export function InjuryCard({
           <FontAwesomeIcon
             icon={faCheck}
             className="text-ink text-[0.625rem]"
-            aria-hidden="true"
           />
         </span>
       )}
@@ -197,6 +192,7 @@ export function InjuryCard({
             <Button
               variant={actionButtonProps.variant}
               size="sm"
+              iconBefore={actionButtonProps.iconBefore}
               onClick={(e) => {
                 e.stopPropagation();
                 actionButtonProps.onClick();

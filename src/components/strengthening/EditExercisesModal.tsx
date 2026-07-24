@@ -77,13 +77,19 @@ export function EditExercisesModal({
       size="narrow"
       footer={
         <>
-          <Button onClick={handleSubmit} disabled={submitting}>
+          <Button
+            iconAfter={<Kbd>{saveShortcutLabel}</Kbd>}
+            onClick={handleSubmit}
+            disabled={submitting}
+          >
             Save
-            <Kbd>{saveShortcutLabel}</Kbd>
           </Button>
-          <Button variant="ghost" onClick={onCancel}>
+          <Button
+            variant="ghost"
+            iconAfter={<Kbd>{cancelShortcutLabel}</Kbd>}
+            onClick={onCancel}
+          >
             Cancel
-            <Kbd>{cancelShortcutLabel}</Kbd>
           </Button>
         </>
       }

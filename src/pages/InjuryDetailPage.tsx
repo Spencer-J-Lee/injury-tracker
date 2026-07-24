@@ -118,30 +118,35 @@ export function InjuryDetailPage() {
                 iconBefore={
                   <FontAwesomeIcon icon={faSun} className="-mr-0.5" />
                 }
+                iconAfter={<Kbd>{morningCheckInShortcutLabel}</Kbd>}
                 onClick={() => setEditingMorning(true)}
               >
                 Morning Check-In
-                <Kbd>{morningCheckInShortcutLabel}</Kbd>
               </Button>
             ) : todayEntry ? (
-              <Button variant="secondary" onClick={() => setEditingToday(true)}>
+              <Button
+                variant="secondary"
+                iconAfter={<Kbd>{updateEntryShortcutLabel}</Kbd>}
+                onClick={() => setEditingToday(true)}
+              >
                 Update Today's Entry
-                <Kbd>{updateEntryShortcutLabel}</Kbd>
               </Button>
             ) : (
-              <Button onClick={() => openLogModal(injury.id)}>
+              <Button
+                iconAfter={<Kbd>{logEntryShortcutLabel}</Kbd>}
+                onClick={() => openLogModal(injury.id)}
+              >
                 Log Entry
-                <Kbd>{logEntryShortcutLabel}</Kbd>
               </Button>
             )}
             {todayMorningEntry && (
               <Button
                 variant="secondary"
+                iconBefore={<FontAwesomeIcon icon={faSun} />}
+                iconAfter={<Kbd>{morningCheckInShortcutLabel}</Kbd>}
                 onClick={() => setEditingMorning(true)}
               >
-                <FontAwesomeIcon icon={faSun} aria-hidden="true" />
                 Update Morning Check-In
-                <Kbd>{morningCheckInShortcutLabel}</Kbd>
               </Button>
             )}
             <Link to={`/injuries/${injury.id}/edit`}>

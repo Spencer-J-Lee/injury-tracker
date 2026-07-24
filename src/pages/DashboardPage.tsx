@@ -90,9 +90,12 @@ export function DashboardPage() {
         actions={
           <div className="flex items-center gap-2.5">
             {selectMode ? (
-              <Button variant="ghost" onClick={exitSelectMode}>
+              <Button
+                variant="ghost"
+                iconAfter={<Kbd>{cancelShortcutLabel}</Kbd>}
+                onClick={exitSelectMode}
+              >
                 Cancel
-                <Kbd>{cancelShortcutLabel}</Kbd>
               </Button>
             ) : (
               <>
@@ -100,9 +103,8 @@ export function DashboardPage() {
                   Select
                 </Button>
                 <Link to="/injuries/new">
-                  <Button>
+                  <Button iconAfter={<Kbd>{addInjuryShortcutLabel}</Kbd>}>
                     Add Injury
-                    <Kbd>{addInjuryShortcutLabel}</Kbd>
                   </Button>
                 </Link>
               </>

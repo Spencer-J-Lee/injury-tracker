@@ -122,13 +122,19 @@ export function LogEntryModal() {
       }
       footer={
         <>
-          <Button onClick={handleSave} disabled={saving || !selectedId}>
+          <Button
+            iconAfter={<Kbd>{saveShortcutLabel}</Kbd>}
+            onClick={handleSave}
+            disabled={saving || !selectedId}
+          >
             Submit
-            <Kbd>{saveShortcutLabel}</Kbd>
           </Button>
-          <Button variant="ghost" onClick={() => guard(closeLogModal)}>
+          <Button
+            variant="ghost"
+            iconAfter={<Kbd>{cancelShortcutLabel}</Kbd>}
+            onClick={() => guard(closeLogModal)}
+          >
             Cancel
-            <Kbd>{cancelShortcutLabel}</Kbd>
           </Button>
         </>
       }

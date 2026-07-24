@@ -132,9 +132,9 @@ export function RemedyForm({
           type="submit"
           disabled={submitting || !name.trim()}
           className="flex-1"
+          iconAfter={showShortcuts && <Kbd>{saveShortcutLabel}</Kbd>}
         >
           {submitLabel}
-          {showShortcuts && <Kbd>{saveShortcutLabel}</Kbd>}
         </Button>
         {onCancel && (
           <Button
@@ -142,9 +142,9 @@ export function RemedyForm({
             variant="ghost"
             onClick={onCancel}
             className="flex-1"
+            iconAfter={showShortcuts && <Kbd>{cancelShortcutLabel}</Kbd>}
           >
             Cancel
-            {showShortcuts && <Kbd>{cancelShortcutLabel}</Kbd>}
           </Button>
         )}
       </div>

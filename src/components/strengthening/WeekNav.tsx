@@ -29,11 +29,10 @@ export function WeekNav({
       <div className="flex items-center gap-3">
         <Button
           variant="secondary"
+          iconBefore={<FontAwesomeIcon icon={faChevronLeft} />}
           onClick={onPrevious}
           aria-label={`Previous ${size} days`}
-        >
-          <FontAwesomeIcon icon={faChevronLeft} />
-        </Button>
+        />
 
         <h2 className="font-heading text-ink w-[280px] text-center text-2xl font-semibold">
           {formatWindowRangeLabel(windowStart, size)}
@@ -41,11 +40,10 @@ export function WeekNav({
 
         <Button
           variant="secondary"
+          iconBefore={<FontAwesomeIcon icon={faChevronRight} />}
           onClick={onNext}
           aria-label={`Next ${size} days`}
-        >
-          <FontAwesomeIcon icon={faChevronRight} />
-        </Button>
+        />
       </div>
 
       <div className="flex h-9 items-center">

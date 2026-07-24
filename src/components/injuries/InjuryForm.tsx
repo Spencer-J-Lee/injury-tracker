@@ -192,13 +192,17 @@ export function InjuryForm({
         <Button
           type="submit"
           disabled={submitting || !bodyPart.trim() || !injuryType.trim()}
+          iconAfter={<Kbd>{saveShortcutLabel}</Kbd>}
         >
           {submitLabel}
-          <Kbd>{saveShortcutLabel}</Kbd>
         </Button>
-        <Button type="button" variant="ghost" onClick={guardedCancel}>
+        <Button
+          type="button"
+          variant="ghost"
+          iconAfter={<Kbd>{cancelShortcutLabel}</Kbd>}
+          onClick={guardedCancel}
+        >
           Cancel
-          <Kbd>{cancelShortcutLabel}</Kbd>
         </Button>
       </div>
       <ConfirmDialog

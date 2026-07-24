@@ -97,13 +97,19 @@ export function JournalEntryCard({
         <>
           <RichTextEditor value={draft} onChange={setDraft} autoFocus />
           <div className="mt-4 flex justify-end gap-2.5">
-            <Button variant="ghost" onClick={guardedCancel}>
+            <Button
+              variant="ghost"
+              iconAfter={<Kbd>{cancelShortcutLabel}</Kbd>}
+              onClick={guardedCancel}
+            >
               Cancel
-              <Kbd>{cancelShortcutLabel}</Kbd>
             </Button>
-            <Button onClick={handleSave} disabled={!draft.trim()}>
+            <Button
+              iconAfter={<Kbd>{saveShortcutLabel}</Kbd>}
+              onClick={handleSave}
+              disabled={!draft.trim()}
+            >
               Save
-              <Kbd>{saveShortcutLabel}</Kbd>
             </Button>
           </div>
         </>

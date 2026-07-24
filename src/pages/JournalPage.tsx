@@ -102,9 +102,12 @@ export function JournalPage() {
             placeholder="How are you feeling?"
           />
           <div className="mt-4 flex justify-end">
-            <Button onClick={handleSave} disabled={!draft.trim()}>
+            <Button
+              iconAfter={<Kbd>{saveShortcutLabel}</Kbd>}
+              onClick={handleSave}
+              disabled={!draft.trim()}
+            >
               Save entry
-              <Kbd>{saveShortcutLabel}</Kbd>
             </Button>
           </div>
         </Card>

@@ -24,18 +24,18 @@ export function PaginationControls({
         variant="secondary"
         size="sm"
         disabled={page === 1}
+        iconBefore={<FontAwesomeIcon icon={faBackwardFast} />}
         onClick={() => onPageChange(1)}
       >
-        <FontAwesomeIcon icon={faBackwardFast} />
         First
       </Button>
       <Button
         variant="secondary"
         size="sm"
         disabled={page === 1}
+        iconBefore={<FontAwesomeIcon icon={faBackwardStep} />}
         onClick={() => onPageChange(page - 1)}
       >
-        <FontAwesomeIcon icon={faBackwardStep} />
         Newer
       </Button>
       <span
@@ -48,19 +48,19 @@ export function PaginationControls({
         variant="secondary"
         size="sm"
         disabled={page === totalPages}
+        iconAfter={<FontAwesomeIcon icon={faForwardStep} />}
         onClick={() => onPageChange(page + 1)}
       >
         Older
-        <FontAwesomeIcon icon={faForwardStep} />
       </Button>
       <Button
         variant="secondary"
         size="sm"
         disabled={page === totalPages}
+        iconAfter={<FontAwesomeIcon icon={faForwardFast} />}
         onClick={() => onPageChange(totalPages)}
       >
         Last
-        <FontAwesomeIcon icon={faForwardFast} />
       </Button>
     </div>
   );
