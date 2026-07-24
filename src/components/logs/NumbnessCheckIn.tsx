@@ -1,5 +1,6 @@
 import { Select } from "@/components/ui/Select";
 import { Label } from "@/components/ui/Label";
+import { LinkButton } from "@/components/ui/LinkButton";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import type { NumbnessDuration, NumbnessSuspectedCause } from "@/types/models";
 import {
@@ -26,7 +27,14 @@ export function NumbnessCheckIn({
 }: NumbnessCheckInProps) {
   return (
     <>
-      <Label>Numbness/tingling present</Label>
+      <div className="mb-2 flex items-center justify-between text-sm">
+        <Label noMargin>Numbness/tingling present</Label>
+        {present !== undefined && (
+          <LinkButton onClick={() => onPresentChange(undefined)}>
+            clear
+          </LinkButton>
+        )}
+      </div>
       <SegmentedControl
         options={[
           { value: "yes", label: "Yes" },
