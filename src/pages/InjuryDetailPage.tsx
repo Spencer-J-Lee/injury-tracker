@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen, faSun, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useInjury } from "@/hooks/useInjury";
 import { useLastLogEntryForInjury } from "@/hooks/useLastLogEntryForInjury";
 import { useMorningCheckInsForInjury } from "@/hooks/useMorningCheckInsForInjury";
@@ -46,7 +47,16 @@ export function InjuryDetailPage() {
   const [view, setView] = useState<"main" | "morning">("main");
   const viewOptions = [
     { value: "main", label: "Main History" },
-    { value: "morning", label: "Morning Check-Ins", tone: "orange" },
+    {
+      value: "morning",
+      label: (
+        <>
+          <FontAwesomeIcon icon={faSun} size="sm" className="mr-1.5" />
+          Morning Check-Ins
+        </>
+      ),
+      tone: "orange",
+    },
   ] as const;
   const anyModalOpen = useAnyModalOpen();
 
@@ -103,7 +113,13 @@ export function InjuryDetailPage() {
         <div className="mt-4 flex w-full flex-wrap items-center justify-between gap-4">
           <div className="flex gap-3">
             {!todayMorningEntry ? (
-              <Button variant="orange" onClick={() => setEditingMorning(true)}>
+              <Button
+                variant="orange"
+                iconBefore={
+                  <FontAwesomeIcon icon={faSun} className="-mr-0.5" />
+                }
+                onClick={() => setEditingMorning(true)}
+              >
                 Morning Check-In
                 <Kbd>{morningCheckInShortcutLabel}</Kbd>
               </Button>
@@ -123,6 +139,7 @@ export function InjuryDetailPage() {
                 variant="secondary"
                 onClick={() => setEditingMorning(true)}
               >
+                <FontAwesomeIcon icon={faSun} aria-hidden="true" />
                 Update Morning Check-In
                 <Kbd>{morningCheckInShortcutLabel}</Kbd>
               </Button>

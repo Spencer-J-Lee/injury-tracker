@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faSun } from "@fortawesome/free-solid-svg-icons";
 import type { Injury } from "@/types/models";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
@@ -89,6 +89,29 @@ export function InjuryCard({
   const loggedToday = !!todayEntry;
   const todayMorningEntry = todayEntryOnly(recentMorningCheckIns?.[0]);
 
+  const actionButtonProps = !todayMorningEntry
+    ? {
+        variant: "orange" as const,
+        label: (
+          <>
+            <FontAwesomeIcon icon={faSun} aria-hidden="true" />
+            Morning Check-In
+          </>
+        ),
+        onClick: () => setEditingMorning(true),
+      }
+    : todayEntry
+      ? {
+          variant: "secondary" as const,
+          label: "Update Entry",
+          onClick: () => setEditingToday(true),
+        }
+      : {
+          variant: "primary" as const,
+          label: "Log Entry",
+          onClick: () => openLogModal(injury.id),
+        };
+
   const handleClick = () => {
     if (selectable) {
       onToggleSelect?.(injury.id);
@@ -172,30 +195,14 @@ export function InjuryCard({
           )}
           {!selectable && (
             <Button
-              variant={
-                !todayMorningEntry
-                  ? "orange"
-                  : !loggedToday
-                    ? "primary"
-                    : "secondary"
-              }
+              variant={actionButtonProps.variant}
               size="sm"
               onClick={(e) => {
                 e.stopPropagation();
-                if (!todayMorningEntry) {
-                  setEditingMorning(true);
-                } else if (todayEntry) {
-                  setEditingToday(true);
-                } else {
-                  openLogModal(injury.id);
-                }
+                actionButtonProps.onClick();
               }}
             >
-              {!todayMorningEntry
-                ? "Morning Check-In"
-                : loggedToday
-                  ? "Update Entry"
-                  : "Log Entry"}
+              {actionButtonProps.label}
             </Button>
           )}
         </div>

@@ -1,10 +1,11 @@
+import type { ReactNode } from "react";
 import clsx from "clsx";
 
 type SegmentedControlTone = "accent" | "orange";
 
 interface SegmentedControlOption<T extends string> {
   value: T;
-  label: string;
+  label: ReactNode;
   tone?: SegmentedControlTone;
 }
 
