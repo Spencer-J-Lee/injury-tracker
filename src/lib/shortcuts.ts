@@ -10,3 +10,4 @@ export const morningCheckInShortcutLabel = "M";
 export const dashboardShortcutLabel = "D";
 export const journalShortcutLabel = "J";
 export const strengtheningShortcutLabel = "S";
+export const journalQuickEditShortcutLabel = "E";

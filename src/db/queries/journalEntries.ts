@@ -6,6 +6,11 @@ export function listJournalEntries() {
   return db.journalEntries.orderBy("date").reverse().toArray();
 }
 
+export function getTodayJournalEntry() {
+  const today = format(new Date(), "yyyy-MM-dd");
+  return db.journalEntries.where("date").equals(today).first();
+}
+
 export async function createJournalEntry(text: string): Promise<JournalEntry> {
   const now = new Date();
   const entry: JournalEntry = {

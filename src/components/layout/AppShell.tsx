@@ -1,7 +1,11 @@
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import clsx from "clsx";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { useLogModal } from "@/context/useLogModal";
+import { useJournalModal } from "@/context/useJournalModal";
 import { LogEntryModal } from "@/components/logs/LogEntryModal";
+import { TodayJournalModal } from "@/components/journal/TodayJournalModal";
 import { StampPicker } from "@/components/stamps/StampPicker";
 import { BackupBanner } from "./BackupBanner";
 import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut";
@@ -11,6 +15,7 @@ import {
   dashboardShortcutLabel,
   journalShortcutLabel,
   strengtheningShortcutLabel,
+  journalQuickEditShortcutLabel,
 } from "@/lib/shortcuts";
 import { UnsavedChangesBlockerProvider } from "@/context/UnsavedChangesBlockerProvider";
 
@@ -26,11 +31,17 @@ function AppShellContent() {
   const location = useLocation();
   const navigate = useNavigate();
   const { openLogModal } = useLogModal();
+  const { openJournalModal } = useJournalModal();
   const anyModalOpen = useAnyModalOpen();
 
   useKeyboardShortcut("d", () => navigate("/"), !anyModalOpen);
   useKeyboardShortcut("j", () => navigate("/journal"), !anyModalOpen);
   useKeyboardShortcut("s", () => navigate("/strengthening"), !anyModalOpen);
+  useKeyboardShortcut(
+    journalQuickEditShortcutLabel.toLowerCase(),
+    () => openJournalModal(),
+    !anyModalOpen,
+  );
 
   const navLinkMobile = (to: string, label: string) => (
     <Link
@@ -106,6 +117,15 @@ function AppShellContent() {
       </div>
 
       <button
+        onClick={() => openJournalModal()}
+        aria-label="Quick-edit today's journal entry"
+        title={`Today's journal entry (${journalQuickEditShortcutLabel})`}
+        className="bg-surface-raised text-ink hover:bg-canvas-sidebar border-subtle fixed right-7 bottom-27 flex h-14 w-14 items-center justify-center rounded-full border text-xl shadow-lg lg:right-8 lg:bottom-8"
+      >
+        <FontAwesomeIcon icon={faPen} />
+      </button>
+
+      <button
         onClick={() => openLogModal()}
         className="bg-accent text-accent-on hover:bg-accent-hover fixed right-7 bottom-7 flex h-16 w-16 items-center justify-center rounded-full text-3xl shadow-lg lg:hidden"
       >
@@ -113,6 +133,7 @@ function AppShellContent() {
       </button>
 
       <LogEntryModal />
+      <TodayJournalModal />
       <StampPicker />
     </div>
   );

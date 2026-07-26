@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import { AppShell } from "@/components/layout/AppShell";
 import { LogModalProvider } from "@/context/LogModalContext";
+import { JournalModalProvider } from "@/context/JournalModalContext";
 import { DashboardPage } from "@/pages/DashboardPage";
 import { InjuryDetailPage } from "@/pages/InjuryDetailPage";
 import { InjuryFormPage } from "@/pages/InjuryFormPage";
@@ -32,7 +33,9 @@ const router = createBrowserRouter(
 function App() {
   return (
     <LogModalProvider>
-      <RouterProvider router={router} />
+      <JournalModalProvider>
+        <RouterProvider router={router} />
+      </JournalModalProvider>
     </LogModalProvider>
   );
 }
