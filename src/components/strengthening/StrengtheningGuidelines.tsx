@@ -50,7 +50,7 @@ const RULES: { title: string; text: string; science?: string }[] = [
   },
   {
     title: "Progress slowly: 5-10% per week",
-    text: "Change only one variable at a time (load, reps, or sets). If the next-day check passes for a couple sessions in a row, you're clear to progress. If not, dial it back. I know it's tempting to try and progress faster, but remember that patience and steady progress is a far more effective strategy. Trying to rush through has consistently proven to make things worse and prolong your pain.",
+    text: "Change only one variable at a time (load, reps, or sets). If the next-day check passes for a couple sessions in a row, you're clear to progress. If not, dial it back. It's tempting to try and progress faster, but remember that patience and steady progress is a far more effective strategy. Trying to rush through rehabilitation has consistently proven to make things worse and prolong your pain.",
     science:
       "Standard resistance-training and tendon-rehab literature (e.g., Kongsgaard et al. on tendon loading, and general strength & conditioning guidelines) recommends conservative, single-variable increases — usually 5-10% per week — to allow tissue (especially tendon and connective tissue, which adapt slower than muscle) to keep pace with load demands. Changing multiple variables at once (load + volume + frequency) makes it hard to isolate what caused a flare.",
   },
