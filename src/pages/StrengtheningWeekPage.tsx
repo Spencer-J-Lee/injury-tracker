@@ -90,7 +90,7 @@ export function StrengtheningWeekPage() {
           <StrengtheningGuidelines />
 
           <Button onClick={acknowledgeGuidelines}>
-            I've read this, continue
+            I've practiced memorizing this, continue
           </Button>
         </div>
       </div>

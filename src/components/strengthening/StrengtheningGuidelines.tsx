@@ -37,20 +37,24 @@ const PAIN_SCALE: { range: string; text: string }[] = [
   { range: "8-10", text: "Severe (should never be reached)" },
 ];
 
-const RULES: { title: string; text: string; science?: string }[] = [
-  {
-    title: "Numbness or tingling = Stop immediately",
-    text: "Nerves have separate rules from muscles. Never push through nerve symptoms.",
-    science:
-      "Nerve tissue doesn't follow the same \"safe to load through discomfort\" logic as muscle/tendon. Compressive or tensile nerve irritation (e.g., ulnar nerve entrapment) can worsen with repeated provocation, and unlike muscle soreness, nerve symptoms don't reliably self-limit — they're a marker of mechanical irritation, not just fatigue. Standard neurodynamic and orthopedic guidelines treat any neural symptom as an immediate stop signal.",
-  },
+const NUMBNESS_RULE: { title: string; text: string; science?: string } = {
+  title: "Numbness or tingling = Stop immediately",
+  text: "Nerves have separate rules from muscles. Never push through nerve symptoms.",
+  science:
+    "Nerve tissue doesn't follow the same \"safe to load through discomfort\" logic as muscle/tendon. Compressive or tensile nerve irritation (e.g., ulnar nerve entrapment) can worsen with repeated provocation, and unlike muscle soreness, nerve symptoms don't reliably self-limit — they're a marker of mechanical irritation, not just fatigue. Standard neurodynamic and orthopedic guidelines treat any neural symptom as an immediate stop signal.",
+};
+
+const RULES: { title: string; text: string | string[]; science?: string }[] = [
   {
     title: 'Always warm up first, even for "easy" sessions',
     text: "It's important to be extra careful since your body's tolerance for load is extremely low. A proper warm-up can be the difference between a productive set and a flare up.",
   },
   {
     title: "Progress slowly: 5-10% per week",
-    text: "Change only one variable at a time (load, reps, or sets). If the next-day check passes for a couple sessions in a row, you're clear to progress. If not, dial it back. It's tempting to try and progress faster, but remember that patience and steady progress is a far more effective strategy. Trying to rush through rehabilitation has consistently proven to make things worse and prolong your pain.",
+    text: [
+      "Change only one variable at a time (load, reps, or sets). If the next-day check passes for a couple sessions in a row, you're clear to progress. If not, dial it back.",
+      "It's tempting to try and progress faster, but remember that trying to rush through rehabilitation has proven to make things worse and prolong your pain time and time again. Patience and calm analysis are the keys to making steady progress that will get you out of the injury cycle.",
+    ],
     science:
       "Standard resistance-training and tendon-rehab literature (e.g., Kongsgaard et al. on tendon loading, and general strength & conditioning guidelines) recommends conservative, single-variable increases — usually 5-10% per week — to allow tissue (especially tendon and connective tissue, which adapt slower than muscle) to keep pace with load demands. Changing multiple variables at once (load + volume + frequency) makes it hard to isolate what caused a flare.",
   },
@@ -85,10 +89,11 @@ function GuidelineItem({
 }: {
   variant: "inline" | "heading";
   title: string;
-  text: string;
+  text: string | string[];
   science?: string;
   showScience: boolean;
 }) {
+  const paragraphs = Array.isArray(text) ? text : [text];
   return (
     <div className={variant === "heading" ? "mt-5" : undefined}>
       {variant === "heading" ? (
@@ -96,12 +101,16 @@ function GuidelineItem({
           <p className="font-heading text-ink mb-1 text-lg font-medium">
             {title}
           </p>
-          <p className="text-ink-muted">{text}</p>
+          {paragraphs.map((paragraph, index) => (
+            <p key={index} className="text-ink-muted mt-2 first:mt-0">
+              {paragraph}
+            </p>
+          ))}
         </>
       ) : (
         <p>
           <span className="text-ink font-medium">{title}: </span>
-          <span className="text-ink-muted">{text}</span>
+          <span className="text-ink-muted">{paragraphs.join(" ")}</span>
         </p>
       )}
       {showScience && science && <ScienceNote text={science} />}
@@ -126,7 +135,13 @@ export function StrengtheningGuidelines() {
         </Button>
       </div>
 
-      <div>
+      <GuidelineItem
+        variant="heading"
+        showScience={showScience}
+        {...NUMBNESS_RULE}
+      />
+
+      <div className="mt-5">
         <p className="font-heading text-ink mb-1 text-lg font-medium">
           Pain is okay, escalating pain is not
         </p>
