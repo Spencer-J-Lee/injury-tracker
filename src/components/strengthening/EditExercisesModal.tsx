@@ -74,7 +74,7 @@ export function EditExercisesModal({
       onClose={onCancel}
       onSave={handleSubmit}
       title={`Edit exercises — ${formatShortDateWithDay(date)}`}
-      size="narrow"
+      size="sm"
       footer={
         <>
           <Button

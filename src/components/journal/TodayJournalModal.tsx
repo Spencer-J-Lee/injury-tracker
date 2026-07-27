@@ -72,6 +72,7 @@ export function TodayJournalModal() {
       onClose={() => guard(closeJournalModal)}
       onSave={handleSave}
       title={`Journal — ${formatFullDate(format(new Date(), "yyyy-MM-dd"))}`}
+      size="lg"
       footer={
         <>
           <Button

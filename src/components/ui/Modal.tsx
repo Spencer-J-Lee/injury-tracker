@@ -12,12 +12,13 @@ interface ModalProps {
   title: ReactNode;
   children: ReactNode;
   footer?: ReactNode;
-  size?: "default" | "narrow";
+  size?: "sm" | "md" | "lg";
 }
 
 const maxWidthBySize = {
-  default: "sm:max-w-[800px]",
-  narrow: "sm:max-w-[550px]",
+  sm: "sm:max-w-[550px]",
+  md: "sm:max-w-[800px]",
+  lg: "sm:max-w-[1100px]",
 };
 
 export function Modal({
@@ -27,7 +28,7 @@ export function Modal({
   title,
   children,
   footer,
-  size = "default",
+  size = "md",
 }: ModalProps) {
   useFormShortcuts({ onSave, onCancel: onClose, enabled: open });
 
