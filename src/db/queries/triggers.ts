@@ -24,6 +24,7 @@ export async function createTrigger(input: {
   name: string;
   description?: string;
   category?: TriggerCategory;
+  isHighReactivity?: boolean;
 }): Promise<Trigger> {
   const trigger: Trigger = {
     id: crypto.randomUUID(),
@@ -31,6 +32,7 @@ export async function createTrigger(input: {
     name: input.name,
     description: input.description,
     category: input.category,
+    isHighReactivity: input.isHighReactivity,
     createdAt: new Date().toISOString(),
   };
   await db.triggers.add(trigger);
@@ -39,7 +41,9 @@ export async function createTrigger(input: {
 
 export async function updateTrigger(
   id: string,
-  changes: Partial<Pick<Trigger, "name" | "description" | "category">>,
+  changes: Partial<
+    Pick<Trigger, "name" | "description" | "category" | "isHighReactivity">
+  >,
 ) {
   await db.triggers.update(id, changes);
 }

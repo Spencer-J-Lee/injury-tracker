@@ -39,6 +39,7 @@ export interface Trigger {
   name: string;
   description?: string;
   category?: TriggerCategory;
+  isHighReactivity?: boolean;
   createdAt: string;
   archivedAt?: string;
 }

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Kbd } from "@/components/ui/Kbd";
 import { Select } from "@/components/ui/Select";
+import { Checkbox } from "@/components/ui/Checkbox";
 import { useFormShortcuts } from "@/hooks/useFormShortcuts";
 import { saveShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
 import { Textarea } from "@/components/ui/Textarea";
@@ -14,6 +15,7 @@ interface TriggerFormValues {
   name: string;
   description: string;
   category?: TriggerCategory;
+  isHighReactivity: boolean;
 }
 
 interface TriggerFormProps {
@@ -36,6 +38,9 @@ export function TriggerForm({
   const [category, setCategory] = useState<TriggerCategory | undefined>(
     initial?.category,
   );
+  const [isHighReactivity, setIsHighReactivity] = useState(
+    initial?.isHighReactivity ?? false,
+  );
   const [submitting, setSubmitting] = useState(false);
 
   const doSubmit = async () => {
@@ -46,11 +51,13 @@ export function TriggerForm({
         name: name.trim(),
         description: description.trim(),
         category,
+        isHighReactivity,
       });
       if (!initial) {
         setName("");
         setDescription("");
         setCategory(undefined);
+        setIsHighReactivity(false);
       }
     } finally {
       setSubmitting(false);
@@ -97,6 +104,13 @@ export function TriggerForm({
           </option>
         ))}
       </Select>
+
+      <Checkbox
+        id="isHighReactivity"
+        label="High reactivity"
+        checked={isHighReactivity}
+        onChange={(e) => setIsHighReactivity(e.target.checked)}
+      />
 
       <div className="flex items-center gap-2.5">
         <Button

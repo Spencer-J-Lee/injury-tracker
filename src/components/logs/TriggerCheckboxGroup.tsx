@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { faBolt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { TriggerCategory } from "@/types/models";
 import { useTriggers } from "@/hooks/useTriggers";
 import { createTrigger } from "@/db/queries/triggers";
@@ -25,12 +27,14 @@ export function TriggerCheckboxGroup({
     name: string;
     description: string;
     category?: TriggerCategory;
+    isHighReactivity: boolean;
   }) => {
     const created = await createTrigger({
       injuryId,
       name: values.name,
       description: values.description || undefined,
       category: values.category,
+      isHighReactivity: values.isHighReactivity,
     });
     onToggle(created.id);
   };
@@ -49,6 +53,9 @@ export function TriggerCheckboxGroup({
               onClick={() => onToggle(trigger.id)}
             >
               {trigger.name}
+              {trigger.isHighReactivity && (
+                <FontAwesomeIcon icon={faBolt} className="ml-1" />
+              )}
             </TogglePill>
           );
         })}

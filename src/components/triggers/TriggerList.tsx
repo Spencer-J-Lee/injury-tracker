@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { faPen, faBoxArchive } from "@fortawesome/free-solid-svg-icons";
+import { faPen, faBoxArchive, faBolt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -19,9 +20,15 @@ export function TriggerList({ injuryId }: { injuryId: string }) {
 
   return (
     <Card>
-      <h3 className="font-heading text-ink-emphasis mb-6 text-lg font-semibold">
-        Triggers
-      </h3>
+      <div className="mb-6 flex items-baseline justify-between gap-2.5">
+        <h3 className="font-heading text-ink-emphasis text-lg font-semibold">
+          Triggers
+        </h3>
+        <span className="text-ink-faint flex items-center gap-1 text-xs">
+          <FontAwesomeIcon icon={faBolt} className="text-pain-red text-xs" />
+          High reactivity
+        </span>
+      </div>
 
       {triggers.length > 0 && (
         <ul className="mb-2.5 space-y-2.5">
@@ -33,6 +40,7 @@ export function TriggerList({ injuryId }: { injuryId: string }) {
                     name: trigger.name,
                     description: trigger.description ?? "",
                     category: trigger.category,
+                    isHighReactivity: trigger.isHighReactivity ?? false,
                   }}
                   submitLabel="Save"
                   onCancel={() => setEditingId(null)}
@@ -45,7 +53,15 @@ export function TriggerList({ injuryId }: { injuryId: string }) {
             ) : (
               <Card as="li" size="md" variant="subtle" key={trigger.id}>
                 <div className="flex min-w-0 items-start justify-between gap-2.5">
-                  <p className="text-ink">{trigger.name}</p>
+                  <p className="text-ink">
+                    {trigger.name}
+                    {trigger.isHighReactivity && (
+                      <FontAwesomeIcon
+                        icon={faBolt}
+                        className="text-pain-red ml-1.5 align-baseline! text-xs"
+                      />
+                    )}
+                  </p>
                   <div className="flex shrink-0 gap-2">
                     {trigger.category && <Badge>{trigger.category}</Badge>}
                     <IconButton

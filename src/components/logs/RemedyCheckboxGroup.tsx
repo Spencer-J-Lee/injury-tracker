@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { faAsterisk } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { RemedyCategory, Remedy } from "@/types/models";
 import { useRemedies } from "@/hooks/useRemedies";
 import { createRemedy } from "@/db/queries/remedies";
@@ -52,6 +54,9 @@ function RemedySection({
             onClick={() => onToggle(remedy.id)}
           >
             {remedy.name}
+            {remedy.providesImmediateRelief && (
+              <FontAwesomeIcon icon={faAsterisk} className="ml-1" />
+            )}
           </TogglePill>
         ))}
         <Button

@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPen,
+  faTrash,
+  faBolt,
+  faAsterisk,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { LogEntry, Remedy, Trigger } from "@/types/models";
 import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
@@ -114,6 +120,9 @@ export function LogTimelineItem({
                   {sortedRemedyIds.map((remedyId) => (
                     <Badge key={remedyId} tone="green">
                       {remedyMap.get(remedyId)?.name ?? "Unknown remedy"}
+                      {remedyMap.get(remedyId)?.providesImmediateRelief && (
+                        <FontAwesomeIcon icon={faAsterisk} className="ml-1" />
+                      )}
                     </Badge>
                   ))}
                 </div>
@@ -129,6 +138,9 @@ export function LogTimelineItem({
                   {sortedTriggerIds.map((triggerId) => (
                     <Badge key={triggerId} tone="red">
                       {triggerMap.get(triggerId)?.name ?? "Unknown trigger"}
+                      {triggerMap.get(triggerId)?.isHighReactivity && (
+                        <FontAwesomeIcon icon={faBolt} className="ml-1" />
+                      )}
                     </Badge>
                   ))}
                 </div>
