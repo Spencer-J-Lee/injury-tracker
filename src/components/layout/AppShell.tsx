@@ -34,9 +34,26 @@ function AppShellContent() {
   const { openJournalModal } = useJournalModal();
   const anyModalOpen = useAnyModalOpen();
 
-  useKeyboardShortcut("d", () => navigate("/"), !anyModalOpen);
-  useKeyboardShortcut("j", () => navigate("/journal"), !anyModalOpen);
-  useKeyboardShortcut("s", () => navigate("/strengthening"), !anyModalOpen);
+  useKeyboardShortcut(
+    dashboardShortcutLabel,
+    () => navigate("/"),
+    !anyModalOpen,
+  );
+  useKeyboardShortcut(
+    journalShortcutLabel,
+    () => navigate("/journal"),
+    !anyModalOpen,
+  );
+  useKeyboardShortcut(
+    strengtheningShortcutLabel,
+    () => navigate("/strengthening"),
+    !anyModalOpen,
+  );
+  useKeyboardShortcut(
+    habitsShortcutLabel,
+    () => navigate("/habits"),
+    !anyModalOpen,
+  );
   useKeyboardShortcut(
     journalQuickEditShortcutLabel.toLowerCase(),
     () => openJournalModal(),
