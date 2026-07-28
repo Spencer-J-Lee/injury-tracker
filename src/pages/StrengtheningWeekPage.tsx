@@ -5,6 +5,7 @@ import { WeekGrid } from "@/components/strengthening/WeekGrid";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import { PageTitle } from "@/components/ui/PageTitle";
 import { Button } from "@/components/ui/Button";
+import { Checkbox } from "@/components/ui/Checkbox";
 import { ExerciseAdjustmentTips } from "@/components/strengthening/ExerciseAdjustmentTips";
 import { StrengtheningGuidelines } from "@/components/strengthening/StrengtheningGuidelines";
 import { useWeekPlannedExercises } from "@/hooks/useWeekPlannedExercises";
@@ -35,6 +36,8 @@ export function StrengtheningWeekPage() {
   const size = WINDOW_SIZE[view];
 
   const [ackDate, setAckDate] = useState(getGuidelinesAckDate);
+  const [hasMemorized, setHasMemorized] = useState(false);
+  const [hasQuitCodingApps, setHasQuitCodingApps] = useState(false);
 
   const today = getTodayDateString();
   const hasReadGuidelinesToday = ackDate === today;
@@ -89,8 +92,26 @@ export function StrengtheningWeekPage() {
         <div className="space-y-4">
           <StrengtheningGuidelines />
 
-          <Button onClick={acknowledgeGuidelines}>
-            I've practiced memorizing this, continue
+          <div className="flex flex-col gap-1">
+            <Checkbox
+              id="ack-memorized"
+              label="I have practiced memorizing these guidelines"
+              checked={hasMemorized}
+              onChange={(e) => setHasMemorized(e.target.checked)}
+            />
+            <Checkbox
+              id="ack-quit-coding-apps"
+              label="I have quit out of all coding applications"
+              checked={hasQuitCodingApps}
+              onChange={(e) => setHasQuitCodingApps(e.target.checked)}
+            />
+          </div>
+
+          <Button
+            onClick={acknowledgeGuidelines}
+            disabled={!hasMemorized || !hasQuitCodingApps}
+          >
+            Continue
           </Button>
         </div>
       </div>
