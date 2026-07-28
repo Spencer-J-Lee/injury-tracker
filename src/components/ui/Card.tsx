@@ -2,7 +2,7 @@ import type { ComponentPropsWithoutRef, ElementType } from "react";
 import clsx from "clsx";
 
 type Size = "sm" | "md" | "lg";
-type Variant = "solid" | "subtle" | "dashed";
+type Variant = "solid" | "muted" | "dashed";
 
 interface CardOwnProps {
   size?: Size;
@@ -21,8 +21,8 @@ const sizeClasses: Record<Size, string> = {
 
 const variantClasses: Record<Variant, string> = {
   solid: "bg-surface border-subtle border",
-  subtle: "border-subtle border",
-  dashed: "border-strong border border-dashed",
+  muted: "bg-canvas/40 border-subtle border",
+  dashed: "bg-canvas/40 border-strong border border-dashed",
 };
 
 export function Card<T extends ElementType = "div">({

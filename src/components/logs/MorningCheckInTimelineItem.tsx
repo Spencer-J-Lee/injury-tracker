@@ -53,7 +53,7 @@ export function MorningCheckInTimelineItem({
   const showDetails = showPain || showStiffness || showNumbess;
 
   return (
-    <Card as="li" size="md" variant="subtle">
+    <Card as="li" size="md" variant="muted">
       <div className="flex items-center justify-between gap-2.5">
         <div className="flex items-center gap-2.5">
           <span className="text-ink-muted">

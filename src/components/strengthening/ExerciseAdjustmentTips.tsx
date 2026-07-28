@@ -94,7 +94,7 @@ export function ExerciseAdjustmentTips() {
   const hasChecked = Object.values(checked).some(Boolean);
 
   return (
-    <Card variant="subtle" size="sm">
+    <Card variant="muted" size="sm">
       <div className="flex items-center justify-between gap-4">
         <h3 className="text-ink text-lg font-semibold">
           Is the exercise aggravating symptoms?

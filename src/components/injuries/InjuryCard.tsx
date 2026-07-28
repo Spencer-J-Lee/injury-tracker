@@ -100,7 +100,7 @@ export function InjuryCard({
             lastLog.painFrequency !== undefined) && (
             <Card
               size="sm"
-              variant="subtle"
+              variant="muted"
               className="flex flex-col justify-between gap-3"
             >
               {lastLog.painLevel !== undefined && (

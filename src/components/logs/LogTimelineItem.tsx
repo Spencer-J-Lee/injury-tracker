@@ -64,7 +64,7 @@ export function LogTimelineItem({
   );
 
   return (
-    <Card as="li" size="md" variant="subtle">
+    <Card as="li" size="md" variant="muted">
       <div className="flex items-center justify-between gap-2.5">
         <span className="text-ink-muted">
           {formatTimestamp(entry.timestamp)}

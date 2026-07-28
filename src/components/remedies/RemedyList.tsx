@@ -67,7 +67,7 @@ function RemedySection({
                 />
               </li>
             ) : (
-              <Card as="li" size="md" variant="subtle" key={remedy.id}>
+              <Card as="li" size="md" variant="muted" key={remedy.id}>
                 <div className="flex min-w-0 items-start justify-between gap-2.5">
                   <p className="text-ink">
                     {remedy.name}
