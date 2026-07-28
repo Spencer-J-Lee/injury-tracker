@@ -3,9 +3,11 @@ import {
   ResponsiveContainer,
   LineChart,
   Line,
+  XAxis,
   YAxis,
   CartesianGrid,
   ReferenceLine,
+  ReferenceArea,
 } from "recharts";
 import { useLogEntriesForInjury } from "@/hooks/useLogEntriesForInjury";
 import { isWithinRange } from "@/lib/dates";
@@ -44,7 +46,18 @@ export function MiniPainTrendChart({ injuryId }: { injuryId: string }) {
           data={data}
           margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
         >
+          <ReferenceArea
+            yAxisId="left"
+            x1={data[0].timestamp}
+            x2={data[data.length - 1].timestamp}
+            y1={0}
+            y2={10}
+            fill={colors.plotBackground}
+            stroke="none"
+            ifOverflow="visible"
+          />
           <CartesianGrid stroke={colors.grid} strokeWidth={1} />
+          <XAxis dataKey="timestamp" hide />
           <YAxis yAxisId="left" domain={[0, 10]} hide width={0} />
           <YAxis yAxisId="right" domain={[0, 100]} hide width={0} />
           <ReferenceLine

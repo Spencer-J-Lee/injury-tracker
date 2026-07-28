@@ -8,6 +8,7 @@ import {
   CartesianGrid,
   Tooltip,
   ReferenceLine,
+  ReferenceArea,
 } from "recharts";
 import { Card } from "@/components/ui/Card";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
@@ -144,6 +145,16 @@ export function TrendChart<T>({
                 data={data}
                 margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
               >
+                <ReferenceArea
+                  yAxisId={axes[0].id}
+                  x1={data[0].timestamp}
+                  x2={data[data.length - 1].timestamp}
+                  y1={axes[0].domain[0]}
+                  y2={axes[0].domain[1]}
+                  fill={colors.plotBackground}
+                  stroke="none"
+                  ifOverflow="visible"
+                />
                 <CartesianGrid stroke={colors.grid} strokeWidth={1} />
                 <XAxis
                   dataKey="timestamp"
