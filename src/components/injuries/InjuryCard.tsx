@@ -73,7 +73,7 @@ export function InjuryCard({
     <Card
       onClick={handleClick}
       className={clsx(
-        "relative flex cursor-pointer flex-col justify-between gap-4.5 transition-colors",
+        "relative flex cursor-pointer flex-col justify-between gap-4.5",
         "[&:hover:not(:has(button:hover))]:border-accent",
         selectable && selected && "border-accent! bg-accent-soft/20",
       )}

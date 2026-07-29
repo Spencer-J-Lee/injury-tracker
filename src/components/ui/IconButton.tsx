@@ -50,7 +50,7 @@ export function IconButton({
       type="button"
       title={label}
       className={clsx(
-        "inline-flex items-center justify-center transition-colors",
+        "inline-flex items-center justify-center",
         sizeClasses[size],
         toneClasses[size][tone],
         className,

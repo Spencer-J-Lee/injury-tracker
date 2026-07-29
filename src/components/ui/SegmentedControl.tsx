@@ -58,7 +58,7 @@ export function SegmentedControl<T extends string>({
             type="button"
             onClick={() => onChange(option.value)}
             className={clsx(
-              "w-full rounded-md border font-semibold whitespace-nowrap transition-colors",
+              "w-full rounded-md border font-semibold whitespace-nowrap",
               buttonSizeClasses[size],
               option.value === value
                 ? activeToneClasses[option.tone ?? "accent"]

@@ -44,7 +44,7 @@ export function Button({
   return (
     <button
       className={clsx(
-        "inline-flex items-center justify-center border transition-colors disabled:pointer-events-none disabled:opacity-50",
+        "inline-flex items-center justify-center border disabled:pointer-events-none disabled:opacity-50",
         sizeClasses[size],
         variantClasses[variant],
         className,
