@@ -57,7 +57,6 @@ export function MiniPainTrendChart({ injuryId }: { injuryId: string }) {
             ifOverflow="visible"
           />
           <CartesianGrid stroke={colors.grid} strokeWidth={1} />
-          <XAxis dataKey="timestamp" hide />
           <YAxis yAxisId="left" domain={[0, 10]} hide width={0} />
           <YAxis yAxisId="right" domain={[0, 100]} hide width={0} />
           <ReferenceLine
