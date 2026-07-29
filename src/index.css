@@ -131,6 +131,7 @@ input[type="range"].range-violet::-moz-range-thumb {
 /* Journal rich text (editor content + rendered entries) */
 .journal-rich-text {
   line-height: 1.6;
+  text-wrap: pretty;
 }
 .journal-rich-text > *:first-child {
   margin-top: 0;

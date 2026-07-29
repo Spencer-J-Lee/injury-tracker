@@ -13,12 +13,12 @@ export function Checkbox({ label, className, id, ...props }: CheckboxProps) {
     <label
       htmlFor={id}
       className={clsx(
-        "text-ink-secondary group flex gap-2.5 py-1.5",
+        "text-ink-secondary group flex gap-2.5 py-1.5 text-pretty",
         !props.disabled && "cursor-pointer",
         className,
       )}
     >
-      <span className="relative flex h-6 w-6 shrink-0 items-center justify-center">
+      <div className="relative flex h-6 w-6 shrink-0 items-center justify-center">
         <input
           id={id}
           type="checkbox"
@@ -38,7 +38,7 @@ export function Checkbox({ label, className, id, ...props }: CheckboxProps) {
             strokeLinejoin="round"
           />
         </svg>
-      </span>
+      </div>
       {label}
     </label>
   );

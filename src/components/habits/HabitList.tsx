@@ -37,7 +37,13 @@ export function HabitList() {
                 />
               </li>
             ) : (
-              <Card as="li" size="md" variant="muted" key={habit.id}>
+              <Card
+                as="li"
+                size="md"
+                variant="muted"
+                key={habit.id}
+                className="text-pretty"
+              >
                 <div className="flex min-w-0 items-start justify-between gap-2.5">
                   <p className="text-ink">{habit.name}</p>
                   <div className="flex shrink-0 gap-2">

@@ -45,7 +45,7 @@ export function HabitGrid({ habits, completions, weekDates }: HabitGridProps) {
                     key={date}
                     className={clsx(
                       "w-22 min-w-22 px-2 pb-3 text-center whitespace-nowrap",
-                      today && "bg-accent-soft/50 rounded-t-lg",
+                      today && "bg-accent-soft/70 rounded-t-lg",
                     )}
                   >
                     <p className="text-accent h-[2em] pt-1.5 text-[10px] tracking-[0.2em] uppercase">
@@ -91,18 +91,21 @@ export function HabitGrid({ habits, completions, weekDates }: HabitGridProps) {
                         key={date}
                         className={clsx(
                           "w-22 min-w-22 py-1.5 text-center",
-                          today && "bg-accent-soft/50",
+                          today && "bg-accent-soft/70",
                           today && isLastRow && "rounded-b-lg",
                         )}
                       >
-                        <Checkbox
-                          id={`${habit.id}-${date}`}
-                          label=""
-                          aria-label={`${habit.name} — ${formatShortDateWithDay(date)}`}
-                          checked={checked}
-                          onChange={() => toggleHabitCompletion(habit.id, date)}
-                          className="mx-auto"
-                        />
+                        <div className="flex justify-center">
+                          <Checkbox
+                            id={`${habit.id}-${date}`}
+                            label=""
+                            aria-label={`${habit.name} — ${formatShortDateWithDay(date)}`}
+                            checked={checked}
+                            onChange={() =>
+                              toggleHabitCompletion(habit.id, date)
+                            }
+                          />
+                        </div>
                       </td>
                     );
                   })}
