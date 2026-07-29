@@ -1,6 +1,9 @@
 import { db } from "@/db/schema";
 
-export function listHabitCompletionsForWeek(startDate: string, endDate: string) {
+export function listHabitCompletionsForWeek(
+  startDate: string,
+  endDate: string,
+) {
   return db.habitCompletions
     .where("date")
     .between(startDate, endDate, true, true)

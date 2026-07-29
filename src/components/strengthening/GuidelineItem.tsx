@@ -13,12 +13,11 @@ export function GuidelineHeading({
   title: string;
   text?: string | string[];
 }) {
-  const paragraphs = text === undefined ? [] : Array.isArray(text) ? text : [text];
+  const paragraphs =
+    text === undefined ? [] : Array.isArray(text) ? text : [text];
   return (
     <div className="mt-5">
-      <p className="font-heading text-ink mb-1 text-lg font-medium">
-        {title}
-      </p>
+      <p className="font-heading text-ink mb-1 text-lg font-medium">{title}</p>
       {paragraphs.map((paragraph, index) => (
         <p key={index} className="text-ink-muted mt-2 first:mt-0">
           {paragraph}
@@ -39,7 +38,8 @@ export function GuidelineInline({
   science?: string;
   showScience?: boolean;
 }) {
-  const paragraphs = text === undefined ? [] : Array.isArray(text) ? text : [text];
+  const paragraphs =
+    text === undefined ? [] : Array.isArray(text) ? text : [text];
   return (
     <div>
       <p>

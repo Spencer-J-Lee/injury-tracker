@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import { GuidelineHeading, GuidelineInline, ScienceNote } from "./GuidelineItem";
+import {
+  GuidelineHeading,
+  GuidelineInline,
+  ScienceNote,
+} from "./GuidelineItem";
 
 const INTRO_SCIENCE =
   "Based on the Silbernagel pain-monitoring model, originally developed for Achilles tendinopathy and now applied broadly to tendon/overuse rehab. Studies (Silbernagel et al., 2007, American Journal of Sports Medicine) found that patients allowed to exercise through moderate pain (up to ~5/10) had equal or better long-term outcomes than those told to stay pain-free — likely because continued loading stimulates tissue adaptation (collagen remodeling), while total rest leads to deconditioning and delayed return to function.";
@@ -40,7 +44,7 @@ const PAIN_SCALE: { range: string; text: string }[] = [
 
 const NUMBNESS_RULE: { title: string; text: string; science?: string } = {
   title: "Numbness or tingling = Stop immediately",
-  text: "Nerves have separate rules from muscles. Never push through nerve symptoms.",
+  text: "Nerves have separate rules from muscles. Never push through nerve symptoms because doing so repeatedly will make it worse.",
   science:
     "Nerve tissue doesn't follow the same \"safe to load through discomfort\" logic as muscle/tendon. Compressive or tensile nerve irritation (e.g., ulnar nerve entrapment) can worsen with repeated provocation, and unlike muscle soreness, nerve symptoms don't reliably self-limit — they're a marker of mechanical irritation, not just fatigue. Standard neurodynamic and orthopedic guidelines treat any neural symptom as an immediate stop signal.",
 };
