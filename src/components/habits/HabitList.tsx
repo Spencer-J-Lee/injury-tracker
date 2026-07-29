@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { faPen, faBoxArchive } from "@fortawesome/free-solid-svg-icons";
 import { Card } from "@/components/ui/Card";
+import { CollapsibleCard } from "@/components/ui/CollapsibleCard";
 import { Button } from "@/components/ui/Button";
 import { IconButton } from "@/components/ui/IconButton";
 import { HabitForm } from "@/components/habits/HabitForm";
@@ -13,11 +14,7 @@ export function HabitList() {
   const [editingId, setEditingId] = useState<string | null>(null);
 
   return (
-    <Card>
-      <h3 className="font-heading text-ink-emphasis mb-6 text-lg font-semibold">
-        Manage Habits
-      </h3>
-
+    <CollapsibleCard title="Manage Habits" defaultOpen={false}>
       {habits.length > 0 && (
         <ul className="mb-2.5 space-y-2.5">
           {habits.map((habit) =>
@@ -92,6 +89,6 @@ export function HabitList() {
           + Add
         </Button>
       )}
-    </Card>
+    </CollapsibleCard>
   );
 }
