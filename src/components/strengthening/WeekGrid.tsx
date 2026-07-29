@@ -106,7 +106,7 @@ function DayColumn({
       <div
         className={clsx(
           "flex flex-col gap-2.5 px-4 pt-2 pb-4",
-          today && "bg-accent-soft/40",
+          today && "bg-accent-soft/50",
         )}
       >
         <div

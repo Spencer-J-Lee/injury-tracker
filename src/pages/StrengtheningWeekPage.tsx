@@ -6,7 +6,6 @@ import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import { PageTitle } from "@/components/ui/PageTitle";
 import { Button } from "@/components/ui/Button";
 import { Checkbox } from "@/components/ui/Checkbox";
-import { ExerciseAdjustmentTips } from "@/components/strengthening/ExerciseAdjustmentTips";
 import { StrengtheningGuidelines } from "@/components/strengthening/StrengtheningGuidelines";
 import { useWeekPlannedExercises } from "@/hooks/useWeekPlannedExercises";
 import {
@@ -20,6 +19,7 @@ import {
   getTodayDateString,
   getWeekStart,
 } from "@/lib/weeks";
+import { ExerciseModificationCheatsheet } from "@/components/strengthening/ExerciseModificationCheatsheet";
 
 type ViewMode = "week" | "4day";
 
@@ -151,7 +151,7 @@ export function StrengtheningWeekPage() {
         />
       </div>
 
-      <ExerciseAdjustmentTips />
+      <ExerciseModificationCheatsheet />
 
       <StrengtheningGuidelines />
     </div>
