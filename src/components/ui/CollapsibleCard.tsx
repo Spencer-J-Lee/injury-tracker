@@ -3,6 +3,7 @@ import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import clsx from "clsx";
 import { Card } from "@/components/ui/Card";
+import { cardPaddingClasses } from "@/components/ui/cardStyles";
 
 interface CollapsibleCardProps {
   title: ReactNode;
@@ -22,12 +23,15 @@ export function CollapsibleCard({
   const toggle = () => setOpen((prev) => !prev);
 
   return (
-    <Card
-      size="lg"
-      onClick={toggle}
-      className={clsx("cursor-pointer", className)}
-    >
-      <div className="font-heading text-ink-emphasis flex items-center justify-between gap-2 text-lg font-semibold">
+    <Card size="lg" padding={false} className={className}>
+      <button
+        type="button"
+        onClick={toggle}
+        className={clsx(
+          "font-heading text-ink-emphasis flex w-full cursor-pointer items-center justify-between gap-2 text-lg font-semibold",
+          cardPaddingClasses.lg,
+        )}
+      >
         {title}
         <FontAwesomeIcon
           icon={faChevronDown}
@@ -36,11 +40,9 @@ export function CollapsibleCard({
             open && "rotate-180",
           )}
         />
-      </div>
+      </button>
       {open && (
-        <div className="mt-6" onClick={(e) => e.stopPropagation()}>
-          {children}
-        </div>
+        <div className={clsx(cardPaddingClasses.lg, "pt-0")}>{children}</div>
       )}
     </Card>
   );

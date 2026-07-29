@@ -1,22 +1,24 @@
 import type { ComponentPropsWithoutRef, ElementType } from "react";
 import clsx from "clsx";
+import { cardPaddingClasses, type CardSize } from "@/components/ui/cardStyles";
 
-type Size = "sm" | "md" | "lg";
+type Size = CardSize;
 type Variant = "solid" | "muted" | "dashed";
 
 interface CardOwnProps {
   size?: Size;
   variant?: Variant;
+  padding?: boolean;
 }
 
 type CardProps<T extends ElementType> = CardOwnProps & {
   as?: T;
 } & Omit<ComponentPropsWithoutRef<T>, keyof CardOwnProps | "as">;
 
-const sizeClasses: Record<Size, string> = {
-  sm: "rounded-lg p-3.5",
-  md: "rounded-2xl px-4.5 py-4",
-  lg: "rounded-[20px] p-5",
+const radiusClasses: Record<Size, string> = {
+  sm: "rounded-lg",
+  md: "rounded-2xl",
+  lg: "rounded-[20px]",
 };
 
 const variantClasses: Record<Variant, string> = {
@@ -29,13 +31,19 @@ export function Card<T extends ElementType = "div">({
   as,
   size = "lg",
   variant = "solid",
+  padding = true,
   className,
   ...props
 }: CardProps<T>) {
   const Component = as ?? "div";
   return (
     <Component
-      className={clsx(sizeClasses[size], variantClasses[variant], className)}
+      className={clsx(
+        radiusClasses[size],
+        padding && cardPaddingClasses[size],
+        variantClasses[variant],
+        className,
+      )}
       {...props}
     />
   );
