@@ -16,6 +16,7 @@ import {
   journalShortcutLabel,
   strengtheningShortcutLabel,
   habitsShortcutLabel,
+  settingsShortcutLabel,
   journalQuickEditShortcutLabel,
 } from "@/lib/shortcuts";
 import { UnsavedChangesBlockerProvider } from "@/context/UnsavedChangesBlockerProvider";
@@ -53,6 +54,11 @@ function AppShellContent() {
   useKeyboardShortcut(
     habitsShortcutLabel,
     () => navigate("/habits"),
+    !anyModalOpen,
+  );
+  useKeyboardShortcut(
+    settingsShortcutLabel,
+    () => navigate("/settings"),
     !anyModalOpen,
   );
   useKeyboardShortcut(
@@ -110,7 +116,7 @@ function AppShellContent() {
                 strengtheningShortcutLabel,
               )}
               {navLinkSidebar("/habits", "Habits", habitsShortcutLabel)}
-              {navLinkSidebar("/settings", "Settings")}
+              {navLinkSidebar("/settings", "Settings", settingsShortcutLabel)}
             </nav>
           </aside>
 

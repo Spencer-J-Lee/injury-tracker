@@ -11,4 +11,5 @@ export const dashboardShortcutLabel = "1";
 export const journalShortcutLabel = "2";
 export const strengtheningShortcutLabel = "3";
 export const habitsShortcutLabel = "4";
+export const settingsShortcutLabel = "0";
 export const journalQuickEditShortcutLabel = "E";
