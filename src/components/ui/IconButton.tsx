@@ -48,7 +48,6 @@ export function IconButton({
   return (
     <button
       type="button"
-      aria-label={label}
       title={label}
       className={clsx(
         "inline-flex items-center justify-center transition-colors",

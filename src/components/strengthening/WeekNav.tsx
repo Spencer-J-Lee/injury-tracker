@@ -31,7 +31,6 @@ export function WeekNav({
           variant="secondary"
           iconBefore={<FontAwesomeIcon icon={faChevronLeft} />}
           onClick={onPrevious}
-          aria-label={`Previous ${size} days`}
         />
 
         <h2 className="font-heading text-ink w-70 text-center text-2xl font-semibold">
@@ -42,7 +41,6 @@ export function WeekNav({
           variant="secondary"
           iconBefore={<FontAwesomeIcon icon={faChevronRight} />}
           onClick={onNext}
-          aria-label={`Next ${size} days`}
         />
       </div>
 

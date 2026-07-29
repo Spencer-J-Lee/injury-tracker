@@ -71,9 +71,6 @@ export function InjuryCard({
 
   return (
     <Card
-      role={selectable ? "checkbox" : "link"}
-      aria-checked={selectable ? Boolean(selected) : undefined}
-      tabIndex={0}
       onClick={handleClick}
       className={clsx(
         "relative flex cursor-pointer flex-col justify-between gap-4.5 transition-colors",

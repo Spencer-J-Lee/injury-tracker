@@ -144,7 +144,6 @@ function AppShellContent() {
 
       <button
         onClick={() => openJournalModal()}
-        aria-label="Quick-edit today's journal entry"
         title={`Today's journal entry (${journalQuickEditShortcutLabel})`}
         className="bg-surface-raised text-ink hover:bg-canvas-sidebar border-subtle fixed right-7 bottom-27 flex h-14 w-14 items-center justify-center rounded-full border text-xl shadow-lg lg:right-8 lg:bottom-8"
       >

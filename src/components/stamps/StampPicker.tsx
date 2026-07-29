@@ -71,7 +71,6 @@ export function StampPicker() {
           ref={buttonRef}
           type="button"
           onClick={() => setOpen((o) => !o)}
-          aria-label="Copy a stamp"
           title="Copy a stamp"
           className={clsx([
             "border-subtle bg-surface-raised text-ink hover:bg-surface flex h-10 w-10 items-center justify-center rounded-full border shadow-lg",
@@ -85,7 +84,6 @@ export function StampPicker() {
           <button
             type="button"
             onClick={() => handleCopy(lastUsedStamp)}
-            aria-label={`Copy ${lastUsedStamp}`}
             title={`Copy ${lastUsedStamp}`}
             className="border-subtle bg-surface-raised text-ink hover:bg-surface flex h-10 w-10 items-center justify-center rounded-r-full border text-xl shadow-lg"
           >
@@ -112,7 +110,6 @@ export function StampPicker() {
                   <button
                     type="button"
                     onClick={() => handleCopy(stamp)}
-                    aria-label={`Copy ${stamp}`}
                     title={`Copy ${stamp}`}
                     className="border-strong bg-control text-ink hover:bg-canvas flex h-12 w-12 items-center justify-center rounded-xl border text-xl"
                   >
@@ -128,7 +125,6 @@ export function StampPicker() {
                   <button
                     type="button"
                     onClick={() => handleRemove(stamp)}
-                    aria-label={`Remove ${stamp}`}
                     title={`Remove ${stamp}`}
                     className="text-ink-faint border-subtle hover:text-pain-red bg-surface-raised absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full border text-xs leading-none"
                   >

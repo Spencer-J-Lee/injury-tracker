@@ -99,7 +99,6 @@ export function HabitGrid({ habits, completions, weekDates }: HabitGridProps) {
                           <Checkbox
                             id={`${habit.id}-${date}`}
                             label=""
-                            aria-label={`${habit.name} — ${formatShortDateWithDay(date)}`}
                             checked={checked}
                             onChange={() =>
                               toggleHabitCompletion(habit.id, date)
