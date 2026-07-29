@@ -15,6 +15,7 @@ import {
   dashboardShortcutLabel,
   journalShortcutLabel,
   strengtheningShortcutLabel,
+  habitsShortcutLabel,
   journalQuickEditShortcutLabel,
 } from "@/lib/shortcuts";
 import { UnsavedChangesBlockerProvider } from "@/context/UnsavedChangesBlockerProvider";
@@ -108,6 +109,7 @@ function AppShellContent() {
                 "Strengthening",
                 strengtheningShortcutLabel,
               )}
+              {navLinkSidebar("/habits", "Habits", habitsShortcutLabel)}
               {navLinkSidebar("/settings", "Settings")}
             </nav>
           </aside>
@@ -121,6 +123,7 @@ function AppShellContent() {
                 {navLinkMobile("/", "Dashboard")}
                 {navLinkMobile("/journal", "Journal")}
                 {navLinkMobile("/strengthening", "Strengthening")}
+                {navLinkMobile("/habits", "Habits")}
                 {navLinkMobile("/settings", "Settings")}
               </nav>
             </header>

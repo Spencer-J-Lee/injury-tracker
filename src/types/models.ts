@@ -83,6 +83,21 @@ export type NumbnessDuration = "brief" | "lingering" | "persistent";
 export type NumbnessSuspectedCause =
   "sleep-posture" | "load-related" | "unsure";
 
+export interface Habit {
+  id: string;
+  name: string;
+  description?: string;
+  createdAt: string;
+  archivedAt?: string;
+}
+
+export interface HabitCompletion {
+  id: string;
+  habitId: string;
+  date: string; // yyyy-MM-dd — the day this habit was fulfilled
+  createdAt: string;
+}
+
 export interface MorningCheckIn {
   id: string;
   injuryId: string;

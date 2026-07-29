@@ -8,6 +8,8 @@ import type {
   AppMeta,
   PlannedExercise,
   MorningCheckIn,
+  Habit,
+  HabitCompletion,
 } from "@/types/models";
 
 export const db = new Dexie("injury-tracker") as Dexie & {
@@ -19,6 +21,8 @@ export const db = new Dexie("injury-tracker") as Dexie & {
   meta: EntityTable<AppMeta, "key">;
   plannedExercises: EntityTable<PlannedExercise, "id">;
   morningCheckIns: EntityTable<MorningCheckIn, "id">;
+  habits: EntityTable<Habit, "id">;
+  habitCompletions: EntityTable<HabitCompletion, "id">;
 };
 
 db.version(1).stores({
@@ -315,3 +319,9 @@ db.version(15)
           [];
       });
   });
+
+db.version(16).stores({
+  ...V13_STORES,
+  habits: "id, archivedAt",
+  habitCompletions: "id, habitId, date, [habitId+date]",
+});
