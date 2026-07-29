@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { GuidelineHeading, GuidelineInline, ScienceNote } from "./GuidelineItem";
 
 const INTRO_SCIENCE =
   "Based on the Silbernagel pain-monitoring model, originally developed for Achilles tendinopathy and now applied broadly to tendon/overuse rehab. Studies (Silbernagel et al., 2007, American Journal of Sports Medicine) found that patients allowed to exercise through moderate pain (up to ~5/10) had equal or better long-term outcomes than those told to stay pain-free — likely because continued loading stimulates tissue adaptation (collagen remodeling), while total rest leads to deconditioning and delayed return to function.";
@@ -50,6 +51,10 @@ const RULES: { title: string; text: string | string[]; science?: string }[] = [
     text: "It's important to be extra careful since your body's tolerance for load is extremely low. A proper warm-up can be the difference between a productive set and a flare up.",
   },
   {
+    title: "Modify or replace exercises if they aggravate symptoms",
+    text: "If an exercise is worsening symptoms, try modifying the exercise so it can still be performed. If that doesn't work, substitute with something else or remove it entirely.",
+  },
+  {
     title: "Progress slowly: 5-10% per week",
     text: [
       "Change only one variable at a time (load, reps, or sets). If the next-day check passes for a couple sessions in a row, you're clear to progress. If not, dial it back.",
@@ -72,52 +77,6 @@ const RULES: { title: string; text: string | string[]; science?: string }[] = [
   },
 ];
 
-function ScienceNote({ text }: { text: string }) {
-  return (
-    <p className="text-accent-soft-text border-accent mt-1.5 border-l-3 pl-3 italic">
-      {text}
-    </p>
-  );
-}
-
-function GuidelineItem({
-  variant,
-  title,
-  text,
-  science,
-  showScience,
-}: {
-  variant: "inline" | "heading";
-  title: string;
-  text: string | string[];
-  science?: string;
-  showScience: boolean;
-}) {
-  const paragraphs = Array.isArray(text) ? text : [text];
-  return (
-    <div className={variant === "heading" ? "mt-5" : undefined}>
-      {variant === "heading" ? (
-        <>
-          <p className="font-heading text-ink mb-1 text-lg font-medium">
-            {title}
-          </p>
-          {paragraphs.map((paragraph, index) => (
-            <p key={index} className="text-ink-muted mt-2 first:mt-0">
-              {paragraph}
-            </p>
-          ))}
-        </>
-      ) : (
-        <p>
-          <span className="text-ink font-medium">{title}: </span>
-          <span className="text-ink-muted">{paragraphs.join(" ")}</span>
-        </p>
-      )}
-      {showScience && science && <ScienceNote text={science} />}
-    </div>
-  );
-}
-
 export function StrengtheningGuidelines() {
   const [showScience, setShowScience] = useState(false);
 
@@ -135,11 +94,7 @@ export function StrengtheningGuidelines() {
         </Button>
       </div>
 
-      <GuidelineItem
-        variant="heading"
-        showScience={showScience}
-        {...NUMBNESS_RULE}
-      />
+      <GuidelineHeading {...NUMBNESS_RULE} />
 
       <div className="mt-5">
         <p className="font-heading text-ink mb-1 text-lg font-medium">
@@ -174,9 +129,8 @@ export function StrengtheningGuidelines() {
             </p>
             <div className="mt-1 space-y-2 pl-8">
               {CHECKS.map((check) => (
-                <GuidelineItem
+                <GuidelineInline
                   key={check.title}
-                  variant="inline"
                   showScience={showScience}
                   {...check}
                 />
@@ -187,12 +141,7 @@ export function StrengtheningGuidelines() {
       </div>
 
       {RULES.map((rule) => (
-        <GuidelineItem
-          key={rule.title}
-          variant="heading"
-          showScience={showScience}
-          {...rule}
-        />
+        <GuidelineHeading key={rule.title} {...rule} />
       ))}
     </Card>
   );
