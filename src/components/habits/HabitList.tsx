@@ -148,7 +148,7 @@ export function HabitList() {
   };
 
   return (
-    <CollapsibleCard title="Manage Habits" defaultOpen={false}>
+    <CollapsibleCard title="Manage Habits">
       {habits.length > 0 && (
         <DndContext
           sensors={sensors}
