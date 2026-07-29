@@ -13,7 +13,7 @@ export function Checkbox({ label, className, id, ...props }: CheckboxProps) {
     <label
       htmlFor={id}
       className={clsx(
-        "text-ink-secondary group flex w-fit items-center gap-2.5 py-1.5",
+        "text-ink-secondary group flex gap-2.5 py-1.5",
         !props.disabled && "cursor-pointer",
         className,
       )}
