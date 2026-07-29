@@ -5,21 +5,29 @@ export async function listActiveHabits(): Promise<Habit[]> {
   const habits = await db.habits.toArray();
   return habits
     .filter((habit) => !habit.archivedAt)
-    .sort((a, b) => a.createdAt.localeCompare(b.createdAt));
+    .sort((a, b) => a.position - b.position);
 }
 
 export async function createHabit(input: {
   name: string;
   description?: string;
 }): Promise<Habit> {
-  const habit: Habit = {
-    id: crypto.randomUUID(),
-    name: input.name,
-    description: input.description,
-    createdAt: new Date().toISOString(),
-  };
-  await db.habits.add(habit);
-  return habit;
+  return db.transaction("rw", db.habits, async () => {
+    const existing = await db.habits.toArray();
+    const nextPosition =
+      existing.length > 0
+        ? Math.max(...existing.map((habit) => habit.position)) + 1
+        : 0;
+    const habit: Habit = {
+      id: crypto.randomUUID(),
+      name: input.name,
+      description: input.description,
+      position: nextPosition,
+      createdAt: new Date().toISOString(),
+    };
+    await db.habits.add(habit);
+    return habit;
+  });
 }
 
 export async function updateHabit(
@@ -31,4 +39,12 @@ export async function updateHabit(
 
 export async function archiveHabit(id: string) {
   await db.habits.update(id, { archivedAt: new Date().toISOString() });
+}
+
+export async function reorderHabits(orderedIds: string[]): Promise<void> {
+  await db.transaction("rw", db.habits, async () => {
+    await Promise.all(
+      orderedIds.map((id, index) => db.habits.update(id, { position: index })),
+    );
+  });
 }

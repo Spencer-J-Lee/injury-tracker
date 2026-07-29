@@ -325,3 +325,19 @@ db.version(16).stores({
   habits: "id, archivedAt",
   habitCompletions: "id, habitId, date, [habitId+date]",
 });
+
+db.version(17)
+  .stores({
+    ...V13_STORES,
+    habits: "id, archivedAt, position",
+    habitCompletions: "id, habitId, date, [habitId+date]",
+  })
+  .upgrade(async (tx) => {
+    const habits = await tx.table("habits").toArray();
+    habits.sort((a, b) => a.createdAt.localeCompare(b.createdAt));
+    await Promise.all(
+      habits.map((habit, index) =>
+        tx.table("habits").update(habit.id, { position: index }),
+      ),
+    );
+  });

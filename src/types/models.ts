@@ -87,6 +87,7 @@ export interface Habit {
   id: string;
   name: string;
   description?: string;
+  position: number;
   createdAt: string;
   archivedAt?: string;
 }
