@@ -20,12 +20,18 @@ import {
 } from "@/lib/dates";
 import { chartColors as colors } from "@/components/charts/chartColors";
 
-const RANGES: { value: TrendRange; label: string }[] = [
-  { value: "7d", label: "7d" },
-  { value: "30d", label: "30d" },
-  { value: "90d", label: "90d" },
-  { value: "all", label: "All" },
-];
+type SegmentedControlTone = "accent" | "orange";
+
+function buildRanges(
+  tone: SegmentedControlTone,
+): { value: TrendRange; label: string; tone: SegmentedControlTone }[] {
+  return [
+    { value: "7d", label: "7d", tone },
+    { value: "30d", label: "30d", tone },
+    { value: "90d", label: "90d", tone },
+    { value: "all", label: "All", tone },
+  ];
+}
 
 export interface TrendChartAxis {
   id: "left" | "right";
@@ -93,6 +99,7 @@ interface TrendChartProps<T> {
   series: TrendChartSeries[];
   axes: TrendChartAxis[];
   referenceLine?: { yAxisId: "left" | "right"; y: number };
+  rangeControlTone?: SegmentedControlTone;
 }
 
 export function TrendChart<T>({
@@ -105,8 +112,10 @@ export function TrendChart<T>({
   series,
   axes,
   referenceLine,
+  rangeControlTone = "accent",
 }: TrendChartProps<T>) {
   const [range, setRange] = useState<TrendRange>("7d");
+  const ranges = useMemo(() => buildRanges(rangeControlTone), [rangeControlTone]);
 
   const data = useMemo<ChartPoint[]>(() => {
     return (entries ?? [])
@@ -121,7 +130,7 @@ export function TrendChart<T>({
         <h3 className="font-heading text-ink-emphasis text-lg font-semibold">
           {title}
         </h3>
-        <SegmentedControl options={RANGES} value={range} onChange={setRange} />
+        <SegmentedControl options={ranges} value={range} onChange={setRange} />
       </div>
 
       {data.length === 0 ? (

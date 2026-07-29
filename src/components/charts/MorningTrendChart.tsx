@@ -10,6 +10,7 @@ export function MorningTrendChart({ injuryId }: { injuryId: string }) {
     <TrendChart<MorningCheckIn>
       title="Resting pain & stiffness over time"
       emptyText="No rated check-ins in this range yet."
+      rangeControlTone="orange"
       entries={entries}
       getTimestamp={(e) => e.timestamp}
       isRated={(e) =>
