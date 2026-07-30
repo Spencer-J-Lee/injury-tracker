@@ -9,6 +9,13 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      // The package's "browser" field points to a UMD bundle whose default
+      // export is the whole CJS exports object, not the Lottie component
+      // itself. Force resolution to the real ESM build instead.
+      "lottie-react": path.resolve(
+        __dirname,
+        "./node_modules/lottie-react/build/index.es.js",
+      ),
     },
   },
 });
