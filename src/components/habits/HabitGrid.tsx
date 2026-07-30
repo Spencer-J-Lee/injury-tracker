@@ -34,8 +34,8 @@ export function HabitGrid({ habits, completions, weekDates }: HabitGridProps) {
       <div className="overflow-x-auto">
         <table className="w-full border-collapse">
           <thead>
-            <tr className="border-subtle border-b text-sm">
-              <th className="text-ink-muted w-full max-w-60 pr-4 pb-3 text-right align-bottom font-semibold tracking-wide uppercase">
+            <tr className="border-subtle border-b text-lg tracking-wide">
+              <th className="text-ink-muted w-full max-w-60 pr-6 pb-3 text-right align-bottom font-medium uppercase">
                 Habit
               </th>
               {weekDates.map((date) => {
@@ -44,16 +44,16 @@ export function HabitGrid({ habits, completions, weekDates }: HabitGridProps) {
                   <th
                     key={date}
                     className={clsx(
-                      "w-22 min-w-22 px-2 pb-3 text-center whitespace-nowrap",
+                      "w-24 min-w-24 px-2 pb-3 text-center whitespace-nowrap",
                       today && "bg-accent-soft/70 rounded-t-lg",
                     )}
                   >
-                    <p className="text-accent h-[2em] pt-1.5 text-[10px] tracking-[0.2em] uppercase">
+                    <p className="text-accent h-[2em] pt-1.5 text-xs font-bold tracking-[0.2em] uppercase">
                       {today && "Today"}
                     </p>
                     <div
                       className={clsx(
-                        "font-bold tracking-wide uppercase",
+                        "text-xs tracking-wide uppercase",
                         today ? "text-ink-muted" : "text-ink-faint",
                       )}
                     >
@@ -61,8 +61,8 @@ export function HabitGrid({ habits, completions, weekDates }: HabitGridProps) {
                     </div>
                     <div
                       className={clsx(
-                        "text-base font-bold",
-                        today ? "text-ink" : "text-ink-secondary",
+                        "font-medium",
+                        today ? "text-ink" : "text-ink-faint",
                       )}
                     >
                       {format(parseISO(date), "MMM d")}
@@ -79,7 +79,7 @@ export function HabitGrid({ habits, completions, weekDates }: HabitGridProps) {
                 <tr key={habit.id}>
                   <th
                     scope="row"
-                    className="text-ink max-w-60 py-1.5 pr-4 text-right text-sm leading-snug font-semibold"
+                    className="text-ink max-w-60 py-1.5 pr-6 text-right leading-snug font-medium"
                   >
                     {habit.name}
                   </th>
@@ -90,7 +90,7 @@ export function HabitGrid({ habits, completions, weekDates }: HabitGridProps) {
                       <td
                         key={date}
                         className={clsx(
-                          "w-22 min-w-22 py-1.5 text-center",
+                          "w-24 min-w-24 py-1.5 text-center",
                           today && "bg-accent-soft/70",
                           today && isLastRow && "rounded-b-lg",
                         )}

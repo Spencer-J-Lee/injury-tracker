@@ -111,14 +111,16 @@ function DayColumn({
       >
         <div
           className={clsx(
-            "flex flex-col text-sm font-semibold tracking-wide uppercase",
+            "flex flex-col tracking-wide uppercase",
             today ? "text-ink" : "text-ink-muted",
           )}
         >
-          <p className="text-accent mb-0.5 h-[1em] text-[10px] tracking-[0.2em] uppercase">
+          <p className="text-accent mb-1 h-[1em] text-xs font-bold tracking-[0.2em] uppercase">
             {today && "Today"}
           </p>
-          <p className="leading-relaxed">{formatShortDateWithDay(date)}</p>
+          <p className="leading-relaxed font-medium">
+            {formatShortDateWithDay(date)}
+          </p>
         </div>
 
         <Button
@@ -136,7 +138,7 @@ function DayColumn({
           {groups.map(({ injury, exercises }) => (
             <div className="py-3 first:pt-0 last:pb-0" key={injury.id}>
               <Label noMargin>{injury.bodyPart}</Label>
-              <ul className="text-ink mt-2 flex flex-col items-start gap-1.5 pl-2 text-sm">
+              <ul className="text-ink mt-2 flex flex-col items-start gap-1.5 pl-2">
                 {exercises.map((exercise) => (
                   <li className="font-medium" key={exercise.id}>
                     {exercise.remedy?.name ?? "Exercise"}
