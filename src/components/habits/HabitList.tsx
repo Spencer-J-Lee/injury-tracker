@@ -109,7 +109,7 @@ function SortableHabitItem({
             </div>
           </div>
           {habit.description && (
-            <p className="text-ink-muted mt-1.5 text-base text-pretty">
+            <p className="text-ink-muted mt-1.5 text-base text-pretty whitespace-pre-line">
               {habit.description}
             </p>
           )}

@@ -108,7 +108,7 @@ function RemedySection({
                   </div>
                 </div>
                 {remedy.description && (
-                  <p className="text-ink-muted mt-1.5 text-sm">
+                  <p className="text-ink-muted mt-1.5 text-sm text-pretty whitespace-pre-line">
                     {remedy.description}
                   </p>
                 )}

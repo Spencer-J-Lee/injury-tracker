@@ -105,7 +105,7 @@ export function InjuryDetailPage() {
           <InjuryTitle injury={injury} />
         </PageTitle>
         {injury.description && (
-          <p className="text-ink-secondary mt-2.5 max-w-3/5 text-lg">
+          <p className="text-ink-secondary mt-2.5 max-w-3/5 text-lg text-pretty whitespace-pre-line">
             {injury.description}
           </p>
         )}
