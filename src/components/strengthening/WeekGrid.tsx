@@ -4,6 +4,7 @@ import { isToday, parseISO } from "date-fns";
 import { Button } from "@/components/ui/Button";
 import { Label } from "@/components/ui/Label";
 import { Modal } from "@/components/ui/Modal";
+import { RichTextContent } from "@/components/journal/RichTextEditor";
 import { EditExercisesModal } from "@/components/strengthening/EditExercisesModal";
 import {
   createPlannedExercise,
@@ -178,9 +179,14 @@ function DayColumn({
         title={viewingRemedy?.name ?? ""}
         size="sm"
       >
-        <p className="text-ink-muted text-pretty whitespace-pre-line">
-          {viewingRemedy?.description || "No description added."}
-        </p>
+        {viewingRemedy?.description ? (
+          <RichTextContent
+            html={viewingRemedy.description}
+            className="text-ink-muted text-pretty"
+          />
+        ) : (
+          <p className="text-ink-muted text-pretty">No description added.</p>
+        )}
       </Modal>
     </div>
   );

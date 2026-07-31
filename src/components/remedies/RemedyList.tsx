@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { IconButton } from "@/components/ui/IconButton";
 import { RemedyForm } from "@/components/remedies/RemedyForm";
+import { RichTextContent } from "@/components/journal/RichTextEditor";
 import { useRemedies } from "@/hooks/useRemedies";
 import {
   createRemedy,
@@ -108,9 +109,10 @@ function RemedySection({
                   </div>
                 </div>
                 {remedy.description && (
-                  <p className="text-ink-muted mt-1.5 text-sm text-pretty whitespace-pre-line">
-                    {remedy.description}
-                  </p>
+                  <RichTextContent
+                    html={remedy.description}
+                    className="text-ink-muted mt-1.5 text-sm text-pretty"
+                  />
                 )}
               </Card>
             ),

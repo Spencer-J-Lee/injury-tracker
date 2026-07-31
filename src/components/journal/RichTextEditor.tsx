@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { EditorContent, useEditor, useEditorState } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Placeholder from "@tiptap/extension-placeholder";
@@ -22,6 +22,24 @@ import { Button } from "@/components/ui/Button";
 // schemes (mailto:, tel:, http:, etc.) untouched.
 function normalizeUrl(url: string) {
   return /^[a-z][a-z0-9+.-]*:/i.test(url) ? url : `https://${url}`;
+}
+
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+// Descriptions saved before rich text was introduced are plain strings (with
+// literal newlines/"&"/"<") rather than HTML — detect and convert them so old
+// data doesn't get mis-parsed as markup or lose its line breaks.
+function toEditorHtml(value: string) {
+  if (!value || /<[a-z][\s\S]*>/i.test(value)) return value;
+  return value
+    .split(/\n{2,}/)
+    .map((paragraph) => `<p>${escapeHtml(paragraph).replace(/\n/g, "<br>")}</p>`)
+    .join("");
 }
 
 interface RichTextEditorProps {
@@ -64,7 +82,7 @@ export function RichTextEditor({
         HTMLAttributes: { rel: "noopener noreferrer", target: "_blank" },
       }),
     ],
-    content: value,
+    content: toEditorHtml(value),
     editorProps: {
       attributes: {
         class:
@@ -125,8 +143,7 @@ export function RichTextEditor({
     setLinkMenuOpen(true);
   }
 
-  function applyLink(event: FormEvent) {
-    event.preventDefault();
+  function applyLink() {
     const url = linkUrl.trim();
     if (url) {
       editor
@@ -200,20 +217,31 @@ export function RichTextEditor({
           />
           {linkMenuOpen && (
             <div className="border-subtle bg-surface-raised absolute top-full left-0 z-10 mt-1 flex w-80 items-center gap-1 rounded-lg border p-3 shadow-lg">
-              <form onSubmit={applyLink} className="flex flex-1 gap-3">
+              <div className="flex flex-1 gap-3">
                 <Input
                   autoFocus
                   type="text"
                   inputMode="url"
                   value={linkUrl}
                   onChange={(e) => setLinkUrl(e.target.value)}
+                  onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      applyLink();
+                    }
+                  }}
                   placeholder="https://example.com"
                   className="px-3 py-2"
                 />
-                <Button type="submit" size="sm" className="shrink-0">
+                <Button
+                  type="button"
+                  size="sm"
+                  className="shrink-0"
+                  onClick={applyLink}
+                >
                   {editorState?.isLink ? "Update" : "Add"}
                 </Button>
-              </form>
+              </div>
               {editorState?.isLink && (
                 <IconButton
                   icon={faLinkSlash}
@@ -241,7 +269,7 @@ export function RichTextContent({
   return (
     <div
       className={clsx("journal-rich-text", className)}
-      dangerouslySetInnerHTML={{ __html: html }}
+      dangerouslySetInnerHTML={{ __html: toEditorHtml(html) }}
     />
   );
 }

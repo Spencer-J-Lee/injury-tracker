@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { IconButton } from "@/components/ui/IconButton";
 import { TriggerForm } from "@/components/triggers/TriggerForm";
+import { RichTextContent } from "@/components/journal/RichTextEditor";
 import { useTriggers } from "@/hooks/useTriggers";
 import {
   createTrigger,
@@ -84,9 +85,10 @@ export function TriggerList({ injuryId }: { injuryId: string }) {
                   </div>
                 </div>
                 {trigger.description && (
-                  <p className="text-ink-muted mt-1.5 text-sm text-pretty whitespace-pre-line">
-                    {trigger.description}
-                  </p>
+                  <RichTextContent
+                    html={trigger.description}
+                    className="text-ink-muted mt-1.5 text-sm text-pretty"
+                  />
                 )}
               </Card>
             ),

@@ -8,7 +8,7 @@ import { Select } from "@/components/ui/Select";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { useFormShortcuts } from "@/hooks/useFormShortcuts";
 import { saveShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
-import { Textarea } from "@/components/ui/Textarea";
+import { RichTextEditor } from "@/components/journal/RichTextEditor";
 import { REMEDY_CATEGORIES } from "@/lib/categories";
 
 interface RemedyFormValues {
@@ -53,7 +53,7 @@ export function RemedyForm({
     try {
       await onSubmit({
         name: name.trim(),
-        description: description.trim(),
+        description,
         category,
         providesImmediateRelief,
         isProgramExercise: category === "Strengthening" && isProgramExercise,
@@ -92,9 +92,9 @@ export function RemedyForm({
         required
         autoFocus
       />
-      <Textarea
+      <RichTextEditor
         value={description}
-        onChange={(e) => setDescription(e.target.value)}
+        onChange={setDescription}
         placeholder="Notes (optional)"
       />
       <Select
