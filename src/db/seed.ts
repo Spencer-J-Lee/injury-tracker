@@ -8,8 +8,14 @@ import type {
   JournalEntry,
   MorningCheckIn,
   PlannedExercise,
+  Habit,
+  HabitCompletion,
 } from "@/types/models";
-import { SEED_INJURIES, SEED_JOURNAL_ENTRIES } from "@/db/seedData";
+import {
+  SEED_INJURIES,
+  SEED_JOURNAL_ENTRIES,
+  SEED_HABITS,
+} from "@/db/seedData";
 
 export const SEED_MARKER = "꧁꧂";
 
@@ -41,6 +47,7 @@ function dateOffsetDays(days: number): string {
 export interface ClearSeedResult {
   injuriesDeleted: number;
   journalEntriesDeleted: number;
+  habitsDeleted: number;
 }
 
 export async function clearSeedTestData(): Promise<ClearSeedResult> {
@@ -53,6 +60,8 @@ export async function clearSeedTestData(): Promise<ClearSeedResult> {
     db.morningCheckIns,
     db.journalEntries,
     db.plannedExercises,
+    db.habits,
+    db.habitCompletions,
     async () => {
       const seedIds = (await db.injuries.toArray())
         .filter((injury) => isSeedMarked(injury.injuryType))
@@ -83,9 +92,19 @@ export async function clearSeedTestData(): Promise<ClearSeedResult> {
         await db.journalEntries.bulkDelete(seedJournalIds);
       }
 
+      const seedHabitIds = (await db.habits.toArray())
+        .filter((habit) => isSeedMarked(habit.description ?? ""))
+        .map((habit) => habit.id);
+
+      if (seedHabitIds.length > 0) {
+        await db.habitCompletions.where("habitId").anyOf(seedHabitIds).delete();
+        await db.habits.bulkDelete(seedHabitIds);
+      }
+
       return {
         injuriesDeleted: seedIds.length,
         journalEntriesDeleted: seedJournalIds.length,
+        habitsDeleted: seedHabitIds.length,
       };
     },
   );
@@ -99,12 +118,16 @@ export interface SeedResult {
   morningCheckInsCreated: number;
   journalEntriesCreated: number;
   plannedExercisesCreated: number;
+  habitsCreated: number;
+  habitCompletionsCreated: number;
   injuriesDeleted: number;
   journalEntriesDeleted: number;
+  habitsDeleted: number;
 }
 
 export async function seedTestData(): Promise<SeedResult> {
-  const { injuriesDeleted, journalEntriesDeleted } = await clearSeedTestData();
+  const { injuriesDeleted, journalEntriesDeleted, habitsDeleted } =
+    await clearSeedTestData();
 
   const injuryRows: Injury[] = [];
   const remedyRows: Remedy[] = [];
@@ -121,6 +144,35 @@ export async function seedTestData(): Promise<SeedResult> {
       createdAt: now,
       updatedAt: now,
     };
+  });
+
+  const habitRows: Habit[] = [];
+  const habitCompletionRows: HabitCompletion[] = [];
+  SEED_HABITS.forEach((seed, index) => {
+    const habitId = crypto.randomUUID();
+    const createdAt = isoOffsetDays(-seed.createdDaysAgo);
+    habitRows.push({
+      id: habitId,
+      name: seed.name,
+      description: seed.description
+        ? `${seed.description}\n\n${SEED_MARKER}`
+        : SEED_MARKER,
+      position: index,
+      createdAt,
+      archivedAt:
+        seed.archivedDaysAgo !== undefined
+          ? isoOffsetDays(-seed.archivedDaysAgo)
+          : undefined,
+    });
+
+    for (const daysAgo of seed.completedDaysAgo) {
+      habitCompletionRows.push({
+        id: crypto.randomUUID(),
+        habitId,
+        date: dateOffsetDays(-daysAgo),
+        createdAt: isoOffsetDays(-daysAgo, 8),
+      });
+    }
   });
 
   for (const seed of SEED_INJURIES) {
@@ -248,6 +300,8 @@ export async function seedTestData(): Promise<SeedResult> {
     db.morningCheckIns,
     db.journalEntries,
     db.plannedExercises,
+    db.habits,
+    db.habitCompletions,
     async () => {
       await db.injuries.bulkAdd(injuryRows);
       await db.remedies.bulkAdd(remedyRows);
@@ -256,6 +310,8 @@ export async function seedTestData(): Promise<SeedResult> {
       await db.morningCheckIns.bulkAdd(morningCheckInRows);
       await db.journalEntries.bulkAdd(journalEntryRows);
       await db.plannedExercises.bulkAdd(plannedExerciseRows);
+      await db.habits.bulkAdd(habitRows);
+      await db.habitCompletions.bulkAdd(habitCompletionRows);
     },
   );
 
@@ -267,7 +323,10 @@ export async function seedTestData(): Promise<SeedResult> {
     morningCheckInsCreated: morningCheckInRows.length,
     journalEntriesCreated: journalEntryRows.length,
     plannedExercisesCreated: plannedExerciseRows.length,
+    habitsCreated: habitRows.length,
+    habitCompletionsCreated: habitCompletionRows.length,
     injuriesDeleted,
     journalEntriesDeleted,
+    habitsDeleted,
   };
 }
