@@ -115,7 +115,10 @@ export function TrendChart<T>({
   rangeControlTone = "accent",
 }: TrendChartProps<T>) {
   const [range, setRange] = useState<TrendRange>("7d");
-  const ranges = useMemo(() => buildRanges(rangeControlTone), [rangeControlTone]);
+  const ranges = useMemo(
+    () => buildRanges(rangeControlTone),
+    [rangeControlTone],
+  );
 
   const data = useMemo<ChartPoint[]>(() => {
     return (entries ?? [])

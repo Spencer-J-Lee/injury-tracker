@@ -20,12 +20,17 @@ function completionKey(habitId: string, date: string) {
 
 export function HabitGrid({ habits, completions, weekDates }: HabitGridProps) {
   const [completedKeys, setCompletedKeys] = useState<Set<string>>(
-    () => new Set(completions.map((entry) => completionKey(entry.habitId, entry.date))),
+    () =>
+      new Set(
+        completions.map((entry) => completionKey(entry.habitId, entry.date)),
+      ),
   );
 
   useEffect(() => {
     setCompletedKeys(
-      new Set(completions.map((entry) => completionKey(entry.habitId, entry.date))),
+      new Set(
+        completions.map((entry) => completionKey(entry.habitId, entry.date)),
+      ),
     );
   }, [completions]);
 
@@ -49,7 +54,9 @@ export function HabitGrid({ habits, completions, weekDates }: HabitGridProps) {
         weekDates.filter(
           (date) =>
             habits.length > 0 &&
-            habits.every((habit) => completedKeys.has(completionKey(habit.id, date))),
+            habits.every((habit) =>
+              completedKeys.has(completionKey(habit.id, date)),
+            ),
         ),
       ),
     [habits, weekDates, completedKeys],
@@ -199,7 +206,9 @@ export function HabitGrid({ habits, completions, weekDates }: HabitGridProps) {
                               label=""
                               checked={checked}
                               disabled={!today}
-                              variant={completeDates.has(date) ? "gold" : "default"}
+                              variant={
+                                completeDates.has(date) ? "gold" : "default"
+                              }
                               onChange={() => toggleCompletion(habit.id, date)}
                             />
                           </div>
