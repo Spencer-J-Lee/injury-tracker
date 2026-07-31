@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import clsx from "clsx";
-import { format, isToday, parseISO } from "date-fns";
+import { format, isToday, isYesterday, parseISO } from "date-fns";
 import Lottie from "lottie-react";
 import confettiAnimation from "@/assets/lottie/confetti.json";
 import { Card } from "@/components/ui/Card";
@@ -41,6 +41,7 @@ export function HabitGrid({ habits, completions, weekDates }: HabitGridProps) {
         return {
           date,
           today: isToday(parsed),
+          editable: isToday(parsed) || isYesterday(parsed),
           dayLabel: format(parsed, "EEE"),
           dateLabel: format(parsed, "MMM d"),
         };
@@ -176,7 +177,7 @@ export function HabitGrid({ habits, completions, weekDates }: HabitGridProps) {
                     >
                       {habit.name}
                     </th>
-                    {dateInfo.map(({ date, today }) => {
+                    {dateInfo.map(({ date, today, editable }) => {
                       const checked = completedKeys.has(
                         completionKey(habit.id, date),
                       );
@@ -205,7 +206,7 @@ export function HabitGrid({ habits, completions, weekDates }: HabitGridProps) {
                               id={`${habit.id}-${date}`}
                               label=""
                               checked={checked}
-                              disabled={!today}
+                              disabled={!editable}
                               variant={
                                 completeDates.has(date) ? "gold" : "default"
                               }
