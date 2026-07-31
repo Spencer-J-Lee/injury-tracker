@@ -3,6 +3,7 @@ import clsx from "clsx";
 import { isToday, parseISO } from "date-fns";
 import { Button } from "@/components/ui/Button";
 import { Label } from "@/components/ui/Label";
+import { Modal } from "@/components/ui/Modal";
 import { EditExercisesModal } from "@/components/strengthening/EditExercisesModal";
 import {
   createPlannedExercise,
@@ -61,6 +62,9 @@ function DayColumn({
   injuries: Injury[];
 }) {
   const [managing, setManaging] = useState(false);
+  const [viewingRemedy, setViewingRemedy] = useState<
+    PlannedExerciseWithRemedy["remedy"] | null
+  >(null);
   const today = isToday(parseISO(date));
   const remedyIdsKey = exercises.map((exercise) => exercise.remedyId).join(",");
   const existingRemedyIds = useMemo(
@@ -118,7 +122,7 @@ function DayColumn({
           <p className="text-accent mb-1 h-[1em] text-xs font-bold tracking-[0.2em] uppercase">
             {today && "Today"}
           </p>
-          <p className="leading-relaxed font-medium">
+          <p className="text-lg leading-relaxed font-medium">
             {formatShortDateWithDay(date)}
           </p>
         </div>
@@ -140,7 +144,17 @@ function DayColumn({
               <Label noMargin>{injury.bodyPart}</Label>
               <ul className="text-ink mt-2 flex flex-col items-start gap-1.5 pl-2">
                 {exercises.map((exercise) => (
-                  <li className="font-medium" key={exercise.id}>
+                  <li
+                    className={clsx(
+                      "font-medium",
+                      exercise.remedy &&
+                        "hover:text-accent cursor-pointer underline decoration-dotted underline-offset-2",
+                    )}
+                    key={exercise.id}
+                    onClick={() =>
+                      exercise.remedy && setViewingRemedy(exercise.remedy)
+                    }
+                  >
                     {exercise.remedy?.name ?? "Exercise"}
                   </li>
                 ))}
@@ -157,6 +171,17 @@ function DayColumn({
         onSubmit={handleSave}
         onCancel={() => setManaging(false)}
       />
+
+      <Modal
+        open={!!viewingRemedy}
+        onClose={() => setViewingRemedy(null)}
+        title={viewingRemedy?.name ?? ""}
+        size="sm"
+      >
+        <p className="text-ink-muted text-pretty whitespace-pre-line">
+          {viewingRemedy?.description || "No description added."}
+        </p>
+      </Modal>
     </div>
   );
 }
