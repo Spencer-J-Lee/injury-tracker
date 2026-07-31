@@ -30,7 +30,10 @@ import { LogTimeline } from "@/components/logs/LogTimeline";
 import { MorningCheckInTimeline } from "@/components/logs/MorningCheckInTimeline";
 import { LogEntryEditModal } from "@/components/logs/LogEntryEditModal";
 import { MorningCheckInModal } from "@/components/logs/MorningCheckInModal";
-import { SegmentedControl } from "@/components/ui/SegmentedControl";
+import {
+  SegmentedControl,
+  type SegmentedControlOption,
+} from "@/components/ui/SegmentedControl";
 import { deleteInjury } from "@/db/queries/injuries";
 import { formatInjuryName } from "@/lib/injuries";
 
@@ -45,7 +48,7 @@ export function InjuryDetailPage() {
   const [editingMorning, setEditingMorning] = useState(false);
   const [confirmingDelete, setConfirmingDelete] = useState(false);
   const [view, setView] = useState<"main" | "morning">("main");
-  const viewOptions = [
+  const viewOptions: SegmentedControlOption<"main" | "morning">[] = [
     { value: "main", label: "Main History" },
     {
       value: "morning",
@@ -57,7 +60,7 @@ export function InjuryDetailPage() {
       ),
       tone: "orange",
     },
-  ] as const;
+  ];
   const anyModalOpen = useAnyModalOpen();
 
   const todayEntry = todayEntryOnly(lastEntry);
