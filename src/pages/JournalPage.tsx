@@ -91,28 +91,6 @@ export function JournalPage() {
         Journal
       </PageTitle>
 
-      {!hasTodayEntry && (
-        <Card>
-          <div className="font-heading text-ink mb-4 text-2xl font-semibold">
-            {formatFullDate(today)}
-          </div>
-          <RichTextEditor
-            value={draft}
-            onChange={updateDraft}
-            placeholder="How are you feeling?"
-          />
-          <div className="mt-4 flex justify-end">
-            <Button
-              iconAfter={<Kbd>{saveShortcutLabel}</Kbd>}
-              onClick={handleSave}
-              disabled={!draft.trim()}
-            >
-              Save entry
-            </Button>
-          </div>
-        </Card>
-      )}
-
       {entries.length > PAGE_SIZE && (
         <PaginationControls
           page={page}
@@ -122,6 +100,28 @@ export function JournalPage() {
       )}
 
       <div className="flex flex-col gap-4">
+        {!hasTodayEntry && (
+          <Card>
+            <div className="font-heading text-ink mb-4 text-2xl font-semibold">
+              {formatFullDate(today)}
+            </div>
+            <RichTextEditor
+              value={draft}
+              onChange={updateDraft}
+              placeholder="How are you feeling?"
+            />
+            <div className="mt-4 flex justify-end">
+              <Button
+                iconAfter={<Kbd>{saveShortcutLabel}</Kbd>}
+                onClick={handleSave}
+                disabled={!draft.trim()}
+              >
+                Save entry
+              </Button>
+            </div>
+          </Card>
+        )}
+
         {entries.length === 0 ? (
           <p className="text-ink-muted py-10 text-center text-lg">
             No entries yet. Write your first one above.
