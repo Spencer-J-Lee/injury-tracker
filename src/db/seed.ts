@@ -53,15 +53,17 @@ export interface ClearSeedResult {
 export async function clearSeedTestData(): Promise<ClearSeedResult> {
   return db.transaction(
     "rw",
-    db.injuries,
-    db.remedies,
-    db.triggers,
-    db.logEntries,
-    db.morningCheckIns,
-    db.journalEntries,
-    db.plannedExercises,
-    db.habits,
-    db.habitCompletions,
+    [
+      db.injuries,
+      db.remedies,
+      db.triggers,
+      db.logEntries,
+      db.morningCheckIns,
+      db.journalEntries,
+      db.plannedExercises,
+      db.habits,
+      db.habitCompletions,
+    ],
     async () => {
       const seedIds = (await db.injuries.toArray())
         .filter((injury) => isSeedMarked(injury.injuryType))
@@ -293,15 +295,17 @@ export async function seedTestData(): Promise<SeedResult> {
 
   await db.transaction(
     "rw",
-    db.injuries,
-    db.remedies,
-    db.triggers,
-    db.logEntries,
-    db.morningCheckIns,
-    db.journalEntries,
-    db.plannedExercises,
-    db.habits,
-    db.habitCompletions,
+    [
+      db.injuries,
+      db.remedies,
+      db.triggers,
+      db.logEntries,
+      db.morningCheckIns,
+      db.journalEntries,
+      db.plannedExercises,
+      db.habits,
+      db.habitCompletions,
+    ],
     async () => {
       await db.injuries.bulkAdd(injuryRows);
       await db.remedies.bulkAdd(remedyRows);

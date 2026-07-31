@@ -38,7 +38,9 @@ function toEditorHtml(value: string) {
   if (!value || /<[a-z][\s\S]*>/i.test(value)) return value;
   return value
     .split(/\n{2,}/)
-    .map((paragraph) => `<p>${escapeHtml(paragraph).replace(/\n/g, "<br>")}</p>`)
+    .map(
+      (paragraph) => `<p>${escapeHtml(paragraph).replace(/\n/g, "<br>")}</p>`,
+    )
     .join("");
 }
 
@@ -127,7 +129,7 @@ export function RichTextEditor({
         setLinkMenuOpen(false);
       }
     };
-    const handleKeyDown = (event: KeyboardEvent) => {
+    const handleKeyDown = (event: globalThis.KeyboardEvent) => {
       if (event.key === "Escape") setLinkMenuOpen(false);
     };
     document.addEventListener("mousedown", handlePointerDown);
