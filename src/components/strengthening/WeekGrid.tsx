@@ -2,21 +2,24 @@ import { useMemo, useState } from "react";
 import clsx from "clsx";
 import { isToday, parseISO } from "date-fns";
 import { Button } from "@/components/ui/Button";
-import { Label } from "@/components/ui/Label";
+import { LinkButton } from "@/components/ui/LinkButton";
 import { Modal } from "@/components/ui/Modal";
 import { RichTextContent } from "@/components/journal/RichTextEditor";
 import { EditExercisesModal } from "@/components/strengthening/EditExercisesModal";
+import { LogEntryEditModal } from "@/components/logs/LogEntryEditModal";
 import {
   createPlannedExercise,
   deletePlannedExercise,
 } from "@/db/queries/plannedExercises";
 import { getRemediesByIds } from "@/db/queries/remedies";
+import { getLastLogEntryForInjury } from "@/db/queries/logEntries";
 import { useInjuries } from "@/hooks/useInjuries";
+import { useLogModal } from "@/context/useLogModal";
 import { compareInjuries } from "@/lib/injuries";
-import { formatShortDateWithDay } from "@/lib/dates";
+import { formatShortDateWithDay, todayEntryOnly } from "@/lib/dates";
 import { getWindowDates } from "@/lib/weeks";
 import type { PlannedExerciseWithRemedy } from "@/hooks/useWeekPlannedExercises";
-import type { Injury } from "@/types/models";
+import type { Injury, LogEntry } from "@/types/models";
 
 interface WeekGridProps {
   windowStart: string;
@@ -31,6 +34,17 @@ export function WeekGrid({
 }: WeekGridProps) {
   const dates = getWindowDates(windowStart, size);
   const injuries = useInjuries() ?? [];
+  const { openLogModal } = useLogModal();
+  const [editingEntry, setEditingEntry] = useState<LogEntry | null>(null);
+
+  const handleInjuryClick = async (injuryId: string) => {
+    const todayEntry = todayEntryOnly(await getLastLogEntryForInjury(injuryId));
+    if (todayEntry) {
+      setEditingEntry(todayEntry);
+    } else {
+      openLogModal(injuryId);
+    }
+  };
 
   return (
     <div
@@ -47,8 +61,17 @@ export function WeekGrid({
             (exercise) => exercise.date === date,
           )}
           injuries={injuries}
+          onInjuryClick={handleInjuryClick}
         />
       ))}
+
+      {editingEntry && (
+        <LogEntryEditModal
+          entry={editingEntry}
+          open={!!editingEntry}
+          onClose={() => setEditingEntry(null)}
+        />
+      )}
     </div>
   );
 }
@@ -57,10 +80,12 @@ function DayColumn({
   date,
   exercises,
   injuries,
+  onInjuryClick,
 }: {
   date: string;
   exercises: PlannedExerciseWithRemedy[];
   injuries: Injury[];
+  onInjuryClick: (injuryId: string) => void;
 }) {
   const [managing, setManaging] = useState(false);
   const [viewingRemedy, setViewingRemedy] = useState<
@@ -142,14 +167,16 @@ function DayColumn({
         <div className="divide-subtle mt-3 flex flex-col divide-y divide-dashed px-4 wrap-break-word">
           {groups.map(({ injury, exercises }) => (
             <div className="py-3 first:pt-0 last:pb-0" key={injury.id}>
-              <Label noMargin>{injury.bodyPart}</Label>
-              <ul className="text-ink mt-2 flex flex-col items-start gap-1.5 pl-2">
+              <LinkButton onClick={() => onInjuryClick(injury.id)}>
+                {injury.bodyPart}
+              </LinkButton>
+              <ul className="text-ink mt-2 flex flex-col items-start gap-2.5 pl-2">
                 {exercises.map((exercise) => (
                   <li
                     className={clsx(
                       "font-medium",
                       exercise.remedy &&
-                        "hover:text-accent cursor-pointer underline decoration-dotted underline-offset-2",
+                        "hover:text-ink-secondary cursor-pointer underline decoration-dotted underline-offset-2",
                     )}
                     key={exercise.id}
                     onClick={() =>
