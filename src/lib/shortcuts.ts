@@ -3,6 +3,7 @@ const isMac =
 
 export const saveShortcutLabel = isMac ? "⌘S" : "Ctrl+S";
 export const cancelShortcutLabel = "Esc";
+export const saveNoSymptomsShortcutLabel = isMac ? "⌘⇧S" : "Ctrl+Shift+S";
 export const addInjuryShortcutLabel = "N";
 export const logEntryShortcutLabel = "T";
 export const updateEntryShortcutLabel = "T";

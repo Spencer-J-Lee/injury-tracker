@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { matchesShortcut } from "@/lib/keyboardShortcut";
 
 interface FormShortcutOptions {
   onSave?: () => void;
@@ -15,12 +16,12 @@ export function useFormShortcuts({
     if (!enabled) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "s") {
+      if (matchesShortcut(e, "s", { meta: true })) {
         e.preventDefault();
         onSave?.();
         return;
       }
-      if (e.key === "Escape") {
+      if (matchesShortcut(e, "Escape")) {
         onCancel?.();
       }
     };
