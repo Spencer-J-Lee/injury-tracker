@@ -42,6 +42,11 @@ function AppShellContent() {
     !anyModalOpen,
   );
   useKeyboardShortcut(
+    habitsShortcutLabel,
+    () => navigate("/habits"),
+    !anyModalOpen,
+  );
+  useKeyboardShortcut(
     journalShortcutLabel,
     () => navigate("/journal"),
     !anyModalOpen,
@@ -49,11 +54,6 @@ function AppShellContent() {
   useKeyboardShortcut(
     strengtheningShortcutLabel,
     () => navigate("/strengthening"),
-    !anyModalOpen,
-  );
-  useKeyboardShortcut(
-    habitsShortcutLabel,
-    () => navigate("/habits"),
     !anyModalOpen,
   );
   useKeyboardShortcut(
@@ -109,13 +109,13 @@ function AppShellContent() {
             </Link>
             <nav className="flex flex-col gap-1">
               {navLinkSidebar("/", "Dashboard", dashboardShortcutLabel)}
+              {navLinkSidebar("/habits", "Habits", habitsShortcutLabel)}
               {navLinkSidebar("/journal", "Journal", journalShortcutLabel)}
               {navLinkSidebar(
                 "/strengthening",
                 "Strengthening",
                 strengtheningShortcutLabel,
               )}
-              {navLinkSidebar("/habits", "Habits", habitsShortcutLabel)}
               {navLinkSidebar("/settings", "Settings", settingsShortcutLabel)}
             </nav>
           </aside>
@@ -127,9 +127,9 @@ function AppShellContent() {
               </Link>
               <nav className="flex gap-1">
                 {navLinkMobile("/", "Dashboard")}
+                {navLinkMobile("/habits", "Habits")}
                 {navLinkMobile("/journal", "Journal")}
                 {navLinkMobile("/strengthening", "Strengthening")}
-                {navLinkMobile("/habits", "Habits")}
                 {navLinkMobile("/settings", "Settings")}
               </nav>
             </header>
