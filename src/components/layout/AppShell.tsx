@@ -108,14 +108,14 @@ function AppShellContent() {
               Rehab Tracker
             </Link>
             <nav className="flex flex-col gap-1">
-              {navLinkSidebar("/", "Dashboard", dashboardShortcutLabel)}
+              {navLinkSidebar("/", "Injuries", dashboardShortcutLabel)}
               {navLinkSidebar("/habits", "Habits", habitsShortcutLabel)}
-              {navLinkSidebar("/journal", "Journal", journalShortcutLabel)}
               {navLinkSidebar(
                 "/strengthening",
                 "Strengthening",
                 strengtheningShortcutLabel,
               )}
+              {navLinkSidebar("/journal", "Journal", journalShortcutLabel)}
               {navLinkSidebar("/settings", "Settings", settingsShortcutLabel)}
             </nav>
           </aside>
@@ -126,10 +126,10 @@ function AppShellContent() {
                 Rehab Tracker
               </Link>
               <nav className="flex gap-1">
-                {navLinkMobile("/", "Dashboard")}
+                {navLinkMobile("/", "Injuries")}
                 {navLinkMobile("/habits", "Habits")}
-                {navLinkMobile("/journal", "Journal")}
                 {navLinkMobile("/strengthening", "Strengthening")}
+                {navLinkMobile("/journal", "Journal")}
                 {navLinkMobile("/settings", "Settings")}
               </nav>
             </header>
