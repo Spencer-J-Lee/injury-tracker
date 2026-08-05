@@ -80,6 +80,7 @@ export const richTextStarterKit = StarterKit.configure({
   link: false,
   strike: false,
   underline: false,
+  trailingNode: false,
 });
 
 export function richTextLink(openOnClick: boolean) {
