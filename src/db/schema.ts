@@ -10,6 +10,8 @@ import type {
   MorningCheckIn,
   Habit,
   HabitCompletion,
+  Activity,
+  Section,
 } from "@/types/models";
 
 export const db = new Dexie("injury-tracker") as Dexie & {
@@ -23,6 +25,8 @@ export const db = new Dexie("injury-tracker") as Dexie & {
   morningCheckIns: EntityTable<MorningCheckIn, "id">;
   habits: EntityTable<Habit, "id">;
   habitCompletions: EntityTable<HabitCompletion, "id">;
+  activities: EntityTable<Activity, "id">;
+  sections: EntityTable<Section, "id">;
 };
 
 db.version(1).stores({
@@ -339,5 +343,71 @@ db.version(17)
       habits.map((habit, index) =>
         tx.table("habits").update(habit.id, { position: index }),
       ),
+    );
+  });
+
+db.version(18).stores({
+  ...V13_STORES,
+  habits: "id, archivedAt, position",
+  habitCompletions: "id, habitId, date, [habitId+date]",
+  activities: "id, archivedAt",
+});
+
+db.version(19)
+  .stores({
+    ...V13_STORES,
+    habits: "id, archivedAt, position",
+    habitCompletions: "id, habitId, date, [habitId+date]",
+    activities: "id, archivedAt",
+  })
+  .upgrade(async (tx) => {
+    const activities = await tx.table("activities").toArray();
+    await Promise.all(
+      activities.map((activity) =>
+        tx.table("activities").update(activity.id, {
+          bodyPartsRested: activity.bodyPartsUsed ?? [],
+          bodyPartsUsed: undefined,
+        }),
+      ),
+    );
+  });
+
+db.version(20)
+  .stores({
+    ...V13_STORES,
+    habits: "id, archivedAt, position",
+    habitCompletions: "id, habitId, date, [habitId+date]",
+    activities: "id, archivedAt, sectionId",
+    sections: "id, archivedAt, position",
+  })
+  .upgrade(async (tx) => {
+    const activities = await tx.table("activities").toArray();
+
+    const categories = [
+      ...new Set(
+        activities
+          .map((activity) => (activity.category ?? "").trim())
+          .filter((category) => category.length > 0),
+      ),
+    ].sort((a, b) => a.localeCompare(b));
+
+    const sectionIdByCategory = new Map<string, string>();
+    const sectionRows = categories.map((name, index) => {
+      const id = crypto.randomUUID();
+      sectionIdByCategory.set(name, id);
+      return { id, name, position: index, createdAt: new Date().toISOString() };
+    });
+    if (sectionRows.length > 0) {
+      await tx.table("sections").bulkAdd(sectionRows);
+    }
+
+    await Promise.all(
+      activities.map((activity) => {
+        const key = (activity.category ?? "").trim();
+        return tx.table("activities").update(activity.id, {
+          sectionId: key ? sectionIdByCategory.get(key) : undefined,
+          category: undefined,
+        });
+      }),
     );
   });

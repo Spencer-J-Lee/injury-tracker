@@ -7,6 +7,7 @@ import type {
   StiffnessDuration,
   NumbnessDuration,
   NumbnessSuspectedCause,
+  ActivityBodyPart,
 } from "@/types/models";
 
 export interface SeedRemedy {
@@ -157,6 +158,71 @@ export const SEED_HABITS: SeedHabit[] = [
     createdDaysAgo: 20,
     archivedDaysAgo: 10,
     completedDaysAgo: [20, 19, 18, 17, 16, 15, 14, 13, 12, 11],
+  },
+];
+
+export interface SeedSection {
+  name: string;
+}
+
+export const SEED_SECTIONS: SeedSection[] = [
+  { name: "Downtime" },
+  { name: "Movement" },
+  { name: "Social" },
+];
+
+export interface SeedActivity {
+  name: string;
+  description?: string;
+  section?: string;
+  bodyPartsRested: ActivityBodyPart[];
+  createdDaysAgo: number;
+  archivedDaysAgo?: number;
+}
+
+export const SEED_ACTIVITIES: SeedActivity[] = [
+  {
+    name: "Listen to a podcast",
+    description: "<p>No screen, no controller — just sit back and listen.</p>",
+    section: "Downtime",
+    bodyPartsRested: ["Arms", "Legs", "Neck/Shoulders"],
+    createdDaysAgo: 30,
+  },
+  {
+    name: "Watch a show",
+    description:
+      "<p>Lying back on the couch instead of hunched over a laptop.</p>",
+    section: "Downtime",
+    bodyPartsRested: ["Arms", "Neck/Shoulders"],
+    createdDaysAgo: 30,
+  },
+  {
+    name: "Go for a walk",
+    description: "<p>Leaves the arms and neck alone entirely.</p>",
+    section: "Movement",
+    bodyPartsRested: ["Arms", "Neck/Shoulders"],
+    createdDaysAgo: 25,
+  },
+  {
+    name: "Call a friend",
+    section: "Social",
+    bodyPartsRested: ["Arms", "Legs"],
+    createdDaysAgo: 20,
+  },
+  {
+    name: "Meditate",
+    description: "<p>10-15 min sitting with good posture, hands relaxed.</p>",
+    section: "Downtime",
+    bodyPartsRested: ["Arms", "Legs", "Neck/Shoulders"],
+    createdDaysAgo: 15,
+  },
+  {
+    name: "Board games",
+    description: "<p>Turns out this still uses the hands more than expected.</p>",
+    section: "Social",
+    bodyPartsRested: ["Legs", "Neck/Shoulders"],
+    createdDaysAgo: 12,
+    archivedDaysAgo: 3,
   },
 ];
 

@@ -60,11 +60,12 @@ export function SettingsPage() {
     try {
       const result = await seedTestData();
       setMessage(
-        `Loaded ${result.injuriesCreated} injuries, ${result.remediesCreated} remedies, ${result.triggersCreated} triggers, ${result.logEntriesCreated} log entries, ${result.morningCheckInsCreated} morning check-ins, ${result.plannedExercisesCreated} planned exercises, ${result.journalEntriesCreated} journal entries, ${result.habitsCreated} habits, and ${result.habitCompletionsCreated} habit completions` +
+        `Loaded ${result.injuriesCreated} injuries, ${result.remediesCreated} remedies, ${result.triggersCreated} triggers, ${result.logEntriesCreated} log entries, ${result.morningCheckInsCreated} morning check-ins, ${result.plannedExercisesCreated} planned exercises, ${result.journalEntriesCreated} journal entries, ${result.habitsCreated} habits, ${result.habitCompletionsCreated} habit completions, and ${result.activitiesCreated} activities` +
           (result.injuriesDeleted > 0 ||
           result.journalEntriesDeleted > 0 ||
-          result.habitsDeleted > 0
-            ? ` (replaced ${result.injuriesDeleted} previous seed injuries, ${result.journalEntriesDeleted} journal entries, and ${result.habitsDeleted} habits).`
+          result.habitsDeleted > 0 ||
+          result.activitiesDeleted > 0
+            ? ` (replaced ${result.injuriesDeleted} previous seed injuries, ${result.journalEntriesDeleted} journal entries, ${result.habitsDeleted} habits, and ${result.activitiesDeleted} activities).`
             : "."),
       );
     } finally {
@@ -76,10 +77,14 @@ export function SettingsPage() {
     setBusy(true);
     setMessage(null);
     try {
-      const { injuriesDeleted, journalEntriesDeleted, habitsDeleted } =
-        await clearSeedTestData();
+      const {
+        injuriesDeleted,
+        journalEntriesDeleted,
+        habitsDeleted,
+        activitiesDeleted,
+      } = await clearSeedTestData();
       setMessage(
-        `Cleared ${injuriesDeleted} seed injur${injuriesDeleted === 1 ? "y" : "ies"}, ${journalEntriesDeleted} seed journal entr${journalEntriesDeleted === 1 ? "y" : "ies"}, and ${habitsDeleted} seed habit${habitsDeleted === 1 ? "" : "s"}.`,
+        `Cleared ${injuriesDeleted} seed injur${injuriesDeleted === 1 ? "y" : "ies"}, ${journalEntriesDeleted} seed journal entr${journalEntriesDeleted === 1 ? "y" : "ies"}, ${habitsDeleted} seed habit${habitsDeleted === 1 ? "" : "s"}, and ${activitiesDeleted} seed activit${activitiesDeleted === 1 ? "y" : "ies"}.`,
       );
     } finally {
       setBusy(false);

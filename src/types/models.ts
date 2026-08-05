@@ -92,6 +92,14 @@ export interface Habit {
   archivedAt?: string;
 }
 
+export interface Section {
+  id: string;
+  name: string;
+  position: number;
+  createdAt: string;
+  archivedAt?: string;
+}
+
 export interface HabitCompletion {
   id: string;
   habitId: string;
@@ -113,4 +121,16 @@ export interface MorningCheckIn {
   notes?: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export type ActivityBodyPart = "Arms" | "Legs" | "Neck/Shoulders";
+
+export interface Activity {
+  id: string;
+  name: string;
+  description?: string;
+  sectionId?: string;
+  bodyPartsRested: ActivityBodyPart[];
+  createdAt: string;
+  archivedAt?: string;
 }

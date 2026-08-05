@@ -10,11 +10,15 @@ import type {
   PlannedExercise,
   Habit,
   HabitCompletion,
+  Activity,
+  Section,
 } from "@/types/models";
 import {
   SEED_INJURIES,
   SEED_JOURNAL_ENTRIES,
   SEED_HABITS,
+  SEED_ACTIVITIES,
+  SEED_SECTIONS,
 } from "@/db/seedData";
 
 export const SEED_MARKER = "꧁꧂";
@@ -48,6 +52,8 @@ export interface ClearSeedResult {
   injuriesDeleted: number;
   journalEntriesDeleted: number;
   habitsDeleted: number;
+  activitiesDeleted: number;
+  sectionsDeleted: number;
 }
 
 export async function clearSeedTestData(): Promise<ClearSeedResult> {
@@ -63,6 +69,8 @@ export async function clearSeedTestData(): Promise<ClearSeedResult> {
       db.plannedExercises,
       db.habits,
       db.habitCompletions,
+      db.activities,
+      db.sections,
     ],
     async () => {
       const seedIds = (await db.injuries.toArray())
@@ -103,10 +111,28 @@ export async function clearSeedTestData(): Promise<ClearSeedResult> {
         await db.habits.bulkDelete(seedHabitIds);
       }
 
+      const seedActivityIds = (await db.activities.toArray())
+        .filter((activity) => isSeedMarked(activity.description ?? ""))
+        .map((activity) => activity.id);
+
+      if (seedActivityIds.length > 0) {
+        await db.activities.bulkDelete(seedActivityIds);
+      }
+
+      const seedSectionIds = (await db.sections.toArray())
+        .filter((section) => isSeedMarked(section.name))
+        .map((section) => section.id);
+
+      if (seedSectionIds.length > 0) {
+        await db.sections.bulkDelete(seedSectionIds);
+      }
+
       return {
         injuriesDeleted: seedIds.length,
         journalEntriesDeleted: seedJournalIds.length,
         habitsDeleted: seedHabitIds.length,
+        activitiesDeleted: seedActivityIds.length,
+        sectionsDeleted: seedSectionIds.length,
       };
     },
   );
@@ -122,14 +148,23 @@ export interface SeedResult {
   plannedExercisesCreated: number;
   habitsCreated: number;
   habitCompletionsCreated: number;
+  activitiesCreated: number;
+  sectionsCreated: number;
   injuriesDeleted: number;
   journalEntriesDeleted: number;
   habitsDeleted: number;
+  activitiesDeleted: number;
+  sectionsDeleted: number;
 }
 
 export async function seedTestData(): Promise<SeedResult> {
-  const { injuriesDeleted, journalEntriesDeleted, habitsDeleted } =
-    await clearSeedTestData();
+  const {
+    injuriesDeleted,
+    journalEntriesDeleted,
+    habitsDeleted,
+    activitiesDeleted,
+    sectionsDeleted,
+  } = await clearSeedTestData();
 
   const injuryRows: Injury[] = [];
   const remedyRows: Remedy[] = [];
@@ -176,6 +211,31 @@ export async function seedTestData(): Promise<SeedResult> {
       });
     }
   });
+
+  const sectionRows: Section[] = SEED_SECTIONS.map((seed, index) => ({
+    id: crypto.randomUUID(),
+    name: `${seed.name} ${SEED_MARKER}`,
+    position: index,
+    createdAt: isoOffsetDays(-30),
+  }));
+  const sectionIdByName = new Map(
+    SEED_SECTIONS.map((seed, index) => [seed.name, sectionRows[index].id]),
+  );
+
+  const activityRows: Activity[] = SEED_ACTIVITIES.map((seed) => ({
+    id: crypto.randomUUID(),
+    name: seed.name,
+    description: seed.description
+      ? `${seed.description}\n\n${SEED_MARKER}`
+      : SEED_MARKER,
+    sectionId: seed.section ? sectionIdByName.get(seed.section) : undefined,
+    bodyPartsRested: seed.bodyPartsRested,
+    createdAt: isoOffsetDays(-seed.createdDaysAgo),
+    archivedAt:
+      seed.archivedDaysAgo !== undefined
+        ? isoOffsetDays(-seed.archivedDaysAgo)
+        : undefined,
+  }));
 
   for (const seed of SEED_INJURIES) {
     const injuryId = crypto.randomUUID();
@@ -305,6 +365,8 @@ export async function seedTestData(): Promise<SeedResult> {
       db.plannedExercises,
       db.habits,
       db.habitCompletions,
+      db.activities,
+      db.sections,
     ],
     async () => {
       await db.injuries.bulkAdd(injuryRows);
@@ -316,6 +378,8 @@ export async function seedTestData(): Promise<SeedResult> {
       await db.plannedExercises.bulkAdd(plannedExerciseRows);
       await db.habits.bulkAdd(habitRows);
       await db.habitCompletions.bulkAdd(habitCompletionRows);
+      await db.sections.bulkAdd(sectionRows);
+      await db.activities.bulkAdd(activityRows);
     },
   );
 
@@ -329,8 +393,12 @@ export async function seedTestData(): Promise<SeedResult> {
     plannedExercisesCreated: plannedExerciseRows.length,
     habitsCreated: habitRows.length,
     habitCompletionsCreated: habitCompletionRows.length,
+    activitiesCreated: activityRows.length,
+    sectionsCreated: sectionRows.length,
     injuriesDeleted,
     journalEntriesDeleted,
     habitsDeleted,
+    activitiesDeleted,
+    sectionsDeleted,
   };
 }
