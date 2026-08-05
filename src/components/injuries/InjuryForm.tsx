@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/Button";
 import { Label } from "@/components/ui/Label";
 import { Kbd } from "@/components/ui/Kbd";
 import { TogglePill } from "@/components/ui/TogglePill";
-import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { useFormShortcuts } from "@/hooks/useFormShortcuts";
 import { useUnsavedChangesGuard } from "@/hooks/useUnsavedChangesGuard";
 import { saveShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
@@ -76,8 +75,7 @@ export function InjuryForm({
     [...painMechanisms].sort().join(",") !==
       [...(initial?.painMechanisms ?? [])].sort().join(",");
 
-  const { isPrompting, guard, confirmLeave, cancelLeave, markSaved } =
-    useUnsavedChangesGuard(isDirty);
+  const { markSaved } = useUnsavedChangesGuard(isDirty);
 
   const doSubmit = async () => {
     if (!bodyPart.trim() || !injuryType.trim() || submitting) return;
@@ -103,9 +101,7 @@ export function InjuryForm({
     void doSubmit();
   };
 
-  const guardedCancel = () => guard(onCancel);
-
-  useFormShortcuts({ onSave: doSubmit, onCancel: guardedCancel });
+  useFormShortcuts({ onSave: doSubmit, onCancel });
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
@@ -200,17 +196,11 @@ export function InjuryForm({
           type="button"
           variant="ghost"
           iconAfter={<Kbd>{cancelShortcutLabel}</Kbd>}
-          onClick={guardedCancel}
+          onClick={onCancel}
         >
           Cancel
         </Button>
       </div>
-      <ConfirmDialog
-        open={isPrompting}
-        message="You have unsaved changes to this injury. Leave without saving?"
-        onConfirm={confirmLeave}
-        onCancel={cancelLeave}
-      />
     </form>
   );
 }
