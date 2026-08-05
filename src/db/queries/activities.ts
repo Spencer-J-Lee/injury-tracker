@@ -16,16 +16,26 @@ export async function createActivity(input: {
   sectionId?: string;
   bodyPartsRested: ActivityBodyPart[];
 }): Promise<Activity> {
-  const activity: Activity = {
-    id: crypto.randomUUID(),
-    name: input.name,
-    description: input.description,
-    sectionId: input.sectionId,
-    bodyPartsRested: input.bodyPartsRested,
-    createdAt: new Date().toISOString(),
-  };
-  await db.activities.add(activity);
-  return activity;
+  return db.transaction("rw", db.activities, async () => {
+    const siblings = (await db.activities.toArray()).filter(
+      (activity) => activity.sectionId === input.sectionId,
+    );
+    const nextPosition =
+      siblings.length > 0
+        ? Math.max(...siblings.map((activity) => activity.position)) + 1
+        : 0;
+    const activity: Activity = {
+      id: crypto.randomUUID(),
+      name: input.name,
+      description: input.description,
+      sectionId: input.sectionId,
+      bodyPartsRested: input.bodyPartsRested,
+      position: nextPosition,
+      createdAt: new Date().toISOString(),
+    };
+    await db.activities.add(activity);
+    return activity;
+  });
 }
 
 export async function updateActivity(
@@ -39,4 +49,14 @@ export async function updateActivity(
 
 export async function archiveActivity(id: string) {
   await db.activities.update(id, { archivedAt: new Date().toISOString() });
+}
+
+export async function reorderActivities(orderedIds: string[]): Promise<void> {
+  await db.transaction("rw", db.activities, async () => {
+    await Promise.all(
+      orderedIds.map((id, index) =>
+        db.activities.update(id, { position: index }),
+      ),
+    );
+  });
 }

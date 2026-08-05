@@ -222,20 +222,27 @@ export async function seedTestData(): Promise<SeedResult> {
     SEED_SECTIONS.map((seed, index) => [seed.name, sectionRows[index].id]),
   );
 
-  const activityRows: Activity[] = SEED_ACTIVITIES.map((seed) => ({
-    id: crypto.randomUUID(),
-    name: seed.name,
-    description: seed.description
-      ? `${seed.description}\n\n${SEED_MARKER}`
-      : SEED_MARKER,
-    sectionId: seed.section ? sectionIdByName.get(seed.section) : undefined,
-    bodyPartsRested: seed.bodyPartsRested,
-    createdAt: isoOffsetDays(-seed.createdDaysAgo),
-    archivedAt:
-      seed.archivedDaysAgo !== undefined
-        ? isoOffsetDays(-seed.archivedDaysAgo)
-        : undefined,
-  }));
+  const activityPositionBySection = new Map<string, number>();
+  const activityRows: Activity[] = SEED_ACTIVITIES.map((seed) => {
+    const sectionKey = seed.section ?? "";
+    const position = activityPositionBySection.get(sectionKey) ?? 0;
+    activityPositionBySection.set(sectionKey, position + 1);
+    return {
+      id: crypto.randomUUID(),
+      name: seed.name,
+      description: seed.description
+        ? `${seed.description}\n\n${SEED_MARKER}`
+        : SEED_MARKER,
+      sectionId: seed.section ? sectionIdByName.get(seed.section) : undefined,
+      bodyPartsRested: seed.bodyPartsRested,
+      position,
+      createdAt: isoOffsetDays(-seed.createdDaysAgo),
+      archivedAt:
+        seed.archivedDaysAgo !== undefined
+          ? isoOffsetDays(-seed.archivedDaysAgo)
+          : undefined,
+    };
+  });
 
   for (const seed of SEED_INJURIES) {
     const injuryId = crypto.randomUUID();

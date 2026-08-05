@@ -26,9 +26,9 @@ export function groupActivitiesBySections(
     }
   }
   for (const items of bySection.values()) {
-    items.sort((a, b) => a.name.localeCompare(b.name));
+    items.sort((a, b) => a.position - b.position);
   }
-  other.sort((a, b) => a.name.localeCompare(b.name));
+  other.sort((a, b) => a.position - b.position);
 
   const groups: Array<{ section: Section | undefined; items: Activity[] }> =
     sections

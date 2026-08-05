@@ -131,6 +131,7 @@ export interface Activity {
   description?: string;
   sectionId?: string;
   bodyPartsRested: ActivityBodyPart[];
+  position: number;
   createdAt: string;
   archivedAt?: string;
 }

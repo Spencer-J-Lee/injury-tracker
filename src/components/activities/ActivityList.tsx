@@ -20,15 +20,16 @@ import {
 import {
   SortableContext,
   arrayMove,
+  rectSortingStrategy,
   sortableKeyboardCoordinates,
   useSortable,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import type { Activity, ActivityBodyPart, Section } from "@/types/models";
-import { Card } from "@/components/ui/Card";
 import { Divider } from "@/components/ui/Divider";
 import { IconButton } from "@/components/ui/IconButton";
+import { SortableCard } from "@/components/ui/SortableCard";
 import { Button } from "@/components/ui/Button";
 import { TogglePill } from "@/components/ui/TogglePill";
 import { Label } from "@/components/ui/Label";
@@ -38,7 +39,7 @@ import { SectionForm } from "@/components/activities/SectionForm";
 import { useActivities } from "@/hooks/useActivities";
 import { useSections } from "@/hooks/useSections";
 import { useActivitiesEditingEnabled } from "@/lib/activitiesEditStore";
-import { archiveActivity } from "@/db/queries/activities";
+import { archiveActivity, reorderActivities } from "@/db/queries/activities";
 import {
   createSection,
   updateSection,
@@ -50,56 +51,125 @@ import {
   groupActivitiesBySections,
 } from "@/lib/activities";
 
+function SortableActivityCard({
+  activity,
+  navigate,
+  editingEnabled,
+  draggable,
+  onArchiveRequest,
+}: {
+  activity: Activity;
+  navigate: ReturnType<typeof useNavigate>;
+  editingEnabled: boolean;
+  draggable: boolean;
+  onArchiveRequest: () => void;
+}) {
+  return (
+    <SortableCard
+      id={activity.id}
+      as="li"
+      draggable={draggable}
+      title={activity.name}
+      description={
+        activity.description && (
+          <RichTextContent
+            html={activity.description}
+            className="text-ink-muted mt-1.5 text-sm text-pretty"
+          />
+        )
+      }
+      actions={
+        editingEnabled && (
+          <>
+            <IconButton
+              icon={faPen}
+              label="Edit activity"
+              onClick={() => navigate(`/activities/${activity.id}/edit`)}
+            />
+            <IconButton
+              icon={faBoxArchive}
+              tone="danger"
+              label="Archive activity"
+              onClick={onArchiveRequest}
+            />
+          </>
+        )
+      }
+    />
+  );
+}
+
 function ActivityGrid({
   items,
   navigate,
   editingEnabled,
+  reorderable = true,
 }: {
   items: Activity[];
   navigate: ReturnType<typeof useNavigate>;
   editingEnabled: boolean;
+  reorderable?: boolean;
 }) {
   const [confirmingId, setConfirmingId] = useState<string | null>(null);
   const confirmingActivity = items.find((item) => item.id === confirmingId);
+  const draggable = editingEnabled && reorderable;
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
+  );
+
+  const handleDragEnd = async (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+
+    const oldIndex = items.findIndex((item) => item.id === active.id);
+    const newIndex = items.findIndex((item) => item.id === over.id);
+    if (oldIndex === -1 || newIndex === -1) return;
+
+    const reordered = arrayMove(items, oldIndex, newIndex);
+    try {
+      await reorderActivities(reordered.map((item) => item.id));
+    } catch (error) {
+      console.error("Failed to reorder activities", error);
+    }
+  };
+
+  const grid = (
+    <ul className="grid grid-cols-4 gap-2.5">
+      {items.map((activity) => (
+        <SortableActivityCard
+          key={activity.id}
+          activity={activity}
+          navigate={navigate}
+          editingEnabled={editingEnabled}
+          draggable={draggable}
+          onArchiveRequest={() => setConfirmingId(activity.id)}
+        />
+      ))}
+    </ul>
+  );
 
   return (
     <>
-      <ul className="grid grid-cols-4 gap-2.5">
-        {items.map((activity) => (
-          <Card
-            as="li"
-            size="md"
-            variant="solid"
-            key={activity.id}
-            className="text-pretty"
+      {draggable ? (
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
+          <SortableContext
+            items={items.map((item) => item.id)}
+            strategy={rectSortingStrategy}
           >
-            <div className="flex min-w-0 items-start justify-between gap-2.5">
-              <p className="text-ink">{activity.name}</p>
-              {editingEnabled && (
-                <div className="flex shrink-0 gap-2">
-                  <IconButton
-                    icon={faPen}
-                    label="Edit activity"
-                    onClick={() => navigate(`/activities/${activity.id}/edit`)}
-                  />
-                  <IconButton
-                    icon={faBoxArchive}
-                    tone="danger"
-                    label="Archive activity"
-                    onClick={() => setConfirmingId(activity.id)}
-                  />
-                </div>
-              )}
-            </div>
-            {activity.description && (
-              <RichTextContent
-                html={activity.description}
-                className="text-ink-muted mt-1.5 text-sm text-pretty"
-              />
-            )}
-          </Card>
-        ))}
-      </ul>
+            {grid}
+          </SortableContext>
+        </DndContext>
+      ) : (
+        grid
+      )}
       <ConfirmDialog
         open={confirmingActivity !== undefined}
         title="Archive activity?"
@@ -316,6 +386,7 @@ export function ActivityList() {
                 items={items}
                 navigate={navigate}
                 editingEnabled={editingEnabled}
+                reorderable={false}
               />
             </div>
           ))}

@@ -411,3 +411,33 @@ db.version(20)
       }),
     );
   });
+
+db.version(21)
+  .stores({
+    ...V13_STORES,
+    habits: "id, archivedAt, position",
+    habitCompletions: "id, habitId, date, [habitId+date]",
+    activities: "id, archivedAt, sectionId, position",
+    sections: "id, archivedAt, position",
+  })
+  .upgrade(async (tx) => {
+    const activities = await tx.table("activities").toArray();
+    const bySection = new Map<string, typeof activities>();
+    for (const activity of activities) {
+      const key = activity.sectionId ?? "";
+      const bucket = bySection.get(key);
+      if (bucket) {
+        bucket.push(activity);
+      } else {
+        bySection.set(key, [activity]);
+      }
+    }
+    await Promise.all(
+      [...bySection.values()].flatMap((group) => {
+        group.sort((a, b) => a.name.localeCompare(b.name));
+        return group.map((activity, index) =>
+          tx.table("activities").update(activity.id, { position: index }),
+        );
+      }),
+    );
+  });
