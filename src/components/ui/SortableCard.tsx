@@ -6,6 +6,9 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Card } from "@/components/ui/Card";
 
+const SIDEBAR_CLASSES =
+  "bg-surface-raised flex w-8 shrink-0 items-center justify-center self-stretch";
+
 interface SortableCardProps {
   id: string;
   as?: ElementType;
@@ -37,23 +40,28 @@ export function SortableCard({
       ref={setNodeRef}
       style={style}
       size="md"
-      variant={draggable ? "muted" : "solid"}
-      padding={!draggable}
-      className={clsx("h-full text-pretty", draggable && "flex overflow-hidden")}
+      variant="muted"
+      padding={false}
+      className="flex h-full overflow-hidden text-pretty"
     >
-      {draggable && (
+      {draggable ? (
         <button
           type="button"
           title="Drag to reorder"
-          className="bg-surface-raised text-ink-muted hover:text-ink flex w-8 shrink-0 cursor-grab touch-none items-center justify-center self-stretch active:cursor-grabbing"
+          className={clsx(
+            SIDEBAR_CLASSES,
+            "text-ink-muted hover:text-ink cursor-grab touch-none active:cursor-grabbing",
+          )}
           {...attributes}
           {...listeners}
         >
           <FontAwesomeIcon icon={faGripVertical} />
         </button>
+      ) : (
+        <div className={SIDEBAR_CLASSES} />
       )}
-      <div className={clsx("min-w-0 flex-1", draggable && "p-4 pl-3.5")}>
-        <div className="flex min-w-0 items-start justify-between gap-2.5">
+      <div className="min-w-0 flex-1 p-4 pl-3.5">
+        <div className="mb-2 flex min-h-7 min-w-0 items-start justify-between gap-2.5">
           <p className="text-ink">{title}</p>
           {actions && <div className="flex shrink-0 gap-2">{actions}</div>}
         </div>

@@ -225,7 +225,7 @@ function SortableSectionItem({
             onCancel={onCancelEdit}
           />
         ) : (
-          <div className="flex items-center">
+          <div className="flex min-h-7 items-center">
             {editingEnabled && (
               <button
                 type="button"
@@ -427,7 +427,7 @@ export function ActivityList() {
 
       {otherGroup && (
         <div>
-          <div className="mb-3 flex items-center gap-2">
+          <div className="mb-3 flex min-h-7 items-center gap-2">
             <h3 className="text-ink-faint text-sm font-semibold tracking-wide uppercase">
               Other
             </h3>
