@@ -14,11 +14,11 @@ import { Card } from '@/components/ui/Card';
 import { SegmentedControl } from '@/components/ui/SegmentedControl';
 import {
   formatShortDate,
-  formatTimestamp,
   isWithinRange,
   type TrendRange,
 } from '@/lib/dates';
 import { chartColors as colors } from '@/components/charts/chartColors';
+import { ChartTooltip } from '@/components/charts/ChartTooltip';
 
 type SegmentedControlTone = 'accent' | 'orange';
 
@@ -49,45 +49,10 @@ export interface TrendChartSeries {
   tooltipFormatter: (value: number) => string;
 }
 
-type ChartPoint = { timestamp: string } & Record<
+export type ChartPoint = { timestamp: string } & Record<
   string,
   string | number | undefined
 >;
-
-interface ChartTooltipProps {
-  active?: boolean;
-  payload?: Array<{ payload: ChartPoint }>;
-  series: TrendChartSeries[];
-}
-
-function ChartTooltip({ active, payload, series }: ChartTooltipProps) {
-  if (!active || !payload?.length) return null;
-  const point = payload[0].payload;
-  return (
-    <div
-      className="rounded-lg border px-4 py-3 text-lg shadow-md"
-      style={{
-        background: colors.surface,
-        borderColor: colors.grid,
-        color: colors.secondary,
-      }}
-    >
-      <p style={{ color: colors.muted }}>{formatTimestamp(point.timestamp)}</p>
-      {series.map((s) => {
-        const value = point[s.dataKey];
-        return value === undefined ? null : (
-          <p
-            key={s.dataKey}
-            className="font-semibold"
-            style={{ color: s.color }}
-          >
-            {s.tooltipFormatter(value as number)}
-          </p>
-        );
-      })}
-    </div>
-  );
-}
 
 interface TrendChartProps<T> {
   title: string;
