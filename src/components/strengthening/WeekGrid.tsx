@@ -11,7 +11,7 @@ import {
   createPlannedExercise,
   deletePlannedExercise,
 } from '@/db/queries/plannedExercises';
-import { getRemediesByIds } from '@/db/queries/remedies';
+import { getRemediesByIds, updateRemedy } from '@/db/queries/remedies';
 import { getLastLogEntryForInjury } from '@/db/queries/logEntries';
 import { useInjuries } from '@/hooks/useInjuries';
 import { useLogModal } from '@/context/useLogModal';
@@ -210,6 +210,9 @@ function DayColumn({
           <RichTextContent
             html={viewingRemedy.description}
             className="text-ink-muted text-pretty"
+            onChange={(description) =>
+              updateRemedy(viewingRemedy.id, { description })
+            }
           />
         ) : (
           <p className="text-ink-muted text-pretty">No description added.</p>

@@ -21,7 +21,7 @@ import {
   sortByCategoryThenName,
   TRIGGER_CATEGORIES,
 } from '@/lib/categories';
-import { deleteLogEntry } from '@/db/queries/logEntries';
+import { deleteLogEntry, updateLogEntry } from '@/db/queries/logEntries';
 import { LogEntryEditModal } from '@/components/logs/LogEntryEditModal';
 
 function sortIdsByCategory<T extends { name: string; category?: string }>(
@@ -157,6 +157,16 @@ export function LogTimelineItem({
             <RichTextContent
               html={entry.notes}
               className="text-ink-secondary"
+              onChange={(notes) =>
+                updateLogEntry(entry.id, {
+                  timestamp: entry.timestamp,
+                  painLevel: entry.painLevel,
+                  painFrequency: entry.painFrequency,
+                  remedyIds: entry.remedyIds,
+                  triggerIds: entry.triggerIds,
+                  notes,
+                })
+              }
             />
           </div>
         </>

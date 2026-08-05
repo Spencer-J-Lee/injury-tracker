@@ -114,7 +114,11 @@ export function JournalEntryCard({
           </div>
         </>
       ) : (
-        <RichTextContent html={entry.text} className="text-ink-secondary" />
+        <RichTextContent
+          html={entry.text}
+          className="text-ink-secondary"
+          onChange={(text) => updateJournalEntry(entry.id, text)}
+        />
       )}
 
       <ConfirmDialog

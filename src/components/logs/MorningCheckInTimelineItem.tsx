@@ -20,7 +20,10 @@ import {
   numbnessPresenceTone,
   numbnessDurationTone,
 } from '@/lib/morningCheckInOptions';
-import { deleteMorningCheckIn } from '@/db/queries/morningCheckIns';
+import {
+  deleteMorningCheckIn,
+  updateMorningCheckIn,
+} from '@/db/queries/morningCheckIns';
 import { MorningCheckInModal } from '@/components/logs/MorningCheckInModal';
 
 const stiffnessLabels = new Map(
@@ -172,6 +175,18 @@ export function MorningCheckInTimelineItem({
             <RichTextContent
               html={entry.notes}
               className="text-ink-secondary"
+              onChange={(notes) =>
+                updateMorningCheckIn(entry.id, {
+                  timestamp: entry.timestamp,
+                  painLevel: entry.painLevel,
+                  stiffnessLevel: entry.stiffnessLevel,
+                  stiffnessDuration: entry.stiffnessDuration,
+                  numbnessPresent: entry.numbnessPresent,
+                  numbnessDuration: entry.numbnessDuration,
+                  numbnessSuspectedCause: entry.numbnessSuspectedCause,
+                  notes,
+                })
+              }
             />
           </div>
         </>

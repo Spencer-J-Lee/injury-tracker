@@ -112,6 +112,9 @@ function RemedySection({
                   <RichTextContent
                     html={remedy.description}
                     className="text-ink-muted mt-1.5 text-sm text-pretty"
+                    onChange={(description) =>
+                      updateRemedy(remedy.id, { description })
+                    }
                   />
                 )}
               </Card>

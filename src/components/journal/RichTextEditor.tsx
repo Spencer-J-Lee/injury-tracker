@@ -24,6 +24,96 @@ function normalizeUrl(url: string) {
   return /^[a-z][a-z0-9+.-]*:/i.test(url) ? url : `https://${url}`;
 }
 
+// The stock TaskItem node view never re-binds its checkbox "change" listener
+// after the first toggle, so it keeps closing over the pre-toggle `node`
+// reference. `onReadOnlyChecked` only receives that stale node (no position),
+// which works once but can't locate the node in the doc on later clicks. This
+// variant reads the position fresh via `getPos()` on every click instead.
+const ReadOnlyTaskItem = TaskItem.extend({
+  addNodeView() {
+    return ({ node, HTMLAttributes, getPos, editor }) => {
+      const listItem = document.createElement('li');
+      const checkboxWrapper = document.createElement('label');
+      const checkboxStyler = document.createElement('span');
+      const checkbox = document.createElement('input');
+      const content = document.createElement('div');
+
+      checkboxWrapper.contentEditable = 'false';
+      checkbox.type = 'checkbox';
+      checkbox.addEventListener('mousedown', (event) => event.preventDefault());
+      checkbox.addEventListener('change', () => {
+        const checked = checkbox.checked;
+        const pos = typeof getPos === 'function' ? getPos() : undefined;
+        const currentNode =
+          typeof pos === 'number' ? editor.state.doc.nodeAt(pos) : undefined;
+        if (typeof pos !== 'number' || !currentNode) {
+          checkbox.checked = !checkbox.checked;
+          return;
+        }
+        editor.view.dispatch(
+          editor.state.tr.setNodeMarkup(pos, undefined, {
+            ...currentNode.attrs,
+            checked,
+          }),
+        );
+      });
+
+      Object.entries(this.options.HTMLAttributes).forEach(([key, value]) => {
+        listItem.setAttribute(key, value);
+      });
+      listItem.dataset.checked = node.attrs.checked;
+      checkbox.checked = node.attrs.checked;
+      checkboxWrapper.append(checkbox, checkboxStyler);
+      listItem.append(checkboxWrapper, content);
+      Object.entries(HTMLAttributes).forEach(([key, value]) => {
+        listItem.setAttribute(key, value);
+      });
+
+      return {
+        dom: listItem,
+        contentDOM: content,
+        update: (updatedNode) => {
+          if (updatedNode.type !== this.type) return false;
+          listItem.dataset.checked = updatedNode.attrs.checked;
+          checkbox.checked = updatedNode.attrs.checked;
+          return true;
+        },
+      };
+    };
+  },
+});
+
+// Shared between the editable and read-only editors below so their schemas
+// can't drift apart — content saved by one must always parse the same way in
+// the other.
+const richTextStarterKit = StarterKit.configure({
+  blockquote: false,
+  code: false,
+  codeBlock: false,
+  heading: false,
+  horizontalRule: false,
+  italic: false,
+  link: false,
+  strike: false,
+  underline: false,
+});
+
+function richTextLink(openOnClick: boolean) {
+  return Link.configure({
+    openOnClick,
+    autolink: true,
+    linkOnPaste: true,
+    defaultProtocol: 'https',
+    protocols: ['http', 'https', 'mailto', 'tel'],
+    HTMLAttributes: { rel: 'noopener noreferrer', target: '_blank' },
+  });
+}
+
+const editableTaskItem = TaskItem.configure({ nested: true });
+const readOnlyTaskItem = ReadOnlyTaskItem.configure({ nested: true });
+const editableLink = richTextLink(false);
+const readOnlyLink = richTextLink(true);
+
 function escapeHtml(value: string) {
   return value
     .replace(/&/g, '&amp;')
@@ -61,28 +151,11 @@ export function RichTextEditor({
 }: RichTextEditorProps) {
   const editor = useEditor({
     extensions: [
-      StarterKit.configure({
-        blockquote: false,
-        code: false,
-        codeBlock: false,
-        heading: false,
-        horizontalRule: false,
-        italic: false,
-        link: false,
-        strike: false,
-        underline: false,
-      }),
+      richTextStarterKit,
       Placeholder.configure({ placeholder }),
       TaskList,
-      TaskItem.configure({ nested: true }),
-      Link.configure({
-        openOnClick: false,
-        autolink: true,
-        linkOnPaste: true,
-        defaultProtocol: 'https',
-        protocols: ['http', 'https', 'mailto', 'tel'],
-        HTMLAttributes: { rel: 'noopener noreferrer', target: '_blank' },
-      }),
+      editableTaskItem,
+      editableLink,
     ],
     content: toEditorHtml(value),
     editorProps: {
@@ -264,14 +337,41 @@ export function RichTextEditor({
 export function RichTextContent({
   html,
   className,
+  onChange,
 }: {
   html: string;
   className?: string;
+  onChange?: (html: string) => void;
 }) {
-  return (
-    <div
-      className={clsx('journal-rich-text', className)}
-      dangerouslySetInnerHTML={{ __html: toEditorHtml(html) }}
-    />
-  );
+  const lastEmittedHtml = useRef<string | null>(null);
+
+  const editor = useEditor({
+    extensions: [
+      richTextStarterKit,
+      TaskList,
+      readOnlyTaskItem,
+      readOnlyLink,
+    ],
+    content: toEditorHtml(html),
+    editable: false,
+    editorProps: {
+      attributes: { class: 'journal-rich-text' },
+    },
+    immediatelyRender: false,
+    shouldRerenderOnTransaction: false,
+    onUpdate: ({ editor }) => {
+      const nextHtml = editor.getHTML();
+      lastEmittedHtml.current = nextHtml;
+      onChange?.(nextHtml);
+    },
+  });
+
+  useEffect(() => {
+    if (!editor) return;
+    const nextHtml = toEditorHtml(html);
+    if (nextHtml === lastEmittedHtml.current) return;
+    editor.commands.setContent(nextHtml);
+  }, [html, editor]);
+
+  return <EditorContent editor={editor} className={className} />;
 }

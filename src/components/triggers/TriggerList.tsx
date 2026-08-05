@@ -88,6 +88,9 @@ export function TriggerList({ injuryId }: { injuryId: string }) {
                   <RichTextContent
                     html={trigger.description}
                     className="text-ink-muted mt-1.5 text-sm text-pretty"
+                    onChange={(description) =>
+                      updateTrigger(trigger.id, { description })
+                    }
                   />
                 )}
               </Card>

@@ -39,7 +39,11 @@ import { SectionForm } from '@/components/activities/SectionForm';
 import { useActivities } from '@/hooks/useActivities';
 import { useSections } from '@/hooks/useSections';
 import { useActivitiesEditingEnabled } from '@/lib/activitiesEditStore';
-import { archiveActivity, reorderActivities } from '@/db/queries/activities';
+import {
+  archiveActivity,
+  reorderActivities,
+  updateActivity,
+} from '@/db/queries/activities';
 import {
   createSection,
   updateSection,
@@ -75,6 +79,9 @@ function SortableActivityCard({
           <RichTextContent
             html={activity.description}
             className="text-ink-muted mt-1.5 text-sm text-pretty"
+            onChange={(description) =>
+              updateActivity(activity.id, { description })
+            }
           />
         )
       }
