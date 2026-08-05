@@ -1,13 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import clsx from 'clsx';
-import {
-  faPen,
-  faBoxArchive,
-  faPlus,
-  faGripVertical,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import {
   DndContext,
   closestCenter,
@@ -20,284 +13,26 @@ import {
 import {
   SortableContext,
   arrayMove,
-  rectSortingStrategy,
   sortableKeyboardCoordinates,
-  useSortable,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
 import type { Activity, ActivityBodyPart, Section } from '@/types/models';
 import { Divider } from '@/components/ui/Divider';
 import { IconButton } from '@/components/ui/IconButton';
-import { SortableCard } from '@/components/ui/SortableCard';
 import { Button } from '@/components/ui/Button';
 import { TogglePill } from '@/components/ui/TogglePill';
 import { Label } from '@/components/ui/Label';
-import { RichTextContent } from '@/components/journal/RichTextEditor';
-import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import { SectionForm } from '@/components/activities/SectionForm';
+import { ActivityGrid } from '@/components/activities/ActivityGrid';
+import { SortableSectionItem } from '@/components/activities/SortableSectionItem';
 import { useActivities } from '@/hooks/useActivities';
 import { useSections } from '@/hooks/useSections';
 import { useActivitiesEditingEnabled } from '@/lib/activitiesEditStore';
-import {
-  archiveActivity,
-  reorderActivities,
-  updateActivity,
-} from '@/db/queries/activities';
-import {
-  createSection,
-  updateSection,
-  archiveSection,
-  reorderSections,
-} from '@/db/queries/sections';
+import { updateSection, createSection, reorderSections } from '@/db/queries/sections';
 import {
   ACTIVITY_BODY_PARTS,
   groupActivitiesBySections,
 } from '@/lib/activities';
-
-function SortableActivityCard({
-  activity,
-  navigate,
-  editingEnabled,
-  draggable,
-  onArchiveRequest,
-}: {
-  activity: Activity;
-  navigate: ReturnType<typeof useNavigate>;
-  editingEnabled: boolean;
-  draggable: boolean;
-  onArchiveRequest: () => void;
-}) {
-  return (
-    <SortableCard
-      id={activity.id}
-      as="li"
-      draggable={draggable}
-      title={activity.name}
-      description={
-        activity.description && (
-          <RichTextContent
-            html={activity.description}
-            className="text-ink-muted mt-1.5 text-sm text-pretty"
-            onChange={(description) =>
-              updateActivity(activity.id, { description })
-            }
-          />
-        )
-      }
-      actions={
-        editingEnabled && (
-          <>
-            <IconButton
-              icon={faPen}
-              label="Edit activity"
-              onClick={() => navigate(`/activities/${activity.id}/edit`)}
-            />
-            <IconButton
-              icon={faBoxArchive}
-              tone="danger"
-              label="Archive activity"
-              onClick={onArchiveRequest}
-            />
-          </>
-        )
-      }
-    />
-  );
-}
-
-function ActivityGrid({
-  items,
-  navigate,
-  editingEnabled,
-  reorderable = true,
-}: {
-  items: Activity[];
-  navigate: ReturnType<typeof useNavigate>;
-  editingEnabled: boolean;
-  reorderable?: boolean;
-}) {
-  const [confirmingId, setConfirmingId] = useState<string | null>(null);
-  const confirmingActivity = items.find((item) => item.id === confirmingId);
-  const draggable = editingEnabled && reorderable;
-
-  const sensors = useSensors(
-    useSensor(PointerSensor),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    }),
-  );
-
-  const handleDragEnd = async (event: DragEndEvent) => {
-    const { active, over } = event;
-    if (!over || active.id === over.id) return;
-
-    const oldIndex = items.findIndex((item) => item.id === active.id);
-    const newIndex = items.findIndex((item) => item.id === over.id);
-    if (oldIndex === -1 || newIndex === -1) return;
-
-    const reordered = arrayMove(items, oldIndex, newIndex);
-    try {
-      await reorderActivities(reordered.map((item) => item.id));
-    } catch (error) {
-      console.error('Failed to reorder activities', error);
-    }
-  };
-
-  const grid = (
-    <ul className="grid grid-cols-4 gap-2.5">
-      {items.map((activity) => (
-        <SortableActivityCard
-          key={activity.id}
-          activity={activity}
-          navigate={navigate}
-          editingEnabled={editingEnabled}
-          draggable={draggable}
-          onArchiveRequest={() => setConfirmingId(activity.id)}
-        />
-      ))}
-    </ul>
-  );
-
-  return (
-    <>
-      {draggable ? (
-        <DndContext
-          sensors={sensors}
-          collisionDetection={closestCenter}
-          onDragEnd={handleDragEnd}
-        >
-          <SortableContext
-            items={items.map((item) => item.id)}
-            strategy={rectSortingStrategy}
-          >
-            {grid}
-          </SortableContext>
-        </DndContext>
-      ) : (
-        grid
-      )}
-      <ConfirmDialog
-        open={confirmingActivity !== undefined}
-        title="Archive activity?"
-        message={`"${confirmingActivity?.name}" will be archived and hidden from this list.`}
-        confirmLabel="Archive"
-        onConfirm={() => {
-          if (confirmingActivity) archiveActivity(confirmingActivity.id);
-          setConfirmingId(null);
-        }}
-        onCancel={() => setConfirmingId(null)}
-      />
-    </>
-  );
-}
-
-interface SortableSectionItemProps {
-  section: Section;
-  items: Activity[];
-  editing: boolean;
-  editingEnabled: boolean;
-  onEdit: () => void;
-  onCancelEdit: () => void;
-  onSubmitEdit: (values: { name: string }) => Promise<void>;
-  navigate: ReturnType<typeof useNavigate>;
-}
-
-function SortableSectionItem({
-  section,
-  items,
-  editing,
-  editingEnabled,
-  onEdit,
-  onCancelEdit,
-  onSubmitEdit,
-  navigate,
-}: SortableSectionItemProps) {
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: section.id, disabled: editing || !editingEnabled });
-  const [confirmingArchive, setConfirmingArchive] = useState(false);
-
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-  };
-
-  return (
-    <li ref={setNodeRef} style={style}>
-      <div className="mb-3">
-        {editing ? (
-          <SectionForm
-            initial={{ name: section.name }}
-            onSubmit={onSubmitEdit}
-            onCancel={onCancelEdit}
-          />
-        ) : (
-          <div className="flex min-h-7 items-center">
-            {editingEnabled && (
-              <button
-                type="button"
-                title="Drag to reorder"
-                className="text-ink-faint hover:text-ink cursor-grab touch-none active:cursor-grabbing"
-                {...attributes}
-                {...listeners}
-              >
-                <FontAwesomeIcon icon={faGripVertical} className="text-sm" />
-              </button>
-            )}
-
-            <h3
-              className={clsx(
-                'text-ink-faint text-sm font-semibold tracking-wide uppercase',
-                editingEnabled && 'ml-2',
-              )}
-            >
-              {section.name}
-            </h3>
-
-            {editingEnabled && (
-              <div className="ml-4 flex items-center gap-1">
-                <IconButton
-                  icon={faPen}
-                  label="Rename section"
-                  onClick={onEdit}
-                />
-                <IconButton
-                  icon={faBoxArchive}
-                  tone="danger"
-                  label="Archive section"
-                  onClick={() => setConfirmingArchive(true)}
-                />
-                <IconButton
-                  icon={faPlus}
-                  label={`Add activity to ${section.name}`}
-                  onClick={() =>
-                    navigate(`/activities/new?sectionId=${section.id}`)
-                  }
-                />
-              </div>
-            )}
-          </div>
-        )}
-      </div>
-      <ActivityGrid
-        items={items}
-        navigate={navigate}
-        editingEnabled={editingEnabled}
-      />
-      <ConfirmDialog
-        open={confirmingArchive}
-        title="Archive section?"
-        message={`"${section.name}" will be archived. Its activities will be hidden until the section is restored.`}
-        confirmLabel="Archive"
-        onConfirm={() => {
-          archiveSection(section.id);
-          setConfirmingArchive(false);
-        }}
-        onCancel={() => setConfirmingArchive(false)}
-      />
-    </li>
-  );
-}
 
 export function ActivityList() {
   const activities = useActivities() ?? [];
