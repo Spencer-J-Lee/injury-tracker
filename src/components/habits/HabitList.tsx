@@ -1,10 +1,5 @@
 import { useState } from "react";
-import {
-  faPen,
-  faBoxArchive,
-  faGripVertical,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen, faBoxArchive } from "@fortawesome/free-solid-svg-icons";
 import {
   DndContext,
   closestCenter,
@@ -22,10 +17,10 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { Card } from "@/components/ui/Card";
 import { CollapsibleCard } from "@/components/ui/CollapsibleCard";
 import { Button } from "@/components/ui/Button";
 import { IconButton } from "@/components/ui/IconButton";
+import { SortableCard } from "@/components/ui/SortableCard";
 import { HabitForm } from "@/components/habits/HabitForm";
 import { useHabits } from "@/hooks/useHabits";
 import {
@@ -54,8 +49,10 @@ function SortableHabitItem({
   onCancelEdit,
   onSubmitEdit,
 }: SortableHabitItemProps) {
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: habit.id, disabled: editing });
+  const { setNodeRef, transform, transition } = useSortable({
+    id: habit.id,
+    disabled: editing,
+  });
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -79,43 +76,29 @@ function SortableHabitItem({
   }
 
   return (
-    <li ref={setNodeRef} style={style}>
-      <Card
-        size="md"
-        variant="muted"
-        padding={false}
-        className="flex overflow-hidden"
-      >
-        <button
-          type="button"
-          title="Drag to reorder"
-          className="bg-surface-raised text-ink-muted hover:text-ink flex w-8 shrink-0 cursor-grab touch-none items-center justify-center self-stretch active:cursor-grabbing"
-          {...attributes}
-          {...listeners}
-        >
-          <FontAwesomeIcon icon={faGripVertical} />
-        </button>
-        <div className="min-w-0 flex-1 p-4 pl-3.5">
-          <div className="flex min-w-0 items-start justify-between gap-2.5">
-            <p className="text-ink">{habit.name}</p>
-            <div className="flex shrink-0 gap-2">
-              <IconButton icon={faPen} label="Edit habit" onClick={onEdit} />
-              <IconButton
-                icon={faBoxArchive}
-                tone="danger"
-                label="Archive habit"
-                onClick={() => archiveHabit(habit.id)}
-              />
-            </div>
-          </div>
-          {habit.description && (
-            <p className="text-ink-muted mt-1.5 text-base text-pretty whitespace-pre-line">
-              {habit.description}
-            </p>
-          )}
-        </div>
-      </Card>
-    </li>
+    <SortableCard
+      id={habit.id}
+      as="li"
+      title={habit.name}
+      description={
+        habit.description && (
+          <p className="text-ink-muted mt-1.5 text-base text-pretty whitespace-pre-line">
+            {habit.description}
+          </p>
+        )
+      }
+      actions={
+        <>
+          <IconButton icon={faPen} label="Edit habit" onClick={onEdit} />
+          <IconButton
+            icon={faBoxArchive}
+            tone="danger"
+            label="Archive habit"
+            onClick={() => archiveHabit(habit.id)}
+          />
+        </>
+      }
+    />
   );
 }
 

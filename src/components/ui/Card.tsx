@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, ElementType } from "react";
+import type { ComponentPropsWithRef, ElementType } from "react";
 import clsx from "clsx";
 import { cardPaddingClasses, type CardSize } from "@/components/ui/cardStyles";
 
@@ -13,7 +13,7 @@ interface CardOwnProps {
 
 type CardProps<T extends ElementType> = CardOwnProps & {
   as?: T;
-} & Omit<ComponentPropsWithoutRef<T>, keyof CardOwnProps | "as">;
+} & Omit<ComponentPropsWithRef<T>, keyof CardOwnProps | "as">;
 
 const radiusClasses: Record<Size, string> = {
   sm: "rounded-lg",
