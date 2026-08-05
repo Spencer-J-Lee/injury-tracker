@@ -1,5 +1,5 @@
-import { useEntitiesForInjury } from "@/hooks/useEntitiesForInjury";
-import { listLogEntriesForInjury } from "@/db/queries/logEntries";
+import { useEntitiesForInjury } from '@/hooks/useEntitiesForInjury';
+import { listLogEntriesForInjury } from '@/db/queries/logEntries';
 
 export function useLogEntriesForInjury(
   injuryId: string | undefined,

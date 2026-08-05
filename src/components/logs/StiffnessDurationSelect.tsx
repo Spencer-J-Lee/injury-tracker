@@ -1,7 +1,7 @@
-import { Select } from "@/components/ui/Select";
-import { Label } from "@/components/ui/Label";
-import type { StiffnessDuration } from "@/types/models";
-import { STIFFNESS_DURATION_OPTIONS } from "@/lib/morningCheckInOptions";
+import { Select } from '@/components/ui/Select';
+import { Label } from '@/components/ui/Label';
+import type { StiffnessDuration } from '@/types/models';
+import { STIFFNESS_DURATION_OPTIONS } from '@/lib/morningCheckInOptions';
 
 interface StiffnessDurationSelectProps {
   value: StiffnessDuration | undefined;
@@ -16,7 +16,7 @@ export function StiffnessDurationSelect({
     <div>
       <Label>Stiffness duration</Label>
       <Select
-        value={value ?? ""}
+        value={value ?? ''}
         onChange={(e) =>
           onChange(
             (e.target.value || undefined) as StiffnessDuration | undefined,

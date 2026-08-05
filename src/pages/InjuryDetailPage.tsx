@@ -1,64 +1,64 @@
-import { useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen, faSun, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { useInjury } from "@/hooks/useInjury";
-import { useLastLogEntryForInjury } from "@/hooks/useLastLogEntryForInjury";
-import { useMorningCheckInsForInjury } from "@/hooks/useMorningCheckInsForInjury";
-import { statusLabels } from "@/lib/injuryStatus";
-import { InjuryPriorityBadge } from "@/components/injuries/InjuryPriorityBadge";
-import { InjuryTitle } from "@/components/injuries/InjuryTitle";
-import { Button } from "@/components/ui/Button";
-import { PageTitle } from "@/components/ui/PageTitle";
-import { IconButton } from "@/components/ui/IconButton";
-import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
-import { Kbd } from "@/components/ui/Kbd";
-import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut";
-import { useAnyModalOpen } from "@/lib/modalStore";
+import { useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPen, faSun, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { useInjury } from '@/hooks/useInjury';
+import { useLastLogEntryForInjury } from '@/hooks/useLastLogEntryForInjury';
+import { useMorningCheckInsForInjury } from '@/hooks/useMorningCheckInsForInjury';
+import { statusLabels } from '@/lib/injuryStatus';
+import { InjuryPriorityBadge } from '@/components/injuries/InjuryPriorityBadge';
+import { InjuryTitle } from '@/components/injuries/InjuryTitle';
+import { Button } from '@/components/ui/Button';
+import { PageTitle } from '@/components/ui/PageTitle';
+import { IconButton } from '@/components/ui/IconButton';
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
+import { Kbd } from '@/components/ui/Kbd';
+import { useKeyboardShortcut } from '@/hooks/useKeyboardShortcut';
+import { useAnyModalOpen } from '@/lib/modalStore';
 import {
   logEntryShortcutLabel,
   updateEntryShortcutLabel,
   morningCheckInShortcutLabel,
-} from "@/lib/shortcuts";
-import { useLogModal } from "@/context/useLogModal";
-import { todayEntryOnly } from "@/lib/dates";
-import { RemedyList } from "@/components/remedies/RemedyList";
-import { TriggerList } from "@/components/triggers/TriggerList";
-import { PainTrendChart } from "@/components/charts/PainTrendChart";
-import { MorningTrendChart } from "@/components/charts/MorningTrendChart";
-import { LogTimeline } from "@/components/logs/LogTimeline";
-import { MorningCheckInTimeline } from "@/components/logs/MorningCheckInTimeline";
-import { LogEntryEditModal } from "@/components/logs/LogEntryEditModal";
-import { MorningCheckInModal } from "@/components/logs/MorningCheckInModal";
+} from '@/lib/shortcuts';
+import { useLogModal } from '@/context/useLogModal';
+import { todayEntryOnly } from '@/lib/dates';
+import { RemedyList } from '@/components/remedies/RemedyList';
+import { TriggerList } from '@/components/triggers/TriggerList';
+import { PainTrendChart } from '@/components/charts/PainTrendChart';
+import { MorningTrendChart } from '@/components/charts/MorningTrendChart';
+import { LogTimeline } from '@/components/logs/LogTimeline';
+import { MorningCheckInTimeline } from '@/components/logs/MorningCheckInTimeline';
+import { LogEntryEditModal } from '@/components/logs/LogEntryEditModal';
+import { MorningCheckInModal } from '@/components/logs/MorningCheckInModal';
 import {
   SegmentedControl,
   type SegmentedControlOption,
-} from "@/components/ui/SegmentedControl";
-import { deleteInjury } from "@/db/queries/injuries";
-import { formatInjuryName } from "@/lib/injuries";
+} from '@/components/ui/SegmentedControl';
+import { deleteInjury } from '@/db/queries/injuries';
+import { formatInjuryName } from '@/lib/injuries';
 
 export function InjuryDetailPage() {
   const { id } = useParams();
   const injury = useInjury(id);
   const { openLogModal } = useLogModal();
   const navigate = useNavigate();
-  const lastEntry = useLastLogEntryForInjury(id ?? "");
+  const lastEntry = useLastLogEntryForInjury(id ?? '');
   const recentMorningCheckIns = useMorningCheckInsForInjury(id, 1);
   const [editingToday, setEditingToday] = useState(false);
   const [editingMorning, setEditingMorning] = useState(false);
   const [confirmingDelete, setConfirmingDelete] = useState(false);
-  const [view, setView] = useState<"main" | "morning">("main");
-  const viewOptions: SegmentedControlOption<"main" | "morning">[] = [
-    { value: "main", label: "Main History" },
+  const [view, setView] = useState<'main' | 'morning'>('main');
+  const viewOptions: SegmentedControlOption<'main' | 'morning'>[] = [
+    { value: 'main', label: 'Main History' },
     {
-      value: "morning",
+      value: 'morning',
       label: (
         <>
           <FontAwesomeIcon icon={faSun} size="sm" className="mr-1.5" />
           Morning Check-Ins
         </>
       ),
-      tone: "orange",
+      tone: 'orange',
     },
   ];
   const anyModalOpen = useAnyModalOpen();
@@ -67,13 +67,13 @@ export function InjuryDetailPage() {
   const todayMorningEntry = todayEntryOnly(recentMorningCheckIns?.[0]);
 
   useKeyboardShortcut(
-    "t",
+    't',
     () => (todayEntry ? setEditingToday(true) : openLogModal(injury?.id)),
     !!injury && !!todayMorningEntry && !anyModalOpen,
   );
 
   useKeyboardShortcut(
-    "m",
+    'm',
     () => setEditingMorning(true),
     !!injury && !anyModalOpen,
   );
@@ -89,7 +89,7 @@ export function InjuryDetailPage() {
   const handleDelete = async () => {
     setConfirmingDelete(false);
     await deleteInjury(injury.id);
-    navigate("/");
+    navigate('/');
   };
 
   return (
@@ -178,7 +178,7 @@ export function InjuryDetailPage() {
             className="w-full"
           />
 
-          {view === "main" ? (
+          {view === 'main' ? (
             <>
               <PainTrendChart injuryId={injury.id} />
               <LogTimeline injuryId={injury.id} />

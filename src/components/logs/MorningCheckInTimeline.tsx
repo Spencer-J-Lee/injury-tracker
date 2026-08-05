@@ -1,9 +1,9 @@
-import { Card } from "@/components/ui/Card";
-import { LoadMoreButton } from "@/components/ui/LoadMoreButton";
-import { useInjury } from "@/hooks/useInjury";
-import { listMorningCheckInsForInjury } from "@/db/queries/morningCheckIns";
-import { usePaginatedEntitiesForInjury } from "@/hooks/usePaginatedEntitiesForInjury";
-import { MorningCheckInTimelineItem } from "@/components/logs/MorningCheckInTimelineItem";
+import { Card } from '@/components/ui/Card';
+import { LoadMoreButton } from '@/components/ui/LoadMoreButton';
+import { useInjury } from '@/hooks/useInjury';
+import { listMorningCheckInsForInjury } from '@/db/queries/morningCheckIns';
+import { usePaginatedEntitiesForInjury } from '@/hooks/usePaginatedEntitiesForInjury';
+import { MorningCheckInTimelineItem } from '@/components/logs/MorningCheckInTimelineItem';
 
 export function MorningCheckInTimeline({ injuryId }: { injuryId: string }) {
   const injury = useInjury(injuryId);

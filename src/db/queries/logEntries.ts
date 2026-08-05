@@ -1,6 +1,6 @@
-import { db } from "@/db/schema";
-import type { LogEntry } from "@/types/models";
-import { listForInjuryOrderedByTimestamp } from "@/db/queries/shared";
+import { db } from '@/db/schema';
+import type { LogEntry } from '@/types/models';
+import { listForInjuryOrderedByTimestamp } from '@/db/queries/shared';
 
 export interface LogSessionInjuryInput {
   injuryId: string;
@@ -43,7 +43,7 @@ export function listLogEntriesForInjury(injuryId: string, limit?: number) {
 }
 
 export function listRecentLogEntries(limit = 10) {
-  return db.logEntries.orderBy("timestamp").reverse().limit(limit).toArray();
+  return db.logEntries.orderBy('timestamp').reverse().limit(limit).toArray();
 }
 
 export async function getLastLogEntryForInjury(injuryId: string) {
@@ -68,7 +68,7 @@ export async function updateLogEntry(id: string, changes: UpdateLogEntryInput) {
 }
 
 export async function deleteLogSession(sessionId: string) {
-  await db.logEntries.where("sessionId").equals(sessionId).delete();
+  await db.logEntries.where('sessionId').equals(sessionId).delete();
 }
 
 export async function deleteLogEntry(id: string) {

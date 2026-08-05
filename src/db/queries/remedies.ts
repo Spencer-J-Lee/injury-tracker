@@ -1,10 +1,10 @@
-import { db } from "@/db/schema";
-import type { RemedyCategory, Remedy } from "@/types/models";
-import { REMEDY_CATEGORIES, sortByCategoryThenName } from "@/lib/categories";
+import { db } from '@/db/schema';
+import type { RemedyCategory, Remedy } from '@/types/models';
+import { REMEDY_CATEGORIES, sortByCategoryThenName } from '@/lib/categories';
 
 export async function listRemediesForInjury(injuryId: string) {
   const remedies = await db.remedies
-    .where("injuryId")
+    .where('injuryId')
     .equals(injuryId)
     .filter((remedy) => !remedy.archivedAt)
     .toArray();
@@ -13,7 +13,7 @@ export async function listRemediesForInjury(injuryId: string) {
 
 export async function listAllRemediesForInjury(injuryId: string) {
   const remedies = await db.remedies
-    .where("injuryId")
+    .where('injuryId')
     .equals(injuryId)
     .toArray();
   return sortByCategoryThenName(remedies, REMEDY_CATEGORIES);
@@ -46,11 +46,11 @@ export async function updateRemedy(
   changes: Partial<
     Pick<
       Remedy,
-      | "name"
-      | "description"
-      | "category"
-      | "providesImmediateRelief"
-      | "isProgramExercise"
+      | 'name'
+      | 'description'
+      | 'category'
+      | 'providesImmediateRelief'
+      | 'isProgramExercise'
     >
   >,
 ) {

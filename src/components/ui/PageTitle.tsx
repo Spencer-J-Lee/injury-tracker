@@ -1,5 +1,5 @@
-import type { ReactNode } from "react";
-import clsx from "clsx";
+import type { ReactNode } from 'react';
+import clsx from 'clsx';
 
 interface PageTitleProps {
   children: ReactNode;
@@ -17,7 +17,7 @@ export function PageTitle({ children, actions, className }: PageTitleProps) {
   }
 
   return (
-    <div className={clsx("flex items-start justify-between gap-4", className)}>
+    <div className={clsx('flex items-start justify-between gap-4', className)}>
       {heading}
       {actions}
     </div>

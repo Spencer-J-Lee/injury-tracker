@@ -1,25 +1,25 @@
-import { useMemo, useState } from "react";
-import clsx from "clsx";
-import { isToday, parseISO } from "date-fns";
-import { Button } from "@/components/ui/Button";
-import { LinkButton } from "@/components/ui/LinkButton";
-import { Modal } from "@/components/ui/Modal";
-import { RichTextContent } from "@/components/journal/RichTextEditor";
-import { EditExercisesModal } from "@/components/strengthening/EditExercisesModal";
-import { LogEntryEditModal } from "@/components/logs/LogEntryEditModal";
+import { useMemo, useState } from 'react';
+import clsx from 'clsx';
+import { isToday, parseISO } from 'date-fns';
+import { Button } from '@/components/ui/Button';
+import { LinkButton } from '@/components/ui/LinkButton';
+import { Modal } from '@/components/ui/Modal';
+import { RichTextContent } from '@/components/journal/RichTextEditor';
+import { EditExercisesModal } from '@/components/strengthening/EditExercisesModal';
+import { LogEntryEditModal } from '@/components/logs/LogEntryEditModal';
 import {
   createPlannedExercise,
   deletePlannedExercise,
-} from "@/db/queries/plannedExercises";
-import { getRemediesByIds } from "@/db/queries/remedies";
-import { getLastLogEntryForInjury } from "@/db/queries/logEntries";
-import { useInjuries } from "@/hooks/useInjuries";
-import { useLogModal } from "@/context/useLogModal";
-import { compareInjuries } from "@/lib/injuries";
-import { formatShortDateWithDay, todayEntryOnly } from "@/lib/dates";
-import { getWindowDates } from "@/lib/weeks";
-import type { PlannedExerciseWithRemedy } from "@/hooks/useWeekPlannedExercises";
-import type { Injury, LogEntry } from "@/types/models";
+} from '@/db/queries/plannedExercises';
+import { getRemediesByIds } from '@/db/queries/remedies';
+import { getLastLogEntryForInjury } from '@/db/queries/logEntries';
+import { useInjuries } from '@/hooks/useInjuries';
+import { useLogModal } from '@/context/useLogModal';
+import { compareInjuries } from '@/lib/injuries';
+import { formatShortDateWithDay, todayEntryOnly } from '@/lib/dates';
+import { getWindowDates } from '@/lib/weeks';
+import type { PlannedExerciseWithRemedy } from '@/hooks/useWeekPlannedExercises';
+import type { Injury, LogEntry } from '@/types/models';
 
 interface WeekGridProps {
   windowStart: string;
@@ -49,8 +49,8 @@ export function WeekGrid({
   return (
     <div
       className={clsx(
-        "divide-subtle grid min-h-96 grid-cols-1 divide-x sm:grid-cols-2",
-        size === 4 ? "lg:grid-cols-4" : "lg:grid-cols-7",
+        'divide-subtle grid min-h-96 grid-cols-1 divide-x sm:grid-cols-2',
+        size === 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-7',
       )}
     >
       {dates.map((date) => (
@@ -89,12 +89,12 @@ function DayColumn({
 }) {
   const [managing, setManaging] = useState(false);
   const [viewingRemedy, setViewingRemedy] = useState<
-    PlannedExerciseWithRemedy["remedy"] | null
+    PlannedExerciseWithRemedy['remedy'] | null
   >(null);
   const today = isToday(parseISO(date));
-  const remedyIdsKey = exercises.map((exercise) => exercise.remedyId).join(",");
+  const remedyIdsKey = exercises.map((exercise) => exercise.remedyId).join(',');
   const existingRemedyIds = useMemo(
-    () => (remedyIdsKey ? remedyIdsKey.split(",") : []),
+    () => (remedyIdsKey ? remedyIdsKey.split(',') : []),
     [remedyIdsKey],
   );
 
@@ -135,18 +135,18 @@ function DayColumn({
     <div className="first:pl-0 last:pr-0">
       <div
         className={clsx(
-          "flex flex-col gap-2.5 px-4 pt-2 pb-4",
-          today && "bg-accent-soft/70",
+          'flex flex-col gap-2.5 px-4 pt-2 pb-4',
+          today && 'bg-accent-soft/70',
         )}
       >
         <div
           className={clsx(
-            "flex flex-col tracking-wide uppercase",
-            today ? "text-ink" : "text-ink-muted",
+            'flex flex-col tracking-wide uppercase',
+            today ? 'text-ink' : 'text-ink-muted',
           )}
         >
           <p className="text-accent mb-1 h-[1em] text-xs font-bold tracking-[0.2em] uppercase">
-            {today && "Today"}
+            {today && 'Today'}
           </p>
           <p className="text-lg leading-relaxed font-medium">
             {formatShortDateWithDay(date)}
@@ -154,7 +154,7 @@ function DayColumn({
         </div>
 
         <Button
-          variant={exercises.length > 0 ? "secondary" : "dashed"}
+          variant={exercises.length > 0 ? 'secondary' : 'dashed'}
           size="sm"
           onClick={() => setManaging(true)}
           className="w-full"
@@ -174,16 +174,16 @@ function DayColumn({
                 {exercises.map((exercise) => (
                   <li
                     className={clsx(
-                      "font-medium",
+                      'font-medium',
                       exercise.remedy &&
-                        "hover:text-ink-secondary cursor-pointer underline decoration-dotted underline-offset-2",
+                        'hover:text-ink-secondary cursor-pointer underline decoration-dotted underline-offset-2',
                     )}
                     key={exercise.id}
                     onClick={() =>
                       exercise.remedy && setViewingRemedy(exercise.remedy)
                     }
                   >
-                    {exercise.remedy?.name ?? "Exercise"}
+                    {exercise.remedy?.name ?? 'Exercise'}
                   </li>
                 ))}
               </ul>
@@ -203,7 +203,7 @@ function DayColumn({
       <Modal
         open={!!viewingRemedy}
         onClose={() => setViewingRemedy(null)}
-        title={viewingRemedy?.name ?? ""}
+        title={viewingRemedy?.name ?? ''}
         size="sm"
       >
         {viewingRemedy?.description ? (

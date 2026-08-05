@@ -1,13 +1,13 @@
-import { useState } from "react";
-import { faAsterisk } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import type { RemedyCategory, Remedy } from "@/types/models";
-import { useRemedies } from "@/hooks/useRemedies";
-import { createRemedy } from "@/db/queries/remedies";
-import { Label } from "../ui/Label";
-import { TogglePill } from "@/components/ui/TogglePill";
-import { Button } from "../ui/Button";
-import { RemedyForm } from "@/components/remedies/RemedyForm";
+import { useState } from 'react';
+import { faAsterisk } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import type { RemedyCategory, Remedy } from '@/types/models';
+import { useRemedies } from '@/hooks/useRemedies';
+import { createRemedy } from '@/db/queries/remedies';
+import { Label } from '../ui/Label';
+import { TogglePill } from '@/components/ui/TogglePill';
+import { Button } from '../ui/Button';
+import { RemedyForm } from '@/components/remedies/RemedyForm';
 
 interface RemedyCheckboxGroupProps {
   injuryId: string;
@@ -60,7 +60,7 @@ function RemedySection({
           </TogglePill>
         ))}
         <Button
-          variant={remedies.length > 0 ? "ghost" : "dashed"}
+          variant={remedies.length > 0 ? 'ghost' : 'dashed'}
           size="sm"
           onClick={() => setAdding(true)}
         >
@@ -91,13 +91,13 @@ export function RemedyCheckboxGroup({
   onToggle,
 }: RemedyCheckboxGroupProps) {
   const remedies = useRemedies(injuryId) ?? [];
-  const strengthening = remedies.filter((r) => r.category === "Strengthening");
-  const mobility = remedies.filter((r) => r.category === "Mobility");
+  const strengthening = remedies.filter((r) => r.category === 'Strengthening');
+  const mobility = remedies.filter((r) => r.category === 'Mobility');
   const prevention = remedies
-    .filter((r) => r.category !== "Strengthening" && r.category !== "Mobility")
+    .filter((r) => r.category !== 'Strengthening' && r.category !== 'Mobility')
     .sort((a, b) => {
-      const categoryCompare = (a.category ?? "").localeCompare(
-        b.category ?? "",
+      const categoryCompare = (a.category ?? '').localeCompare(
+        b.category ?? '',
       );
       if (categoryCompare !== 0) return categoryCompare;
       return a.name.localeCompare(b.name);
@@ -126,7 +126,7 @@ export function RemedyCheckboxGroup({
         remedies={strengthening}
         selectedRemedyIds={selectedRemedyIds}
         onToggle={onToggle}
-        defaults={{ category: "Strengthening" }}
+        defaults={{ category: 'Strengthening' }}
         onAdd={handleAdd}
       />
       <RemedySection
@@ -134,7 +134,7 @@ export function RemedyCheckboxGroup({
         remedies={mobility}
         selectedRemedyIds={selectedRemedyIds}
         onToggle={onToggle}
-        defaults={{ category: "Mobility" }}
+        defaults={{ category: 'Mobility' }}
         onAdd={handleAdd}
       />
       <RemedySection

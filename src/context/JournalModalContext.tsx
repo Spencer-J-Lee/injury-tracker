@@ -1,5 +1,5 @@
-import { useState, useCallback, type ReactNode } from "react";
-import { JournalModalContext } from "@/context/journalModalStore";
+import { useState, useCallback, type ReactNode } from 'react';
+import { JournalModalContext } from '@/context/journalModalStore';
 
 export function JournalModalProvider({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);

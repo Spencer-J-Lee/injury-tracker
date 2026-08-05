@@ -1,12 +1,12 @@
-import { Select } from "@/components/ui/Select";
-import { Label } from "@/components/ui/Label";
-import { LinkButton } from "@/components/ui/LinkButton";
-import { SegmentedControl } from "@/components/ui/SegmentedControl";
-import type { NumbnessDuration, NumbnessSuspectedCause } from "@/types/models";
+import { Select } from '@/components/ui/Select';
+import { Label } from '@/components/ui/Label';
+import { LinkButton } from '@/components/ui/LinkButton';
+import { SegmentedControl } from '@/components/ui/SegmentedControl';
+import type { NumbnessDuration, NumbnessSuspectedCause } from '@/types/models';
 import {
   NUMBNESS_DURATION_OPTIONS,
   NUMBNESS_SUSPECTED_CAUSE_OPTIONS,
-} from "@/lib/morningCheckInOptions";
+} from '@/lib/morningCheckInOptions';
 
 interface NumbnessCheckInProps {
   present: boolean | undefined;
@@ -37,11 +37,11 @@ export function NumbnessCheckIn({
       </div>
       <SegmentedControl
         options={[
-          { value: "yes", label: "Yes" },
-          { value: "no", label: "No" },
+          { value: 'yes', label: 'Yes' },
+          { value: 'no', label: 'No' },
         ]}
-        value={present === undefined ? undefined : present ? "yes" : "no"}
-        onChange={(value) => onPresentChange(value === "yes")}
+        value={present === undefined ? undefined : present ? 'yes' : 'no'}
+        onChange={(value) => onPresentChange(value === 'yes')}
       />
 
       {present === true && (
@@ -49,7 +49,7 @@ export function NumbnessCheckIn({
           <div>
             <Label>Numbness duration</Label>
             <Select
-              value={duration ?? ""}
+              value={duration ?? ''}
               onChange={(e) =>
                 onDurationChange(
                   (e.target.value || undefined) as NumbnessDuration | undefined,
@@ -68,7 +68,7 @@ export function NumbnessCheckIn({
           <div>
             <Label>Suspected cause of numbness</Label>
             <Select
-              value={suspectedCause ?? ""}
+              value={suspectedCause ?? ''}
               onChange={(e) =>
                 onSuspectedCauseChange(
                   (e.target.value || undefined) as

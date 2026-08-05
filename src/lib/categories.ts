@@ -1,18 +1,18 @@
-import type { RemedyCategory, TriggerCategory } from "@/types/models";
+import type { RemedyCategory, TriggerCategory } from '@/types/models';
 
 export const REMEDY_CATEGORIES: RemedyCategory[] = [
-  "Strengthening",
-  "Mobility",
-  "Lifestyle",
-  "Rest",
+  'Strengthening',
+  'Mobility',
+  'Lifestyle',
+  'Rest',
 ];
 
 export const TRIGGER_CATEGORIES: TriggerCategory[] = [
-  "Activity",
-  "Overuse",
-  "Load",
-  "Posture",
-  "Muscle Tightness",
+  'Activity',
+  'Overuse',
+  'Load',
+  'Posture',
+  'Muscle Tightness',
 ];
 
 export function sortByCategoryThenName<

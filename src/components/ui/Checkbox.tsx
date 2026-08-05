@@ -1,19 +1,19 @@
-import type { InputHTMLAttributes } from "react";
-import clsx from "clsx";
+import type { InputHTMLAttributes } from 'react';
+import clsx from 'clsx';
 
-type Variant = "default" | "gold";
+type Variant = 'default' | 'gold';
 
 interface CheckboxProps extends Omit<
   InputHTMLAttributes<HTMLInputElement>,
-  "type"
+  'type'
 > {
   label: string;
   variant?: Variant;
 }
 
 const variantClasses: Record<Variant, string> = {
-  default: "checked:bg-accent checked:border-accent",
-  gold: "checked:border-amber-400 checked:bg-amber-400",
+  default: 'checked:bg-accent checked:border-accent',
+  gold: 'checked:border-amber-400 checked:bg-amber-400',
 };
 
 const variantIcon: Record<Variant, React.ReactNode> = {
@@ -47,15 +47,15 @@ export function Checkbox({
   label,
   className,
   id,
-  variant = "default",
+  variant = 'default',
   ...props
 }: CheckboxProps) {
   return (
     <label
       htmlFor={id}
       className={clsx(
-        "text-ink-secondary group flex gap-2.5 py-1.5 text-pretty",
-        !props.disabled && "cursor-pointer",
+        'text-ink-secondary group flex gap-2.5 py-1.5 text-pretty',
+        !props.disabled && 'cursor-pointer',
         className,
       )}
     >
@@ -64,7 +64,7 @@ export function Checkbox({
           id={id}
           type="checkbox"
           className={clsx(
-            "peer border-strong bg-input group-hover:border-ink-faint absolute inset-0 m-0 cursor-pointer appearance-none rounded border disabled:cursor-not-allowed disabled:opacity-50",
+            'peer border-strong bg-input group-hover:border-ink-faint absolute inset-0 m-0 cursor-pointer appearance-none rounded border disabled:cursor-not-allowed disabled:opacity-50',
             variantClasses[variant],
           )}
           {...props}

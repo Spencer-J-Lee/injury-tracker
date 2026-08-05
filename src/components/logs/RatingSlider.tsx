@@ -1,6 +1,6 @@
-import { useMemo } from "react";
-import { LinkButton } from "@/components/ui/LinkButton";
-import { Label } from "../ui/Label";
+import { useMemo } from 'react';
+import { LinkButton } from '@/components/ui/LinkButton';
+import { Label } from '../ui/Label';
 
 const THUMB_RADIUS_PX = 8;
 
@@ -29,7 +29,7 @@ export function RatingSlider({
 }: RatingSliderProps) {
   const pct = ((value ?? 0) / max) * 100;
   const listId = useMemo(
-    () => `${label.replace(/\s+/g, "-").toLowerCase()}-ticks`,
+    () => `${label.replace(/\s+/g, '-').toLowerCase()}-ticks`,
     [label],
   );
 
@@ -48,7 +48,7 @@ export function RatingSlider({
         <Label noMargin>{label}</Label>
         <div className="flex items-center gap-2.5">
           <span className="text-ink-emphasis font-semibold">
-            {value === undefined ? "Not rated" : formatValue(value)}
+            {value === undefined ? 'Not rated' : formatValue(value)}
           </span>
           {value !== undefined && (
             <LinkButton onClick={() => onChange(undefined)}>clear</LinkButton>

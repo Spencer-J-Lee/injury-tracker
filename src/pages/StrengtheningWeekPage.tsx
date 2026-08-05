@@ -1,38 +1,38 @@
-import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import { WeekNav } from "@/components/strengthening/WeekNav";
-import { WeekGrid } from "@/components/strengthening/WeekGrid";
-import { SegmentedControl } from "@/components/ui/SegmentedControl";
-import { PageTitle } from "@/components/ui/PageTitle";
-import { Button } from "@/components/ui/Button";
-import { Checkbox } from "@/components/ui/Checkbox";
-import { StrengtheningGuidelines } from "@/components/strengthening/StrengtheningGuidelines";
-import { useWeekPlannedExercises } from "@/hooks/useWeekPlannedExercises";
+import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { WeekNav } from '@/components/strengthening/WeekNav';
+import { WeekGrid } from '@/components/strengthening/WeekGrid';
+import { SegmentedControl } from '@/components/ui/SegmentedControl';
+import { PageTitle } from '@/components/ui/PageTitle';
+import { Button } from '@/components/ui/Button';
+import { Checkbox } from '@/components/ui/Checkbox';
+import { StrengtheningGuidelines } from '@/components/strengthening/StrengtheningGuidelines';
+import { useWeekPlannedExercises } from '@/hooks/useWeekPlannedExercises';
 import {
   getGuidelinesAckDate,
   setGuidelinesAckDate,
-} from "@/lib/strengtheningGuidelinesAck";
+} from '@/lib/strengtheningGuidelinesAck';
 import {
   get4DayWindowStart,
   getNextWindowStart,
   getPreviousWindowStart,
   getTodayDateString,
   getWeekStart,
-} from "@/lib/weeks";
-import { ExerciseModificationCheatsheet } from "@/components/strengthening/ExerciseModificationCheatsheet";
+} from '@/lib/weeks';
+import { ExerciseModificationCheatsheet } from '@/components/strengthening/ExerciseModificationCheatsheet';
 
-type ViewMode = "week" | "4day";
+type ViewMode = 'week' | '4day';
 
-const WINDOW_SIZE: Record<ViewMode, number> = { week: 7, "4day": 4 };
+const WINDOW_SIZE: Record<ViewMode, number> = { week: 7, '4day': 4 };
 
 const VIEW_OPTIONS: { value: ViewMode; label: string }[] = [
-  { value: "week", label: "7 Day" },
-  { value: "4day", label: "4 Day" },
+  { value: 'week', label: '7 Day' },
+  { value: '4day', label: '4 Day' },
 ];
 
 export function StrengtheningWeekPage() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const view: ViewMode = searchParams.get("view") === "4day" ? "4day" : "week";
+  const view: ViewMode = searchParams.get('view') === '4day' ? '4day' : 'week';
   const size = WINDOW_SIZE[view];
 
   const [ackDate, setAckDate] = useState(getGuidelinesAckDate);
@@ -42,11 +42,11 @@ export function StrengtheningWeekPage() {
   const today = getTodayDateString();
   const hasReadGuidelinesToday = ackDate === today;
   const currentWindowStart =
-    view === "week" ? getWeekStart(today) : get4DayWindowStart(today);
+    view === 'week' ? getWeekStart(today) : get4DayWindowStart(today);
 
-  const startParam = searchParams.get("start");
+  const startParam = searchParams.get('start');
   const windowStart = startParam
-    ? view === "week"
+    ? view === 'week'
       ? getWeekStart(startParam)
       : startParam
     : currentWindowStart;
@@ -58,9 +58,9 @@ export function StrengtheningWeekPage() {
     setSearchParams((prev) => {
       const params = new URLSearchParams(prev);
       if (next === currentWindowStart) {
-        params.delete("start");
+        params.delete('start');
       } else {
-        params.set("start", next);
+        params.set('start', next);
       }
       return params;
     });
@@ -69,11 +69,11 @@ export function StrengtheningWeekPage() {
   const setView = (next: ViewMode) => {
     setSearchParams((prev) => {
       const params = new URLSearchParams(prev);
-      params.delete("start");
-      if (next === "week") {
-        params.delete("view");
+      params.delete('start');
+      if (next === 'week') {
+        params.delete('view');
       } else {
-        params.set("view", next);
+        params.set('view', next);
       }
       return params;
     });

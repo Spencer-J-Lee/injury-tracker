@@ -1,7 +1,7 @@
-import { useMorningCheckInsForInjury } from "@/hooks/useMorningCheckInsForInjury";
-import { chartColors as colors } from "@/components/charts/chartColors";
-import { TrendChart } from "@/components/charts/TrendChart";
-import type { MorningCheckIn } from "@/types/models";
+import { useMorningCheckInsForInjury } from '@/hooks/useMorningCheckInsForInjury';
+import { chartColors as colors } from '@/components/charts/chartColors';
+import { TrendChart } from '@/components/charts/TrendChart';
+import type { MorningCheckIn } from '@/types/models';
 
 export function MorningTrendChart({ injuryId }: { injuryId: string }) {
   const entries = useMorningCheckInsForInjury(injuryId);
@@ -21,22 +21,22 @@ export function MorningTrendChart({ injuryId }: { injuryId: string }) {
         stiffnessLevel: e.stiffnessLevel,
       })}
       axes={[
-        { id: "left", domain: [0, 10], ticks: [0, 5, 10], color: colors.muted },
+        { id: 'left', domain: [0, 10], ticks: [0, 5, 10], color: colors.muted },
       ]}
-      referenceLine={{ yAxisId: "left", y: 5 }}
+      referenceLine={{ yAxisId: 'left', y: 5 }}
       series={[
         {
-          dataKey: "painLevel",
-          legendLabel: "Resting pain (0-10)",
+          dataKey: 'painLevel',
+          legendLabel: 'Resting pain (0-10)',
           color: colors.line,
-          yAxisId: "left",
+          yAxisId: 'left',
           tooltipFormatter: (v) => `${v}/10 resting pain`,
         },
         {
-          dataKey: "stiffnessLevel",
-          legendLabel: "Stiffness (0-10)",
+          dataKey: 'stiffnessLevel',
+          legendLabel: 'Stiffness (0-10)',
           color: colors.frequencyLine,
-          yAxisId: "left",
+          yAxisId: 'left',
           tooltipFormatter: (v) => `${v}/10 stiffness`,
         },
       ]}

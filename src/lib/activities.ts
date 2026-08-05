@@ -1,9 +1,9 @@
-import type { Activity, ActivityBodyPart, Section } from "@/types/models";
+import type { Activity, ActivityBodyPart, Section } from '@/types/models';
 
 export const ACTIVITY_BODY_PARTS: ActivityBodyPart[] = [
-  "Arms",
-  "Legs",
-  "Neck/Shoulders",
+  'Arms',
+  'Legs',
+  'Neck/Shoulders',
 ];
 
 export function groupActivitiesBySections(

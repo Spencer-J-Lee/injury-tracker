@@ -1,17 +1,17 @@
-import { useSearchParams } from "react-router-dom";
-import { WeekNav } from "@/components/strengthening/WeekNav";
-import { HabitGrid } from "@/components/habits/HabitGrid";
-import { HabitList } from "@/components/habits/HabitList";
-import { PageTitle } from "@/components/ui/PageTitle";
-import { useHabits } from "@/hooks/useHabits";
-import { useWeekHabitCompletions } from "@/hooks/useWeekHabitCompletions";
+import { useSearchParams } from 'react-router-dom';
+import { WeekNav } from '@/components/strengthening/WeekNav';
+import { HabitGrid } from '@/components/habits/HabitGrid';
+import { HabitList } from '@/components/habits/HabitList';
+import { PageTitle } from '@/components/ui/PageTitle';
+import { useHabits } from '@/hooks/useHabits';
+import { useWeekHabitCompletions } from '@/hooks/useWeekHabitCompletions';
 import {
   getNextWindowStart,
   getPreviousWindowStart,
   getTodayDateString,
   getWeekStart,
   getWindowDates,
-} from "@/lib/weeks";
+} from '@/lib/weeks';
 
 const WEEK_SIZE = 7;
 
@@ -21,7 +21,7 @@ export function HabitsPage() {
   const today = getTodayDateString();
   const currentWindowStart = getWeekStart(today);
 
-  const startParam = searchParams.get("start");
+  const startParam = searchParams.get('start');
   const windowStart = startParam
     ? getWeekStart(startParam)
     : currentWindowStart;
@@ -36,9 +36,9 @@ export function HabitsPage() {
     setSearchParams((prev) => {
       const params = new URLSearchParams(prev);
       if (next === currentWindowStart) {
-        params.delete("start");
+        params.delete('start');
       } else {
-        params.set("start", next);
+        params.set('start', next);
       }
       return params;
     });

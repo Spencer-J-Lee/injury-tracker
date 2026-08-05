@@ -1,21 +1,21 @@
-import { format } from "date-fns";
-import { db } from "@/db/schema";
-import type { JournalEntry } from "@/types/models";
+import { format } from 'date-fns';
+import { db } from '@/db/schema';
+import type { JournalEntry } from '@/types/models';
 
 export function listJournalEntries() {
-  return db.journalEntries.orderBy("date").reverse().toArray();
+  return db.journalEntries.orderBy('date').reverse().toArray();
 }
 
 export function getTodayJournalEntry() {
-  const today = format(new Date(), "yyyy-MM-dd");
-  return db.journalEntries.where("date").equals(today).first();
+  const today = format(new Date(), 'yyyy-MM-dd');
+  return db.journalEntries.where('date').equals(today).first();
 }
 
 export async function createJournalEntry(text: string): Promise<JournalEntry> {
   const now = new Date();
   const entry: JournalEntry = {
     id: crypto.randomUUID(),
-    date: format(now, "yyyy-MM-dd"),
+    date: format(now, 'yyyy-MM-dd'),
     text,
     createdAt: now.toISOString(),
     updatedAt: now.toISOString(),

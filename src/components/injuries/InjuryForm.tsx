@@ -1,21 +1,21 @@
-import { useState, type SubmitEvent } from "react";
+import { useState, type SubmitEvent } from 'react';
 import type {
   Injury,
   InjuryPriority,
   InjuryStatus,
   PainMechanism,
-} from "@/types/models";
-import { Input } from "@/components/ui/Input";
-import { Textarea } from "@/components/ui/Textarea";
-import { Select } from "@/components/ui/Select";
-import { Button } from "@/components/ui/Button";
-import { Label } from "@/components/ui/Label";
-import { Kbd } from "@/components/ui/Kbd";
-import { TogglePill } from "@/components/ui/TogglePill";
-import { useFormShortcuts } from "@/hooks/useFormShortcuts";
-import { useUnsavedChangesGuard } from "@/hooks/useUnsavedChangesGuard";
-import { saveShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
-import { PAIN_MECHANISM_OPTIONS } from "@/lib/morningCheckInOptions";
+} from '@/types/models';
+import { Input } from '@/components/ui/Input';
+import { Textarea } from '@/components/ui/Textarea';
+import { Select } from '@/components/ui/Select';
+import { Button } from '@/components/ui/Button';
+import { Label } from '@/components/ui/Label';
+import { Kbd } from '@/components/ui/Kbd';
+import { TogglePill } from '@/components/ui/TogglePill';
+import { useFormShortcuts } from '@/hooks/useFormShortcuts';
+import { useUnsavedChangesGuard } from '@/hooks/useUnsavedChangesGuard';
+import { saveShortcutLabel, cancelShortcutLabel } from '@/lib/shortcuts';
+import { PAIN_MECHANISM_OPTIONS } from '@/lib/morningCheckInOptions';
 
 interface InjuryFormValues {
   bodyPart: string;
@@ -40,14 +40,14 @@ export function InjuryForm({
   onCancel,
   submitLabel,
 }: InjuryFormProps) {
-  const [bodyPart, setBodyPart] = useState(initial?.bodyPart ?? "");
-  const [injuryType, setInjuryType] = useState(initial?.injuryType ?? "");
+  const [bodyPart, setBodyPart] = useState(initial?.bodyPart ?? '');
+  const [injuryType, setInjuryType] = useState(initial?.injuryType ?? '');
   const [locationDetail, setLocationDetail] = useState(
-    initial?.locationDetail ?? "",
+    initial?.locationDetail ?? '',
   );
-  const [description, setDescription] = useState(initial?.description ?? "");
+  const [description, setDescription] = useState(initial?.description ?? '');
   const [status, setStatus] = useState<InjuryStatus>(
-    initial?.status ?? "active",
+    initial?.status ?? 'active',
   );
   const [priority, setPriority] = useState<InjuryPriority | null>(
     initial?.priority ?? null,
@@ -66,14 +66,14 @@ export function InjuryForm({
   };
 
   const isDirty =
-    bodyPart !== (initial?.bodyPart ?? "") ||
-    injuryType !== (initial?.injuryType ?? "") ||
-    locationDetail !== (initial?.locationDetail ?? "") ||
-    description !== (initial?.description ?? "") ||
-    status !== (initial?.status ?? "active") ||
+    bodyPart !== (initial?.bodyPart ?? '') ||
+    injuryType !== (initial?.injuryType ?? '') ||
+    locationDetail !== (initial?.locationDetail ?? '') ||
+    description !== (initial?.description ?? '') ||
+    status !== (initial?.status ?? 'active') ||
     priority !== (initial?.priority ?? null) ||
-    [...painMechanisms].sort().join(",") !==
-      [...(initial?.painMechanisms ?? [])].sort().join(",");
+    [...painMechanisms].sort().join(',') !==
+      [...(initial?.painMechanisms ?? [])].sort().join(',');
 
   const { markSaved } = useUnsavedChangesGuard(isDirty);
 
@@ -161,10 +161,10 @@ export function InjuryForm({
       <div>
         <Label size="md">Priority</Label>
         <Select
-          value={priority ?? ""}
+          value={priority ?? ''}
           onChange={(e) =>
             setPriority(
-              e.target.value === "" ? null : (e.target.value as InjuryPriority),
+              e.target.value === '' ? null : (e.target.value as InjuryPriority),
             )
           }
         >

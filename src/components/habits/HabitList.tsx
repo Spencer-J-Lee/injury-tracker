@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { faPen, faBoxArchive } from "@fortawesome/free-solid-svg-icons";
+import { useState } from 'react';
+import { faPen, faBoxArchive } from '@fortawesome/free-solid-svg-icons';
 import {
   DndContext,
   closestCenter,
@@ -8,28 +8,28 @@ import {
   useSensor,
   useSensors,
   type DragEndEvent,
-} from "@dnd-kit/core";
+} from '@dnd-kit/core';
 import {
   SortableContext,
   arrayMove,
   sortableKeyboardCoordinates,
   useSortable,
   verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
-import { CollapsibleCard } from "@/components/ui/CollapsibleCard";
-import { Button } from "@/components/ui/Button";
-import { IconButton } from "@/components/ui/IconButton";
-import { SortableCard } from "@/components/ui/SortableCard";
-import { HabitForm } from "@/components/habits/HabitForm";
-import { useHabits } from "@/hooks/useHabits";
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+import { CollapsibleCard } from '@/components/ui/CollapsibleCard';
+import { Button } from '@/components/ui/Button';
+import { IconButton } from '@/components/ui/IconButton';
+import { SortableCard } from '@/components/ui/SortableCard';
+import { HabitForm } from '@/components/habits/HabitForm';
+import { useHabits } from '@/hooks/useHabits';
 import {
   createHabit,
   archiveHabit,
   updateHabit,
   reorderHabits,
-} from "@/db/queries/habits";
-import type { Habit } from "@/types/models";
+} from '@/db/queries/habits';
+import type { Habit } from '@/types/models';
 
 interface SortableHabitItemProps {
   habit: Habit;
@@ -65,7 +65,7 @@ function SortableHabitItem({
         <HabitForm
           initial={{
             name: habit.name,
-            description: habit.description ?? "",
+            description: habit.description ?? '',
           }}
           submitLabel="Save"
           onCancel={onCancelEdit}
@@ -126,7 +126,7 @@ export function HabitList() {
     try {
       await reorderHabits(reordered.map((habit) => habit.id));
     } catch (error) {
-      console.error("Failed to reorder habits", error);
+      console.error('Failed to reorder habits', error);
     }
   };
 
@@ -174,8 +174,8 @@ export function HabitList() {
         </div>
       ) : (
         <Button
-          variant={habits.length > 0 ? "ghost" : "dashed"}
-          size={habits.length > 0 ? "sm" : "md"}
+          variant={habits.length > 0 ? 'ghost' : 'dashed'}
+          size={habits.length > 0 ? 'sm' : 'md'}
           onClick={() => setAdding(true)}
           className="w-full"
         >

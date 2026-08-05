@@ -1,4 +1,4 @@
-import { RatingSlider } from "@/components/logs/RatingSlider";
+import { RatingSlider } from '@/components/logs/RatingSlider';
 
 interface PainFrequencySliderProps {
   value: number | undefined;

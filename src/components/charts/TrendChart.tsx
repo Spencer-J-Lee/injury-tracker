@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState } from 'react';
 import {
   ResponsiveContainer,
   LineChart,
@@ -9,32 +9,32 @@ import {
   Tooltip,
   ReferenceLine,
   ReferenceArea,
-} from "recharts";
-import { Card } from "@/components/ui/Card";
-import { SegmentedControl } from "@/components/ui/SegmentedControl";
+} from 'recharts';
+import { Card } from '@/components/ui/Card';
+import { SegmentedControl } from '@/components/ui/SegmentedControl';
 import {
   formatShortDate,
   formatTimestamp,
   isWithinRange,
   type TrendRange,
-} from "@/lib/dates";
-import { chartColors as colors } from "@/components/charts/chartColors";
+} from '@/lib/dates';
+import { chartColors as colors } from '@/components/charts/chartColors';
 
-type SegmentedControlTone = "accent" | "orange";
+type SegmentedControlTone = 'accent' | 'orange';
 
 function buildRanges(
   tone: SegmentedControlTone,
 ): { value: TrendRange; label: string; tone: SegmentedControlTone }[] {
   return [
-    { value: "7d", label: "7d", tone },
-    { value: "30d", label: "30d", tone },
-    { value: "90d", label: "90d", tone },
-    { value: "all", label: "All", tone },
+    { value: '7d', label: '7d', tone },
+    { value: '30d', label: '30d', tone },
+    { value: '90d', label: '90d', tone },
+    { value: 'all', label: 'All', tone },
   ];
 }
 
 export interface TrendChartAxis {
-  id: "left" | "right";
+  id: 'left' | 'right';
   domain: [number, number];
   ticks: number[];
   tickFormatter?: (value: number) => string;
@@ -45,7 +45,7 @@ export interface TrendChartSeries {
   dataKey: string;
   legendLabel: string;
   color: string;
-  yAxisId: "left" | "right";
+  yAxisId: 'left' | 'right';
   tooltipFormatter: (value: number) => string;
 }
 
@@ -98,7 +98,7 @@ interface TrendChartProps<T> {
   isRated: (entry: T) => boolean;
   series: TrendChartSeries[];
   axes: TrendChartAxis[];
-  referenceLine?: { yAxisId: "left" | "right"; y: number };
+  referenceLine?: { yAxisId: 'left' | 'right'; y: number };
   rangeControlTone?: SegmentedControlTone;
 }
 
@@ -112,9 +112,9 @@ export function TrendChart<T>({
   series,
   axes,
   referenceLine,
-  rangeControlTone = "accent",
+  rangeControlTone = 'accent',
 }: TrendChartProps<T>) {
-  const [range, setRange] = useState<TrendRange>("7d");
+  const [range, setRange] = useState<TrendRange>('7d');
   const ranges = useMemo(
     () => buildRanges(rangeControlTone),
     [rangeControlTone],
@@ -182,7 +182,7 @@ export function TrendChart<T>({
                   <YAxis
                     key={axis.id}
                     yAxisId={axis.id}
-                    orientation={axis.id === "right" ? "right" : undefined}
+                    orientation={axis.id === 'right' ? 'right' : undefined}
                     domain={axis.domain}
                     ticks={axis.ticks}
                     tickFormatter={axis.tickFormatter}

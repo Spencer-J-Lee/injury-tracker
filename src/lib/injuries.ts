@@ -1,4 +1,4 @@
-import type { Injury, InjuryPriority, InjuryStatus } from "@/types/models";
+import type { Injury, InjuryPriority, InjuryStatus } from '@/types/models';
 
 export function formatInjuryName(injury: {
   bodyPart: string;
@@ -9,11 +9,11 @@ export function formatInjuryName(injury: {
 }
 
 export const STATUS_ORDER: InjuryStatus[] = [
-  "active",
-  "monitoring",
-  "resolved",
+  'active',
+  'monitoring',
+  'resolved',
 ];
-const PRIORITY_ORDER: InjuryPriority[] = ["urgent", "high", "medium", "low"];
+const PRIORITY_ORDER: InjuryPriority[] = ['urgent', 'high', 'medium', 'low'];
 
 export function compareInjuries(a: Injury, b: Injury): number {
   const statusDiff =

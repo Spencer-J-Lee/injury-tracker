@@ -1,12 +1,12 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import clsx from "clsx";
-import { format, isToday, isYesterday, parseISO } from "date-fns";
-import Lottie from "lottie-react";
-import confettiAnimation from "@/assets/lottie/confetti.json";
-import { Card } from "@/components/ui/Card";
-import { Checkbox } from "@/components/ui/Checkbox";
-import { toggleHabitCompletion } from "@/db/queries/habitCompletions";
-import type { Habit, HabitCompletion } from "@/types/models";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import clsx from 'clsx';
+import { format, isToday, isYesterday, parseISO } from 'date-fns';
+import Lottie from 'lottie-react';
+import confettiAnimation from '@/assets/lottie/confetti.json';
+import { Card } from '@/components/ui/Card';
+import { Checkbox } from '@/components/ui/Checkbox';
+import { toggleHabitCompletion } from '@/db/queries/habitCompletions';
+import type { Habit, HabitCompletion } from '@/types/models';
 
 interface HabitGridProps {
   habits: Habit[];
@@ -42,8 +42,8 @@ export function HabitGrid({ habits, completions, weekDates }: HabitGridProps) {
           date,
           today: isToday(parsed),
           editable: isToday(parsed) || isYesterday(parsed),
-          dayLabel: format(parsed, "EEE"),
-          dateLabel: format(parsed, "MMM d"),
+          dayLabel: format(parsed, 'EEE'),
+          dateLabel: format(parsed, 'MMM d'),
         };
       }),
     [weekDates],
@@ -139,25 +139,25 @@ export function HabitGrid({ habits, completions, weekDates }: HabitGridProps) {
                   <th
                     key={date}
                     className={clsx(
-                      "w-24 min-w-24 px-2 pb-3 text-center whitespace-nowrap",
-                      today && "bg-accent-soft/70 rounded-t-lg",
+                      'w-24 min-w-24 px-2 pb-3 text-center whitespace-nowrap',
+                      today && 'bg-accent-soft/70 rounded-t-lg',
                     )}
                   >
                     <p className="text-accent h-[2em] pt-1.5 text-xs font-bold tracking-[0.2em] uppercase">
-                      {today && "Today"}
+                      {today && 'Today'}
                     </p>
                     <div
                       className={clsx(
-                        "text-xs tracking-wide uppercase",
-                        today ? "text-ink-muted" : "text-ink-faint",
+                        'text-xs tracking-wide uppercase',
+                        today ? 'text-ink-muted' : 'text-ink-faint',
                       )}
                     >
                       {dayLabel}
                     </div>
                     <div
                       className={clsx(
-                        "font-medium",
-                        today ? "text-ink" : "text-ink-faint",
+                        'font-medium',
+                        today ? 'text-ink' : 'text-ink-faint',
                       )}
                     >
                       {dateLabel}
@@ -196,9 +196,9 @@ export function HabitGrid({ habits, completions, weekDates }: HabitGridProps) {
                               : undefined
                           }
                           className={clsx(
-                            "w-24 min-w-24 py-1.5 text-center",
-                            today && "bg-accent-soft/70",
-                            today && isLastRow && "rounded-b-lg",
+                            'w-24 min-w-24 py-1.5 text-center',
+                            today && 'bg-accent-soft/70',
+                            today && isLastRow && 'rounded-b-lg',
                           )}
                         >
                           <div className="flex justify-center">
@@ -208,7 +208,7 @@ export function HabitGrid({ habits, completions, weekDates }: HabitGridProps) {
                               checked={checked}
                               disabled={!editable}
                               variant={
-                                completeDates.has(date) ? "gold" : "default"
+                                completeDates.has(date) ? 'gold' : 'default'
                               }
                               onChange={() => toggleCompletion(habit.id, date)}
                             />

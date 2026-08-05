@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState, type KeyboardEvent } from "react";
-import { EditorContent, useEditor, useEditorState } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import Placeholder from "@tiptap/extension-placeholder";
-import Link from "@tiptap/extension-link";
-import { TaskList } from "@tiptap/extension-task-list";
-import { TaskItem } from "@tiptap/extension-task-item";
-import clsx from "clsx";
+import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
+import { EditorContent, useEditor, useEditorState } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import Placeholder from '@tiptap/extension-placeholder';
+import Link from '@tiptap/extension-link';
+import { TaskList } from '@tiptap/extension-task-list';
+import { TaskItem } from '@tiptap/extension-task-item';
+import clsx from 'clsx';
 import {
   faBold,
   faLink,
@@ -13,10 +13,10 @@ import {
   faListCheck,
   faListOl,
   faListUl,
-} from "@fortawesome/free-solid-svg-icons";
-import { IconButton } from "@/components/ui/IconButton";
-import { Input } from "@/components/ui/Input";
-import { Button } from "@/components/ui/Button";
+} from '@fortawesome/free-solid-svg-icons';
+import { IconButton } from '@/components/ui/IconButton';
+import { Input } from '@/components/ui/Input';
+import { Button } from '@/components/ui/Button';
 
 // Prepend https:// to bare URLs (e.g. "example.com") while leaving explicit
 // schemes (mailto:, tel:, http:, etc.) untouched.
@@ -26,9 +26,9 @@ function normalizeUrl(url: string) {
 
 function escapeHtml(value: string) {
   return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
 }
 
 // Descriptions saved before rich text was introduced are plain strings (with
@@ -39,9 +39,9 @@ function toEditorHtml(value: string) {
   return value
     .split(/\n{2,}/)
     .map(
-      (paragraph) => `<p>${escapeHtml(paragraph).replace(/\n/g, "<br>")}</p>`,
+      (paragraph) => `<p>${escapeHtml(paragraph).replace(/\n/g, '<br>')}</p>`,
     )
-    .join("");
+    .join('');
 }
 
 interface RichTextEditorProps {
@@ -79,30 +79,30 @@ export function RichTextEditor({
         openOnClick: false,
         autolink: true,
         linkOnPaste: true,
-        defaultProtocol: "https",
-        protocols: ["http", "https", "mailto", "tel"],
-        HTMLAttributes: { rel: "noopener noreferrer", target: "_blank" },
+        defaultProtocol: 'https',
+        protocols: ['http', 'https', 'mailto', 'tel'],
+        HTMLAttributes: { rel: 'noopener noreferrer', target: '_blank' },
       }),
     ],
     content: toEditorHtml(value),
     editorProps: {
       attributes: {
         class:
-          "journal-rich-text min-h-20 text-ink-emphasis focus:outline-none",
+          'journal-rich-text min-h-20 text-ink-emphasis focus:outline-none',
       },
     },
     immediatelyRender: false,
     shouldRerenderOnTransaction: false,
-    autofocus: autoFocus ? "end" : false,
+    autofocus: autoFocus ? 'end' : false,
     onUpdate: ({ editor }) => {
-      onChange(editor.getText().trim() ? editor.getHTML() : "");
+      onChange(editor.getText().trim() ? editor.getHTML() : '');
     },
   });
 
   // Only fires for an external reset (e.g. clearing the draft after save) — typing
   // never sets `value` back to '' while the editor still has content.
   useEffect(() => {
-    if (editor && value === "" && !editor.isEmpty) {
+    if (editor && value === '' && !editor.isEmpty) {
       editor.commands.clearContent();
     }
   }, [value, editor]);
@@ -110,16 +110,16 @@ export function RichTextEditor({
   const editorState = useEditorState({
     editor,
     selector: (ctx) => ({
-      isBold: ctx.editor?.isActive("bold") ?? false,
-      isBulletList: ctx.editor?.isActive("bulletList") ?? false,
-      isOrderedList: ctx.editor?.isActive("orderedList") ?? false,
-      isTaskList: ctx.editor?.isActive("taskList") ?? false,
-      isLink: ctx.editor?.isActive("link") ?? false,
+      isBold: ctx.editor?.isActive('bold') ?? false,
+      isBulletList: ctx.editor?.isActive('bulletList') ?? false,
+      isOrderedList: ctx.editor?.isActive('orderedList') ?? false,
+      isTaskList: ctx.editor?.isActive('taskList') ?? false,
+      isLink: ctx.editor?.isActive('link') ?? false,
     }),
   });
 
   const [linkMenuOpen, setLinkMenuOpen] = useState(false);
-  const [linkUrl, setLinkUrl] = useState("");
+  const [linkUrl, setLinkUrl] = useState('');
   const linkMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -130,18 +130,18 @@ export function RichTextEditor({
       }
     };
     const handleKeyDown = (event: globalThis.KeyboardEvent) => {
-      if (event.key === "Escape") setLinkMenuOpen(false);
+      if (event.key === 'Escape') setLinkMenuOpen(false);
     };
-    document.addEventListener("mousedown", handlePointerDown);
-    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener('mousedown', handlePointerDown);
+    document.addEventListener('keydown', handleKeyDown);
     return () => {
-      document.removeEventListener("mousedown", handlePointerDown);
-      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener('mousedown', handlePointerDown);
+      document.removeEventListener('keydown', handleKeyDown);
     };
   }, [linkMenuOpen]);
 
   function openLinkMenu() {
-    setLinkUrl(editor?.getAttributes("link").href ?? "");
+    setLinkUrl(editor?.getAttributes('link').href ?? '');
     setLinkMenuOpen(true);
   }
 
@@ -151,24 +151,24 @@ export function RichTextEditor({
       editor
         ?.chain()
         .focus()
-        .extendMarkRange("link")
+        .extendMarkRange('link')
         .setLink({ href: normalizeUrl(url) })
         .run();
     } else {
-      editor?.chain().focus().extendMarkRange("link").unsetLink().run();
+      editor?.chain().focus().extendMarkRange('link').unsetLink().run();
     }
     setLinkMenuOpen(false);
   }
 
   function removeLink() {
-    editor?.chain().focus().extendMarkRange("link").unsetLink().run();
+    editor?.chain().focus().extendMarkRange('link').unsetLink().run();
     setLinkMenuOpen(false);
   }
 
   return (
     <div
       className={clsx(
-        "border-strong bg-input focus-within:border-accent rounded-xl border",
+        'border-strong bg-input focus-within:border-accent rounded-xl border',
         className,
       )}
     >
@@ -178,7 +178,7 @@ export function RichTextEditor({
           label="Bold"
           onClick={() => editor?.chain().focus().toggleBold().run()}
           className={clsx(
-            editorState?.isBold && "bg-accent-soft text-accent-soft-text",
+            editorState?.isBold && 'bg-accent-soft text-accent-soft-text',
           )}
         />
         <IconButton
@@ -186,7 +186,7 @@ export function RichTextEditor({
           label="Bulleted list"
           onClick={() => editor?.chain().focus().toggleBulletList().run()}
           className={clsx(
-            editorState?.isBulletList && "bg-accent-soft text-accent-soft-text",
+            editorState?.isBulletList && 'bg-accent-soft text-accent-soft-text',
           )}
         />
         <IconButton
@@ -195,7 +195,7 @@ export function RichTextEditor({
           onClick={() => editor?.chain().focus().toggleOrderedList().run()}
           className={clsx(
             editorState?.isOrderedList &&
-              "bg-accent-soft text-accent-soft-text",
+              'bg-accent-soft text-accent-soft-text',
           )}
         />
         <IconButton
@@ -203,7 +203,7 @@ export function RichTextEditor({
           label="Checklist"
           onClick={() => editor?.chain().focus().toggleTaskList().run()}
           className={clsx(
-            editorState?.isTaskList && "bg-accent-soft text-accent-soft-text",
+            editorState?.isTaskList && 'bg-accent-soft text-accent-soft-text',
           )}
         />
         <div className="relative" ref={linkMenuRef}>
@@ -214,7 +214,7 @@ export function RichTextEditor({
               linkMenuOpen ? setLinkMenuOpen(false) : openLinkMenu()
             }
             className={clsx(
-              editorState?.isLink && "bg-accent-soft text-accent-soft-text",
+              editorState?.isLink && 'bg-accent-soft text-accent-soft-text',
             )}
           />
           {linkMenuOpen && (
@@ -227,7 +227,7 @@ export function RichTextEditor({
                   value={linkUrl}
                   onChange={(e) => setLinkUrl(e.target.value)}
                   onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
-                    if (e.key === "Enter") {
+                    if (e.key === 'Enter') {
                       e.preventDefault();
                       applyLink();
                     }
@@ -241,7 +241,7 @@ export function RichTextEditor({
                   className="shrink-0"
                   onClick={applyLink}
                 >
-                  {editorState?.isLink ? "Update" : "Add"}
+                  {editorState?.isLink ? 'Update' : 'Add'}
                 </Button>
               </div>
               {editorState?.isLink && (
@@ -270,7 +270,7 @@ export function RichTextContent({
 }) {
   return (
     <div
-      className={clsx("journal-rich-text", className)}
+      className={clsx('journal-rich-text', className)}
       dangerouslySetInnerHTML={{ __html: toEditorHtml(html) }}
     />
   );

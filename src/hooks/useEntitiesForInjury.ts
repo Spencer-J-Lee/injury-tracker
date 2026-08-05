@@ -1,4 +1,4 @@
-import { useLiveQuery } from "dexie-react-hooks";
+import { useLiveQuery } from 'dexie-react-hooks';
 
 export function useEntitiesForInjury<T>(
   listFn: (injuryId: string, limit?: number) => Promise<T[]>,

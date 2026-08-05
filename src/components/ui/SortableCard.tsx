@@ -1,13 +1,13 @@
-import type { ElementType, ReactNode } from "react";
-import clsx from "clsx";
-import { faGripVertical } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
-import { Card } from "@/components/ui/Card";
+import type { ElementType, ReactNode } from 'react';
+import clsx from 'clsx';
+import { faGripVertical } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+import { Card } from '@/components/ui/Card';
 
 const SIDEBAR_CLASSES =
-  "bg-surface-raised flex w-8 shrink-0 items-center justify-center self-stretch";
+  'bg-surface-raised flex w-8 shrink-0 items-center justify-center self-stretch';
 
 interface SortableCardProps {
   id: string;
@@ -20,7 +20,7 @@ interface SortableCardProps {
 
 export function SortableCard({
   id,
-  as = "div",
+  as = 'div',
   draggable = true,
   title,
   description,
@@ -50,7 +50,7 @@ export function SortableCard({
           title="Drag to reorder"
           className={clsx(
             SIDEBAR_CLASSES,
-            "text-ink-muted hover:text-ink cursor-grab touch-none active:cursor-grabbing",
+            'text-ink-muted hover:text-ink cursor-grab touch-none active:cursor-grabbing',
           )}
           {...attributes}
           {...listeners}

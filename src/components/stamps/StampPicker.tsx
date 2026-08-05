@@ -1,23 +1,23 @@
-import { useRef, useState } from "react";
-import { createPortal } from "react-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faStamp } from "@fortawesome/free-solid-svg-icons";
-import { useClickOutside } from "@/hooks/useClickOutside";
-import { useFormShortcuts } from "@/hooks/useFormShortcuts";
-import { Input } from "@/components/ui/Input";
-import { Button } from "@/components/ui/Button";
+import { useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faStamp } from '@fortawesome/free-solid-svg-icons';
+import { useClickOutside } from '@/hooks/useClickOutside';
+import { useFormShortcuts } from '@/hooks/useFormShortcuts';
+import { Input } from '@/components/ui/Input';
+import { Button } from '@/components/ui/Button';
 import {
   getLastUsedStamp,
   getStamps,
   setLastUsedStamp,
   setStamps as persistStamps,
-} from "@/lib/stampPicker";
-import clsx from "clsx";
+} from '@/lib/stampPicker';
+import clsx from 'clsx';
 
 export function StampPicker() {
   const [open, setOpen] = useState(false);
   const [stamps, setStampsState] = useState<string[]>(() => getStamps());
-  const [newStamp, setNewStamp] = useState("");
+  const [newStamp, setNewStamp] = useState('');
   const [copiedStamp, setCopiedStamp] = useState<string | null>(null);
   const [lastUsedStamp, setLastUsedStampState] = useState<string | null>(() =>
     getLastUsedStamp(),
@@ -57,11 +57,11 @@ export function StampPicker() {
   const handleAdd = () => {
     const trimmed = newStamp.trim();
     if (!trimmed || stamps.includes(trimmed)) {
-      setNewStamp("");
+      setNewStamp('');
       return;
     }
     updateStamps([...stamps, trimmed]);
-    setNewStamp("");
+    setNewStamp('');
   };
 
   return (
@@ -73,8 +73,8 @@ export function StampPicker() {
           onClick={() => setOpen((o) => !o)}
           title="Copy a stamp"
           className={clsx([
-            "border-subtle bg-surface-raised text-ink hover:bg-surface flex h-10 w-10 items-center justify-center rounded-full border shadow-lg",
-            lastUsedStamp && "rounded-r-none border-r-0",
+            'border-subtle bg-surface-raised text-ink hover:bg-surface flex h-10 w-10 items-center justify-center rounded-full border shadow-lg',
+            lastUsedStamp && 'rounded-r-none border-r-0',
           ])}
         >
           <FontAwesomeIcon icon={faStamp} />

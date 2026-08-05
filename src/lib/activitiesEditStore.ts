@@ -1,8 +1,8 @@
-import { useSyncExternalStore } from "react";
+import { useSyncExternalStore } from 'react';
 
-const KEY = "activities:editing-enabled";
+const KEY = 'activities:editing-enabled';
 
-let editingEnabled = localStorage.getItem(KEY) !== "false";
+let editingEnabled = localStorage.getItem(KEY) !== 'false';
 const listeners = new Set<() => void>();
 
 function notify() {

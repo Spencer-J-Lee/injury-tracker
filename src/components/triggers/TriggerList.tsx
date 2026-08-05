@@ -1,18 +1,18 @@
-import { useState } from "react";
-import { faPen, faBoxArchive, faBolt } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Card } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Badge";
-import { IconButton } from "@/components/ui/IconButton";
-import { TriggerForm } from "@/components/triggers/TriggerForm";
-import { RichTextContent } from "@/components/journal/RichTextEditor";
-import { useTriggers } from "@/hooks/useTriggers";
+import { useState } from 'react';
+import { faPen, faBoxArchive, faBolt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Card } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
+import { Badge } from '@/components/ui/Badge';
+import { IconButton } from '@/components/ui/IconButton';
+import { TriggerForm } from '@/components/triggers/TriggerForm';
+import { RichTextContent } from '@/components/journal/RichTextEditor';
+import { useTriggers } from '@/hooks/useTriggers';
 import {
   createTrigger,
   archiveTrigger,
   updateTrigger,
-} from "@/db/queries/triggers";
+} from '@/db/queries/triggers';
 
 export function TriggerList({ injuryId }: { injuryId: string }) {
   const triggers = useTriggers(injuryId) ?? [];
@@ -39,7 +39,7 @@ export function TriggerList({ injuryId }: { injuryId: string }) {
                 <TriggerForm
                   initial={{
                     name: trigger.name,
-                    description: trigger.description ?? "",
+                    description: trigger.description ?? '',
                     category: trigger.category,
                     isHighReactivity: trigger.isHighReactivity ?? false,
                   }}
@@ -109,8 +109,8 @@ export function TriggerList({ injuryId }: { injuryId: string }) {
         </div>
       ) : (
         <Button
-          variant={triggers.length > 0 ? "ghost" : "dashed"}
-          size={triggers.length > 0 ? "sm" : "md"}
+          variant={triggers.length > 0 ? 'ghost' : 'dashed'}
+          size={triggers.length > 0 ? 'sm' : 'md'}
           onClick={() => setAdding(true)}
           className="w-full"
         >

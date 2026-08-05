@@ -1,11 +1,11 @@
-export type InjuryStatus = "active" | "monitoring" | "resolved";
-export type InjuryPriority = "low" | "medium" | "high" | "urgent";
+export type InjuryStatus = 'active' | 'monitoring' | 'resolved';
+export type InjuryPriority = 'low' | 'medium' | 'high' | 'urgent';
 export type RemedyCategory =
-  "Strengthening" | "Mobility" | "Lifestyle" | "Rest";
+  'Strengthening' | 'Mobility' | 'Lifestyle' | 'Rest';
 export type TriggerCategory =
-  "Activity" | "Overuse" | "Load" | "Posture" | "Muscle Tightness";
+  'Activity' | 'Overuse' | 'Load' | 'Posture' | 'Muscle Tightness';
 
-export type PainMechanism = "nociceptive" | "neuropathic" | "nociplastic";
+export type PainMechanism = 'nociceptive' | 'neuropathic' | 'nociplastic';
 
 export interface Injury {
   id: string;
@@ -78,10 +78,10 @@ export interface PlannedExercise {
   createdAt: string;
 }
 
-export type StiffnessDuration = "1-2min" | "5-10min" | "15-30min" | "30plus";
-export type NumbnessDuration = "brief" | "lingering" | "persistent";
+export type StiffnessDuration = '1-2min' | '5-10min' | '15-30min' | '30plus';
+export type NumbnessDuration = 'brief' | 'lingering' | 'persistent';
 export type NumbnessSuspectedCause =
-  "sleep-posture" | "load-related" | "unsure";
+  'sleep-posture' | 'load-related' | 'unsure';
 
 export interface Habit {
   id: string;
@@ -123,7 +123,7 @@ export interface MorningCheckIn {
   updatedAt: string;
 }
 
-export type ActivityBodyPart = "Arms" | "Legs" | "Neck/Shoulders";
+export type ActivityBodyPart = 'Arms' | 'Legs' | 'Neck/Shoulders';
 
 export interface Activity {
   id: string;

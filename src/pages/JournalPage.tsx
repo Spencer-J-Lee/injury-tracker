@@ -1,21 +1,21 @@
-import { useCallback, useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import { format } from "date-fns";
-import { Card } from "@/components/ui/Card";
-import { PageTitle } from "@/components/ui/PageTitle";
-import { Button } from "@/components/ui/Button";
-import { Kbd } from "@/components/ui/Kbd";
-import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
-import { RichTextEditor } from "@/components/journal/RichTextEditor";
-import { JournalEntryCard } from "@/components/journal/JournalEntryCard";
-import { PaginationControls } from "@/components/journal/PaginationControls";
-import { useJournalEntries } from "@/hooks/useJournalEntries";
-import { createJournalEntry } from "@/db/queries/journalEntries";
-import { useFormShortcuts } from "@/hooks/useFormShortcuts";
-import { useUnsavedChangesGuard } from "@/hooks/useUnsavedChangesGuard";
-import { formatFullDate } from "@/lib/dates";
-import { saveShortcutLabel } from "@/lib/shortcuts";
-import { getJournalDraft, setJournalDraft } from "@/lib/journalDraft";
+import { useCallback, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { format } from 'date-fns';
+import { Card } from '@/components/ui/Card';
+import { PageTitle } from '@/components/ui/PageTitle';
+import { Button } from '@/components/ui/Button';
+import { Kbd } from '@/components/ui/Kbd';
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
+import { RichTextEditor } from '@/components/journal/RichTextEditor';
+import { JournalEntryCard } from '@/components/journal/JournalEntryCard';
+import { PaginationControls } from '@/components/journal/PaginationControls';
+import { useJournalEntries } from '@/hooks/useJournalEntries';
+import { createJournalEntry } from '@/db/queries/journalEntries';
+import { useFormShortcuts } from '@/hooks/useFormShortcuts';
+import { useUnsavedChangesGuard } from '@/hooks/useUnsavedChangesGuard';
+import { formatFullDate } from '@/lib/dates';
+import { saveShortcutLabel } from '@/lib/shortcuts';
+import { getJournalDraft, setJournalDraft } from '@/lib/journalDraft';
 
 const PAGE_SIZE = 5;
 
@@ -26,15 +26,15 @@ export function JournalPage() {
   const [isEditingDirty, setIsEditingDirty] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const today = useMemo(() => format(new Date(), "yyyy-MM-dd"), []);
+  const today = useMemo(() => format(new Date(), 'yyyy-MM-dd'), []);
   const hasTodayEntry = useMemo(
     () => entries.some((entry) => entry.date === today),
     [entries, today],
   );
   const totalPages = Math.max(1, Math.ceil(entries.length / PAGE_SIZE));
 
-  const rawPage = searchParams.has("page")
-    ? Number(searchParams.get("page"))
+  const rawPage = searchParams.has('page')
+    ? Number(searchParams.get('page'))
     : 1;
   const page =
     Number.isFinite(rawPage) && rawPage >= 1
@@ -47,9 +47,9 @@ export function JournalPage() {
     setSearchParams((prev) => {
       const params = new URLSearchParams(prev);
       if (clamped <= 1) {
-        params.delete("page");
+        params.delete('page');
       } else {
-        params.set("page", String(clamped));
+        params.set('page', String(clamped));
       }
       return params;
     });
@@ -70,7 +70,7 @@ export function JournalPage() {
   const handleSave = async () => {
     if (!draft.trim()) return;
     await createJournalEntry(draft);
-    updateDraft("");
+    updateDraft('');
     goToPage(1);
   };
 
@@ -84,7 +84,7 @@ export function JournalPage() {
       <PageTitle
         actions={
           <div className="text-ink-muted">
-            {entries.length} {entries.length === 1 ? "entry" : "entries"}
+            {entries.length} {entries.length === 1 ? 'entry' : 'entries'}
           </div>
         }
       >

@@ -1,19 +1,19 @@
-import { db } from "@/db/schema";
+import { db } from '@/db/schema';
 
 export function listHabitCompletionsForWeek(
   startDate: string,
   endDate: string,
 ) {
   return db.habitCompletions
-    .where("date")
+    .where('date')
     .between(startDate, endDate, true, true)
     .toArray();
 }
 
 export async function toggleHabitCompletion(habitId: string, date: string) {
-  await db.transaction("rw", db.habitCompletions, async () => {
+  await db.transaction('rw', db.habitCompletions, async () => {
     const existing = await db.habitCompletions
-      .where("[habitId+date]")
+      .where('[habitId+date]')
       .equals([habitId, date])
       .first();
 

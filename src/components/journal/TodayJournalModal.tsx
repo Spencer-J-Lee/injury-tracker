@@ -1,21 +1,21 @@
-import { useRef, useState } from "react";
-import { format } from "date-fns";
-import { useLiveQuery } from "dexie-react-hooks";
-import { Modal } from "@/components/ui/Modal";
-import { Button } from "@/components/ui/Button";
-import { Kbd } from "@/components/ui/Kbd";
-import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
-import { RichTextEditor } from "@/components/journal/RichTextEditor";
-import { useJournalModal } from "@/context/useJournalModal";
-import { useUnsavedChangesGuard } from "@/hooks/useUnsavedChangesGuard";
+import { useRef, useState } from 'react';
+import { format } from 'date-fns';
+import { useLiveQuery } from 'dexie-react-hooks';
+import { Modal } from '@/components/ui/Modal';
+import { Button } from '@/components/ui/Button';
+import { Kbd } from '@/components/ui/Kbd';
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
+import { RichTextEditor } from '@/components/journal/RichTextEditor';
+import { useJournalModal } from '@/context/useJournalModal';
+import { useUnsavedChangesGuard } from '@/hooks/useUnsavedChangesGuard';
 import {
   getTodayJournalEntry,
   createJournalEntry,
   updateJournalEntry,
-} from "@/db/queries/journalEntries";
-import { formatFullDate } from "@/lib/dates";
-import { saveShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
-import { setJournalDraft } from "@/lib/journalDraft";
+} from '@/db/queries/journalEntries';
+import { formatFullDate } from '@/lib/dates';
+import { saveShortcutLabel, cancelShortcutLabel } from '@/lib/shortcuts';
+import { setJournalDraft } from '@/lib/journalDraft';
 
 export function TodayJournalModal() {
   const { open, closeJournalModal } = useJournalModal();
@@ -26,7 +26,7 @@ export function TodayJournalModal() {
   const todayEntry = todayEntryResult?.entry;
   const loaded = todayEntryResult !== undefined;
 
-  const [draft, setDraft] = useState("");
+  const [draft, setDraft] = useState('');
   const [saving, setSaving] = useState(false);
 
   // Modal only mounts the RichTextEditor once `open` flips true, so the
@@ -38,14 +38,14 @@ export function TodayJournalModal() {
   const wasOpenRef = useRef(false);
   if (open && !wasOpenRef.current) {
     if (loaded) {
-      setDraft(todayEntry?.text ?? "");
+      setDraft(todayEntry?.text ?? '');
       wasOpenRef.current = true;
     }
   } else if (!open) {
     wasOpenRef.current = false;
   }
 
-  const isDirty = open && draft !== (todayEntry?.text ?? "");
+  const isDirty = open && draft !== (todayEntry?.text ?? '');
 
   const { isPrompting, guard, confirmLeave, cancelLeave } =
     useUnsavedChangesGuard(isDirty);
@@ -59,7 +59,7 @@ export function TodayJournalModal() {
       } else {
         await createJournalEntry(draft);
       }
-      setJournalDraft("");
+      setJournalDraft('');
       closeJournalModal();
     } finally {
       setSaving(false);
@@ -71,7 +71,7 @@ export function TodayJournalModal() {
       open={open}
       onClose={() => guard(closeJournalModal)}
       onSave={handleSave}
-      title={`Journal — ${formatFullDate(format(new Date(), "yyyy-MM-dd"))}`}
+      title={`Journal — ${formatFullDate(format(new Date(), 'yyyy-MM-dd'))}`}
       size="lg"
       footer={
         <>

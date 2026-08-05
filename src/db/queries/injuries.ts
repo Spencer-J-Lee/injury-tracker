@@ -1,10 +1,10 @@
-import { db } from "@/db/schema";
+import { db } from '@/db/schema';
 import type {
   Injury,
   InjuryPriority,
   InjuryStatus,
   PainMechanism,
-} from "@/types/models";
+} from '@/types/models';
 
 export function listInjuries() {
   return db.injuries.filter((injury) => !injury.archivedAt).toArray();
@@ -30,7 +30,7 @@ export async function createInjury(input: {
     injuryType: input.injuryType,
     locationDetail: input.locationDetail,
     description: input.description,
-    status: input.status ?? "active",
+    status: input.status ?? 'active',
     priority: input.priority ?? null,
     painMechanisms: input.painMechanisms ?? [],
     createdAt: now,
@@ -45,13 +45,13 @@ export async function updateInjury(
   changes: Partial<
     Pick<
       Injury,
-      | "bodyPart"
-      | "injuryType"
-      | "locationDetail"
-      | "description"
-      | "status"
-      | "priority"
-      | "painMechanisms"
+      | 'bodyPart'
+      | 'injuryType'
+      | 'locationDetail'
+      | 'description'
+      | 'status'
+      | 'priority'
+      | 'painMechanisms'
     >
   >,
 ) {
@@ -71,15 +71,15 @@ export async function archiveInjury(id: string) {
 
 export async function deleteInjuries(ids: string[]) {
   await db.transaction(
-    "rw",
+    'rw',
     db.injuries,
     db.remedies,
     db.logEntries,
     db.morningCheckIns,
     async () => {
-      await db.logEntries.where("injuryId").anyOf(ids).delete();
-      await db.remedies.where("injuryId").anyOf(ids).delete();
-      await db.morningCheckIns.where("injuryId").anyOf(ids).delete();
+      await db.logEntries.where('injuryId').anyOf(ids).delete();
+      await db.remedies.where('injuryId').anyOf(ids).delete();
+      await db.morningCheckIns.where('injuryId').anyOf(ids).delete();
       await db.injuries.bulkDelete(ids);
     },
   );

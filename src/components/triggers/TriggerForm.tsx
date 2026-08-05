@@ -1,15 +1,15 @@
-import { useState, type SubmitEvent } from "react";
-import type { TriggerCategory } from "@/types/models";
-import { Input } from "@/components/ui/Input";
-import { Button } from "@/components/ui/Button";
-import { Card } from "@/components/ui/Card";
-import { Kbd } from "@/components/ui/Kbd";
-import { Select } from "@/components/ui/Select";
-import { Checkbox } from "@/components/ui/Checkbox";
-import { useFormShortcuts } from "@/hooks/useFormShortcuts";
-import { saveShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
-import { RichTextEditor } from "@/components/journal/RichTextEditor";
-import { TRIGGER_CATEGORIES } from "@/lib/categories";
+import { useState, type SubmitEvent } from 'react';
+import type { TriggerCategory } from '@/types/models';
+import { Input } from '@/components/ui/Input';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
+import { Kbd } from '@/components/ui/Kbd';
+import { Select } from '@/components/ui/Select';
+import { Checkbox } from '@/components/ui/Checkbox';
+import { useFormShortcuts } from '@/hooks/useFormShortcuts';
+import { saveShortcutLabel, cancelShortcutLabel } from '@/lib/shortcuts';
+import { RichTextEditor } from '@/components/journal/RichTextEditor';
+import { TRIGGER_CATEGORIES } from '@/lib/categories';
 
 interface TriggerFormValues {
   name: string;
@@ -33,8 +33,8 @@ export function TriggerForm({
   onCancel,
   showShortcuts = true,
 }: TriggerFormProps) {
-  const [name, setName] = useState(initial?.name ?? "");
-  const [description, setDescription] = useState(initial?.description ?? "");
+  const [name, setName] = useState(initial?.name ?? '');
+  const [description, setDescription] = useState(initial?.description ?? '');
   const [category, setCategory] = useState<TriggerCategory | undefined>(
     initial?.category,
   );
@@ -54,8 +54,8 @@ export function TriggerForm({
         isHighReactivity,
       });
       if (!initial) {
-        setName("");
-        setDescription("");
+        setName('');
+        setDescription('');
         setCategory(undefined);
         setIsHighReactivity(false);
       }
@@ -92,7 +92,7 @@ export function TriggerForm({
         placeholder="Notes (optional)"
       />
       <Select
-        value={category ?? ""}
+        value={category ?? ''}
         onChange={(e) =>
           setCategory(e.target.value as TriggerCategory | undefined)
         }

@@ -1,7 +1,7 @@
-import { exportDB, importInto } from "dexie-export-import";
-import { db } from "@/db/schema";
+import { exportDB, importInto } from 'dexie-export-import';
+import { db } from '@/db/schema';
 
-const LAST_EXPORTED_AT_KEY = "lastExportedAt";
+const LAST_EXPORTED_AT_KEY = 'lastExportedAt';
 
 export async function getLastExportedAt(): Promise<string | undefined> {
   const meta = await db.meta.get(LAST_EXPORTED_AT_KEY);
@@ -16,7 +16,7 @@ export async function exportBackup(): Promise<void> {
   const blob = await exportDB(db);
   const now = new Date().toISOString();
   const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
+  const a = document.createElement('a');
   a.href = url;
   a.download = `injury-tracker-backup-${now.slice(0, 10)}.json`;
   a.click();
@@ -28,13 +28,13 @@ export async function importBackup(file: File): Promise<void> {
   await importInto(db, file, {
     clearTablesBeforeImport: true,
     acceptNameDiff: true,
-    skipTables: ["meta"],
+    skipTables: ['meta'],
   });
 }
 
 export async function deleteAllData(): Promise<void> {
   await db.transaction(
-    "rw",
+    'rw',
     db.injuries,
     db.remedies,
     db.triggers,

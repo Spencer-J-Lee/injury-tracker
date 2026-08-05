@@ -1,13 +1,13 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import clsx from "clsx";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import clsx from 'clsx';
 import {
   faPen,
   faBoxArchive,
   faPlus,
   faGripVertical,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   DndContext,
   closestCenter,
@@ -16,7 +16,7 @@ import {
   useSensor,
   useSensors,
   type DragEndEvent,
-} from "@dnd-kit/core";
+} from '@dnd-kit/core';
 import {
   SortableContext,
   arrayMove,
@@ -24,32 +24,32 @@ import {
   sortableKeyboardCoordinates,
   useSortable,
   verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
-import type { Activity, ActivityBodyPart, Section } from "@/types/models";
-import { Divider } from "@/components/ui/Divider";
-import { IconButton } from "@/components/ui/IconButton";
-import { SortableCard } from "@/components/ui/SortableCard";
-import { Button } from "@/components/ui/Button";
-import { TogglePill } from "@/components/ui/TogglePill";
-import { Label } from "@/components/ui/Label";
-import { RichTextContent } from "@/components/journal/RichTextEditor";
-import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
-import { SectionForm } from "@/components/activities/SectionForm";
-import { useActivities } from "@/hooks/useActivities";
-import { useSections } from "@/hooks/useSections";
-import { useActivitiesEditingEnabled } from "@/lib/activitiesEditStore";
-import { archiveActivity, reorderActivities } from "@/db/queries/activities";
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+import type { Activity, ActivityBodyPart, Section } from '@/types/models';
+import { Divider } from '@/components/ui/Divider';
+import { IconButton } from '@/components/ui/IconButton';
+import { SortableCard } from '@/components/ui/SortableCard';
+import { Button } from '@/components/ui/Button';
+import { TogglePill } from '@/components/ui/TogglePill';
+import { Label } from '@/components/ui/Label';
+import { RichTextContent } from '@/components/journal/RichTextEditor';
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
+import { SectionForm } from '@/components/activities/SectionForm';
+import { useActivities } from '@/hooks/useActivities';
+import { useSections } from '@/hooks/useSections';
+import { useActivitiesEditingEnabled } from '@/lib/activitiesEditStore';
+import { archiveActivity, reorderActivities } from '@/db/queries/activities';
 import {
   createSection,
   updateSection,
   archiveSection,
   reorderSections,
-} from "@/db/queries/sections";
+} from '@/db/queries/sections';
 import {
   ACTIVITY_BODY_PARTS,
   groupActivitiesBySections,
-} from "@/lib/activities";
+} from '@/lib/activities';
 
 function SortableActivityCard({
   activity,
@@ -133,7 +133,7 @@ function ActivityGrid({
     try {
       await reorderActivities(reordered.map((item) => item.id));
     } catch (error) {
-      console.error("Failed to reorder activities", error);
+      console.error('Failed to reorder activities', error);
     }
   };
 
@@ -240,8 +240,8 @@ function SortableSectionItem({
 
             <h3
               className={clsx(
-                "text-ink-faint text-sm font-semibold tracking-wide uppercase",
-                editingEnabled && "ml-2",
+                'text-ink-faint text-sm font-semibold tracking-wide uppercase',
+                editingEnabled && 'ml-2',
               )}
             >
               {section.name}
@@ -338,7 +338,7 @@ export function ActivityList() {
     try {
       await reorderSections(reordered.map((section) => section.id));
     } catch (error) {
-      console.error("Failed to reorder sections", error);
+      console.error('Failed to reorder sections', error);
     }
   };
 
@@ -435,7 +435,7 @@ export function ActivityList() {
               <IconButton
                 icon={faPlus}
                 label="Add activity to Other"
-                onClick={() => navigate("/activities/new")}
+                onClick={() => navigate('/activities/new')}
               />
             )}
           </div>
@@ -459,8 +459,8 @@ export function ActivityList() {
           />
         ) : (
           <Button
-            variant={sections.length > 0 ? "ghost" : "dashed"}
-            size={sections.length > 0 ? "sm" : "md"}
+            variant={sections.length > 0 ? 'ghost' : 'dashed'}
+            size={sections.length > 0 ? 'sm' : 'md'}
             onClick={() => setAddingSection(true)}
           >
             + Add section

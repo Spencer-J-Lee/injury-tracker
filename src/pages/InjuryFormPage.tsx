@@ -1,8 +1,8 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { useInjury } from "@/hooks/useInjury";
-import { InjuryForm } from "@/components/injuries/InjuryForm";
-import { PageTitle } from "@/components/ui/PageTitle";
-import { createInjury, updateInjury } from "@/db/queries/injuries";
+import { useNavigate, useParams } from 'react-router-dom';
+import { useInjury } from '@/hooks/useInjury';
+import { InjuryForm } from '@/components/injuries/InjuryForm';
+import { PageTitle } from '@/components/ui/PageTitle';
+import { createInjury, updateInjury } from '@/db/queries/injuries';
 
 export function InjuryFormPage() {
   const { id } = useParams();
@@ -16,10 +16,10 @@ export function InjuryFormPage() {
 
   return (
     <div className="space-y-6">
-      <PageTitle>{isEdit ? "Edit injury" : "Add injury"}</PageTitle>
+      <PageTitle>{isEdit ? 'Edit injury' : 'Add injury'}</PageTitle>
       <InjuryForm
         initial={injury ?? undefined}
-        submitLabel={isEdit ? "Save" : "Submit"}
+        submitLabel={isEdit ? 'Save' : 'Submit'}
         onSubmit={async (values) => {
           if (isEdit && id) {
             await updateInjury(id, values);
@@ -29,7 +29,7 @@ export function InjuryFormPage() {
             navigate(`/injuries/${created.id}`);
           }
         }}
-        onCancel={() => navigate(isEdit && id ? `/injuries/${id}` : "/")}
+        onCancel={() => navigate(isEdit && id ? `/injuries/${id}` : '/')}
       />
     </div>
   );

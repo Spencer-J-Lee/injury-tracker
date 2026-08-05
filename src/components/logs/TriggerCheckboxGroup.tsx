@@ -1,13 +1,13 @@
-import { useState } from "react";
-import { faBolt } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import type { TriggerCategory } from "@/types/models";
-import { useTriggers } from "@/hooks/useTriggers";
-import { createTrigger } from "@/db/queries/triggers";
-import { Label } from "../ui/Label";
-import { TogglePill } from "@/components/ui/TogglePill";
-import { Button } from "../ui/Button";
-import { TriggerForm } from "@/components/triggers/TriggerForm";
+import { useState } from 'react';
+import { faBolt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import type { TriggerCategory } from '@/types/models';
+import { useTriggers } from '@/hooks/useTriggers';
+import { createTrigger } from '@/db/queries/triggers';
+import { Label } from '../ui/Label';
+import { TogglePill } from '@/components/ui/TogglePill';
+import { Button } from '../ui/Button';
+import { TriggerForm } from '@/components/triggers/TriggerForm';
 
 interface TriggerCheckboxGroupProps {
   injuryId: string;
@@ -60,7 +60,7 @@ export function TriggerCheckboxGroup({
           );
         })}
         <Button
-          variant={triggers.length > 0 ? "ghost" : "dashed"}
+          variant={triggers.length > 0 ? 'ghost' : 'dashed'}
           size="sm"
           onClick={() => setAdding(true)}
         >

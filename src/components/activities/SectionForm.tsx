@@ -1,8 +1,8 @@
-import { useState, type SubmitEvent } from "react";
-import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { Input } from "@/components/ui/Input";
-import { IconButton } from "@/components/ui/IconButton";
-import { useFormShortcuts } from "@/hooks/useFormShortcuts";
+import { useState, type SubmitEvent } from 'react';
+import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { Input } from '@/components/ui/Input';
+import { IconButton } from '@/components/ui/IconButton';
+import { useFormShortcuts } from '@/hooks/useFormShortcuts';
 
 interface SectionFormValues {
   name: string;
@@ -15,7 +15,7 @@ interface SectionFormProps {
 }
 
 export function SectionForm({ initial, onSubmit, onCancel }: SectionFormProps) {
-  const [name, setName] = useState(initial?.name ?? "");
+  const [name, setName] = useState(initial?.name ?? '');
   const [submitting, setSubmitting] = useState(false);
 
   const doSubmit = async () => {

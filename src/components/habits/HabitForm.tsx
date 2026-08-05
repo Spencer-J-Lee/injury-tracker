@@ -1,11 +1,11 @@
-import { useState, type SubmitEvent } from "react";
-import { Input } from "@/components/ui/Input";
-import { Button } from "@/components/ui/Button";
-import { Card } from "@/components/ui/Card";
-import { Kbd } from "@/components/ui/Kbd";
-import { Textarea } from "@/components/ui/Textarea";
-import { useFormShortcuts } from "@/hooks/useFormShortcuts";
-import { saveShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
+import { useState, type SubmitEvent } from 'react';
+import { Input } from '@/components/ui/Input';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
+import { Kbd } from '@/components/ui/Kbd';
+import { Textarea } from '@/components/ui/Textarea';
+import { useFormShortcuts } from '@/hooks/useFormShortcuts';
+import { saveShortcutLabel, cancelShortcutLabel } from '@/lib/shortcuts';
 
 interface HabitFormValues {
   name: string;
@@ -27,8 +27,8 @@ export function HabitForm({
   onCancel,
   showShortcuts = true,
 }: HabitFormProps) {
-  const [name, setName] = useState(initial?.name ?? "");
-  const [description, setDescription] = useState(initial?.description ?? "");
+  const [name, setName] = useState(initial?.name ?? '');
+  const [description, setDescription] = useState(initial?.description ?? '');
   const [submitting, setSubmitting] = useState(false);
 
   const doSubmit = async () => {
@@ -37,8 +37,8 @@ export function HabitForm({
     try {
       await onSubmit({ name: name.trim(), description: description.trim() });
       if (!initial) {
-        setName("");
-        setDescription("");
+        setName('');
+        setDescription('');
       }
     } finally {
       setSubmitting(false);

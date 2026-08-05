@@ -1,7 +1,7 @@
-import type { Injury } from "@/types/models";
+import type { Injury } from '@/types/models';
 
 interface InjuryTitleProps {
-  injury: Pick<Injury, "bodyPart" | "injuryType" | "locationDetail">;
+  injury: Pick<Injury, 'bodyPart' | 'injuryType' | 'locationDetail'>;
 }
 
 export function InjuryTitle({ injury }: InjuryTitleProps) {
@@ -10,7 +10,7 @@ export function InjuryTitle({ injury }: InjuryTitleProps) {
       {injury.bodyPart}
       {injury.locationDetail && (
         <span className="text-ink-muted font-normal">
-          {" "}
+          {' '}
           ({injury.locationDetail})
         </span>
       )}

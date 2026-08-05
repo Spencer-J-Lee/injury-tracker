@@ -1,5 +1,5 @@
-import { useState, useCallback, type ReactNode } from "react";
-import { LogModalContext, type LogModalState } from "@/context/logModalStore";
+import { useState, useCallback, type ReactNode } from 'react';
+import { LogModalContext, type LogModalState } from '@/context/logModalStore';
 
 export function LogModalProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<LogModalState>({

@@ -1,16 +1,16 @@
-import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
-import clsx from "clsx";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
-import { useLogModal } from "@/context/useLogModal";
-import { useJournalModal } from "@/context/useJournalModal";
-import { LogEntryModal } from "@/components/logs/LogEntryModal";
-import { TodayJournalModal } from "@/components/journal/TodayJournalModal";
-import { StampPicker } from "@/components/stamps/StampPicker";
-import { BackupBanner } from "./BackupBanner";
-import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut";
-import { useAnyModalOpen } from "@/lib/modalStore";
-import { Kbd } from "@/components/ui/Kbd";
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import clsx from 'clsx';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPen } from '@fortawesome/free-solid-svg-icons';
+import { useLogModal } from '@/context/useLogModal';
+import { useJournalModal } from '@/context/useJournalModal';
+import { LogEntryModal } from '@/components/logs/LogEntryModal';
+import { TodayJournalModal } from '@/components/journal/TodayJournalModal';
+import { StampPicker } from '@/components/stamps/StampPicker';
+import { BackupBanner } from './BackupBanner';
+import { useKeyboardShortcut } from '@/hooks/useKeyboardShortcut';
+import { useAnyModalOpen } from '@/lib/modalStore';
+import { Kbd } from '@/components/ui/Kbd';
 import {
   dashboardShortcutLabel,
   journalShortcutLabel,
@@ -19,8 +19,8 @@ import {
   activitiesShortcutLabel,
   settingsShortcutLabel,
   journalQuickEditShortcutLabel,
-} from "@/lib/shortcuts";
-import { UnsavedChangesBlockerProvider } from "@/context/UnsavedChangesBlockerProvider";
+} from '@/lib/shortcuts';
+import { UnsavedChangesBlockerProvider } from '@/context/UnsavedChangesBlockerProvider';
 
 export function AppShell() {
   return (
@@ -39,32 +39,32 @@ function AppShellContent() {
 
   useKeyboardShortcut(
     dashboardShortcutLabel,
-    () => navigate("/"),
+    () => navigate('/'),
     !anyModalOpen,
   );
   useKeyboardShortcut(
     habitsShortcutLabel,
-    () => navigate("/habits"),
+    () => navigate('/habits'),
     !anyModalOpen,
   );
   useKeyboardShortcut(
     activitiesShortcutLabel,
-    () => navigate("/activities"),
+    () => navigate('/activities'),
     !anyModalOpen,
   );
   useKeyboardShortcut(
     journalShortcutLabel,
-    () => navigate("/journal"),
+    () => navigate('/journal'),
     !anyModalOpen,
   );
   useKeyboardShortcut(
     strengtheningShortcutLabel,
-    () => navigate("/strengthening"),
+    () => navigate('/strengthening'),
     !anyModalOpen,
   );
   useKeyboardShortcut(
     settingsShortcutLabel,
-    () => navigate("/settings"),
+    () => navigate('/settings'),
     !anyModalOpen,
   );
   useKeyboardShortcut(
@@ -77,10 +77,10 @@ function AppShellContent() {
     <Link
       to={to}
       className={clsx(
-        "rounded-xl px-4 py-2 text-lg",
+        'rounded-xl px-4 py-2 text-lg',
         location.pathname === to
-          ? "bg-accent-soft text-accent-soft-text font-semibold"
-          : "text-ink-muted font-medium",
+          ? 'bg-accent-soft text-accent-soft-text font-semibold'
+          : 'text-ink-muted font-medium',
       )}
     >
       {label}
@@ -91,10 +91,10 @@ function AppShellContent() {
     <Link
       to={to}
       className={clsx(
-        "flex items-center justify-between gap-2.5 rounded-xl px-3.5 py-2.5 text-lg",
+        'flex items-center justify-between gap-2.5 rounded-xl px-3.5 py-2.5 text-lg',
         location.pathname === to
-          ? "bg-accent-soft text-accent-soft-text font-semibold"
-          : "text-ink-muted hover:text-ink-secondary font-medium",
+          ? 'bg-accent-soft text-accent-soft-text font-semibold'
+          : 'text-ink-muted hover:text-ink-secondary font-medium',
       )}
     >
       {label}
@@ -114,20 +114,20 @@ function AppShellContent() {
               Rehab Tracker
             </Link>
             <nav className="flex flex-col gap-1">
-              {navLinkSidebar("/", "Injuries", dashboardShortcutLabel)}
-              {navLinkSidebar("/habits", "Habits", habitsShortcutLabel)}
+              {navLinkSidebar('/', 'Injuries', dashboardShortcutLabel)}
+              {navLinkSidebar('/habits', 'Habits', habitsShortcutLabel)}
               {navLinkSidebar(
-                "/strengthening",
-                "Strengthening",
+                '/strengthening',
+                'Strengthening',
                 strengtheningShortcutLabel,
               )}
-              {navLinkSidebar("/journal", "Journal", journalShortcutLabel)}
+              {navLinkSidebar('/journal', 'Journal', journalShortcutLabel)}
               {navLinkSidebar(
-                "/activities",
-                "Rest Activities",
+                '/activities',
+                'Rest Activities',
                 activitiesShortcutLabel,
               )}
-              {navLinkSidebar("/settings", "Settings", settingsShortcutLabel)}
+              {navLinkSidebar('/settings', 'Settings', settingsShortcutLabel)}
             </nav>
           </aside>
 
@@ -137,12 +137,12 @@ function AppShellContent() {
                 Rehab Tracker
               </Link>
               <nav className="flex gap-1">
-                {navLinkMobile("/", "Injuries")}
-                {navLinkMobile("/habits", "Habits")}
-                {navLinkMobile("/strengthening", "Strengthening")}
-                {navLinkMobile("/journal", "Journal")}
-                {navLinkMobile("/activities", "Rest Activities")}
-                {navLinkMobile("/settings", "Settings")}
+                {navLinkMobile('/', 'Injuries')}
+                {navLinkMobile('/habits', 'Habits')}
+                {navLinkMobile('/strengthening', 'Strengthening')}
+                {navLinkMobile('/journal', 'Journal')}
+                {navLinkMobile('/activities', 'Rest Activities')}
+                {navLinkMobile('/settings', 'Settings')}
               </nav>
             </header>
 

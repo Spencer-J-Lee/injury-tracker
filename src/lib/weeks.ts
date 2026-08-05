@@ -5,9 +5,9 @@ import {
   parseISO,
   startOfWeek,
   subDays,
-} from "date-fns";
+} from 'date-fns';
 
-const DATE_FORMAT = "yyyy-MM-dd";
+const DATE_FORMAT = 'yyyy-MM-dd';
 
 export function getWeekStart(dateStr: string): string {
   return format(
@@ -51,9 +51,9 @@ export function formatWindowRangeLabel(
 ): string {
   const start = parseISO(windowStartStr);
   const end = addDays(start, size - 1);
-  const sameYear = format(start, "yyyy") === format(end, "yyyy");
-  const startLabel = format(start, sameYear ? "MMM d" : "MMM d, yyyy");
-  const endLabel = format(end, "MMM d, yyyy");
+  const sameYear = format(start, 'yyyy') === format(end, 'yyyy');
+  const startLabel = format(start, sameYear ? 'MMM d' : 'MMM d, yyyy');
+  const endLabel = format(end, 'MMM d, yyyy');
   return `${startLabel} - ${endLabel}`;
 }
 

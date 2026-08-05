@@ -1,17 +1,17 @@
-import { useState, type SubmitEvent } from "react";
-import type { ActivityBodyPart } from "@/types/models";
-import { Input } from "@/components/ui/Input";
-import { Select } from "@/components/ui/Select";
-import { Button } from "@/components/ui/Button";
-import { Label } from "@/components/ui/Label";
-import { Kbd } from "@/components/ui/Kbd";
-import { TogglePill } from "@/components/ui/TogglePill";
-import { RichTextEditor } from "@/components/journal/RichTextEditor";
-import { useFormShortcuts } from "@/hooks/useFormShortcuts";
-import { useUnsavedChangesGuard } from "@/hooks/useUnsavedChangesGuard";
-import { useSections } from "@/hooks/useSections";
-import { saveShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
-import { ACTIVITY_BODY_PARTS } from "@/lib/activities";
+import { useState, type SubmitEvent } from 'react';
+import type { ActivityBodyPart } from '@/types/models';
+import { Input } from '@/components/ui/Input';
+import { Select } from '@/components/ui/Select';
+import { Button } from '@/components/ui/Button';
+import { Label } from '@/components/ui/Label';
+import { Kbd } from '@/components/ui/Kbd';
+import { TogglePill } from '@/components/ui/TogglePill';
+import { RichTextEditor } from '@/components/journal/RichTextEditor';
+import { useFormShortcuts } from '@/hooks/useFormShortcuts';
+import { useUnsavedChangesGuard } from '@/hooks/useUnsavedChangesGuard';
+import { useSections } from '@/hooks/useSections';
+import { saveShortcutLabel, cancelShortcutLabel } from '@/lib/shortcuts';
+import { ACTIVITY_BODY_PARTS } from '@/lib/activities';
 
 interface ActivityFormValues {
   name: string;
@@ -33,9 +33,9 @@ export function ActivityForm({
   onCancel,
   submitLabel,
 }: ActivityFormProps) {
-  const [name, setName] = useState(initial?.name ?? "");
-  const [description, setDescription] = useState(initial?.description ?? "");
-  const [sectionId, setSectionId] = useState(initial?.sectionId ?? "");
+  const [name, setName] = useState(initial?.name ?? '');
+  const [description, setDescription] = useState(initial?.description ?? '');
+  const [sectionId, setSectionId] = useState(initial?.sectionId ?? '');
   const [bodyPartsRested, setBodyPartsRested] = useState<ActivityBodyPart[]>(
     initial?.bodyPartsRested ?? [],
   );
@@ -49,11 +49,11 @@ export function ActivityForm({
   };
 
   const isDirty =
-    name !== (initial?.name ?? "") ||
-    description !== (initial?.description ?? "") ||
-    sectionId !== (initial?.sectionId ?? "") ||
-    [...bodyPartsRested].sort().join(",") !==
-      [...(initial?.bodyPartsRested ?? [])].sort().join(",");
+    name !== (initial?.name ?? '') ||
+    description !== (initial?.description ?? '') ||
+    sectionId !== (initial?.sectionId ?? '') ||
+    [...bodyPartsRested].sort().join(',') !==
+      [...(initial?.bodyPartsRested ?? [])].sort().join(',');
 
   const { markSaved } = useUnsavedChangesGuard(isDirty);
 

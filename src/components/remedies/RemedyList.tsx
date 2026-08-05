@@ -1,24 +1,24 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   faPen,
   faBoxArchive,
   faAsterisk,
   faDumbbell,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import type { RemedyCategory, Remedy } from "@/types/models";
-import { Card } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Badge";
-import { IconButton } from "@/components/ui/IconButton";
-import { RemedyForm } from "@/components/remedies/RemedyForm";
-import { RichTextContent } from "@/components/journal/RichTextEditor";
-import { useRemedies } from "@/hooks/useRemedies";
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import type { RemedyCategory, Remedy } from '@/types/models';
+import { Card } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
+import { Badge } from '@/components/ui/Badge';
+import { IconButton } from '@/components/ui/IconButton';
+import { RemedyForm } from '@/components/remedies/RemedyForm';
+import { RichTextContent } from '@/components/journal/RichTextEditor';
+import { useRemedies } from '@/hooks/useRemedies';
 import {
   createRemedy,
   archiveRemedy,
   updateRemedy,
-} from "@/db/queries/remedies";
+} from '@/db/queries/remedies';
 
 interface RemedySectionDefaults {
   category?: RemedyCategory;
@@ -54,7 +54,7 @@ function RemedySection({
                 <RemedyForm
                   initial={{
                     name: remedy.name,
-                    description: remedy.description ?? "",
+                    description: remedy.description ?? '',
                     category: remedy.category,
                     providesImmediateRelief: remedy.providesImmediateRelief,
                     isProgramExercise: remedy.isProgramExercise ?? false,
@@ -134,8 +134,8 @@ function RemedySection({
         </div>
       ) : (
         <Button
-          variant={remedies.length > 0 ? "ghost" : "dashed"}
-          size={remedies.length > 0 ? "sm" : "md"}
+          variant={remedies.length > 0 ? 'ghost' : 'dashed'}
+          size={remedies.length > 0 ? 'sm' : 'md'}
           onClick={() => setAdding(true)}
           className="w-full"
         >
@@ -148,13 +148,13 @@ function RemedySection({
 
 export function RemedyList({ injuryId }: { injuryId: string }) {
   const remedies = useRemedies(injuryId) ?? [];
-  const strengthening = remedies.filter((r) => r.category === "Strengthening");
-  const mobility = remedies.filter((r) => r.category === "Mobility");
+  const strengthening = remedies.filter((r) => r.category === 'Strengthening');
+  const mobility = remedies.filter((r) => r.category === 'Mobility');
   const prevention = remedies
-    .filter((r) => r.category !== "Strengthening" && r.category !== "Mobility")
+    .filter((r) => r.category !== 'Strengthening' && r.category !== 'Mobility')
     .sort((a, b) => {
-      const categoryCompare = (a.category ?? "").localeCompare(
-        b.category ?? "",
+      const categoryCompare = (a.category ?? '').localeCompare(
+        b.category ?? '',
       );
       if (categoryCompare !== 0) return categoryCompare;
       return a.name.localeCompare(b.name);
@@ -187,14 +187,14 @@ export function RemedyList({ injuryId }: { injuryId: string }) {
         title="Strengthening"
         remedies={strengthening}
         injuryId={injuryId}
-        defaults={{ category: "Strengthening" }}
+        defaults={{ category: 'Strengthening' }}
         showCategoryBadge={false}
       />
       <RemedySection
         title="Mobility"
         remedies={mobility}
         injuryId={injuryId}
-        defaults={{ category: "Mobility" }}
+        defaults={{ category: 'Mobility' }}
         showCategoryBadge={false}
       />
       <RemedySection

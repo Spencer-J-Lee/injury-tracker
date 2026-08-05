@@ -1,5 +1,5 @@
-import { db } from "@/db/schema";
-import type { PlannedExercise } from "@/types/models";
+import { db } from '@/db/schema';
+import type { PlannedExercise } from '@/types/models';
 
 export async function createPlannedExercise(input: {
   date: string;
@@ -20,7 +20,7 @@ export async function deletePlannedExercise(id: string) {
 }
 
 export function listPlannedExercisesForDate(date: string) {
-  return db.plannedExercises.where("date").equals(date).sortBy("createdAt");
+  return db.plannedExercises.where('date').equals(date).sortBy('createdAt');
 }
 
 export function listPlannedExercisesForWeek(
@@ -28,7 +28,7 @@ export function listPlannedExercisesForWeek(
   weekEnd: string,
 ) {
   return db.plannedExercises
-    .where("date")
+    .where('date')
     .between(weekStart, weekEnd, true, true)
-    .sortBy("createdAt");
+    .sortBy('createdAt');
 }

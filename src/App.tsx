@@ -3,20 +3,20 @@ import {
   createRoutesFromElements,
   Route,
   RouterProvider,
-} from "react-router-dom";
-import { AppShell } from "@/components/layout/AppShell";
-import { LogModalProvider } from "@/context/LogModalContext";
-import { JournalModalProvider } from "@/context/JournalModalContext";
-import { DashboardPage } from "@/pages/DashboardPage";
-import { InjuryDetailPage } from "@/pages/InjuryDetailPage";
-import { InjuryFormPage } from "@/pages/InjuryFormPage";
-import { JournalPage } from "@/pages/JournalPage";
-import { StrengtheningWeekPage } from "@/pages/StrengtheningWeekPage";
-import { HabitsPage } from "@/pages/HabitsPage";
-import { ActivitiesPage } from "@/pages/ActivitiesPage";
-import { ActivityFormPage } from "@/pages/ActivityFormPage";
-import { SettingsPage } from "@/pages/SettingsPage";
-import { NotFoundPage } from "@/pages/NotFoundPage";
+} from 'react-router-dom';
+import { AppShell } from '@/components/layout/AppShell';
+import { LogModalProvider } from '@/context/LogModalContext';
+import { JournalModalProvider } from '@/context/JournalModalContext';
+import { DashboardPage } from '@/pages/DashboardPage';
+import { InjuryDetailPage } from '@/pages/InjuryDetailPage';
+import { InjuryFormPage } from '@/pages/InjuryFormPage';
+import { JournalPage } from '@/pages/JournalPage';
+import { StrengtheningWeekPage } from '@/pages/StrengtheningWeekPage';
+import { HabitsPage } from '@/pages/HabitsPage';
+import { ActivitiesPage } from '@/pages/ActivitiesPage';
+import { ActivityFormPage } from '@/pages/ActivityFormPage';
+import { SettingsPage } from '@/pages/SettingsPage';
+import { NotFoundPage } from '@/pages/NotFoundPage';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -37,7 +37,7 @@ const router = createBrowserRouter(
   ),
 );
 
-function App() {
+export function App() {
   return (
     <LogModalProvider>
       <JournalModalProvider>
@@ -46,5 +46,3 @@ function App() {
     </LogModalProvider>
   );
 }
-
-export default App;

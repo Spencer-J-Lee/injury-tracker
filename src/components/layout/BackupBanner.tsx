@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import { useLiveQuery } from "dexie-react-hooks";
-import { Link } from "react-router-dom";
-import { isBefore, subDays } from "date-fns";
-import { getLastExportedAt } from "@/db/backup";
-import { listRecentLogEntries } from "@/db/queries/logEntries";
-import { listInjuries } from "@/db/queries/injuries";
+import { useEffect, useState } from 'react';
+import { useLiveQuery } from 'dexie-react-hooks';
+import { Link } from 'react-router-dom';
+import { isBefore, subDays } from 'date-fns';
+import { getLastExportedAt } from '@/db/backup';
+import { listRecentLogEntries } from '@/db/queries/logEntries';
+import { listInjuries } from '@/db/queries/injuries';
 
 export function BackupBanner() {
   const [dismissed, setDismissed] = useState(false);
@@ -30,15 +30,15 @@ export function BackupBanner() {
     <div
       className="mb-6 flex items-center justify-between gap-4 rounded-lg border px-4 py-3"
       style={{
-        background: "oklch(0.27 0.06 85)",
-        borderColor: "oklch(0.38 0.08 85)",
-        color: "oklch(0.90 0.12 85)",
+        background: 'oklch(0.27 0.06 85)',
+        borderColor: 'oklch(0.38 0.08 85)',
+        color: 'oklch(0.90 0.12 85)',
       }}
     >
       <span>
         {lastExportedAt
           ? "It's been a while since your last backup."
-          : "Back up your data — it only lives in this browser."}{" "}
+          : 'Back up your data — it only lives in this browser.'}{' '}
         <Link to="/settings" className="font-semibold underline">
           Export now
         </Link>

@@ -1,7 +1,7 @@
-import { useState } from "react";
-import type { Injury } from "@/types/models";
-import { TogglePill } from "@/components/ui/TogglePill";
-import { formatInjuryName } from "@/lib/injuries";
+import { useState } from 'react';
+import type { Injury } from '@/types/models';
+import { TogglePill } from '@/components/ui/TogglePill';
+import { formatInjuryName } from '@/lib/injuries';
 
 interface InjurySelectorProps {
   injuries: Injury[];
@@ -17,7 +17,7 @@ export function InjurySelector({
   const [showAll, setShowAll] = useState(false);
   const visible = showAll
     ? injuries
-    : injuries.filter((i) => i.status === "active");
+    : injuries.filter((i) => i.status === 'active');
 
   return (
     <div>
@@ -28,7 +28,7 @@ export function InjurySelector({
           onClick={() => setShowAll((v) => !v)}
           className="text-accent-soft-text font-semibold hover:underline"
         >
-          {showAll ? "Show active only" : "Show all"}
+          {showAll ? 'Show active only' : 'Show all'}
         </button>
       </div>
       <div className="flex flex-wrap gap-2.5">

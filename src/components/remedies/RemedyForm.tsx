@@ -1,15 +1,15 @@
-import { useState, type SubmitEvent } from "react";
-import type { RemedyCategory } from "@/types/models";
-import { Input } from "@/components/ui/Input";
-import { Button } from "@/components/ui/Button";
-import { Card } from "@/components/ui/Card";
-import { Kbd } from "@/components/ui/Kbd";
-import { Select } from "@/components/ui/Select";
-import { Checkbox } from "@/components/ui/Checkbox";
-import { useFormShortcuts } from "@/hooks/useFormShortcuts";
-import { saveShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
-import { RichTextEditor } from "@/components/journal/RichTextEditor";
-import { REMEDY_CATEGORIES } from "@/lib/categories";
+import { useState, type SubmitEvent } from 'react';
+import type { RemedyCategory } from '@/types/models';
+import { Input } from '@/components/ui/Input';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
+import { Kbd } from '@/components/ui/Kbd';
+import { Select } from '@/components/ui/Select';
+import { Checkbox } from '@/components/ui/Checkbox';
+import { useFormShortcuts } from '@/hooks/useFormShortcuts';
+import { saveShortcutLabel, cancelShortcutLabel } from '@/lib/shortcuts';
+import { RichTextEditor } from '@/components/journal/RichTextEditor';
+import { REMEDY_CATEGORIES } from '@/lib/categories';
 
 interface RemedyFormValues {
   name: string;
@@ -34,8 +34,8 @@ export function RemedyForm({
   onCancel,
   showShortcuts = true,
 }: RemedyFormProps) {
-  const [name, setName] = useState(initial?.name ?? "");
-  const [description, setDescription] = useState(initial?.description ?? "");
+  const [name, setName] = useState(initial?.name ?? '');
+  const [description, setDescription] = useState(initial?.description ?? '');
   const [category, setCategory] = useState<RemedyCategory | undefined>(
     initial?.category,
   );
@@ -56,11 +56,11 @@ export function RemedyForm({
         description,
         category,
         providesImmediateRelief,
-        isProgramExercise: category === "Strengthening" && isProgramExercise,
+        isProgramExercise: category === 'Strengthening' && isProgramExercise,
       });
       if (!initial) {
-        setName("");
-        setDescription("");
+        setName('');
+        setDescription('');
         setCategory(undefined);
         setProvidesImmediateRelief(false);
         setIsProgramExercise(false);
@@ -98,7 +98,7 @@ export function RemedyForm({
         placeholder="Notes (optional)"
       />
       <Select
-        value={category ?? ""}
+        value={category ?? ''}
         onChange={(e) =>
           setCategory(e.target.value as RemedyCategory | undefined)
         }
@@ -118,7 +118,7 @@ export function RemedyForm({
         onChange={(e) => setProvidesImmediateRelief(e.target.checked)}
       />
 
-      {category === "Strengthening" && (
+      {category === 'Strengthening' && (
         <Checkbox
           id="isProgramExercise"
           label="Include in strengthening program"

@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
-import { Modal } from "@/components/ui/Modal";
-import { Button } from "@/components/ui/Button";
-import { Kbd } from "@/components/ui/Kbd";
-import { Label } from "@/components/ui/Label";
-import { LinkButton } from "@/components/ui/LinkButton";
-import { TogglePill } from "@/components/ui/TogglePill";
-import { useInjuries } from "@/hooks/useInjuries";
-import { useProgramExercisePool } from "@/hooks/useProgramExercisePool";
-import { compareInjuries, formatInjuryName } from "@/lib/injuries";
-import { formatShortDateWithDay } from "@/lib/dates";
-import { saveShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
+import { useEffect, useState } from 'react';
+import { Modal } from '@/components/ui/Modal';
+import { Button } from '@/components/ui/Button';
+import { Kbd } from '@/components/ui/Kbd';
+import { Label } from '@/components/ui/Label';
+import { LinkButton } from '@/components/ui/LinkButton';
+import { TogglePill } from '@/components/ui/TogglePill';
+import { useInjuries } from '@/hooks/useInjuries';
+import { useProgramExercisePool } from '@/hooks/useProgramExercisePool';
+import { compareInjuries, formatInjuryName } from '@/lib/injuries';
+import { formatShortDateWithDay } from '@/lib/dates';
+import { saveShortcutLabel, cancelShortcutLabel } from '@/lib/shortcuts';
 
 interface EditExercisesModalProps {
   open: boolean;
@@ -104,7 +104,7 @@ export function EditExercisesModal({
             <div className="mb-2 flex items-center justify-between text-sm">
               <Label noMargin>{formatInjuryName(injury)}</Label>
               <LinkButton onClick={() => toggleGroup(groupRemedyIds)}>
-                {allSelected ? "clear" : "select all"}
+                {allSelected ? 'clear' : 'select all'}
               </LinkButton>
             </div>
             <div className="flex flex-wrap gap-2.5">

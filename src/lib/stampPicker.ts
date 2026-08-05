@@ -1,14 +1,14 @@
-const KEY = "stampPicker:stamps";
-const LAST_USED_KEY = "stampPicker:lastUsed";
+const KEY = 'stampPicker:stamps';
+const LAST_USED_KEY = 'stampPicker:lastUsed';
 
-export const DEFAULT_STAMPS = ["→", "°", "±", "≈"];
+export const DEFAULT_STAMPS = ['→', '°', '±', '≈'];
 
 export function getStamps(): string[] {
   const raw = localStorage.getItem(KEY);
   if (!raw) return DEFAULT_STAMPS;
   try {
     const parsed = JSON.parse(raw);
-    if (Array.isArray(parsed) && parsed.every((s) => typeof s === "string")) {
+    if (Array.isArray(parsed) && parsed.every((s) => typeof s === 'string')) {
       return parsed;
     }
   } catch {

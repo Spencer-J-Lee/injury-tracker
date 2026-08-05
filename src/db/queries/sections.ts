@@ -1,5 +1,5 @@
-import { db } from "@/db/schema";
-import type { Section } from "@/types/models";
+import { db } from '@/db/schema';
+import type { Section } from '@/types/models';
 
 export async function listActiveSections(): Promise<Section[]> {
   const sections = await db.sections.toArray();
@@ -8,10 +8,8 @@ export async function listActiveSections(): Promise<Section[]> {
     .sort((a, b) => a.position - b.position);
 }
 
-export async function createSection(input: {
-  name: string;
-}): Promise<Section> {
-  return db.transaction("rw", db.sections, async () => {
+export async function createSection(input: { name: string }): Promise<Section> {
+  return db.transaction('rw', db.sections, async () => {
     const existing = await db.sections.toArray();
     const nextPosition =
       existing.length > 0
@@ -30,7 +28,7 @@ export async function createSection(input: {
 
 export async function updateSection(
   id: string,
-  changes: Partial<Pick<Section, "name">>,
+  changes: Partial<Pick<Section, 'name'>>,
 ) {
   await db.sections.update(id, changes);
 }
@@ -40,7 +38,7 @@ export async function archiveSection(id: string) {
 }
 
 export async function reorderSections(orderedIds: string[]): Promise<void> {
-  await db.transaction("rw", db.sections, async () => {
+  await db.transaction('rw', db.sections, async () => {
     await Promise.all(
       orderedIds.map((id, index) =>
         db.sections.update(id, { position: index }),

@@ -1,31 +1,31 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useInjuries } from "@/hooks/useInjuries";
-import { InjuryCard } from "@/components/injuries/InjuryCard";
-import { Button } from "@/components/ui/Button";
-import { PageTitle } from "@/components/ui/PageTitle";
-import { TogglePill } from "@/components/ui/TogglePill";
-import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
-import { Kbd } from "@/components/ui/Kbd";
-import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut";
-import { useAnyModalOpen } from "@/lib/modalStore";
-import { addInjuryShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
-import { deleteInjuries } from "@/db/queries/injuries";
-import { compareInjuries, STATUS_ORDER } from "@/lib/injuries";
-import type { InjuryStatus } from "@/types/models";
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useInjuries } from '@/hooks/useInjuries';
+import { InjuryCard } from '@/components/injuries/InjuryCard';
+import { Button } from '@/components/ui/Button';
+import { PageTitle } from '@/components/ui/PageTitle';
+import { TogglePill } from '@/components/ui/TogglePill';
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
+import { Kbd } from '@/components/ui/Kbd';
+import { useKeyboardShortcut } from '@/hooks/useKeyboardShortcut';
+import { useAnyModalOpen } from '@/lib/modalStore';
+import { addInjuryShortcutLabel, cancelShortcutLabel } from '@/lib/shortcuts';
+import { deleteInjuries } from '@/db/queries/injuries';
+import { compareInjuries, STATUS_ORDER } from '@/lib/injuries';
+import type { InjuryStatus } from '@/types/models';
 
 const STATUS_LABELS: Record<InjuryStatus, string> = {
-  active: "Active",
-  monitoring: "Monitoring",
-  resolved: "Resolved",
+  active: 'Active',
+  monitoring: 'Monitoring',
+  resolved: 'Resolved',
 };
 
 export function DashboardPage() {
   const injuries = useInjuries();
   const navigate = useNavigate();
   const [statusFilter, setStatusFilter] = useState<InjuryStatus[]>([
-    "active",
-    "monitoring",
+    'active',
+    'monitoring',
   ]);
   const [selectMode, setSelectMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
@@ -33,12 +33,12 @@ export function DashboardPage() {
   const anyModalOpen = useAnyModalOpen();
 
   useKeyboardShortcut(
-    "n",
-    () => navigate("/injuries/new"),
+    'n',
+    () => navigate('/injuries/new'),
     !selectMode && !anyModalOpen,
   );
   useKeyboardShortcut(
-    "Escape",
+    'Escape',
     () => exitSelectMode(),
     selectMode && !anyModalOpen,
   );
@@ -173,7 +173,7 @@ export function DashboardPage() {
       <ConfirmDialog
         open={confirmingDelete}
         title="Delete injuries?"
-        message={`Delete ${selectedIds.size} injur${selectedIds.size === 1 ? "y" : "ies"}? This cannot be undone.`}
+        message={`Delete ${selectedIds.size} injur${selectedIds.size === 1 ? 'y' : 'ies'}? This cannot be undone.`}
         confirmLabel="Delete"
         onConfirm={confirmDeleteSelected}
         onCancel={() => setConfirmingDelete(false)}

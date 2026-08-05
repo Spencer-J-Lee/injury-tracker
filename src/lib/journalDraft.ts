@@ -1,7 +1,7 @@
-const KEY = "journal:draft";
+const KEY = 'journal:draft';
 
 export function getJournalDraft(): string {
-  return localStorage.getItem(KEY) ?? "";
+  return localStorage.getItem(KEY) ?? '';
 }
 
 export function setJournalDraft(draft: string) {

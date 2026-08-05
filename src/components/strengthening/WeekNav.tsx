@@ -1,11 +1,11 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChevronLeft,
   faChevronRight,
-} from "@fortawesome/free-solid-svg-icons";
-import { Button } from "@/components/ui/Button";
-import { formatWindowRangeLabel } from "@/lib/weeks";
-import { LinkButton } from "../ui/LinkButton";
+} from '@fortawesome/free-solid-svg-icons';
+import { Button } from '@/components/ui/Button';
+import { formatWindowRangeLabel } from '@/lib/weeks';
+import { LinkButton } from '../ui/LinkButton';
 
 interface WeekNavProps {
   windowStart: string;

@@ -1,7 +1,7 @@
-import type { SelectHTMLAttributes } from "react";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import clsx from "clsx";
+import type { SelectHTMLAttributes } from 'react';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import clsx from 'clsx';
 
 export function Select({
   className,
@@ -11,7 +11,7 @@ export function Select({
     <div className="relative">
       <select
         className={clsx(
-          "border-strong bg-input text-ink-emphasis focus:border-accent w-full appearance-none rounded-xl border px-4 py-3 pr-10 focus:outline-none",
+          'border-strong bg-input text-ink-emphasis focus:border-accent w-full appearance-none rounded-xl border px-4 py-3 pr-10 focus:outline-none',
           className,
         )}
         {...props}

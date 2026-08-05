@@ -1,22 +1,22 @@
-import { useEffect, useState } from "react";
-import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
-import type { JournalEntry } from "@/types/models";
-import { Card } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { IconButton } from "@/components/ui/IconButton";
-import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
+import { useEffect, useState } from 'react';
+import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
+import type { JournalEntry } from '@/types/models';
+import { Card } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
+import { IconButton } from '@/components/ui/IconButton';
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import {
   RichTextEditor,
   RichTextContent,
-} from "@/components/journal/RichTextEditor";
-import { Kbd } from "@/components/ui/Kbd";
-import { formatFullDate } from "@/lib/dates";
+} from '@/components/journal/RichTextEditor';
+import { Kbd } from '@/components/ui/Kbd';
+import { formatFullDate } from '@/lib/dates';
 import {
   updateJournalEntry,
   deleteJournalEntry,
-} from "@/db/queries/journalEntries";
-import { useFormShortcuts } from "@/hooks/useFormShortcuts";
-import { saveShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
+} from '@/db/queries/journalEntries';
+import { useFormShortcuts } from '@/hooks/useFormShortcuts';
+import { saveShortcutLabel, cancelShortcutLabel } from '@/lib/shortcuts';
 
 interface JournalEntryCardProps {
   entry: JournalEntry;

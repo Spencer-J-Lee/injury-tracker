@@ -1,9 +1,9 @@
-import { useEffect, type ReactNode } from "react";
-import { createPortal } from "react-dom";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { useFormShortcuts } from "@/hooks/useFormShortcuts";
-import { registerModalOpen } from "@/lib/modalStore";
-import { IconButton } from "@/components/ui/IconButton";
+import { useEffect, type ReactNode } from 'react';
+import { createPortal } from 'react-dom';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { useFormShortcuts } from '@/hooks/useFormShortcuts';
+import { registerModalOpen } from '@/lib/modalStore';
+import { IconButton } from '@/components/ui/IconButton';
 
 interface ModalProps {
   open: boolean;
@@ -12,13 +12,13 @@ interface ModalProps {
   title: ReactNode;
   children: ReactNode;
   footer?: ReactNode;
-  size?: "sm" | "md" | "lg";
+  size?: 'sm' | 'md' | 'lg';
 }
 
 const maxWidthBySize = {
-  sm: "sm:max-w-[550px]",
-  md: "sm:max-w-[800px]",
-  lg: "sm:max-w-[1100px]",
+  sm: 'sm:max-w-[550px]',
+  md: 'sm:max-w-[800px]',
+  lg: 'sm:max-w-[1100px]',
 };
 
 export function Modal({
@@ -28,7 +28,7 @@ export function Modal({
   title,
   children,
   footer,
-  size = "md",
+  size = 'md',
 }: ModalProps) {
   useFormShortcuts({ onSave, onCancel: onClose, enabled: open });
 
@@ -42,7 +42,7 @@ export function Modal({
   return createPortal(
     <div
       className="fixed inset-0 z-50 flex items-end justify-center backdrop-blur-sm sm:items-center sm:p-7"
-      style={{ background: "oklch(0.05 0.007 60 / 0.7)" }}
+      style={{ background: 'oklch(0.05 0.007 60 / 0.7)' }}
       onClick={(e) => {
         e.stopPropagation();
         onClose();

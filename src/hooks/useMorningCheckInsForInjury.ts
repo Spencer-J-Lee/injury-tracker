@@ -1,5 +1,5 @@
-import { useEntitiesForInjury } from "@/hooks/useEntitiesForInjury";
-import { listMorningCheckInsForInjury } from "@/db/queries/morningCheckIns";
+import { useEntitiesForInjury } from '@/hooks/useEntitiesForInjury';
+import { listMorningCheckInsForInjury } from '@/db/queries/morningCheckIns';
 
 export function useMorningCheckInsForInjury(
   injuryId: string | undefined,

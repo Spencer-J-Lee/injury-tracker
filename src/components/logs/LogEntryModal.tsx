@@ -1,23 +1,23 @@
-import { useEffect, useRef, useState } from "react";
-import { Modal } from "@/components/ui/Modal";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
-import { Label } from "@/components/ui/Label";
-import { Kbd } from "@/components/ui/Kbd";
-import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
-import { InjurySelector } from "@/components/logs/InjurySelector";
-import { PainSlider } from "@/components/logs/PainSlider";
-import { PainFrequencySlider } from "@/components/logs/PainFrequencySlider";
-import { RemedyCheckboxGroup } from "@/components/logs/RemedyCheckboxGroup";
-import { TriggerCheckboxGroup } from "@/components/logs/TriggerCheckboxGroup";
-import { InjuryTitle } from "@/components/injuries/InjuryTitle";
-import { RichTextEditor } from "@/components/journal/RichTextEditor";
-import { useLogModal } from "@/context/useLogModal";
-import { useInjuries } from "@/hooks/useInjuries";
-import { useUnsavedChangesGuard } from "@/hooks/useUnsavedChangesGuard";
-import { createLogSession } from "@/db/queries/logEntries";
-import { toDatetimeLocalValue, fromDatetimeLocalValue } from "@/lib/dates";
-import { saveShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
+import { useEffect, useRef, useState } from 'react';
+import { Modal } from '@/components/ui/Modal';
+import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
+import { Label } from '@/components/ui/Label';
+import { Kbd } from '@/components/ui/Kbd';
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
+import { InjurySelector } from '@/components/logs/InjurySelector';
+import { PainSlider } from '@/components/logs/PainSlider';
+import { PainFrequencySlider } from '@/components/logs/PainFrequencySlider';
+import { RemedyCheckboxGroup } from '@/components/logs/RemedyCheckboxGroup';
+import { TriggerCheckboxGroup } from '@/components/logs/TriggerCheckboxGroup';
+import { InjuryTitle } from '@/components/injuries/InjuryTitle';
+import { RichTextEditor } from '@/components/journal/RichTextEditor';
+import { useLogModal } from '@/context/useLogModal';
+import { useInjuries } from '@/hooks/useInjuries';
+import { useUnsavedChangesGuard } from '@/hooks/useUnsavedChangesGuard';
+import { createLogSession } from '@/db/queries/logEntries';
+import { toDatetimeLocalValue, fromDatetimeLocalValue } from '@/lib/dates';
+import { saveShortcutLabel, cancelShortcutLabel } from '@/lib/shortcuts';
 
 export function LogEntryModal() {
   const { state, closeLogModal } = useLogModal();
@@ -30,7 +30,7 @@ export function LogEntryModal() {
   );
   const [remedyIds, setRemedyIds] = useState<string[]>([]);
   const [triggerIds, setTriggerIds] = useState<string[]>([]);
-  const [notes, setNotes] = useState("");
+  const [notes, setNotes] = useState('');
   const [timestamp, setTimestamp] = useState(() =>
     toDatetimeLocalValue(new Date().toISOString()),
   );
@@ -58,7 +58,7 @@ export function LogEntryModal() {
       setPainFrequency(undefined);
       setRemedyIds([]);
       setTriggerIds([]);
-      setNotes("");
+      setNotes('');
       const initialTimestamp = toDatetimeLocalValue(new Date().toISOString());
       setTimestamp(initialTimestamp);
       initialTimestampRef.current = initialTimestamp;
@@ -117,7 +117,7 @@ export function LogEntryModal() {
             Log entry — <InjuryTitle injury={selectedInjury} />
           </>
         ) : (
-          "Log entry"
+          'Log entry'
         )
       }
       footer={

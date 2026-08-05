@@ -1,7 +1,7 @@
-import { useCallback, type ReactNode } from "react";
-import { useBlocker } from "react-router-dom";
-import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
-import { isAnyGuardDirty } from "@/lib/unsavedChangesRegistry";
+import { useCallback, type ReactNode } from 'react';
+import { useBlocker } from 'react-router-dom';
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
+import { isAnyGuardDirty } from '@/lib/unsavedChangesRegistry';
 
 export function UnsavedChangesBlockerProvider({
   children,
@@ -14,14 +14,14 @@ export function UnsavedChangesBlockerProvider({
     <>
       {children}
       <ConfirmDialog
-        open={blocker.state === "blocked"}
+        open={blocker.state === 'blocked'}
         message="You have unsaved changes. Are you sure you want to leave?"
         confirmLabel="Leave"
         onConfirm={() => {
-          if (blocker.state === "blocked") blocker.proceed();
+          if (blocker.state === 'blocked') blocker.proceed();
         }}
         onCancel={() => {
-          if (blocker.state === "blocked") blocker.reset();
+          if (blocker.state === 'blocked') blocker.reset();
         }}
       />
     </>

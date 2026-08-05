@@ -1,23 +1,23 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import clsx from "clsx";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faSun } from "@fortawesome/free-solid-svg-icons";
-import type { Injury } from "@/types/models";
-import { Card } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { InjuryPriorityBadge } from "@/components/injuries/InjuryPriorityBadge";
-import { statusLabels } from "@/lib/injuryStatus";
-import { InjuryTitle } from "@/components/injuries/InjuryTitle";
-import { useLastLogEntryForInjury } from "@/hooks/useLastLogEntryForInjury";
-import { useMorningCheckInsForInjury } from "@/hooks/useMorningCheckInsForInjury";
-import { useLogModal } from "@/context/useLogModal";
-import { LogEntryEditModal } from "@/components/logs/LogEntryEditModal";
-import { MorningCheckInModal } from "@/components/logs/MorningCheckInModal";
-import { formatRelative, todayEntryOnly } from "@/lib/dates";
-import { painTone, freqTone } from "@/lib/pain";
-import { MiniPainTrendChart } from "@/components/charts/MiniPainTrendChart";
-import { MeterRow } from "@/components/ui/MeterRow";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import clsx from 'clsx';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faSun } from '@fortawesome/free-solid-svg-icons';
+import type { Injury } from '@/types/models';
+import { Card } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
+import { InjuryPriorityBadge } from '@/components/injuries/InjuryPriorityBadge';
+import { statusLabels } from '@/lib/injuryStatus';
+import { InjuryTitle } from '@/components/injuries/InjuryTitle';
+import { useLastLogEntryForInjury } from '@/hooks/useLastLogEntryForInjury';
+import { useMorningCheckInsForInjury } from '@/hooks/useMorningCheckInsForInjury';
+import { useLogModal } from '@/context/useLogModal';
+import { LogEntryEditModal } from '@/components/logs/LogEntryEditModal';
+import { MorningCheckInModal } from '@/components/logs/MorningCheckInModal';
+import { formatRelative, todayEntryOnly } from '@/lib/dates';
+import { painTone, freqTone } from '@/lib/pain';
+import { MiniPainTrendChart } from '@/components/charts/MiniPainTrendChart';
+import { MeterRow } from '@/components/ui/MeterRow';
 
 interface InjuryCardProps {
   injury: Injury;
@@ -44,20 +44,20 @@ export function InjuryCard({
 
   const actionButtonProps = !todayMorningEntry
     ? {
-        variant: "orange" as const,
+        variant: 'orange' as const,
         iconBefore: <FontAwesomeIcon icon={faSun} />,
-        label: "Morning Check-In",
+        label: 'Morning Check-In',
         onClick: () => setEditingMorning(true),
       }
     : todayEntry
       ? {
-          variant: "secondary" as const,
-          label: "Update Entry",
+          variant: 'secondary' as const,
+          label: 'Update Entry',
           onClick: () => setEditingToday(true),
         }
       : {
-          variant: "primary" as const,
-          label: "Log Entry",
+          variant: 'primary' as const,
+          label: 'Log Entry',
           onClick: () => openLogModal(injury.id),
         };
 
@@ -73,9 +73,9 @@ export function InjuryCard({
     <Card
       onClick={handleClick}
       className={clsx(
-        "relative flex cursor-pointer flex-col justify-between gap-4.5",
-        "[&:hover:not(:has(button:hover))]:border-accent",
-        selectable && selected && "border-accent! bg-accent-soft/20",
+        'relative flex cursor-pointer flex-col justify-between gap-4.5',
+        '[&:hover:not(:has(button:hover))]:border-accent',
+        selectable && selected && 'border-accent! bg-accent-soft/20',
       )}
     >
       {selectable && selected && (

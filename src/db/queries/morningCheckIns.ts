@@ -1,12 +1,12 @@
-import { db } from "@/db/schema";
+import { db } from '@/db/schema';
 import type {
   MorningCheckIn,
   PainMechanism,
   StiffnessDuration,
   NumbnessDuration,
   NumbnessSuspectedCause,
-} from "@/types/models";
-import { listForInjuryOrderedByTimestamp } from "@/db/queries/shared";
+} from '@/types/models';
+import { listForInjuryOrderedByTimestamp } from '@/db/queries/shared';
 
 export interface CreateMorningCheckInInput {
   injuryId: string;

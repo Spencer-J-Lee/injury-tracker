@@ -44,7 +44,7 @@ export function GuidelineInline({
     <div>
       <p>
         <span className="text-ink font-medium">{title}: </span>
-        <span className="text-ink-muted">{paragraphs.join(" ")}</span>
+        <span className="text-ink-muted">{paragraphs.join(' ')}</span>
       </p>
       {showScience && science && <ScienceNote text={science} />}
     </div>

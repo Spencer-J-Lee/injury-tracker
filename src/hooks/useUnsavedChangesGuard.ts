@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useId, useRef, useState } from "react";
-import { setGuardDirty } from "@/lib/unsavedChangesRegistry";
+import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { setGuardDirty } from '@/lib/unsavedChangesRegistry';
 
 export function useUnsavedChangesGuard(isDirty: boolean) {
   const id = useId();
@@ -22,8 +22,8 @@ export function useUnsavedChangesGuard(isDirty: boolean) {
     const handler = (e: BeforeUnloadEvent) => {
       e.preventDefault();
     };
-    window.addEventListener("beforeunload", handler);
-    return () => window.removeEventListener("beforeunload", handler);
+    window.addEventListener('beforeunload', handler);
+    return () => window.removeEventListener('beforeunload', handler);
   }, [id, isDirty]);
 
   useEffect(() => {

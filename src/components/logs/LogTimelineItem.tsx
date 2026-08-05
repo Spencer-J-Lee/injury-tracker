@@ -1,28 +1,28 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   faPen,
   faTrash,
   faBolt,
   faAsterisk,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import type { LogEntry, Remedy, Trigger } from "@/types/models";
-import { Badge } from "@/components/ui/Badge";
-import { Card } from "@/components/ui/Card";
-import { Divider } from "@/components/ui/Divider";
-import { IconButton } from "@/components/ui/IconButton";
-import { ToneText } from "@/components/ui/ToneText";
-import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
-import { RichTextContent } from "@/components/journal/RichTextEditor";
-import { formatTimestamp } from "@/lib/dates";
-import { painTone, painLabel, freqTone } from "@/lib/pain";
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import type { LogEntry, Remedy, Trigger } from '@/types/models';
+import { Badge } from '@/components/ui/Badge';
+import { Card } from '@/components/ui/Card';
+import { Divider } from '@/components/ui/Divider';
+import { IconButton } from '@/components/ui/IconButton';
+import { ToneText } from '@/components/ui/ToneText';
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
+import { RichTextContent } from '@/components/journal/RichTextEditor';
+import { formatTimestamp } from '@/lib/dates';
+import { painTone, painLabel, freqTone } from '@/lib/pain';
 import {
   REMEDY_CATEGORIES,
   sortByCategoryThenName,
   TRIGGER_CATEGORIES,
-} from "@/lib/categories";
-import { deleteLogEntry } from "@/db/queries/logEntries";
-import { LogEntryEditModal } from "@/components/logs/LogEntryEditModal";
+} from '@/lib/categories';
+import { deleteLogEntry } from '@/db/queries/logEntries';
+import { LogEntryEditModal } from '@/components/logs/LogEntryEditModal';
 
 function sortIdsByCategory<T extends { name: string; category?: string }>(
   ids: string[],
@@ -54,13 +54,13 @@ export function LogTimelineItem({
     entry.remedyIds,
     remedyMap,
     REMEDY_CATEGORIES,
-    "Unknown remedy",
+    'Unknown remedy',
   );
   const sortedTriggerIds = sortIdsByCategory(
     entry.triggerIds,
     triggerMap,
     TRIGGER_CATEGORIES,
-    "Unknown trigger",
+    'Unknown trigger',
   );
 
   return (
@@ -76,7 +76,7 @@ export function LogTimelineItem({
             </span>
             <ToneText tone={painTone(entry.painLevel)}>
               {entry.painLevel === undefined
-                ? "Not rated"
+                ? 'Not rated'
                 : `${painLabel(entry.painLevel)} ${entry.painLevel}/10`}
             </ToneText>
             {entry.painFrequency !== undefined && (
@@ -119,7 +119,7 @@ export function LogTimelineItem({
                 <div className="flex flex-wrap gap-2">
                   {sortedRemedyIds.map((remedyId) => (
                     <Badge key={remedyId} tone="green">
-                      {remedyMap.get(remedyId)?.name ?? "Unknown remedy"}
+                      {remedyMap.get(remedyId)?.name ?? 'Unknown remedy'}
                       {remedyMap.get(remedyId)?.providesImmediateRelief && (
                         <FontAwesomeIcon icon={faAsterisk} className="ml-1" />
                       )}
@@ -137,7 +137,7 @@ export function LogTimelineItem({
                 <div className="flex flex-wrap gap-2">
                   {sortedTriggerIds.map((triggerId) => (
                     <Badge key={triggerId} tone="red">
-                      {triggerMap.get(triggerId)?.name ?? "Unknown trigger"}
+                      {triggerMap.get(triggerId)?.name ?? 'Unknown trigger'}
                       {triggerMap.get(triggerId)?.isHighReactivity && (
                         <FontAwesomeIcon icon={faBolt} className="ml-1" />
                       )}

@@ -1,11 +1,11 @@
-import { useMemo } from "react";
-import { Card } from "@/components/ui/Card";
-import { LoadMoreButton } from "@/components/ui/LoadMoreButton";
-import { listLogEntriesForInjury } from "@/db/queries/logEntries";
-import { usePaginatedEntitiesForInjury } from "@/hooks/usePaginatedEntitiesForInjury";
-import { useAllRemediesForInjury } from "@/hooks/useAllRemediesForInjury";
-import { useAllTriggersForInjury } from "@/hooks/useAllTriggersForInjury";
-import { LogTimelineItem } from "@/components/logs/LogTimelineItem";
+import { useMemo } from 'react';
+import { Card } from '@/components/ui/Card';
+import { LoadMoreButton } from '@/components/ui/LoadMoreButton';
+import { listLogEntriesForInjury } from '@/db/queries/logEntries';
+import { usePaginatedEntitiesForInjury } from '@/hooks/usePaginatedEntitiesForInjury';
+import { useAllRemediesForInjury } from '@/hooks/useAllRemediesForInjury';
+import { useAllTriggersForInjury } from '@/hooks/useAllTriggersForInjury';
+import { LogTimelineItem } from '@/components/logs/LogTimelineItem';
 
 export function LogTimeline({ injuryId }: { injuryId: string }) {
   const {

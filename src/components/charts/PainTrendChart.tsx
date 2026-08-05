@@ -1,7 +1,7 @@
-import { useLogEntriesForInjury } from "@/hooks/useLogEntriesForInjury";
-import { chartColors as colors } from "@/components/charts/chartColors";
-import { TrendChart } from "@/components/charts/TrendChart";
-import type { LogEntry } from "@/types/models";
+import { useLogEntriesForInjury } from '@/hooks/useLogEntriesForInjury';
+import { chartColors as colors } from '@/components/charts/chartColors';
+import { TrendChart } from '@/components/charts/TrendChart';
+import type { LogEntry } from '@/types/models';
 
 export function PainTrendChart({ injuryId }: { injuryId: string }) {
   const entries = useLogEntriesForInjury(injuryId);
@@ -20,29 +20,29 @@ export function PainTrendChart({ injuryId }: { injuryId: string }) {
         painFrequency: e.painFrequency,
       })}
       axes={[
-        { id: "left", domain: [0, 10], ticks: [0, 5, 10], color: colors.line },
+        { id: 'left', domain: [0, 10], ticks: [0, 5, 10], color: colors.line },
         {
-          id: "right",
+          id: 'right',
           domain: [0, 100],
           ticks: [0, 50, 100],
           tickFormatter: (v) => `${v}%`,
           color: colors.frequencyLine,
         },
       ]}
-      referenceLine={{ yAxisId: "left", y: 5 }}
+      referenceLine={{ yAxisId: 'left', y: 5 }}
       series={[
         {
-          dataKey: "painLevel",
-          legendLabel: "Pain intensity (0-10)",
+          dataKey: 'painLevel',
+          legendLabel: 'Pain intensity (0-10)',
           color: colors.line,
-          yAxisId: "left",
+          yAxisId: 'left',
           tooltipFormatter: (v) => `${v}/10 intensity`,
         },
         {
-          dataKey: "painFrequency",
-          legendLabel: "Frequency (0-100%)",
+          dataKey: 'painFrequency',
+          legendLabel: 'Frequency (0-100%)',
           color: colors.frequencyLine,
-          yAxisId: "right",
+          yAxisId: 'right',
           tooltipFormatter: (v) => `${v}% frequency`,
         },
       ]}

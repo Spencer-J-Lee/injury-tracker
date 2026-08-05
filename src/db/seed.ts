@@ -1,5 +1,5 @@
-import { format } from "date-fns";
-import { db } from "@/db/schema";
+import { format } from 'date-fns';
+import { db } from '@/db/schema';
 import type {
   Injury,
   LogEntry,
@@ -12,16 +12,16 @@ import type {
   HabitCompletion,
   Activity,
   Section,
-} from "@/types/models";
+} from '@/types/models';
 import {
   SEED_INJURIES,
   SEED_JOURNAL_ENTRIES,
   SEED_HABITS,
   SEED_ACTIVITIES,
   SEED_SECTIONS,
-} from "@/db/seedData";
+} from '@/db/seedData';
 
-export const SEED_MARKER = "꧁꧂";
+export const SEED_MARKER = '꧁꧂';
 
 const LEGACY_SEED_MARKERS: string[] = [];
 
@@ -45,7 +45,7 @@ function isoOffsetDays(
 }
 
 function dateOffsetDays(days: number): string {
-  return format(new Date(Date.now() + days * 86_400_000), "yyyy-MM-dd");
+  return format(new Date(Date.now() + days * 86_400_000), 'yyyy-MM-dd');
 }
 
 export interface ClearSeedResult {
@@ -58,7 +58,7 @@ export interface ClearSeedResult {
 
 export async function clearSeedTestData(): Promise<ClearSeedResult> {
   return db.transaction(
-    "rw",
+    'rw',
     [
       db.injuries,
       db.remedies,
@@ -79,18 +79,18 @@ export async function clearSeedTestData(): Promise<ClearSeedResult> {
 
       if (seedIds.length > 0) {
         const seedRemedyIds = await db.remedies
-          .where("injuryId")
+          .where('injuryId')
           .anyOf(seedIds)
           .primaryKeys();
 
-        await db.logEntries.where("injuryId").anyOf(seedIds).delete();
-        await db.morningCheckIns.where("injuryId").anyOf(seedIds).delete();
+        await db.logEntries.where('injuryId').anyOf(seedIds).delete();
+        await db.morningCheckIns.where('injuryId').anyOf(seedIds).delete();
         await db.plannedExercises
-          .where("remedyId")
+          .where('remedyId')
           .anyOf(seedRemedyIds)
           .delete();
-        await db.remedies.where("injuryId").anyOf(seedIds).delete();
-        await db.triggers.where("injuryId").anyOf(seedIds).delete();
+        await db.remedies.where('injuryId').anyOf(seedIds).delete();
+        await db.triggers.where('injuryId').anyOf(seedIds).delete();
         await db.injuries.bulkDelete(seedIds);
       }
 
@@ -103,16 +103,16 @@ export async function clearSeedTestData(): Promise<ClearSeedResult> {
       }
 
       const seedHabitIds = (await db.habits.toArray())
-        .filter((habit) => isSeedMarked(habit.description ?? ""))
+        .filter((habit) => isSeedMarked(habit.description ?? ''))
         .map((habit) => habit.id);
 
       if (seedHabitIds.length > 0) {
-        await db.habitCompletions.where("habitId").anyOf(seedHabitIds).delete();
+        await db.habitCompletions.where('habitId').anyOf(seedHabitIds).delete();
         await db.habits.bulkDelete(seedHabitIds);
       }
 
       const seedActivityIds = (await db.activities.toArray())
-        .filter((activity) => isSeedMarked(activity.description ?? ""))
+        .filter((activity) => isSeedMarked(activity.description ?? ''))
         .map((activity) => activity.id);
 
       if (seedActivityIds.length > 0) {
@@ -224,7 +224,7 @@ export async function seedTestData(): Promise<SeedResult> {
 
   const activityPositionBySection = new Map<string, number>();
   const activityRows: Activity[] = SEED_ACTIVITIES.map((seed) => {
-    const sectionKey = seed.section ?? "";
+    const sectionKey = seed.section ?? '';
     const position = activityPositionBySection.get(sectionKey) ?? 0;
     activityPositionBySection.set(sectionKey, position + 1);
     return {
@@ -361,7 +361,7 @@ export async function seedTestData(): Promise<SeedResult> {
   }
 
   await db.transaction(
-    "rw",
+    'rw',
     [
       db.injuries,
       db.remedies,

@@ -1,10 +1,10 @@
-import { db } from "@/db/schema";
-import type { TriggerCategory, Trigger } from "@/types/models";
-import { TRIGGER_CATEGORIES, sortByCategoryThenName } from "@/lib/categories";
+import { db } from '@/db/schema';
+import type { TriggerCategory, Trigger } from '@/types/models';
+import { TRIGGER_CATEGORIES, sortByCategoryThenName } from '@/lib/categories';
 
 export async function listActiveTriggersForInjury(injuryId: string) {
   const triggers = await db.triggers
-    .where("injuryId")
+    .where('injuryId')
     .equals(injuryId)
     .filter((trigger) => !trigger.archivedAt)
     .toArray();
@@ -13,7 +13,7 @@ export async function listActiveTriggersForInjury(injuryId: string) {
 
 export async function listAllTriggersForInjury(injuryId: string) {
   const triggers = await db.triggers
-    .where("injuryId")
+    .where('injuryId')
     .equals(injuryId)
     .toArray();
   return sortByCategoryThenName(triggers, TRIGGER_CATEGORIES);
@@ -42,7 +42,7 @@ export async function createTrigger(input: {
 export async function updateTrigger(
   id: string,
   changes: Partial<
-    Pick<Trigger, "name" | "description" | "category" | "isHighReactivity">
+    Pick<Trigger, 'name' | 'description' | 'category' | 'isHighReactivity'>
   >,
 ) {
   await db.triggers.update(id, changes);

@@ -1,22 +1,22 @@
-import { useEffect, useState } from "react";
-import type { LogEntry } from "@/types/models";
-import { Modal } from "@/components/ui/Modal";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
-import { Label } from "@/components/ui/Label";
-import { Kbd } from "@/components/ui/Kbd";
-import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
-import { PainSlider } from "@/components/logs/PainSlider";
-import { PainFrequencySlider } from "@/components/logs/PainFrequencySlider";
-import { RemedyCheckboxGroup } from "@/components/logs/RemedyCheckboxGroup";
-import { TriggerCheckboxGroup } from "@/components/logs/TriggerCheckboxGroup";
-import { InjuryTitle } from "@/components/injuries/InjuryTitle";
-import { RichTextEditor } from "@/components/journal/RichTextEditor";
-import { useInjury } from "@/hooks/useInjury";
-import { useUnsavedChangesGuard } from "@/hooks/useUnsavedChangesGuard";
-import { updateLogEntry } from "@/db/queries/logEntries";
-import { toDatetimeLocalValue, fromDatetimeLocalValue } from "@/lib/dates";
-import { saveShortcutLabel, cancelShortcutLabel } from "@/lib/shortcuts";
+import { useEffect, useState } from 'react';
+import type { LogEntry } from '@/types/models';
+import { Modal } from '@/components/ui/Modal';
+import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
+import { Label } from '@/components/ui/Label';
+import { Kbd } from '@/components/ui/Kbd';
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
+import { PainSlider } from '@/components/logs/PainSlider';
+import { PainFrequencySlider } from '@/components/logs/PainFrequencySlider';
+import { RemedyCheckboxGroup } from '@/components/logs/RemedyCheckboxGroup';
+import { TriggerCheckboxGroup } from '@/components/logs/TriggerCheckboxGroup';
+import { InjuryTitle } from '@/components/injuries/InjuryTitle';
+import { RichTextEditor } from '@/components/journal/RichTextEditor';
+import { useInjury } from '@/hooks/useInjury';
+import { useUnsavedChangesGuard } from '@/hooks/useUnsavedChangesGuard';
+import { updateLogEntry } from '@/db/queries/logEntries';
+import { toDatetimeLocalValue, fromDatetimeLocalValue } from '@/lib/dates';
+import { saveShortcutLabel, cancelShortcutLabel } from '@/lib/shortcuts';
 
 interface LogEntryEditModalProps {
   entry: LogEntry;
@@ -39,7 +39,7 @@ export function LogEntryEditModal({
   );
   const [remedyIds, setRemedyIds] = useState<string[]>(entry.remedyIds);
   const [triggerIds, setTriggerIds] = useState<string[]>(entry.triggerIds);
-  const [notes, setNotes] = useState(entry.notes ?? "");
+  const [notes, setNotes] = useState(entry.notes ?? '');
   const [timestamp, setTimestamp] = useState(() =>
     toDatetimeLocalValue(entry.timestamp),
   );
@@ -49,9 +49,9 @@ export function LogEntryEditModal({
     open &&
     (painLevel !== entry.painLevel ||
       painFrequency !== entry.painFrequency ||
-      remedyIds.join(",") !== entry.remedyIds.join(",") ||
-      triggerIds.join(",") !== entry.triggerIds.join(",") ||
-      notes !== (entry.notes ?? "") ||
+      remedyIds.join(',') !== entry.remedyIds.join(',') ||
+      triggerIds.join(',') !== entry.triggerIds.join(',') ||
+      notes !== (entry.notes ?? '') ||
       timestamp !== toDatetimeLocalValue(entry.timestamp));
 
   const { isPrompting, guard, confirmLeave, cancelLeave } =
@@ -63,7 +63,7 @@ export function LogEntryEditModal({
       setPainFrequency(entry.painFrequency);
       setRemedyIds(entry.remedyIds);
       setTriggerIds(entry.triggerIds);
-      setNotes(entry.notes ?? "");
+      setNotes(entry.notes ?? '');
       setTimestamp(toDatetimeLocalValue(entry.timestamp));
     }
   }, [open, entry]);
@@ -112,7 +112,7 @@ export function LogEntryEditModal({
             Edit log entry — <InjuryTitle injury={injury} />
           </>
         ) : (
-          "Edit log entry"
+          'Edit log entry'
         )
       }
       footer={

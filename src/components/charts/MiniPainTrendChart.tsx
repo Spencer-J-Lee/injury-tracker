@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo } from 'react';
 import {
   ResponsiveContainer,
   LineChart,
@@ -7,10 +7,10 @@ import {
   CartesianGrid,
   ReferenceLine,
   ReferenceArea,
-} from "recharts";
-import { useLogEntriesForInjury } from "@/hooks/useLogEntriesForInjury";
-import { isWithinRange } from "@/lib/dates";
-import { chartColors as colors } from "@/components/charts/chartColors";
+} from 'recharts';
+import { useLogEntriesForInjury } from '@/hooks/useLogEntriesForInjury';
+import { isWithinRange } from '@/lib/dates';
+import { chartColors as colors } from '@/components/charts/chartColors';
 
 interface ChartPoint {
   timestamp: string;
@@ -26,7 +26,7 @@ export function MiniPainTrendChart({ injuryId }: { injuryId: string }) {
       .filter(
         (e) =>
           (e.painLevel !== undefined || e.painFrequency !== undefined) &&
-          isWithinRange(e.timestamp, "7d"),
+          isWithinRange(e.timestamp, '7d'),
       )
       .map((e) => ({
         timestamp: e.timestamp,

@@ -1,40 +1,40 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from 'react';
 import type {
   MorningCheckIn,
   NumbnessDuration,
   NumbnessSuspectedCause,
   PainMechanism,
   StiffnessDuration,
-} from "@/types/models";
-import type { Injury } from "@/types/models";
-import { Modal } from "@/components/ui/Modal";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
-import { Label } from "@/components/ui/Label";
-import { Kbd } from "@/components/ui/Kbd";
-import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
-import { InjuryTitle } from "@/components/injuries/InjuryTitle";
-import { PainSlider } from "@/components/logs/PainSlider";
-import { StiffnessDurationSelect } from "@/components/logs/StiffnessDurationSelect";
-import { NumbnessCheckIn } from "@/components/logs/NumbnessCheckIn";
-import { RichTextEditor } from "@/components/journal/RichTextEditor";
-import { useUnsavedChangesGuard } from "@/hooks/useUnsavedChangesGuard";
+} from '@/types/models';
+import type { Injury } from '@/types/models';
+import { Modal } from '@/components/ui/Modal';
+import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
+import { Label } from '@/components/ui/Label';
+import { Kbd } from '@/components/ui/Kbd';
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
+import { InjuryTitle } from '@/components/injuries/InjuryTitle';
+import { PainSlider } from '@/components/logs/PainSlider';
+import { StiffnessDurationSelect } from '@/components/logs/StiffnessDurationSelect';
+import { NumbnessCheckIn } from '@/components/logs/NumbnessCheckIn';
+import { RichTextEditor } from '@/components/journal/RichTextEditor';
+import { useUnsavedChangesGuard } from '@/hooks/useUnsavedChangesGuard';
 import {
   createMorningCheckIn,
   updateMorningCheckIn,
-} from "@/db/queries/morningCheckIns";
-import { toDatetimeLocalValue, fromDatetimeLocalValue } from "@/lib/dates";
+} from '@/db/queries/morningCheckIns';
+import { toDatetimeLocalValue, fromDatetimeLocalValue } from '@/lib/dates';
 import {
   saveShortcutLabel,
   cancelShortcutLabel,
   saveNoSymptomsShortcutLabel,
-} from "@/lib/shortcuts";
-import { getMechanismVisibility } from "@/lib/morningCheckInOptions";
-import { matchesShortcut } from "@/lib/keyboardShortcut";
+} from '@/lib/shortcuts';
+import { getMechanismVisibility } from '@/lib/morningCheckInOptions';
+import { matchesShortcut } from '@/lib/keyboardShortcut';
 
 interface MorningCheckInModalProps {
   injuryId: string;
-  injury?: Pick<Injury, "bodyPart" | "injuryType" | "locationDetail">;
+  injury?: Pick<Injury, 'bodyPart' | 'injuryType' | 'locationDetail'>;
   painMechanisms: PainMechanism[];
   entry?: MorningCheckIn;
   open: boolean;
@@ -71,7 +71,7 @@ export function MorningCheckInModal({
   const [numbnessSuspectedCause, setNumbnessSuspectedCause] = useState<
     NumbnessSuspectedCause | undefined
   >(entry?.numbnessSuspectedCause);
-  const [notes, setNotes] = useState(entry?.notes ?? "");
+  const [notes, setNotes] = useState(entry?.notes ?? '');
   const [timestamp, setTimestamp] = useState(() =>
     toDatetimeLocalValue(entry?.timestamp ?? new Date().toISOString()),
   );
@@ -86,7 +86,7 @@ export function MorningCheckInModal({
       setNumbnessPresent(entry?.numbnessPresent);
       setNumbnessDuration(entry?.numbnessDuration);
       setNumbnessSuspectedCause(entry?.numbnessSuspectedCause);
-      setNotes(entry?.notes ?? "");
+      setNotes(entry?.notes ?? '');
       const nextTimestamp = toDatetimeLocalValue(
         entry?.timestamp ?? new Date().toISOString(),
       );
@@ -118,7 +118,7 @@ export function MorningCheckInModal({
         numbnessPresent !== entry.numbnessPresent ||
         numbnessDuration !== entry.numbnessDuration ||
         numbnessSuspectedCause !== entry.numbnessSuspectedCause ||
-        notes !== (entry.notes ?? "") ||
+        notes !== (entry.notes ?? '') ||
         timestamp !== toDatetimeLocalValue(entry.timestamp)
       : open &&
         (painLevel !== undefined ||
@@ -190,13 +190,13 @@ export function MorningCheckInModal({
   useEffect(() => {
     if (!open) return;
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (matchesShortcut(e, "s", { meta: true, shift: true })) {
+      if (matchesShortcut(e, 's', { meta: true, shift: true })) {
         e.preventDefault();
         handleSaveNoSymptoms();
       }
     };
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
   }, [open, handleSaveNoSymptoms]);
 
   return (
@@ -207,13 +207,13 @@ export function MorningCheckInModal({
       title={
         injury ? (
           <>
-            {entry ? "Edit morning check-in" : "Morning check-in"} —{" "}
+            {entry ? 'Edit morning check-in' : 'Morning check-in'} —{' '}
             <InjuryTitle injury={injury} />
           </>
         ) : entry ? (
-          "Edit morning check-in"
+          'Edit morning check-in'
         ) : (
-          "Morning check-in"
+          'Morning check-in'
         )
       }
       footer={

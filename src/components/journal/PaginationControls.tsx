@@ -1,11 +1,11 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBackwardFast,
   faBackwardStep,
   faForwardStep,
   faForwardFast,
-} from "@fortawesome/free-solid-svg-icons";
-import { Button } from "@/components/ui/Button";
+} from '@fortawesome/free-solid-svg-icons';
+import { Button } from '@/components/ui/Button';
 
 interface PaginationControlsProps {
   page: number;

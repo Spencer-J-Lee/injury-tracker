@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useEntitiesForInjury } from "@/hooks/useEntitiesForInjury";
+import { useState } from 'react';
+import { useEntitiesForInjury } from '@/hooks/useEntitiesForInjury';
 
 const PAGE_SIZE = 15;
 

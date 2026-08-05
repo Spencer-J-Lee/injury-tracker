@@ -1,5 +1,5 @@
-import { createPortal } from "react-dom";
-import { Button } from "@/components/ui/Button";
+import { createPortal } from 'react-dom';
+import { Button } from '@/components/ui/Button';
 
 interface ConfirmDialogProps {
   open: boolean;
@@ -13,10 +13,10 @@ interface ConfirmDialogProps {
 
 export function ConfirmDialog({
   open,
-  title = "Discard unsaved changes?",
+  title = 'Discard unsaved changes?',
   message,
-  confirmLabel = "Discard",
-  cancelLabel = "Keep editing",
+  confirmLabel = 'Discard',
+  cancelLabel = 'Keep editing',
   onConfirm,
   onCancel,
 }: ConfirmDialogProps) {
@@ -25,7 +25,7 @@ export function ConfirmDialog({
   return createPortal(
     <div
       className="fixed inset-0 z-60 flex items-center justify-center p-5 backdrop-blur-sm"
-      style={{ background: "oklch(0.05 0.007 60 / 0.7)" }}
+      style={{ background: 'oklch(0.05 0.007 60 / 0.7)' }}
       onClick={onCancel}
     >
       <div

@@ -1,16 +1,16 @@
-import { useState } from "react";
-import { faPen, faSun, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import type { Injury, MorningCheckIn } from "@/types/models";
-import { Card } from "@/components/ui/Card";
-import { Divider } from "@/components/ui/Divider";
-import { IconButton } from "@/components/ui/IconButton";
-import { ToneText } from "@/components/ui/ToneText";
-import { MeterRow } from "@/components/ui/MeterRow";
-import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
-import { RichTextContent } from "@/components/journal/RichTextEditor";
-import { formatTimestamp } from "@/lib/dates";
-import { painTone } from "@/lib/pain";
+import { useState } from 'react';
+import { faPen, faSun, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import type { Injury, MorningCheckIn } from '@/types/models';
+import { Card } from '@/components/ui/Card';
+import { Divider } from '@/components/ui/Divider';
+import { IconButton } from '@/components/ui/IconButton';
+import { ToneText } from '@/components/ui/ToneText';
+import { MeterRow } from '@/components/ui/MeterRow';
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
+import { RichTextContent } from '@/components/journal/RichTextEditor';
+import { formatTimestamp } from '@/lib/dates';
+import { painTone } from '@/lib/pain';
 import {
   STIFFNESS_DURATION_OPTIONS,
   NUMBNESS_DURATION_OPTIONS,
@@ -19,9 +19,9 @@ import {
   stiffnessDurationTone,
   numbnessPresenceTone,
   numbnessDurationTone,
-} from "@/lib/morningCheckInOptions";
-import { deleteMorningCheckIn } from "@/db/queries/morningCheckIns";
-import { MorningCheckInModal } from "@/components/logs/MorningCheckInModal";
+} from '@/lib/morningCheckInOptions';
+import { deleteMorningCheckIn } from '@/db/queries/morningCheckIns';
+import { MorningCheckInModal } from '@/components/logs/MorningCheckInModal';
 
 const stiffnessLabels = new Map(
   STIFFNESS_DURATION_OPTIONS.map((opt) => [opt.value, opt.label]),
@@ -107,7 +107,7 @@ export function MorningCheckInTimelineItem({
                   displayValue={
                     entry.stiffnessLevel !== undefined
                       ? `${entry.stiffnessLevel}/10`
-                      : "Not rated"
+                      : 'Not rated'
                   }
                   tone={painTone(entry.stiffnessLevel)}
                 />
@@ -138,7 +138,7 @@ export function MorningCheckInTimelineItem({
                       >
                         {entry.numbnessDuration !== undefined
                           ? numbnessDurationLabels.get(entry.numbnessDuration)
-                          : "Not rated"}
+                          : 'Not rated'}
                       </ToneText>
                     </div>
                   ) : (

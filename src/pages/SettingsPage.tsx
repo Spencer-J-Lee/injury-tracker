@@ -1,23 +1,23 @@
-import { useEffect, useRef, useState } from "react";
-import { Card } from "@/components/ui/Card";
-import { PageTitle } from "@/components/ui/PageTitle";
-import { Button } from "@/components/ui/Button";
-import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
+import { useEffect, useRef, useState } from 'react';
+import { Card } from '@/components/ui/Card';
+import { PageTitle } from '@/components/ui/PageTitle';
+import { Button } from '@/components/ui/Button';
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import {
   exportBackup,
   importBackup,
   deleteAllData,
   getLastExportedAt,
-} from "@/db/backup";
-import { seedTestData, clearSeedTestData, SEED_MARKER } from "@/db/seed";
-import { formatRelative } from "@/lib/dates";
+} from '@/db/backup';
+import { seedTestData, clearSeedTestData, SEED_MARKER } from '@/db/seed';
+import { formatRelative } from '@/lib/dates';
 
 export function SettingsPage() {
   const [lastExportedAt, setLastExportedAt] = useState<string | undefined>();
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [confirmAction, setConfirmAction] = useState<
-    "clearSeed" | "deleteAll" | null
+    'clearSeed' | 'deleteAll' | null
   >(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -31,7 +31,7 @@ export function SettingsPage() {
     try {
       await exportBackup();
       setLastExportedAt(await getLastExportedAt());
-      setMessage("Export downloaded.");
+      setMessage('Export downloaded.');
     } finally {
       setBusy(false);
     }
@@ -47,10 +47,10 @@ export function SettingsPage() {
     try {
       await importBackup(file);
       setLastExportedAt(await getLastExportedAt());
-      setMessage("Import complete.");
+      setMessage('Import complete.');
     } finally {
       setBusy(false);
-      e.target.value = "";
+      e.target.value = '';
     }
   };
 
@@ -66,7 +66,7 @@ export function SettingsPage() {
           result.habitsDeleted > 0 ||
           result.activitiesDeleted > 0
             ? ` (replaced ${result.injuriesDeleted} previous seed injuries, ${result.journalEntriesDeleted} journal entries, ${result.habitsDeleted} habits, and ${result.activitiesDeleted} activities).`
-            : "."),
+            : '.'),
       );
     } finally {
       setBusy(false);
@@ -84,7 +84,7 @@ export function SettingsPage() {
         activitiesDeleted,
       } = await clearSeedTestData();
       setMessage(
-        `Cleared ${injuriesDeleted} seed injur${injuriesDeleted === 1 ? "y" : "ies"}, ${journalEntriesDeleted} seed journal entr${journalEntriesDeleted === 1 ? "y" : "ies"}, ${habitsDeleted} seed habit${habitsDeleted === 1 ? "" : "s"}, and ${activitiesDeleted} seed activit${activitiesDeleted === 1 ? "y" : "ies"}.`,
+        `Cleared ${injuriesDeleted} seed injur${injuriesDeleted === 1 ? 'y' : 'ies'}, ${journalEntriesDeleted} seed journal entr${journalEntriesDeleted === 1 ? 'y' : 'ies'}, ${habitsDeleted} seed habit${habitsDeleted === 1 ? '' : 's'}, and ${activitiesDeleted} seed activit${activitiesDeleted === 1 ? 'y' : 'ies'}.`,
       );
     } finally {
       setBusy(false);
@@ -96,7 +96,7 @@ export function SettingsPage() {
     setMessage(null);
     try {
       await deleteAllData();
-      setMessage("All data deleted.");
+      setMessage('All data deleted.');
     } finally {
       setBusy(false);
     }
@@ -117,7 +117,7 @@ export function SettingsPage() {
           <p className="text-ink-faint mt-2 text-sm">
             {lastExportedAt
               ? `Last exported ${formatRelative(lastExportedAt)}`
-              : "Never exported"}
+              : 'Never exported'}
           </p>
         </div>
         <div className="flex flex-wrap gap-3">
@@ -150,7 +150,7 @@ export function SettingsPage() {
             testing. Re-running replaces previous seed data.
           </p>
           <p className="text-ink-muted mt-2">
-            Seeded items are tagged with the{" "}
+            Seeded items are tagged with the{' '}
             <span className="font-mono">{SEED_MARKER}</span> marker so they can
             be identified and cleared later.
           </p>
@@ -161,7 +161,7 @@ export function SettingsPage() {
           </Button>
           <Button
             variant="danger"
-            onClick={() => setConfirmAction("clearSeed")}
+            onClick={() => setConfirmAction('clearSeed')}
             disabled={busy}
           >
             Clear seed data
@@ -171,7 +171,7 @@ export function SettingsPage() {
 
       <Card
         className="space-y-4"
-        style={{ borderColor: "oklch(0.40 0.08 25)" }}
+        style={{ borderColor: 'oklch(0.40 0.08 25)' }}
       >
         <div>
           <h3 className="text-pain-red text-xl font-semibold">Danger zone</h3>
@@ -181,7 +181,7 @@ export function SettingsPage() {
         </div>
         <Button
           variant="danger"
-          onClick={() => setConfirmAction("deleteAll")}
+          onClick={() => setConfirmAction('deleteAll')}
           disabled={busy}
         >
           Delete all data
@@ -189,7 +189,7 @@ export function SettingsPage() {
       </Card>
 
       <ConfirmDialog
-        open={confirmAction === "clearSeed"}
+        open={confirmAction === 'clearSeed'}
         title="Clear seed data?"
         message='This removes only the example data created by "Load example data".'
         confirmLabel="Clear"
@@ -200,7 +200,7 @@ export function SettingsPage() {
         onCancel={() => setConfirmAction(null)}
       />
       <ConfirmDialog
-        open={confirmAction === "deleteAll"}
+        open={confirmAction === 'deleteAll'}
         title="Delete all data?"
         message="Delete all injuries, remedies, and log entries? This cannot be undone."
         confirmLabel="Delete all"

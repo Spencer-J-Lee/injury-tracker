@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
 export function useKeyboardShortcut(
   key: string,
@@ -13,8 +13,8 @@ export function useKeyboardShortcut(
 
       const target = e.target as HTMLElement;
       if (
-        target.tagName === "INPUT" ||
-        target.tagName === "TEXTAREA" ||
+        target.tagName === 'INPUT' ||
+        target.tagName === 'TEXTAREA' ||
         target.isContentEditable
       )
         return;
@@ -25,7 +25,7 @@ export function useKeyboardShortcut(
       }
     };
 
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
   }, [key, handler, enabled]);
 }

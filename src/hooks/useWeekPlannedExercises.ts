@@ -1,8 +1,8 @@
-import { useLiveQuery } from "dexie-react-hooks";
-import { listPlannedExercisesForWeek } from "@/db/queries/plannedExercises";
-import { getRemediesByIds } from "@/db/queries/remedies";
-import { getWindowEnd } from "@/lib/weeks";
-import type { PlannedExercise, Remedy } from "@/types/models";
+import { useLiveQuery } from 'dexie-react-hooks';
+import { listPlannedExercisesForWeek } from '@/db/queries/plannedExercises';
+import { getRemediesByIds } from '@/db/queries/remedies';
+import { getWindowEnd } from '@/lib/weeks';
+import type { PlannedExercise, Remedy } from '@/types/models';
 
 export interface PlannedExerciseWithRemedy extends PlannedExercise {
   remedy: Remedy | undefined;

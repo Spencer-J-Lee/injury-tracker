@@ -1,5 +1,5 @@
-import { db } from "@/db/schema";
-import type { Habit } from "@/types/models";
+import { db } from '@/db/schema';
+import type { Habit } from '@/types/models';
 
 export async function listActiveHabits(): Promise<Habit[]> {
   const habits = await db.habits.toArray();
@@ -12,7 +12,7 @@ export async function createHabit(input: {
   name: string;
   description?: string;
 }): Promise<Habit> {
-  return db.transaction("rw", db.habits, async () => {
+  return db.transaction('rw', db.habits, async () => {
     const existing = await db.habits.toArray();
     const nextPosition =
       existing.length > 0
@@ -32,7 +32,7 @@ export async function createHabit(input: {
 
 export async function updateHabit(
   id: string,
-  changes: Partial<Pick<Habit, "name" | "description">>,
+  changes: Partial<Pick<Habit, 'name' | 'description'>>,
 ) {
   await db.habits.update(id, changes);
 }
@@ -42,7 +42,7 @@ export async function archiveHabit(id: string) {
 }
 
 export async function reorderHabits(orderedIds: string[]): Promise<void> {
-  await db.transaction("rw", db.habits, async () => {
+  await db.transaction('rw', db.habits, async () => {
     await Promise.all(
       orderedIds.map((id, index) => db.habits.update(id, { position: index })),
     );
