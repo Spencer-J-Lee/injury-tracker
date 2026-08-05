@@ -7,7 +7,7 @@ import { CSS } from '@dnd-kit/utilities';
 import { Card } from '@/components/ui/Card';
 
 const SIDEBAR_CLASSES =
-  'bg-surface-raised flex w-8 shrink-0 items-center justify-center self-stretch';
+  'bg-surface-raised flex w-7 shrink-0 items-center justify-center self-stretch';
 
 interface SortableCardProps {
   id: string;
@@ -61,7 +61,7 @@ export function SortableCard({
         <div className={SIDEBAR_CLASSES} />
       )}
       <div className="min-w-0 flex-1 p-4 pl-3.5">
-        <div className="mb-2 flex min-h-7 min-w-0 items-start justify-between gap-2.5">
+        <div className="flex min-h-7 min-w-0 items-start justify-between gap-2.5">
           <p className="text-ink">{title}</p>
           {actions && <div className="flex shrink-0 gap-2">{actions}</div>}
         </div>
