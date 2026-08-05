@@ -13,7 +13,7 @@ import { Divider } from '@/components/ui/Divider';
 import { IconButton } from '@/components/ui/IconButton';
 import { ToneText } from '@/components/ui/ToneText';
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
-import { RichTextContent } from '@/components/journal/RichTextEditor';
+import { RichTextContent } from '@/components/journal/RichTextContent';
 import { formatTimestamp } from '@/lib/dates';
 import { painTone, painLabel, freqTone } from '@/lib/pain';
 import {

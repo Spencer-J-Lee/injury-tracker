@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { IconButton } from '@/components/ui/IconButton';
 import { TriggerForm } from '@/components/triggers/TriggerForm';
-import { RichTextContent } from '@/components/journal/RichTextEditor';
+import { RichTextContent } from '@/components/journal/RichTextContent';
 import { useTriggers } from '@/hooks/useTriggers';
 import {
   createTrigger,

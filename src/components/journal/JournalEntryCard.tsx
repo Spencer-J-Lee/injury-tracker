@@ -5,10 +5,8 @@ import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { IconButton } from '@/components/ui/IconButton';
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
-import {
-  RichTextEditor,
-  RichTextContent,
-} from '@/components/journal/RichTextEditor';
+import { RichTextEditor } from '@/components/journal/RichTextEditor';
+import { RichTextContent } from '@/components/journal/RichTextContent';
 import { Kbd } from '@/components/ui/Kbd';
 import { formatFullDate } from '@/lib/dates';
 import {
