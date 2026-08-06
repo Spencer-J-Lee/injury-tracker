@@ -2,7 +2,7 @@ import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import clsx from 'clsx';
 
 type Variant =
-  'primary' | 'secondary' | 'danger' | 'ghost' | 'dashed' | 'orange';
+  'primary' | 'secondary' | 'danger' | 'warning' | 'ghost' | 'dashed' | 'orange';
 type Size = 'sm' | 'md' | 'lg';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -18,6 +18,8 @@ const variantClasses: Record<Variant, string> = {
     'bg-control text-ink border-strong font-semibold hover:bg-surface-raised',
   danger:
     'bg-[oklch(0.33_0.14_25)] border-[oklch(0.33_0.14_25)] text-[oklch(0.96_0.03_25)] font-bold hover:bg-[oklch(0.37_0.14_25)]',
+  warning:
+    'bg-[oklch(0.33_0.09_85)] border-[oklch(0.33_0.09_85)] text-[oklch(0.96_0.03_85)] font-bold hover:bg-[oklch(0.37_0.09_85)]',
   orange:
     'bg-[oklch(0.6_0.15_55)] border-[oklch(0.6_0.15_55)] text-ink font-bold hover:bg-[oklch(0.54_0.15_55)]',
   ghost:

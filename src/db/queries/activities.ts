@@ -2,8 +2,7 @@ import { db } from '@/db/schema';
 import type { Activity, ActivityBodyPart } from '@/types/models';
 
 export async function listActiveActivities(): Promise<Activity[]> {
-  const activities = await db.activities.toArray();
-  return activities.filter((activity) => !activity.archivedAt);
+  return db.activities.toArray();
 }
 
 export async function getActivity(id: string): Promise<Activity | undefined> {
@@ -47,8 +46,8 @@ export async function updateActivity(
   await db.activities.update(id, changes);
 }
 
-export async function archiveActivity(id: string) {
-  await db.activities.update(id, { archivedAt: new Date().toISOString() });
+export async function deleteActivity(id: string) {
+  await db.activities.delete(id);
 }
 
 export async function reorderActivities(orderedIds: string[]): Promise<void> {

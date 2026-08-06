@@ -41,6 +41,34 @@ export async function archiveHabit(id: string) {
   await db.habits.update(id, { archivedAt: new Date().toISOString() });
 }
 
+export async function listArchivedHabits(): Promise<Habit[]> {
+  const habits = await db.habits.toArray();
+  return habits
+    .filter((habit) => !!habit.archivedAt)
+    .sort((a, b) => (b.archivedAt ?? '').localeCompare(a.archivedAt ?? ''));
+}
+
+export async function unarchiveHabit(id: string) {
+  await db.transaction('rw', db.habits, async () => {
+    const active = await listActiveHabits();
+    const nextPosition =
+      active.length > 0
+        ? Math.max(...active.map((habit) => habit.position)) + 1
+        : 0;
+    await db.habits.update(id, {
+      archivedAt: undefined,
+      position: nextPosition,
+    });
+  });
+}
+
+export async function deleteHabit(id: string) {
+  await db.transaction('rw', db.habits, db.habitCompletions, async () => {
+    await db.habitCompletions.where('habitId').equals(id).delete();
+    await db.habits.delete(id);
+  });
+}
+
 export async function reorderHabits(orderedIds: string[]): Promise<void> {
   await db.transaction('rw', db.habits, async () => {
     await Promise.all(

@@ -5,9 +5,11 @@ import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { IconButton } from '@/components/ui/IconButton';
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import { TriggerForm } from '@/components/triggers/TriggerForm';
 import { RichTextContent } from '@/components/journal/RichTextContent';
 import { useTriggers } from '@/hooks/useTriggers';
+import { useConfirmTarget } from '@/hooks/useConfirmTarget';
 import {
   createTrigger,
   archiveTrigger,
@@ -18,6 +20,7 @@ export function TriggerList({ injuryId }: { injuryId: string }) {
   const triggers = useTriggers(injuryId) ?? [];
   const [adding, setAdding] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const confirmingArchive = useConfirmTarget(triggers);
 
   return (
     <Card>
@@ -78,9 +81,9 @@ export function TriggerList({ injuryId }: { injuryId: string }) {
                     />
                     <IconButton
                       icon={faBoxArchive}
-                      tone="danger"
+                      tone="warning"
                       label="Archive trigger"
-                      onClick={() => archiveTrigger(trigger.id)}
+                      onClick={() => confirmingArchive.confirm(trigger.id)}
                     />
                   </div>
                 </div>
@@ -120,6 +123,20 @@ export function TriggerList({ injuryId }: { injuryId: string }) {
           + Add
         </Button>
       )}
+
+      <ConfirmDialog
+        open={confirmingArchive.target != null}
+        title="Archive trigger?"
+        message={`"${confirmingArchive.target?.name}" will be moved to the archived list.`}
+        confirmLabel="Archive"
+        confirmVariant="warning"
+        onConfirm={() => {
+          if (confirmingArchive.target)
+            archiveTrigger(confirmingArchive.target.id);
+          confirmingArchive.clear();
+        }}
+        onCancel={() => confirmingArchive.clear()}
+      />
     </Card>
   );
 }

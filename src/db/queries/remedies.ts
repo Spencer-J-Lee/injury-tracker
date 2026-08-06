@@ -68,6 +68,40 @@ export async function archiveRemedy(id: string) {
   await db.remedies.update(id, { archivedAt: new Date().toISOString() });
 }
 
+export async function listArchivedRemediesForInjury(injuryId: string) {
+  const remedies = await db.remedies
+    .where('injuryId')
+    .equals(injuryId)
+    .filter((remedy) => !!remedy.archivedAt)
+    .toArray();
+  return sortByCategoryThenName(remedies, REMEDY_CATEGORIES);
+}
+
+export async function unarchiveRemedy(id: string) {
+  await db.remedies.update(id, { archivedAt: undefined });
+}
+
+export async function deleteRemedy(id: string) {
+  await db.transaction(
+    'rw',
+    db.remedies,
+    db.plannedExercises,
+    db.logEntries,
+    async () => {
+      await db.plannedExercises.where('remedyId').equals(id).delete();
+      await db.logEntries
+        .where('remedyIds')
+        .equals(id)
+        .modify((entry) => {
+          entry.remedyIds = entry.remedyIds.filter(
+            (remedyId) => remedyId !== id,
+          );
+        });
+      await db.remedies.delete(id);
+    },
+  );
+}
+
 export async function getRemediesByIds(ids: string[]): Promise<Remedy[]> {
   if (ids.length === 0) return [];
   const remedies = await db.remedies.bulkGet(ids);

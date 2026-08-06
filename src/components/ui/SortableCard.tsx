@@ -62,7 +62,7 @@ export function SortableCard({
       )}
       <div className="min-w-0 flex-1 p-4 pl-3.5">
         <div className="flex min-h-7 min-w-0 items-start justify-between gap-2.5">
-          <p className="text-ink">{title}</p>
+          <p className="text-ink font-medium">{title}</p>
           {actions && <div className="flex shrink-0 gap-2">{actions}</div>}
         </div>
         {description}

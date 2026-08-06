@@ -52,8 +52,29 @@ export async function archiveTrigger(id: string) {
   await db.triggers.update(id, { archivedAt: new Date().toISOString() });
 }
 
-export async function getTriggersByIds(ids: string[]): Promise<Trigger[]> {
-  if (ids.length === 0) return [];
-  const triggers = await db.triggers.bulkGet(ids);
-  return triggers.filter((t): t is Trigger => t !== undefined);
+export async function listArchivedTriggersForInjury(injuryId: string) {
+  const triggers = await db.triggers
+    .where('injuryId')
+    .equals(injuryId)
+    .filter((trigger) => !!trigger.archivedAt)
+    .toArray();
+  return sortByCategoryThenName(triggers, TRIGGER_CATEGORIES);
+}
+
+export async function unarchiveTrigger(id: string) {
+  await db.triggers.update(id, { archivedAt: undefined });
+}
+
+export async function deleteTrigger(id: string) {
+  await db.transaction('rw', db.triggers, db.logEntries, async () => {
+    await db.logEntries
+      .where('triggerIds')
+      .equals(id)
+      .modify((entry) => {
+        entry.triggerIds = entry.triggerIds.filter(
+          (triggerId) => triggerId !== id,
+        );
+      });
+    await db.triggers.delete(id);
+  });
 }

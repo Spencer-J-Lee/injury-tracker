@@ -5,7 +5,7 @@ import {
   type FontAwesomeIconProps,
 } from '@fortawesome/react-fontawesome';
 
-type Tone = 'neutral' | 'danger';
+type Tone = 'neutral' | 'danger' | 'warning';
 type Size = 'sm' | 'md';
 
 interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -29,11 +29,14 @@ const toneClasses: Record<Size, Record<Tone, string>> = {
   sm: {
     neutral: 'text-ink-muted hover:bg-surface-raised hover:text-ink',
     danger: 'text-ink-muted hover:bg-pain-red-bg hover:text-pain-red',
+    warning: 'text-ink-muted hover:bg-pain-amber-bg hover:text-pain-amber',
   },
   md: {
     neutral: 'border border-strong bg-control text-ink hover:bg-surface-raised',
     danger:
       'bg-[oklch(0.33_0.14_25)] text-[oklch(0.96_0.03_25)] hover:bg-[oklch(0.37_0.14_25)]',
+    warning:
+      'bg-[oklch(0.33_0.09_85)] text-[oklch(0.96_0.03_85)] hover:bg-[oklch(0.37_0.09_85)]',
   },
 };
 

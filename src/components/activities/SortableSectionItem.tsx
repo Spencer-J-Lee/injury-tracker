@@ -1,7 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
-import { faPen, faBoxArchive, faPlus, faGripVertical } from '@fortawesome/free-solid-svg-icons';
+import {
+  faPen,
+  faTrash,
+  faPlus,
+  faGripVertical,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
@@ -10,7 +15,7 @@ import { IconButton } from '@/components/ui/IconButton';
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import { SectionForm } from '@/components/activities/SectionForm';
 import { ActivityGrid } from '@/components/activities/ActivityGrid';
-import { archiveSection } from '@/db/queries/sections';
+import { deleteSection } from '@/db/queries/sections';
 
 interface SortableSectionItemProps {
   section: Section;
@@ -35,7 +40,7 @@ export function SortableSectionItem({
 }: SortableSectionItemProps) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: section.id, disabled: editing || !editingEnabled });
-  const [confirmingArchive, setConfirmingArchive] = useState(false);
+  const [confirmingDelete, setConfirmingDelete] = useState(false);
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -82,10 +87,10 @@ export function SortableSectionItem({
                   onClick={onEdit}
                 />
                 <IconButton
-                  icon={faBoxArchive}
+                  icon={faTrash}
                   tone="danger"
-                  label="Archive section"
-                  onClick={() => setConfirmingArchive(true)}
+                  label="Delete section"
+                  onClick={() => setConfirmingDelete(true)}
                 />
                 <IconButton
                   icon={faPlus}
@@ -105,15 +110,15 @@ export function SortableSectionItem({
         editingEnabled={editingEnabled}
       />
       <ConfirmDialog
-        open={confirmingArchive}
-        title="Archive section?"
-        message={`"${section.name}" will be archived. Its activities will be hidden until the section is restored.`}
-        confirmLabel="Archive"
+        open={confirmingDelete}
+        title="Delete section?"
+        message={`"${section.name}" and its activities will be permanently deleted.`}
+        confirmLabel="Delete"
         onConfirm={() => {
-          archiveSection(section.id);
-          setConfirmingArchive(false);
+          deleteSection(section.id);
+          setConfirmingDelete(false);
         }}
-        onCancel={() => setConfirmingArchive(false)}
+        onCancel={() => setConfirmingDelete(false)}
       />
     </li>
   );

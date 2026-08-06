@@ -23,6 +23,7 @@ import {
 import { useLogModal } from '@/context/useLogModal';
 import { todayEntryOnly } from '@/lib/dates';
 import { RemedyList } from '@/components/remedies/RemedyList';
+import { ArchivedRemedyTriggerSection } from '@/components/remedies/ArchivedRemedyTriggerSection';
 import { TriggerList } from '@/components/triggers/TriggerList';
 import { PainTrendChart } from '@/components/charts/PainTrendChart';
 import { MorningTrendChart } from '@/components/charts/MorningTrendChart';
@@ -193,6 +194,7 @@ export function InjuryDetailPage() {
         <div className="min-w-0 space-y-6 lg:self-start">
           <RemedyList injuryId={injury.id} />
           <TriggerList injuryId={injury.id} />
+          <ArchivedRemedyTriggerSection injuryId={injury.id} />
         </div>
       </div>
 

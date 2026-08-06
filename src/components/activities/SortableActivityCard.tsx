@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { faPen, faBoxArchive } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import type { Activity } from '@/types/models';
 import { IconButton } from '@/components/ui/IconButton';
 import { SortableCard } from '@/components/ui/SortableCard';
@@ -11,13 +11,13 @@ export function SortableActivityCard({
   navigate,
   editingEnabled,
   draggable,
-  onArchiveRequest,
+  onDeleteRequest,
 }: {
   activity: Activity;
   navigate: ReturnType<typeof useNavigate>;
   editingEnabled: boolean;
   draggable: boolean;
-  onArchiveRequest: () => void;
+  onDeleteRequest: () => void;
 }) {
   return (
     <SortableCard
@@ -45,10 +45,10 @@ export function SortableActivityCard({
               onClick={() => navigate(`/activities/${activity.id}/edit`)}
             />
             <IconButton
-              icon={faBoxArchive}
+              icon={faTrash}
               tone="danger"
-              label="Archive activity"
-              onClick={onArchiveRequest}
+              label="Delete activity"
+              onClick={onDeleteRequest}
             />
           </>
         )

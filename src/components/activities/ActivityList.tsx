@@ -28,7 +28,11 @@ import { SortableSectionItem } from '@/components/activities/SortableSectionItem
 import { useActivities } from '@/hooks/useActivities';
 import { useSections } from '@/hooks/useSections';
 import { useActivitiesEditingEnabled } from '@/lib/activitiesEditStore';
-import { updateSection, createSection, reorderSections } from '@/db/queries/sections';
+import {
+  updateSection,
+  createSection,
+  reorderSections,
+} from '@/db/queries/sections';
 import {
   ACTIVITY_BODY_PARTS,
   groupActivitiesBySections,
@@ -119,7 +123,7 @@ export function ActivityList() {
         <div className="space-y-6">
           {sectionGroups.map(({ section, items }) => (
             <div key={section.id}>
-              <div className="mb-3 flex items-center gap-2">
+              <div className="mb-3 flex min-h-7 items-center gap-2">
                 <h3 className="text-ink-faint text-sm font-semibold tracking-wide uppercase">
                   {section.name}
                 </h3>

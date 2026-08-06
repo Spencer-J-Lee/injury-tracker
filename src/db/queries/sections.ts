@@ -3,9 +3,7 @@ import type { Section } from '@/types/models';
 
 export async function listActiveSections(): Promise<Section[]> {
   const sections = await db.sections.toArray();
-  return sections
-    .filter((section) => !section.archivedAt)
-    .sort((a, b) => a.position - b.position);
+  return sections.sort((a, b) => a.position - b.position);
 }
 
 export async function createSection(input: { name: string }): Promise<Section> {
@@ -33,8 +31,11 @@ export async function updateSection(
   await db.sections.update(id, changes);
 }
 
-export async function archiveSection(id: string) {
-  await db.sections.update(id, { archivedAt: new Date().toISOString() });
+export async function deleteSection(id: string) {
+  await db.transaction('rw', db.sections, db.activities, async () => {
+    await db.activities.where('sectionId').equals(id).delete();
+    await db.sections.delete(id);
+  });
 }
 
 export async function reorderSections(orderedIds: string[]): Promise<void> {

@@ -97,7 +97,6 @@ export interface Section {
   name: string;
   position: number;
   createdAt: string;
-  archivedAt?: string;
 }
 
 export interface HabitCompletion {
@@ -133,5 +132,4 @@ export interface Activity {
   bodyPartsRested: ActivityBodyPart[];
   position: number;
   createdAt: string;
-  archivedAt?: string;
 }

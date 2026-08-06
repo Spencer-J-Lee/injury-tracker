@@ -18,7 +18,7 @@ import {
 import type { Activity } from '@/types/models';
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import { SortableActivityCard } from '@/components/activities/SortableActivityCard';
-import { archiveActivity, reorderActivities } from '@/db/queries/activities';
+import { deleteActivity, reorderActivities } from '@/db/queries/activities';
 
 export function ActivityGrid({
   items,
@@ -67,7 +67,7 @@ export function ActivityGrid({
           navigate={navigate}
           editingEnabled={editingEnabled}
           draggable={draggable}
-          onArchiveRequest={() => setConfirmingId(activity.id)}
+          onDeleteRequest={() => setConfirmingId(activity.id)}
         />
       ))}
     </ul>
@@ -93,11 +93,11 @@ export function ActivityGrid({
       )}
       <ConfirmDialog
         open={confirmingActivity !== undefined}
-        title="Archive activity?"
-        message={`"${confirmingActivity?.name}" will be archived and hidden from this list.`}
-        confirmLabel="Archive"
+        title="Delete activity?"
+        message={`"${confirmingActivity?.name}" will be permanently deleted.`}
+        confirmLabel="Delete"
         onConfirm={() => {
-          if (confirmingActivity) archiveActivity(confirmingActivity.id);
+          if (confirmingActivity) deleteActivity(confirmingActivity.id);
           setConfirmingId(null);
         }}
         onCancel={() => setConfirmingId(null)}

@@ -1,14 +1,25 @@
 import { useState } from 'react';
-import { faPen, faBoxArchive, faAsterisk, faDumbbell } from '@fortawesome/free-solid-svg-icons';
+import {
+  faPen,
+  faBoxArchive,
+  faAsterisk,
+  faDumbbell,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { RemedyCategory, Remedy } from '@/types/models';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { IconButton } from '@/components/ui/IconButton';
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import { RemedyForm } from '@/components/remedies/RemedyForm';
 import { RichTextContent } from '@/components/journal/RichTextContent';
-import { createRemedy, archiveRemedy, updateRemedy } from '@/db/queries/remedies';
+import {
+  createRemedy,
+  archiveRemedy,
+  updateRemedy,
+} from '@/db/queries/remedies';
+import { useConfirmTarget } from '@/hooks/useConfirmTarget';
 
 interface RemedySectionDefaults {
   category?: RemedyCategory;
@@ -29,6 +40,7 @@ export function RemedySection({
 }) {
   const [adding, setAdding] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const confirmingArchive = useConfirmTarget(remedies);
 
   return (
     <div>
@@ -92,9 +104,9 @@ export function RemedySection({
                     />
                     <IconButton
                       icon={faBoxArchive}
-                      tone="danger"
+                      tone="warning"
                       label="Archive remedy"
-                      onClick={() => archiveRemedy(remedy.id)}
+                      onClick={() => confirmingArchive.confirm(remedy.id)}
                     />
                   </div>
                 </div>
@@ -135,6 +147,20 @@ export function RemedySection({
           + Add
         </Button>
       )}
+
+      <ConfirmDialog
+        open={confirmingArchive.target != null}
+        title="Archive remedy?"
+        message={`"${confirmingArchive.target?.name}" will be moved to the archived list.`}
+        confirmLabel="Archive"
+        confirmVariant="warning"
+        onConfirm={() => {
+          if (confirmingArchive.target)
+            archiveRemedy(confirmingArchive.target.id);
+          confirmingArchive.clear();
+        }}
+        onCancel={() => confirmingArchive.clear()}
+      />
     </div>
   );
 }
