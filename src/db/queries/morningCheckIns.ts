@@ -48,11 +48,6 @@ export function listMorningCheckInsForInjury(injuryId: string, limit?: number) {
   return listForInjuryOrderedByTimestamp(db.morningCheckIns, injuryId, limit);
 }
 
-export async function getLastMorningCheckInForInjury(injuryId: string) {
-  const [latest] = await listMorningCheckInsForInjury(injuryId, 1);
-  return latest;
-}
-
 export interface UpdateMorningCheckInInput {
   timestamp: string;
   painLevel: number | undefined;

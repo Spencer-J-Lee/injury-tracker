@@ -67,10 +67,6 @@ export async function updateLogEntry(id: string, changes: UpdateLogEntryInput) {
   });
 }
 
-export async function deleteLogSession(sessionId: string) {
-  await db.logEntries.where('sessionId').equals(sessionId).delete();
-}
-
 export async function deleteLogEntry(id: string) {
   await db.logEntries.delete(id);
 }

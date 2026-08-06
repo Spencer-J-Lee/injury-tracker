@@ -19,10 +19,6 @@ export async function deletePlannedExercise(id: string) {
   await db.plannedExercises.delete(id);
 }
 
-export function listPlannedExercisesForDate(date: string) {
-  return db.plannedExercises.where('date').equals(date).sortBy('createdAt');
-}
-
 export function listPlannedExercisesForWeek(
   weekStart: string,
   weekEnd: string,

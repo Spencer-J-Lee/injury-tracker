@@ -61,14 +61,6 @@ export async function updateInjury(
   });
 }
 
-export async function setInjuryStatus(id: string, status: InjuryStatus) {
-  await updateInjury(id, { status });
-}
-
-export async function archiveInjury(id: string) {
-  await db.injuries.update(id, { archivedAt: new Date().toISOString() });
-}
-
 export async function deleteInjuries(ids: string[]) {
   await db.transaction(
     'rw',
