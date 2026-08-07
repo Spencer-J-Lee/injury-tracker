@@ -39,7 +39,6 @@ export function InjuryCard({
   const [editingToday, setEditingToday] = useState(false);
   const [editingMorning, setEditingMorning] = useState(false);
   const todayEntry = todayEntryOnly(lastLog);
-  const loggedToday = !!todayEntry;
   const todayMorningEntry = todayEntryOnly(recentMorningCheckIns?.[0]);
 
   const actionButtonProps = !todayMorningEntry
@@ -127,12 +126,10 @@ export function InjuryCard({
         </div>
 
         <div className="flex min-w-0 items-center gap-2.5 text-right text-sm">
-          {loggedToday && lastLog ? (
+          {todayEntry && lastLog && (
             <span className="text-ink-faint">
               Updated {formatRelative(lastLog.updatedAt)}
             </span>
-          ) : (
-            <span className="text-ink-faint">Not logged today</span>
           )}
           {!selectable && (
             <Button
