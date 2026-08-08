@@ -5,8 +5,8 @@ import { faPen, faSun, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useInjury } from '@/hooks/useInjury';
 import { useLastLogEntryForInjury } from '@/hooks/useLastLogEntryForInjury';
 import { useMorningCheckInsForInjury } from '@/hooks/useMorningCheckInsForInjury';
-import { statusLabels } from '@/lib/injuryStatus';
-import { InjuryPriorityBadge } from '@/components/injuries/InjuryPriorityBadge';
+import { InjuryPriorityTag } from '@/components/injuries/InjuryPriorityTag';
+import { InjuryStatusTag } from '@/components/injuries/InjuryStatusTag';
 import { InjuryTitle } from '@/components/injuries/InjuryTitle';
 import { Button } from '@/components/ui/Button';
 import { PageTitle } from '@/components/ui/PageTitle';
@@ -99,10 +99,8 @@ export function InjuryDetailPage() {
         <PageTitle
           actions={
             <div className="flex shrink-0 items-center gap-2">
-              <span className="text-ink-muted text-xs font-bold tracking-widest uppercase">
-                {statusLabels[injury.status]}
-              </span>
-              <InjuryPriorityBadge priority={injury.priority} />
+              <InjuryPriorityTag priority={injury.priority} />
+              <InjuryStatusTag status={injury.status} />
             </div>
           }
         >

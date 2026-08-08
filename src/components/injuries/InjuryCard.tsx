@@ -6,8 +6,8 @@ import { faCheck, faSun } from '@fortawesome/free-solid-svg-icons';
 import type { Injury } from '@/types/models';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
-import { InjuryPriorityBadge } from '@/components/injuries/InjuryPriorityBadge';
-import { statusLabels } from '@/lib/injuryStatus';
+import { InjuryPriorityTag } from '@/components/injuries/InjuryPriorityTag';
+import { InjuryStatusTag } from '@/components/injuries/InjuryStatusTag';
 import { InjuryTitle } from '@/components/injuries/InjuryTitle';
 import { useLastLogEntryForInjury } from '@/hooks/useLastLogEntryForInjury';
 import { useMorningCheckInsForInjury } from '@/hooks/useMorningCheckInsForInjury';
@@ -119,10 +119,8 @@ export function InjuryCard({
 
       <div className="flex items-center justify-between gap-2.5">
         <div className="flex min-w-0 items-center gap-2.5">
-          <InjuryPriorityBadge priority={injury.priority} />
-          <span className="text-ink-muted text-xs font-bold tracking-widest uppercase">
-            {statusLabels[injury.status]}
-          </span>
+          <InjuryPriorityTag priority={injury.priority} />
+          <InjuryStatusTag status={injury.status} />
         </div>
 
         <div className="flex min-w-0 items-center gap-2.5 text-right text-sm">
