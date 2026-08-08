@@ -7,6 +7,7 @@ import {
 import { AppShell } from '@/components/layout/AppShell';
 import { LogModalProvider } from '@/context/LogModalContext';
 import { JournalModalProvider } from '@/context/JournalModalContext';
+import { TodosModalProvider } from '@/context/TodosModalContext';
 import { InjuriesPage } from '@/pages/InjuriesPage';
 import { InjuryDetailPage } from '@/pages/InjuryDetailPage';
 import { InjuryFormPage } from '@/pages/InjuryFormPage';
@@ -41,7 +42,9 @@ export function App() {
   return (
     <LogModalProvider>
       <JournalModalProvider>
-        <RouterProvider router={router} />
+        <TodosModalProvider>
+          <RouterProvider router={router} />
+        </TodosModalProvider>
       </JournalModalProvider>
     </LogModalProvider>
   );

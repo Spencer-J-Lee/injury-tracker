@@ -9,6 +9,7 @@ interface CheckboxProps extends Omit<
 > {
   label: string;
   variant?: Variant;
+  padding?: boolean;
 }
 
 const variantClasses: Record<Variant, string> = {
@@ -48,13 +49,15 @@ export function Checkbox({
   className,
   id,
   variant = 'default',
+  padding = true,
   ...props
 }: CheckboxProps) {
   return (
     <label
       htmlFor={id}
       className={clsx(
-        'text-ink-secondary group flex gap-2.5 py-1.5 text-pretty',
+        'text-ink-secondary group flex gap-2.5 text-pretty',
+        padding && 'py-1.5',
         !props.disabled && 'cursor-pointer',
         className,
       )}

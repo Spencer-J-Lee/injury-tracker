@@ -124,6 +124,16 @@ export interface MorningCheckIn {
 
 export type ActivityBodyPart = 'Arms' | 'Legs' | 'Neck/Shoulders';
 
+export interface Todo {
+  id: string;
+  text: string;
+  description?: string;
+  completed: boolean;
+  position: number;
+  completedAt?: string;
+  createdAt: string;
+}
+
 export interface Activity {
   id: string;
   name: string;

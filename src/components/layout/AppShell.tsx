@@ -1,11 +1,13 @@
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faListCheck } from '@fortawesome/free-solid-svg-icons';
 import { useLogModal } from '@/context/useLogModal';
 import { useJournalModal } from '@/context/useJournalModal';
+import { useTodosModal } from '@/context/useTodosModal';
 import { LogEntryModal } from '@/components/logs/LogEntryModal';
 import { TodayJournalModal } from '@/components/journal/TodayJournalModal';
+import { TodosModal } from '@/components/todos/TodosModal';
 import { StampPicker } from '@/components/stamps/StampPicker';
 import { BackupBanner } from './BackupBanner';
 import { useKeyboardShortcut } from '@/hooks/useKeyboardShortcut';
@@ -17,6 +19,7 @@ import {
   strengtheningShortcutLabel,
   habitsShortcutLabel,
   activitiesShortcutLabel,
+  todosShortcutLabel,
   settingsShortcutLabel,
   journalQuickEditShortcutLabel,
 } from '@/lib/shortcuts';
@@ -35,6 +38,7 @@ function AppShellContent() {
   const navigate = useNavigate();
   const { openLogModal } = useLogModal();
   const { openJournalModal } = useJournalModal();
+  const { openTodosModal } = useTodosModal();
   const anyModalOpen = useAnyModalOpen();
 
   useKeyboardShortcut(
@@ -67,6 +71,7 @@ function AppShellContent() {
     () => navigate('/settings'),
     !anyModalOpen,
   );
+  useKeyboardShortcut(todosShortcutLabel, () => openTodosModal(), !anyModalOpen);
   useKeyboardShortcut(
     journalQuickEditShortcutLabel.toLowerCase(),
     () => openJournalModal(),
@@ -154,13 +159,23 @@ function AppShellContent() {
         </div>
       </div>
 
-      <button
-        onClick={() => openJournalModal()}
-        title={`Today's journal entry (${journalQuickEditShortcutLabel})`}
-        className="bg-surface-raised text-ink hover:bg-canvas-sidebar border-subtle fixed right-7 bottom-27 flex h-14 w-14 items-center justify-center rounded-full border text-xl shadow-lg lg:right-8 lg:bottom-8"
-      >
-        <FontAwesomeIcon icon={faPen} />
-      </button>
+      <div className="fixed right-7 bottom-27 flex items-center gap-4 lg:right-8 lg:bottom-8">
+        <button
+          onClick={() => openTodosModal()}
+          title={`Todos (${todosShortcutLabel})`}
+          className="bg-surface-raised text-ink hover:bg-canvas-sidebar border-subtle flex h-14 w-14 items-center justify-center rounded-full border text-xl shadow-lg"
+        >
+          <FontAwesomeIcon icon={faListCheck} />
+        </button>
+
+        <button
+          onClick={() => openJournalModal()}
+          title={`Today's journal entry (${journalQuickEditShortcutLabel})`}
+          className="bg-surface-raised text-ink hover:bg-canvas-sidebar border-subtle flex h-14 w-14 items-center justify-center rounded-full border text-xl shadow-lg"
+        >
+          <FontAwesomeIcon icon={faPen} />
+        </button>
+      </div>
 
       <button
         onClick={() => openLogModal()}
@@ -171,6 +186,7 @@ function AppShellContent() {
 
       <LogEntryModal />
       <TodayJournalModal />
+      <TodosModal />
       <StampPicker />
     </div>
   );

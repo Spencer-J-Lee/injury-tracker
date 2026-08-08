@@ -12,6 +12,7 @@ import type {
   HabitCompletion,
   Activity,
   Section,
+  Todo,
 } from '@/types/models';
 
 export const db = new Dexie('injury-tracker') as Dexie & {
@@ -27,6 +28,7 @@ export const db = new Dexie('injury-tracker') as Dexie & {
   habitCompletions: EntityTable<HabitCompletion, 'id'>;
   activities: EntityTable<Activity, 'id'>;
   sections: EntityTable<Section, 'id'>;
+  todos: EntityTable<Todo, 'id'>;
 };
 
 db.version(1).stores({
@@ -441,3 +443,12 @@ db.version(21)
       }),
     );
   });
+
+db.version(22).stores({
+  ...V13_STORES,
+  habits: 'id, archivedAt, position',
+  habitCompletions: 'id, habitId, date, [habitId+date]',
+  activities: 'id, archivedAt, sectionId, position',
+  sections: 'id, archivedAt, position',
+  todos: 'id, position',
+});
