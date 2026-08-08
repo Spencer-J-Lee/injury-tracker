@@ -26,7 +26,7 @@ export function MiniPainTrendChart({ injuryId }: { injuryId: string }) {
       .filter(
         (e) =>
           (e.painLevel !== undefined || e.painFrequency !== undefined) &&
-          isWithinRange(e.timestamp, '7d'),
+          isWithinRange(e.timestamp, '30d'),
       )
       .map((e) => ({
         timestamp: e.timestamp,
