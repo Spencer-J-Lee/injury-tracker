@@ -7,7 +7,7 @@ import {
 import { AppShell } from '@/components/layout/AppShell';
 import { LogModalProvider } from '@/context/LogModalContext';
 import { JournalModalProvider } from '@/context/JournalModalContext';
-import { DashboardPage } from '@/pages/DashboardPage';
+import { InjuriesPage } from '@/pages/InjuriesPage';
 import { InjuryDetailPage } from '@/pages/InjuryDetailPage';
 import { InjuryFormPage } from '@/pages/InjuryFormPage';
 import { JournalPage } from '@/pages/JournalPage';
@@ -21,7 +21,7 @@ import { NotFoundPage } from '@/pages/NotFoundPage';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<AppShell />}>
-      <Route path="/" element={<DashboardPage />} />
+      <Route path="/" element={<InjuriesPage />} />
       <Route path="/injuries/new" element={<InjuryFormPage />} />
       <Route path="/injuries/:id" element={<InjuryDetailPage />} />
       <Route path="/injuries/:id/edit" element={<InjuryFormPage />} />

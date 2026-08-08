@@ -20,7 +20,7 @@ const STATUS_LABELS: Record<InjuryStatus, string> = {
   resolved: 'Resolved',
 };
 
-export function DashboardPage() {
+export function InjuriesPage() {
   const injuries = useInjuries();
   const navigate = useNavigate();
   const [statusFilter, setStatusFilter] = useState<InjuryStatus[]>([

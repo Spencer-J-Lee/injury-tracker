@@ -16,14 +16,13 @@ export const STATUS_ORDER: InjuryStatus[] = [
 const PRIORITY_ORDER: InjuryPriority[] = ['urgent', 'high', 'medium', 'low'];
 
 export function compareInjuries(a: Injury, b: Injury): number {
-  const statusDiff =
-    STATUS_ORDER.indexOf(a.status) - STATUS_ORDER.indexOf(b.status);
-  if (statusDiff !== 0) return statusDiff;
   const aPriority = a.priority
     ? PRIORITY_ORDER.indexOf(a.priority)
     : PRIORITY_ORDER.length;
   const bPriority = b.priority
     ? PRIORITY_ORDER.indexOf(b.priority)
     : PRIORITY_ORDER.length;
-  return aPriority - bPriority;
+  const priorityDiff = aPriority - bPriority;
+  if (priorityDiff !== 0) return priorityDiff;
+  return STATUS_ORDER.indexOf(a.status) - STATUS_ORDER.indexOf(b.status);
 }
