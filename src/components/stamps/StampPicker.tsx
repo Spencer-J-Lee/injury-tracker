@@ -73,7 +73,7 @@ export function StampPicker() {
           onClick={() => setOpen((o) => !o)}
           title="Copy a stamp"
           className={clsx([
-            'border-subtle bg-surface-raised text-ink hover:bg-surface flex h-10 w-10 items-center justify-center rounded-full border shadow-lg',
+            'border-subtle bg-surface-raised text-ink hover:bg-surface flex size-10 items-center justify-center rounded-full border shadow-lg',
             lastUsedStamp && 'rounded-r-none border-r-0',
           ])}
         >
@@ -85,7 +85,7 @@ export function StampPicker() {
             type="button"
             onClick={() => handleCopy(lastUsedStamp)}
             title={`Copy ${lastUsedStamp}`}
-            className="border-subtle bg-surface-raised text-ink hover:bg-surface flex h-10 w-10 items-center justify-center rounded-r-full border text-xl shadow-lg"
+            className="border-subtle bg-surface-raised text-ink hover:bg-surface flex size-10 items-center justify-center rounded-r-full border text-xl shadow-lg"
           >
             {copiedStamp === lastUsedStamp ? (
               <FontAwesomeIcon icon={faCheck} className="text-pain-green" />
@@ -111,7 +111,7 @@ export function StampPicker() {
                     type="button"
                     onClick={() => handleCopy(stamp)}
                     title={`Copy ${stamp}`}
-                    className="border-strong bg-control text-ink hover:bg-canvas flex h-12 w-12 items-center justify-center rounded-xl border text-xl"
+                    className="border-strong bg-control text-ink hover:bg-canvas flex size-12 items-center justify-center rounded-xl border text-xl"
                   >
                     {copiedStamp === stamp ? (
                       <FontAwesomeIcon
@@ -126,7 +126,7 @@ export function StampPicker() {
                     type="button"
                     onClick={() => handleRemove(stamp)}
                     title={`Remove ${stamp}`}
-                    className="text-ink-faint border-subtle hover:text-pain-red bg-surface-raised absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full border text-xs leading-none"
+                    className="text-ink-faint border-subtle hover:text-pain-red bg-surface-raised absolute -top-2 -right-2 flex size-5 items-center justify-center rounded-full border text-xs leading-none"
                   >
                     ✕
                   </button>

@@ -78,7 +78,7 @@ export function InjuryCard({
       )}
     >
       {selectable && selected && (
-        <span className="border-canvas bg-accent text-accent-on absolute -top-2.5 -left-2.5 flex h-6 w-6 items-center justify-center rounded-full border-2">
+        <span className="border-canvas bg-accent text-accent-on absolute -top-2.5 -left-2.5 flex size-6 items-center justify-center rounded-full border-2">
           <FontAwesomeIcon
             icon={faCheck}
             className="text-ink text-[0.625rem]"

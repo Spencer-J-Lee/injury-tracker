@@ -163,7 +163,7 @@ function AppShellContent() {
         <button
           onClick={() => openTodosModal()}
           title={`Todos (${todosShortcutLabel})`}
-          className="bg-surface-raised text-ink hover:bg-canvas-sidebar border-subtle flex h-14 w-14 items-center justify-center rounded-full border text-xl shadow-lg"
+          className="bg-surface-raised text-ink hover:bg-canvas-sidebar border-subtle flex size-14 items-center justify-center rounded-full border text-xl shadow-lg"
         >
           <FontAwesomeIcon icon={faListCheck} />
         </button>
@@ -171,7 +171,7 @@ function AppShellContent() {
         <button
           onClick={() => openJournalModal()}
           title={`Today's journal entry (${journalQuickEditShortcutLabel})`}
-          className="bg-surface-raised text-ink hover:bg-canvas-sidebar border-subtle flex h-14 w-14 items-center justify-center rounded-full border text-xl shadow-lg"
+          className="bg-surface-raised text-ink hover:bg-canvas-sidebar border-subtle flex size-14 items-center justify-center rounded-full border text-xl shadow-lg"
         >
           <FontAwesomeIcon icon={faPen} />
         </button>
@@ -179,7 +179,7 @@ function AppShellContent() {
 
       <button
         onClick={() => openLogModal()}
-        className="bg-accent text-accent-on hover:bg-accent-hover fixed right-7 bottom-7 flex h-16 w-16 items-center justify-center rounded-full text-3xl shadow-lg lg:hidden"
+        className="bg-accent text-accent-on hover:bg-accent-hover fixed right-7 bottom-7 flex size-16 items-center justify-center rounded-full text-3xl shadow-lg lg:hidden"
       >
         +
       </button>
