@@ -5,7 +5,7 @@ import { KeyValueTag } from '@/components/ui/KeyValueTag';
 export function InjuryStatusTag({ status }: { status: InjuryStatus }) {
   return (
     <KeyValueTag
-      label="STA"
+      label="STATUS"
       value={statusLabels[status]}
       valueClassName="text-ink-secondary"
     />

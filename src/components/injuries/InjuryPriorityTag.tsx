@@ -20,7 +20,7 @@ export function InjuryPriorityTag({
   const config = priorityConfig[priority];
   return (
     <KeyValueTag
-      label="PRI"
+      label="PRIO"
       value={config.label}
       valueClassName={config.colorClass}
     />
