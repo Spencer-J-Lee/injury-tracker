@@ -94,7 +94,11 @@ export function InjuryCard({
         {lastLog &&
           (lastLog.painLevel !== undefined ||
             lastLog.painFrequency !== undefined) && (
-            <Card size="sm" className="flex flex-col justify-between gap-3">
+            <Card
+              size="sm"
+              variant="muted"
+              className="flex flex-col justify-between gap-3"
+            >
               {lastLog.painLevel !== undefined && (
                 <MeterRow
                   label="Intensity"
