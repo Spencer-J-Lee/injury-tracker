@@ -71,7 +71,11 @@ function AppShellContent() {
     () => navigate('/settings'),
     !anyModalOpen,
   );
-  useKeyboardShortcut(todosShortcutLabel, () => openTodosModal(), !anyModalOpen);
+  useKeyboardShortcut(
+    todosShortcutLabel,
+    () => openTodosModal(),
+    !anyModalOpen,
+  );
   useKeyboardShortcut(
     journalQuickEditShortcutLabel.toLowerCase(),
     () => openJournalModal(),

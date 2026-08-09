@@ -20,12 +20,7 @@ export function RichTextContent({
   const lastEmittedHtml = useRef<string | null>(null);
 
   const editor = useEditor({
-    extensions: [
-      richTextStarterKit,
-      TaskList,
-      readOnlyTaskItem,
-      readOnlyLink,
-    ],
+    extensions: [richTextStarterKit, TaskList, readOnlyTaskItem, readOnlyLink],
     content: toEditorHtml(html),
     editable: false,
     editorProps: {

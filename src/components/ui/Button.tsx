@@ -2,7 +2,13 @@ import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import clsx from 'clsx';
 
 type Variant =
-  'primary' | 'secondary' | 'danger' | 'warning' | 'ghost' | 'dashed' | 'orange';
+  | 'primary'
+  | 'secondary'
+  | 'danger'
+  | 'warning'
+  | 'ghost'
+  | 'dashed'
+  | 'orange';
 type Size = 'sm' | 'md' | 'lg';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {

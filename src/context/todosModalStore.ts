@@ -6,5 +6,6 @@ export interface TodosModalContextValue {
   closeTodosModal: () => void;
 }
 
-export const TodosModalContext =
-  createContext<TodosModalContextValue | null>(null);
+export const TodosModalContext = createContext<TodosModalContextValue | null>(
+  null,
+);

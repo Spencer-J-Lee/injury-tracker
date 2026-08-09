@@ -12,11 +12,7 @@ import {
 } from 'recharts';
 import { Card } from '@/components/ui/Card';
 import { SegmentedControl } from '@/components/ui/SegmentedControl';
-import {
-  formatShortDate,
-  isWithinRange,
-  type TrendRange,
-} from '@/lib/dates';
+import { formatShortDate, isWithinRange, type TrendRange } from '@/lib/dates';
 import { chartColors as colors } from '@/components/charts/chartColors';
 import { ChartTooltip } from '@/components/charts/ChartTooltip';
 
