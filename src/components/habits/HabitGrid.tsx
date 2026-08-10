@@ -110,7 +110,9 @@ export function HabitGrid({ habits, completions, weekDates }: HabitGridProps) {
         next.add(key);
         const completesDay =
           requiredHabits.length > 0 &&
-          requiredHabits.every((habit) => next.has(completionKey(habit.id, date)));
+          requiredHabits.every((habit) =>
+            next.has(completionKey(habit.id, date)),
+          );
         if (completesDay) {
           setCelebration({ date, key: Date.now() });
         }

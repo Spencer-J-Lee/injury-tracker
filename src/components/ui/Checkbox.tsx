@@ -18,37 +18,30 @@ const variantClasses: Record<Variant, string> = {
   optional: 'border-dashed checked:border-ink-faint checked:bg-control',
 };
 
+function CheckMark({ colorClassName }: { colorClassName: string }) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      fill="none"
+      className={clsx(
+        'pointer-events-none relative size-4 scale-75 opacity-0 peer-checked:scale-100 peer-checked:opacity-100',
+        colorClassName,
+      )}
+    >
+      <path
+        d="M3.5 8.5L6.5 11.5L12.5 4.5"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 const variantIcon: Record<Variant, React.ReactNode> = {
-  default: (
-    <svg
-      viewBox="0 0 16 16"
-      fill="none"
-      className="pointer-events-none relative size-4 scale-75 text-white opacity-0 peer-checked:scale-100 peer-checked:opacity-100"
-    >
-      <path
-        d="M3.5 8.5L6.5 11.5L12.5 4.5"
-        stroke="currentColor"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  ),
-  optional: (
-    <svg
-      viewBox="0 0 16 16"
-      fill="none"
-      className="text-ink-secondary pointer-events-none relative size-4 scale-75 opacity-0 peer-checked:scale-100 peer-checked:opacity-100"
-    >
-      <path
-        d="M3.5 8.5L6.5 11.5L12.5 4.5"
-        stroke="currentColor"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  ),
+  default: <CheckMark colorClassName="text-white" />,
+  optional: <CheckMark colorClassName="text-ink-secondary" />,
   gold: (
     <svg
       viewBox="0 0 576 512"
