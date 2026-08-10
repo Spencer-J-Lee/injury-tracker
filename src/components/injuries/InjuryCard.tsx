@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faSun } from '@fortawesome/free-solid-svg-icons';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import type { Injury } from '@/types/models';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
@@ -10,10 +10,8 @@ import { InjuryPriorityTag } from '@/components/injuries/InjuryPriorityTag';
 import { InjuryStatusTag } from '@/components/injuries/InjuryStatusTag';
 import { InjuryTitle } from '@/components/injuries/InjuryTitle';
 import { useLastLogEntryForInjury } from '@/hooks/useLastLogEntryForInjury';
-import { useMorningCheckInsForInjury } from '@/hooks/useMorningCheckInsForInjury';
 import { useLogModal } from '@/context/useLogModal';
 import { LogEntryEditModal } from '@/components/logs/LogEntryEditModal';
-import { MorningCheckInModal } from '@/components/logs/MorningCheckInModal';
 import { formatRelative, todayEntryOnly } from '@/lib/dates';
 import { painTone, freqTone } from '@/lib/pain';
 import { MiniPainTrendChart } from '@/components/charts/MiniPainTrendChart';
@@ -33,32 +31,22 @@ export function InjuryCard({
   onToggleSelect,
 }: InjuryCardProps) {
   const lastLog = useLastLogEntryForInjury(injury.id);
-  const recentMorningCheckIns = useMorningCheckInsForInjury(injury.id, 1);
   const { openLogModal } = useLogModal();
   const navigate = useNavigate();
   const [editingToday, setEditingToday] = useState(false);
-  const [editingMorning, setEditingMorning] = useState(false);
   const todayEntry = todayEntryOnly(lastLog);
-  const todayMorningEntry = todayEntryOnly(recentMorningCheckIns?.[0]);
 
-  const actionButtonProps = !todayMorningEntry
+  const actionButtonProps = todayEntry
     ? {
-        variant: 'orange' as const,
-        iconBefore: <FontAwesomeIcon icon={faSun} />,
-        label: 'Morning Check-In',
-        onClick: () => setEditingMorning(true),
+        variant: 'secondary' as const,
+        label: 'Update Entry',
+        onClick: () => setEditingToday(true),
       }
-    : todayEntry
-      ? {
-          variant: 'secondary' as const,
-          label: 'Update Entry',
-          onClick: () => setEditingToday(true),
-        }
-      : {
-          variant: 'primary' as const,
-          label: 'Log Entry',
-          onClick: () => openLogModal(injury.id),
-        };
+    : {
+        variant: 'primary' as const,
+        label: 'Log Entry',
+        onClick: () => openLogModal(injury.id),
+      };
 
   const handleClick = () => {
     if (selectable) {
@@ -137,7 +125,6 @@ export function InjuryCard({
             <Button
               variant={actionButtonProps.variant}
               size="sm"
-              iconBefore={actionButtonProps.iconBefore}
               onClick={(e) => {
                 e.stopPropagation();
                 actionButtonProps.onClick();
@@ -156,15 +143,6 @@ export function InjuryCard({
           onClose={() => setEditingToday(false)}
         />
       )}
-
-      <MorningCheckInModal
-        injuryId={injury.id}
-        injury={injury}
-        painMechanisms={injury.painMechanisms}
-        entry={todayMorningEntry}
-        open={editingMorning}
-        onClose={() => setEditingMorning(false)}
-      />
     </Card>
   );
 }
