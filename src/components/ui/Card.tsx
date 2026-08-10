@@ -9,6 +9,7 @@ interface CardOwnProps {
   size?: Size;
   variant?: Variant;
   padding?: boolean;
+  rounded?: boolean;
 }
 
 type CardProps<T extends ElementType> = CardOwnProps & {
@@ -32,6 +33,7 @@ export function Card<T extends ElementType = 'div'>({
   size = 'lg',
   variant = 'solid',
   padding = true,
+  rounded = true,
   className,
   ...props
 }: CardProps<T>) {
@@ -39,7 +41,7 @@ export function Card<T extends ElementType = 'div'>({
   return (
     <Component
       className={clsx(
-        radiusClasses[size],
+        rounded && radiusClasses[size],
         padding && cardPaddingClasses[size],
         variantClasses[variant],
         className,
