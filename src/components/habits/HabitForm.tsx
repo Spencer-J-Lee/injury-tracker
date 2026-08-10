@@ -1,7 +1,8 @@
-import { useState, type SubmitEvent } from 'react';
+import { useId, useState, type SubmitEvent } from 'react';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
+import { Checkbox } from '@/components/ui/Checkbox';
 import { Kbd } from '@/components/ui/Kbd';
 import { Textarea } from '@/components/ui/Textarea';
 import { useFormShortcuts } from '@/hooks/useFormShortcuts';
@@ -10,6 +11,7 @@ import { saveShortcutLabel, cancelShortcutLabel } from '@/lib/shortcuts';
 interface HabitFormValues {
   name: string;
   description: string;
+  optional: boolean;
 }
 
 interface HabitFormProps {
@@ -29,16 +31,23 @@ export function HabitForm({
 }: HabitFormProps) {
   const [name, setName] = useState(initial?.name ?? '');
   const [description, setDescription] = useState(initial?.description ?? '');
+  const [optional, setOptional] = useState(initial?.optional ?? false);
   const [submitting, setSubmitting] = useState(false);
+  const optionalId = useId();
 
   const doSubmit = async () => {
     if (!name.trim() || submitting) return;
     setSubmitting(true);
     try {
-      await onSubmit({ name: name.trim(), description: description.trim() });
+      await onSubmit({
+        name: name.trim(),
+        description: description.trim(),
+        optional,
+      });
       if (!initial) {
         setName('');
         setDescription('');
+        setOptional(false);
       }
     } finally {
       setSubmitting(false);
@@ -71,6 +80,12 @@ export function HabitForm({
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         placeholder="Notes (optional)"
+      />
+      <Checkbox
+        id={optionalId}
+        label="Optional"
+        checked={optional}
+        onChange={(e) => setOptional(e.target.checked)}
       />
 
       <div className="flex items-center gap-2.5">

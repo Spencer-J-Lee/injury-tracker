@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { faPen, faBoxArchive } from '@fortawesome/free-solid-svg-icons';
+import { Badge } from '@/components/ui/Badge';
 import { IconButton } from '@/components/ui/IconButton';
 import { SortableCard } from '@/components/ui/SortableCard';
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
@@ -15,6 +16,7 @@ interface SortableHabitItemProps {
   onSubmitEdit: (values: {
     name: string;
     description?: string;
+    optional?: boolean;
   }) => Promise<void>;
 }
 
@@ -34,6 +36,7 @@ export function SortableHabitItem({
           initial={{
             name: habit.name,
             description: habit.description ?? '',
+            optional: habit.optional ?? false,
           }}
           submitLabel="Save"
           onCancel={onCancelEdit}
@@ -48,7 +51,12 @@ export function SortableHabitItem({
       <SortableCard
         id={habit.id}
         as="li"
-        title={habit.name}
+        title={
+          <span className="flex min-w-0 items-center gap-2">
+            <span className="truncate">{habit.name}</span>
+            {habit.optional && <Badge>Optional</Badge>}
+          </span>
+        }
         description={
           habit.description && (
             <p className="text-ink-muted mt-1.5 text-base text-pretty whitespace-pre-line">

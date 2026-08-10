@@ -11,6 +11,7 @@ export async function listActiveHabits(): Promise<Habit[]> {
 export async function createHabit(input: {
   name: string;
   description?: string;
+  optional?: boolean;
 }): Promise<Habit> {
   return db.transaction('rw', db.habits, async () => {
     const existing = await db.habits.toArray();
@@ -22,6 +23,7 @@ export async function createHabit(input: {
       id: crypto.randomUUID(),
       name: input.name,
       description: input.description,
+      optional: input.optional,
       position: nextPosition,
       createdAt: new Date().toISOString(),
     };
@@ -32,7 +34,7 @@ export async function createHabit(input: {
 
 export async function updateHabit(
   id: string,
-  changes: Partial<Pick<Habit, 'name' | 'description'>>,
+  changes: Partial<Pick<Habit, 'name' | 'description' | 'optional'>>,
 ) {
   await db.habits.update(id, changes);
 }

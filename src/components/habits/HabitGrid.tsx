@@ -49,18 +49,23 @@ export function HabitGrid({ habits, completions, weekDates }: HabitGridProps) {
     [weekDates],
   );
 
+  const requiredHabits = useMemo(
+    () => habits.filter((habit) => !habit.optional),
+    [habits],
+  );
+
   const completeDates = useMemo(
     () =>
       new Set(
         weekDates.filter(
           (date) =>
-            habits.length > 0 &&
-            habits.every((habit) =>
+            requiredHabits.length > 0 &&
+            requiredHabits.every((habit) =>
               completedKeys.has(completionKey(habit.id, date)),
             ),
         ),
       ),
-    [habits, weekDates, completedKeys],
+    [requiredHabits, weekDates, completedKeys],
   );
 
   const [celebration, setCelebration] = useState<{
@@ -103,9 +108,9 @@ export function HabitGrid({ habits, completions, weekDates }: HabitGridProps) {
         next.delete(key);
       } else {
         next.add(key);
-        const completesDay = habits.every((habit) =>
-          next.has(completionKey(habit.id, date)),
-        );
+        const completesDay =
+          requiredHabits.length > 0 &&
+          requiredHabits.every((habit) => next.has(completionKey(habit.id, date)));
         if (completesDay) {
           setCelebration({ date, key: Date.now() });
         }
@@ -208,7 +213,11 @@ export function HabitGrid({ habits, completions, weekDates }: HabitGridProps) {
                               checked={checked}
                               disabled={!editable}
                               variant={
-                                completeDates.has(date) ? 'gold' : 'default'
+                                habit.optional
+                                  ? 'optional'
+                                  : completeDates.has(date)
+                                    ? 'gold'
+                                    : 'default'
                               }
                               onChange={() => toggleCompletion(habit.id, date)}
                             />
