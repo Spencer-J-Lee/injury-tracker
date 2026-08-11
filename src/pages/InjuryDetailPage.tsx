@@ -114,18 +114,7 @@ export function InjuryDetailPage() {
 
         <div className="mt-4 flex w-full flex-wrap items-center justify-between gap-4">
           <div className="flex gap-3">
-            {!todayMorningEntry ? (
-              <Button
-                variant="orange"
-                iconBefore={
-                  <FontAwesomeIcon icon={faSun} className="-mr-0.5" />
-                }
-                iconAfter={<Kbd>{morningCheckInShortcutLabel}</Kbd>}
-                onClick={() => setEditingMorning(true)}
-              >
-                Morning Check-In
-              </Button>
-            ) : todayEntry ? (
+            {todayEntry ? (
               <Button
                 variant="secondary"
                 iconAfter={<Kbd>{updateEntryShortcutLabel}</Kbd>}
@@ -141,7 +130,7 @@ export function InjuryDetailPage() {
                 Log Entry
               </Button>
             )}
-            {todayMorningEntry && (
+            {todayMorningEntry ? (
               <Button
                 variant="secondary"
                 iconBefore={<FontAwesomeIcon icon={faSun} />}
@@ -149,6 +138,17 @@ export function InjuryDetailPage() {
                 onClick={() => setEditingMorning(true)}
               >
                 Update Morning Check-In
+              </Button>
+            ) : (
+              <Button
+                variant="orange"
+                iconBefore={
+                  <FontAwesomeIcon icon={faSun} className="-mr-0.5" />
+                }
+                iconAfter={<Kbd>{morningCheckInShortcutLabel}</Kbd>}
+                onClick={() => setEditingMorning(true)}
+              >
+                Morning Check-In
               </Button>
             )}
             <Link to={`/injuries/${injury.id}/edit`}>
