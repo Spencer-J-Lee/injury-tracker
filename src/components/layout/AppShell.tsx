@@ -114,8 +114,8 @@ function AppShellContent() {
   return (
     <div className="bg-canvas-page min-h-screen">
       <div className="mx-auto max-w-[1750px] lg:p-8">
-        <div className="bg-canvas lg:border-subtle lg:grid lg:grid-cols-[252px_1fr] lg:overflow-hidden lg:rounded-3xl lg:border lg:shadow-[0_24px_60px_-20px_rgba(0,0,0,0.5)]">
-          <aside className="border-subtle bg-canvas-sidebar hidden border-r lg:flex lg:flex-col lg:gap-6 lg:p-6">
+        <div className="bg-canvas lg:border-subtle lg:grid lg:grid-cols-[252px_1fr] lg:rounded-3xl lg:border lg:shadow-[0_24px_60px_-20px_rgba(0,0,0,0.5)]">
+          <aside className="border-subtle bg-canvas-sidebar hidden border-r lg:sticky lg:top-0 lg:flex lg:h-screen lg:flex-col lg:gap-6 lg:overflow-y-auto lg:rounded-l-3xl lg:p-6">
             <Link
               to="/"
               className="font-heading text-ink text-2xl font-semibold"
@@ -140,7 +140,7 @@ function AppShellContent() {
             </nav>
           </aside>
 
-          <div className="bg-canvas">
+          <div className="bg-canvas lg:overflow-hidden lg:rounded-r-3xl">
             <header className="border-subtle bg-canvas/90 sticky top-0 z-10 flex items-center justify-between border-b px-5 py-4 backdrop-blur lg:hidden">
               <Link to="/" className="font-heading text-ink font-semibold">
                 Rehab Tracker
