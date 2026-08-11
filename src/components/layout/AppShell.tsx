@@ -5,6 +5,7 @@ import { faPen, faListCheck } from '@fortawesome/free-solid-svg-icons';
 import { useLogModal } from '@/context/useLogModal';
 import { useJournalModal } from '@/context/useJournalModal';
 import { useTodosModal } from '@/context/useTodosModal';
+import { useTodos } from '@/hooks/useTodos';
 import { LogEntryModal } from '@/components/logs/LogEntryModal';
 import { TodayJournalModal } from '@/components/journal/TodayJournalModal';
 import { TodosModal } from '@/components/todos/TodosModal';
@@ -40,6 +41,8 @@ function AppShellContent() {
   const { openJournalModal } = useJournalModal();
   const { openTodosModal } = useTodosModal();
   const anyModalOpen = useAnyModalOpen();
+  const todos = useTodos();
+  const incompleteTodoCount = todos.filter((todo) => !todo.completed).length;
 
   useKeyboardShortcut(
     dashboardShortcutLabel,
@@ -163,23 +166,26 @@ function AppShellContent() {
         </div>
       </div>
 
-      <div className="fixed right-7 bottom-27 flex items-center gap-4 lg:right-8 lg:bottom-8">
-        <button
-          onClick={() => openTodosModal()}
-          title={`Todos (${todosShortcutLabel})`}
-          className="bg-surface-raised text-ink hover:bg-canvas-sidebar border-subtle flex size-14 items-center justify-center rounded-full border text-xl shadow-lg"
-        >
-          <FontAwesomeIcon icon={faListCheck} />
-        </button>
+      <button
+        onClick={() => openTodosModal()}
+        title={`Todos (${todosShortcutLabel})`}
+        className="bg-surface-raised text-ink hover:bg-canvas-sidebar border-subtle fixed bottom-27 left-1/2 flex size-14 -translate-x-1/2 items-center justify-center rounded-full border text-xl shadow-lg lg:bottom-8"
+      >
+        <FontAwesomeIcon icon={faListCheck} />
+        {incompleteTodoCount > 0 && (
+          <span className="absolute -top-1.5 -right-1.5 flex size-6 items-center justify-center rounded-full bg-red-600 text-sm font-bold text-white ring-2 ring-white shadow-md dark:ring-black">
+            {incompleteTodoCount > 9 ? '9+' : incompleteTodoCount}
+          </span>
+        )}
+      </button>
 
-        <button
-          onClick={() => openJournalModal()}
-          title={`Today's journal entry (${journalQuickEditShortcutLabel})`}
-          className="bg-surface-raised text-ink hover:bg-canvas-sidebar border-subtle flex size-14 items-center justify-center rounded-full border text-xl shadow-lg"
-        >
-          <FontAwesomeIcon icon={faPen} />
-        </button>
-      </div>
+      <button
+        onClick={() => openJournalModal()}
+        title={`Today's journal entry (${journalQuickEditShortcutLabel})`}
+        className="bg-surface-raised text-ink hover:bg-canvas-sidebar border-subtle fixed right-7 bottom-27 flex size-14 items-center justify-center rounded-full border text-xl shadow-lg lg:right-8 lg:bottom-8"
+      >
+        <FontAwesomeIcon icon={faPen} />
+      </button>
 
       <button
         onClick={() => openLogModal()}
