@@ -12,14 +12,6 @@ import { Button } from '@/components/ui/Button';
 import { PageTitle } from '@/components/ui/PageTitle';
 import { IconButton } from '@/components/ui/IconButton';
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
-import { Kbd } from '@/components/ui/Kbd';
-import { useKeyboardShortcut } from '@/hooks/useKeyboardShortcut';
-import { useAnyModalOpen } from '@/lib/modalStore';
-import {
-  logEntryShortcutLabel,
-  updateEntryShortcutLabel,
-  morningCheckInShortcutLabel,
-} from '@/lib/shortcuts';
 import { useLogModal } from '@/context/useLogModal';
 import { todayEntryOnly } from '@/lib/dates';
 import { RemedyList } from '@/components/remedies/RemedyList';
@@ -62,22 +54,8 @@ export function InjuryDetailPage() {
       tone: 'orange',
     },
   ];
-  const anyModalOpen = useAnyModalOpen();
-
   const todayEntry = todayEntryOnly(lastEntry);
   const todayMorningEntry = todayEntryOnly(recentMorningCheckIns?.[0]);
-
-  useKeyboardShortcut(
-    't',
-    () => (todayEntry ? setEditingToday(true) : openLogModal(injury?.id)),
-    !!injury && !!todayMorningEntry && !anyModalOpen,
-  );
-
-  useKeyboardShortcut(
-    'm',
-    () => setEditingMorning(true),
-    !!injury && !anyModalOpen,
-  );
 
   if (injury === undefined) {
     return <p className="text-ink-muted">Loading…</p>;
@@ -117,16 +95,12 @@ export function InjuryDetailPage() {
             {todayEntry ? (
               <Button
                 variant="secondary"
-                iconAfter={<Kbd>{updateEntryShortcutLabel}</Kbd>}
                 onClick={() => setEditingToday(true)}
               >
                 Update Today's Entry
               </Button>
             ) : (
-              <Button
-                iconAfter={<Kbd>{logEntryShortcutLabel}</Kbd>}
-                onClick={() => openLogModal(injury.id)}
-              >
+              <Button onClick={() => openLogModal(injury.id)}>
                 Log Entry
               </Button>
             )}
@@ -134,7 +108,6 @@ export function InjuryDetailPage() {
               <Button
                 variant="secondary"
                 iconBefore={<FontAwesomeIcon icon={faSun} />}
-                iconAfter={<Kbd>{morningCheckInShortcutLabel}</Kbd>}
                 onClick={() => setEditingMorning(true)}
               >
                 Update Morning Check-In
@@ -145,7 +118,6 @@ export function InjuryDetailPage() {
                 iconBefore={
                   <FontAwesomeIcon icon={faSun} className="-mr-0.5" />
                 }
-                iconAfter={<Kbd>{morningCheckInShortcutLabel}</Kbd>}
                 onClick={() => setEditingMorning(true)}
               >
                 Morning Check-In
