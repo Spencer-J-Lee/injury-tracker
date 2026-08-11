@@ -5,6 +5,7 @@ import { TaskList } from '@tiptap/extension-task-list';
 import clsx from 'clsx';
 import {
   faBold,
+  faHeading,
   faLink,
   faLinkSlash,
   faListCheck,
@@ -72,6 +73,7 @@ export function RichTextEditor({
     editor,
     selector: (ctx) => ({
       isBold: ctx.editor?.isActive('bold') ?? false,
+      isHeading: ctx.editor?.isActive('heading', { level: 2 }) ?? false,
       isBulletList: ctx.editor?.isActive('bulletList') ?? false,
       isOrderedList: ctx.editor?.isActive('orderedList') ?? false,
       isTaskList: ctx.editor?.isActive('taskList') ?? false,
@@ -140,6 +142,16 @@ export function RichTextEditor({
           onClick={() => editor?.chain().focus().toggleBold().run()}
           className={clsx(
             editorState?.isBold && 'bg-accent-soft text-accent-soft-text',
+          )}
+        />
+        <IconButton
+          icon={faHeading}
+          label="Heading"
+          onClick={() =>
+            editor?.chain().focus().toggleHeading({ level: 2 }).run()
+          }
+          className={clsx(
+            editorState?.isHeading && 'bg-accent-soft text-accent-soft-text',
           )}
         />
         <IconButton

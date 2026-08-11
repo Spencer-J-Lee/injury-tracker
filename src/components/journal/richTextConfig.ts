@@ -74,7 +74,7 @@ export const richTextStarterKit = StarterKit.configure({
   blockquote: false,
   code: false,
   codeBlock: false,
-  heading: false,
+  heading: { levels: [2] },
   horizontalRule: false,
   italic: false,
   link: false,
