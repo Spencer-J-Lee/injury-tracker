@@ -1,4 +1,8 @@
-import type { RemedyCategory, TriggerCategory } from '@/types/models';
+import type {
+  HabitSection,
+  RemedyCategory,
+  TriggerCategory,
+} from '@/types/models';
 
 export const REMEDY_CATEGORIES: RemedyCategory[] = [
   'Strengthening',
@@ -14,6 +18,14 @@ export const TRIGGER_CATEGORIES: TriggerCategory[] = [
   'Posture',
   'Muscle Tightness',
 ];
+
+export const HABIT_SECTIONS: HabitSection[] = ['morning', 'midday', 'night'];
+
+export const HABIT_SECTION_LABELS: Record<HabitSection, string> = {
+  morning: 'Morning',
+  midday: 'Midday',
+  night: 'Night',
+};
 
 export function sortByCategoryThenName<
   T extends { category?: string; name: string },

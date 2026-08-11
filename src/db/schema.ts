@@ -14,6 +14,7 @@ import type {
   Section,
   Todo,
 } from '@/types/models';
+import { HABIT_SECTIONS } from '@/lib/categories';
 
 export const db = new Dexie('injury-tracker') as Dexie & {
   injuries: EntityTable<Injury, 'id'>;
@@ -452,3 +453,22 @@ db.version(22).stores({
   sections: 'id, archivedAt, position',
   todos: 'id, position',
 });
+
+db.version(23)
+  .stores({
+    ...V13_STORES,
+    habits: 'id, archivedAt, section, position',
+    habitCompletions: 'id, habitId, date, [habitId+date]',
+    activities: 'id, archivedAt, sectionId, position',
+    sections: 'id, archivedAt, position',
+    todos: 'id, position',
+  })
+  .upgrade(async (tx) => {
+    const [defaultSection] = HABIT_SECTIONS;
+    await tx
+      .table('habits')
+      .toCollection()
+      .modify((habit) => {
+        habit.section = defaultSection;
+      });
+  });

@@ -1,4 +1,14 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import {
+  Fragment,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import { faCloudSun, faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
 import { format, isToday, isYesterday, parseISO } from 'date-fns';
 import Lottie from 'lottie-react';
@@ -6,7 +16,14 @@ import confettiAnimation from '@/assets/lottie/confetti.json';
 import { Card } from '@/components/ui/Card';
 import { Checkbox } from '@/components/ui/Checkbox';
 import { toggleHabitCompletion } from '@/db/queries/habitCompletions';
-import type { Habit, HabitCompletion } from '@/types/models';
+import { groupHabitsBySection } from '@/lib/habits';
+import type { Habit, HabitCompletion, HabitSection } from '@/types/models';
+
+const HABIT_SECTION_ICONS: Record<HabitSection, IconDefinition> = {
+  morning: faSun,
+  midday: faCloudSun,
+  night: faMoon,
+};
 
 interface HabitGridProps {
   habits: Habit[];
@@ -53,6 +70,13 @@ export function HabitGrid({ habits, completions, weekDates }: HabitGridProps) {
     () => habits.filter((habit) => !habit.optional),
     [habits],
   );
+
+  const groupedHabits = useMemo(() => groupHabitsBySection(habits), [habits]);
+
+  const lastHabitId = useMemo(() => {
+    const lastGroup = groupedHabits[groupedHabits.length - 1];
+    return lastGroup?.habits[lastGroup.habits.length - 1]?.id;
+  }, [groupedHabits]);
 
   const completeDates = useMemo(
     () =>
@@ -174,62 +198,89 @@ export function HabitGrid({ habits, completions, weekDates }: HabitGridProps) {
               </tr>
             </thead>
             <tbody className="divide-subtle divide-y divide-dashed">
-              {habits.map((habit, habitIndex) => {
-                const isLastRow = habitIndex === habits.length - 1;
-                return (
-                  <tr key={habit.id}>
-                    <th
-                      scope="row"
-                      className="text-ink max-w-60 py-1.5 pr-6 text-right leading-snug font-medium whitespace-pre-line"
-                    >
-                      {habit.name}
-                    </th>
-                    {dateInfo.map(({ date, today, editable }) => {
-                      const checked = completedKeys.has(
-                        completionKey(habit.id, date),
-                      );
-                      return (
-                        <td
-                          key={date}
-                          ref={
-                            isLastRow
-                              ? (el) => {
-                                  if (el) {
-                                    celebrationCellRefs.current.set(date, el);
-                                  } else {
-                                    celebrationCellRefs.current.delete(date);
-                                  }
-                                }
-                              : undefined
-                          }
-                          className={clsx(
-                            'w-24 min-w-24 py-1.5 text-center',
-                            today && 'bg-accent-soft/70',
-                            today && isLastRow && 'rounded-b-lg',
-                          )}
-                        >
-                          <div className="flex justify-center">
-                            <Checkbox
-                              id={`${habit.id}-${date}`}
-                              label=""
-                              checked={checked}
-                              disabled={!editable}
-                              variant={
-                                habit.optional
-                                  ? 'optional'
-                                  : completeDates.has(date)
-                                    ? 'gold'
-                                    : 'default'
-                              }
-                              onChange={() => toggleCompletion(habit.id, date)}
-                            />
-                          </div>
-                        </td>
-                      );
-                    })}
+              {groupedHabits.map((group) => (
+                <Fragment key={group.section}>
+                  <tr key={`${group.section}-header`} className="border-solid">
+                    <td className="bg-canvas/50 w-full max-w-60 py-3 pr-6 text-right">
+                      <FontAwesomeIcon
+                        icon={HABIT_SECTION_ICONS[group.section]}
+                        className="text-ink-faint text-xl"
+                      />
+                    </td>
+                    <td
+                      colSpan={dateInfo.length}
+                      className="bg-canvas/50 py-3"
+                    />
                   </tr>
-                );
-              })}
+                  {group.habits.map((habit, habitIndex) => {
+                    const isLastRow = habit.id === lastHabitId;
+                    const isFirstInGroup = habitIndex === 0;
+                    return (
+                      <tr
+                        key={habit.id}
+                        className={isFirstInGroup ? 'border-t-0' : undefined}
+                      >
+                        <th
+                          scope="row"
+                          className="text-ink max-w-60 py-1.5 pr-6 text-right leading-snug font-medium whitespace-pre-line"
+                        >
+                          {habit.name}
+                        </th>
+                        {dateInfo.map(({ date, today, editable }) => {
+                          const checked = completedKeys.has(
+                            completionKey(habit.id, date),
+                          );
+                          return (
+                            <td
+                              key={date}
+                              ref={
+                                isLastRow
+                                  ? (el) => {
+                                      if (el) {
+                                        celebrationCellRefs.current.set(
+                                          date,
+                                          el,
+                                        );
+                                      } else {
+                                        celebrationCellRefs.current.delete(
+                                          date,
+                                        );
+                                      }
+                                    }
+                                  : undefined
+                              }
+                              className={clsx(
+                                'w-24 min-w-24 py-1.5 text-center',
+                                today && 'bg-accent-soft/70',
+                                today && isLastRow && 'rounded-b-lg',
+                              )}
+                            >
+                              <div className="flex justify-center">
+                                <Checkbox
+                                  id={`${habit.id}-${date}`}
+                                  label=""
+                                  checked={checked}
+                                  disabled={!editable}
+                                  variant={
+                                    habit.optional
+                                      ? 'optional'
+                                      : completeDates.has(date)
+                                        ? 'gold'
+                                        : 'default'
+                                  }
+                                  onChange={() =>
+                                    toggleCompletion(habit.id, date)
+                                  }
+                                />
+                              </div>
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    );
+                  })}
+                </Fragment>
+              ))}
             </tbody>
           </table>
         </div>

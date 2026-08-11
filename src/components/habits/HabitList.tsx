@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
   DndContext,
   closestCenter,
@@ -22,6 +22,7 @@ import { IconButton } from '@/components/ui/IconButton';
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import { HabitForm } from '@/components/habits/HabitForm';
 import { SortableHabitItem } from '@/components/habits/SortableHabitItem';
+import { HabitSectionHeader } from '@/components/habits/HabitSectionHeader';
 import { useHabits } from '@/hooks/useHabits';
 import { useArchivedHabits } from '@/hooks/useArchivedHabits';
 import { useConfirmTarget } from '@/hooks/useConfirmTarget';
@@ -32,7 +33,13 @@ import {
   deleteHabit,
   reorderHabits,
 } from '@/db/queries/habits';
-import type { Habit } from '@/types/models';
+import { HABIT_SECTIONS } from '@/lib/categories';
+import { groupHabitsBySection } from '@/lib/habits';
+import type { Habit, HabitSection } from '@/types/models';
+
+type CombinedItem =
+  | { kind: 'header'; id: string; section: HabitSection }
+  | { kind: 'habit'; id: string; habit: Habit };
 
 export function HabitList() {
   const habits = useHabits() ?? [];
@@ -40,6 +47,20 @@ export function HabitList() {
   const [adding, setAdding] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const confirmDelete = useConfirmTarget(archivedHabits);
+
+  const combinedItems = useMemo<CombinedItem[]>(() => {
+    const grouped = groupHabitsBySection(habits);
+    const items: CombinedItem[] = [];
+    for (const section of HABIT_SECTIONS) {
+      items.push({ kind: 'header', id: `header:${section}`, section });
+      const sectionHabits =
+        grouped.find((group) => group.section === section)?.habits ?? [];
+      for (const habit of sectionHabits) {
+        items.push({ kind: 'habit', id: habit.id, habit });
+      }
+    }
+    return items;
+  }, [habits]);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -52,13 +73,22 @@ export function HabitList() {
     const { active, over } = event;
     if (!over || active.id === over.id) return;
 
-    const oldIndex = habits.findIndex((habit) => habit.id === active.id);
-    const newIndex = habits.findIndex((habit) => habit.id === over.id);
+    const oldIndex = combinedItems.findIndex((item) => item.id === active.id);
+    const newIndex = combinedItems.findIndex((item) => item.id === over.id);
     if (oldIndex === -1 || newIndex === -1) return;
 
-    const reordered = arrayMove(habits, oldIndex, newIndex);
+    const reordered = arrayMove(combinedItems, oldIndex, newIndex);
+    let currentSection: HabitSection = HABIT_SECTIONS[0];
+    const order: Array<{ id: string; section: HabitSection }> = [];
+    for (const item of reordered) {
+      if (item.kind === 'header') {
+        currentSection = item.section;
+      } else {
+        order.push({ id: item.habit.id, section: currentSection });
+      }
+    }
     try {
-      await reorderHabits(reordered.map((habit) => habit.id));
+      await reorderHabits(order);
     } catch (error) {
       console.error('Failed to reorder habits', error);
     }
@@ -67,34 +97,36 @@ export function HabitList() {
   return (
     <>
       <CollapsibleCard title="Manage Habits">
-        {habits.length > 0 && (
-          <DndContext
-            sensors={sensors}
-            collisionDetection={closestCenter}
-            onDragEnd={handleDragEnd}
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
+          <SortableContext
+            items={combinedItems.map((item) => item.id)}
+            strategy={verticalListSortingStrategy}
           >
-            <SortableContext
-              items={habits.map((habit) => habit.id)}
-              strategy={verticalListSortingStrategy}
-            >
-              <ul className="mb-2.5 space-y-2.5">
-                {habits.map((habit) => (
+            <ul className="mb-2.5 space-y-2.5">
+              {combinedItems.map((item) =>
+                item.kind === 'habit' ? (
                   <SortableHabitItem
-                    key={habit.id}
-                    habit={habit}
-                    editing={editingId === habit.id}
-                    onEdit={() => setEditingId(habit.id)}
+                    key={item.id}
+                    habit={item.habit}
+                    editing={editingId === item.id}
+                    onEdit={() => setEditingId(item.id)}
                     onCancelEdit={() => setEditingId(null)}
                     onSubmitEdit={async (values) => {
-                      await updateHabit(habit.id, values);
+                      await updateHabit(item.habit.id, values);
                       setEditingId(null);
                     }}
                   />
-                ))}
-              </ul>
-            </SortableContext>
-          </DndContext>
-        )}
+                ) : (
+                  <HabitSectionHeader key={item.id} section={item.section} />
+                ),
+              )}
+            </ul>
+          </SortableContext>
+        </DndContext>
 
         {adding ? (
           <div>

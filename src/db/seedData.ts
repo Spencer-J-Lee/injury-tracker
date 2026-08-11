@@ -8,6 +8,7 @@ import type {
   NumbnessDuration,
   NumbnessSuspectedCause,
   ActivityBodyPart,
+  HabitSection,
 } from '@/types/models';
 
 export interface SeedRemedy {
@@ -47,6 +48,7 @@ export interface SeedJournalEntry {
 export interface SeedHabit {
   name: string;
   description?: string;
+  section: HabitSection;
   createdDaysAgo: number;
   archivedDaysAgo?: number;
   completedDaysAgo: number[];
@@ -130,6 +132,7 @@ export const SEED_HABITS: SeedHabit[] = [
     name: 'Morning stretching circuit',
     description:
       'Massage gun + stretch routine for calves, chest, and back before starting the day.',
+    section: 'morning',
     createdDaysAgo: 21,
     completedDaysAgo: [
       21, 20, 19, 18, 17, 15, 14, 13, 12, 11, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0,
@@ -138,23 +141,27 @@ export const SEED_HABITS: SeedHabit[] = [
   {
     name: 'Wrist & forearm strengthening',
     description: 'Wrist curls, reverse wrist curls, and 3-point pinch.',
+    section: 'midday',
     createdDaysAgo: 18,
     completedDaysAgo: [18, 14, 11, 8, 4, 1],
   },
   {
     name: 'Take screen breaks',
     description: 'Break every 30-45 min during computer or controller use.',
+    section: 'midday',
     createdDaysAgo: 14,
     completedDaysAgo: [14, 13, 12, 10, 9, 7, 6, 5, 3, 2, 1, 0],
   },
   {
     name: 'Nerve glides',
+    section: 'midday',
     createdDaysAgo: 10,
     completedDaysAgo: [10, 9, 8, 6, 5, 3, 2, 0],
   },
   {
     name: 'Ice the ankle',
     description: 'Cold pack for 10-15 min after activity.',
+    section: 'night',
     createdDaysAgo: 20,
     archivedDaysAgo: 10,
     completedDaysAgo: [20, 19, 18, 17, 16, 15, 14, 13, 12, 11],

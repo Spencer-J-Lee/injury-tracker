@@ -83,11 +83,14 @@ export type NumbnessDuration = 'brief' | 'lingering' | 'persistent';
 export type NumbnessSuspectedCause =
   'sleep-posture' | 'load-related' | 'unsure';
 
+export type HabitSection = 'morning' | 'midday' | 'night';
+
 export interface Habit {
   id: string;
   name: string;
   description?: string;
   optional?: boolean;
+  section: HabitSection;
   position: number;
   createdAt: string;
   archivedAt?: string;

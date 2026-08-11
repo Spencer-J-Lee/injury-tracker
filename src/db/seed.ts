@@ -185,16 +185,20 @@ export async function seedTestData(): Promise<SeedResult> {
 
   const habitRows: Habit[] = [];
   const habitCompletionRows: HabitCompletion[] = [];
-  SEED_HABITS.forEach((seed, index) => {
+  const habitPositionsBySection = new Map<Habit['section'], number>();
+  SEED_HABITS.forEach((seed) => {
     const habitId = crypto.randomUUID();
     const createdAt = isoOffsetDays(-seed.createdDaysAgo);
+    const position = habitPositionsBySection.get(seed.section) ?? 0;
+    habitPositionsBySection.set(seed.section, position + 1);
     habitRows.push({
       id: habitId,
       name: seed.name,
       description: seed.description
         ? `${seed.description}\n\n${SEED_MARKER}`
         : SEED_MARKER,
-      position: index,
+      section: seed.section,
+      position,
       createdAt,
       archivedAt:
         seed.archivedDaysAgo !== undefined
