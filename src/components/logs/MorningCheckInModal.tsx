@@ -188,7 +188,7 @@ export function MorningCheckInModal({
   );
 
   useEffect(() => {
-    if (!open) return;
+    if (!open || entry) return;
     const handleKeyDown = (e: KeyboardEvent) => {
       if (matchesShortcut(e, 's', { meta: true, shift: true })) {
         e.preventDefault();
@@ -197,7 +197,7 @@ export function MorningCheckInModal({
     };
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [open, handleSaveNoSymptoms]);
+  }, [open, entry, handleSaveNoSymptoms]);
 
   return (
     <Modal
@@ -225,14 +225,16 @@ export function MorningCheckInModal({
           >
             Cancel
           </Button>
-          <Button
-            variant="secondary"
-            iconAfter={<Kbd>{saveNoSymptomsShortcutLabel}</Kbd>}
-            onClick={handleSaveNoSymptoms}
-            disabled={saving}
-          >
-            Save: No Symptoms
-          </Button>
+          {!entry && (
+            <Button
+              variant="secondary"
+              iconAfter={<Kbd>{saveNoSymptomsShortcutLabel}</Kbd>}
+              onClick={handleSaveNoSymptoms}
+              disabled={saving}
+            >
+              Save: No Symptoms
+            </Button>
+          )}
           <Button
             iconAfter={<Kbd>{saveShortcutLabel}</Kbd>}
             onClick={handleSave}
