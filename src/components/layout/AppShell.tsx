@@ -158,7 +158,7 @@ function AppShellContent() {
               </nav>
             </header>
 
-            <main className="mx-auto max-w-[1440px] px-5 py-6 sm:px-7 lg:max-w-none lg:p-6">
+            <main className="mx-auto max-w-360 px-5 py-6 sm:px-7 lg:max-w-none lg:p-6">
               <BackupBanner />
               <Outlet />
             </main>
@@ -169,11 +169,12 @@ function AppShellContent() {
       <button
         onClick={() => openTodosModal()}
         title={`Todos (${todosShortcutLabel})`}
-        className="bg-surface-raised text-ink hover:bg-canvas-sidebar border-subtle fixed bottom-27 left-1/2 flex size-14 -translate-x-1/2 items-center justify-center rounded-full border text-xl shadow-lg lg:bottom-8"
+        className="bg-surface-raised text-ink hover:bg-canvas-sidebar border-subtle fixed bottom-27 left-1/2 flex h-14 -translate-x-1/2 items-center gap-2 rounded-full border px-5 text-xl shadow-lg lg:bottom-8"
       >
         <FontAwesomeIcon icon={faListCheck} />
+        <span className="text-base font-semibold">Todos</span>
         {incompleteTodoCount > 0 && (
-          <span className="absolute -top-1.5 -right-1.5 flex size-6 items-center justify-center rounded-full bg-red-600 text-sm font-bold text-white ring-2 ring-white shadow-md dark:ring-black">
+          <span className="absolute -top-1.5 -right-1.5 flex size-6 items-center justify-center rounded-full bg-red-600 text-sm font-bold text-white shadow-md ring-2 ring-white dark:ring-black">
             {incompleteTodoCount > 9 ? '9+' : incompleteTodoCount}
           </span>
         )}
