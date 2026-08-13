@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Modal } from '@/components/ui/Modal';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -17,7 +17,12 @@ import { useInjuries } from '@/hooks/useInjuries';
 import { useUnsavedChangesGuard } from '@/hooks/useUnsavedChangesGuard';
 import { createLogSession } from '@/db/queries/logEntries';
 import { toDatetimeLocalValue, fromDatetimeLocalValue } from '@/lib/dates';
-import { saveShortcutLabel, cancelShortcutLabel } from '@/lib/shortcuts';
+import {
+  saveShortcutLabel,
+  cancelShortcutLabel,
+  saveNoSymptomsShortcutLabel,
+} from '@/lib/shortcuts';
+import { matchesShortcut } from '@/lib/keyboardShortcut';
 
 export function LogEntryModal() {
   const { state, closeLogModal } = useLogModal();
@@ -81,28 +86,59 @@ export function LogEntryModal() {
     );
   };
 
-  const handleSave = async () => {
-    if (!selectedId) return;
-    setSaving(true);
-    try {
-      await createLogSession({
-        timestamp: fromDatetimeLocalValue(timestamp),
-        notes: notes.trim() || undefined,
-        injuries: [
-          {
-            injuryId: selectedId,
-            painLevel,
-            painFrequency,
-            remedyIds,
-            triggerIds,
-          },
-        ],
-      });
-      closeLogModal();
-    } finally {
-      setSaving(false);
-    }
-  };
+  const saveEntry = useCallback(
+    async (values: {
+      painLevel: number | undefined;
+      painFrequency: number | undefined;
+      remedyIds: string[];
+      triggerIds: string[];
+    }) => {
+      if (!selectedId) return;
+      setSaving(true);
+      try {
+        await createLogSession({
+          timestamp: fromDatetimeLocalValue(timestamp),
+          notes: notes.trim() || undefined,
+          injuries: [
+            {
+              injuryId: selectedId,
+              ...values,
+            },
+          ],
+        });
+        closeLogModal();
+      } finally {
+        setSaving(false);
+      }
+    },
+    [selectedId, timestamp, notes, closeLogModal],
+  );
+
+  const handleSave = () =>
+    saveEntry({ painLevel, painFrequency, remedyIds, triggerIds });
+
+  const handleSaveNoSymptoms = useCallback(
+    () =>
+      saveEntry({
+        painLevel: 0,
+        painFrequency: 0,
+        remedyIds: [],
+        triggerIds: [],
+      }),
+    [saveEntry],
+  );
+
+  useEffect(() => {
+    if (!state.open) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (matchesShortcut(e, 's', { meta: true, shift: true })) {
+        e.preventDefault();
+        handleSaveNoSymptoms();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [state.open, handleSaveNoSymptoms]);
 
   const selectedInjury = injuries.find((i) => i.id === selectedId);
 
@@ -123,18 +159,26 @@ export function LogEntryModal() {
       footer={
         <>
           <Button
-            iconAfter={<Kbd>{saveShortcutLabel}</Kbd>}
-            onClick={handleSave}
-            disabled={saving || !selectedId}
-          >
-            Submit
-          </Button>
-          <Button
             variant="ghost"
             iconAfter={<Kbd>{cancelShortcutLabel}</Kbd>}
             onClick={() => guard(closeLogModal)}
           >
             Cancel
+          </Button>
+          <Button
+            variant="secondary"
+            iconAfter={<Kbd>{saveNoSymptomsShortcutLabel}</Kbd>}
+            onClick={handleSaveNoSymptoms}
+            disabled={saving || !selectedId}
+          >
+            Save: No Symptoms
+          </Button>
+          <Button
+            iconAfter={<Kbd>{saveShortcutLabel}</Kbd>}
+            onClick={handleSave}
+            disabled={saving || !selectedId}
+          >
+            Submit
           </Button>
         </>
       }
