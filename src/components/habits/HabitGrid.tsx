@@ -124,8 +124,16 @@ export function HabitGrid({ habits, completions, weekDates }: HabitGridProps) {
     });
   }, [celebration]);
 
+  const [animatedKeys, setAnimatedKeys] = useState<Set<string>>(new Set());
+
   function toggleCompletion(habitId: string, date: string) {
     const key = completionKey(habitId, date);
+    setAnimatedKeys((prev) => {
+      if (prev.has(key)) return prev;
+      const next = new Set(prev);
+      next.add(key);
+      return next;
+    });
     setCompletedKeys((prev) => {
       const next = new Set(prev);
       if (next.has(key)) {
@@ -227,9 +235,8 @@ export function HabitGrid({ habits, completions, weekDates }: HabitGridProps) {
                           {habit.name}
                         </th>
                         {dateInfo.map(({ date, today, editable }) => {
-                          const checked = completedKeys.has(
-                            completionKey(habit.id, date),
-                          );
+                          const key = completionKey(habit.id, date);
+                          const checked = completedKeys.has(key);
                           return (
                             <td
                               key={date}
@@ -271,6 +278,7 @@ export function HabitGrid({ habits, completions, weekDates }: HabitGridProps) {
                                   onChange={() =>
                                     toggleCompletion(habit.id, date)
                                   }
+                                  animated={animatedKeys.has(key)}
                                 />
                               </div>
                             </td>
