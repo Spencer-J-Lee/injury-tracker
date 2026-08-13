@@ -36,7 +36,6 @@ export function StrengtheningWeekPage() {
   const size = WINDOW_SIZE[view];
 
   const [ackDate, setAckDate] = useState(getGuidelinesAckDate);
-  const [hasMemorized, setHasMemorized] = useState(false);
   const [hasQuitCodingApps, setHasQuitCodingApps] = useState(false);
 
   const today = getTodayDateString();
@@ -94,12 +93,6 @@ export function StrengtheningWeekPage() {
 
           <div className="flex flex-col gap-1">
             <Checkbox
-              id="ack-memorized"
-              label="I have practiced memorizing these guidelines"
-              checked={hasMemorized}
-              onChange={(e) => setHasMemorized(e.target.checked)}
-            />
-            <Checkbox
               id="ack-quit-coding-apps"
               label="I have quit out of all coding applications"
               checked={hasQuitCodingApps}
@@ -107,10 +100,7 @@ export function StrengtheningWeekPage() {
             />
           </div>
 
-          <Button
-            onClick={acknowledgeGuidelines}
-            disabled={!hasMemorized || !hasQuitCodingApps}
-          >
+          <Button onClick={acknowledgeGuidelines} disabled={!hasQuitCodingApps}>
             Continue
           </Button>
         </div>
