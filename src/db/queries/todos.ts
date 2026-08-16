@@ -57,6 +57,10 @@ export async function reorderTodos(orderedIds: string[]): Promise<void> {
   });
 }
 
+export async function deleteTodo(id: string): Promise<void> {
+  await db.todos.delete(id);
+}
+
 export async function deleteCompletedTodos(): Promise<void> {
   await db.transaction('rw', db.todos, async () => {
     const completed = (await db.todos.toArray()).filter(
