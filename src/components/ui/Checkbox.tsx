@@ -15,20 +15,20 @@ interface CheckboxProps extends Omit<
 
 const variantClasses: Record<Variant, string> = {
   default: 'checked:bg-accent checked:border-accent',
-  gold: 'checked:border-amber-400 checked:bg-amber-400',
+  gold: 'checked:border-[#F8AF18] checked:bg-[#F8AF18]',
   optional: 'border-dashed checked:border-ink-faint checked:bg-control',
 };
 
 const animatedVariantClasses: Record<Variant, string> = {
   default: 'motion-reduce:checked:bg-accent checked:border-accent',
-  gold: 'checked:border-amber-400 motion-reduce:checked:bg-amber-400',
+  gold: 'checked:border-[#F8AF18] motion-reduce:checked:bg-[#F8AF18]',
   optional:
     'border-dashed checked:border-ink-faint motion-reduce:checked:bg-control',
 };
 
 const overlayColorClasses: Record<Variant, string> = {
   default: 'bg-accent',
-  gold: 'bg-amber-400',
+  gold: 'bg-[#F8AF18]',
   optional: 'bg-control',
 };
 
