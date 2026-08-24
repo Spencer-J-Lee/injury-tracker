@@ -1,6 +1,6 @@
 # Injury Rehab Tracker
 
-A personal tool for logging injuries, tracking symptoms and remedies over time, and spotting trends before your next PT appointment. Built as a local-first web app — all data lives in your browser (IndexedDB via Dexie), with export/import for backups.
+A personal tool for logging injuries, tracking symptoms and remedies over time, and spotting trends before your next PT appointment. Built as a local-first web app — all data lives in your browser (IndexedDB via Dexie), with export/import for backups. You can visit the website here: https://injury-tracker-pi.vercel.app/
 
 ## Project Status
 
