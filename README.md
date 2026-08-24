@@ -1,4 +1,4 @@
-# Injury Tracker
+# Injury Rehab Tracker
 
 A personal tool for logging injuries, tracking symptoms and remedies over time, and spotting trends before your next PT appointment. Built as a local-first web app — all data lives in your browser (IndexedDB via Dexie), with export/import for backups.
 
