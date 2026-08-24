@@ -99,9 +99,14 @@ export function InjuriesPage() {
               </Button>
             ) : (
               <>
-                <Button variant="secondary" onClick={() => setSelectMode(true)}>
-                  Select
-                </Button>
+                {(injuries?.length ?? 0) > 0 && (
+                  <Button
+                    variant="secondary"
+                    onClick={() => setSelectMode(true)}
+                  >
+                    Select
+                  </Button>
+                )}
                 <Link to="/injuries/new">
                   <Button iconAfter={<Kbd>{addInjuryShortcutLabel}</Kbd>}>
                     Add Injury
