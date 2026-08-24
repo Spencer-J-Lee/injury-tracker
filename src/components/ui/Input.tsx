@@ -3,7 +3,7 @@ import clsx from 'clsx';
 
 type Size = 'sm' | 'md';
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
   size?: Size;
 }
 

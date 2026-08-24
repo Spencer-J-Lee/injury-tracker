@@ -10,7 +10,7 @@ import { faCloudSun, faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
-import { format, isToday, isYesterday, parseISO } from 'date-fns';
+import { format, isToday, parseISO } from 'date-fns';
 import Lottie from 'lottie-react';
 import confettiAnimation from '@/assets/lottie/confetti.json';
 import { Card } from '@/components/ui/Card';
@@ -58,7 +58,6 @@ export function HabitGrid({ habits, completions, weekDates }: HabitGridProps) {
         return {
           date,
           today: isToday(parsed),
-          editable: isToday(parsed) || isYesterday(parsed),
           dayLabel: format(parsed, 'EEE'),
           dateLabel: format(parsed, 'MMM d'),
         };
@@ -234,7 +233,7 @@ export function HabitGrid({ habits, completions, weekDates }: HabitGridProps) {
                         >
                           {habit.name}
                         </th>
-                        {dateInfo.map(({ date, today, editable }) => {
+                        {dateInfo.map(({ date, today }) => {
                           const key = completionKey(habit.id, date);
                           const checked = completedKeys.has(key);
                           return (
@@ -267,7 +266,6 @@ export function HabitGrid({ habits, completions, weekDates }: HabitGridProps) {
                                   id={`${habit.id}-${date}`}
                                   label=""
                                   checked={checked}
-                                  disabled={!editable}
                                   variant={
                                     habit.optional
                                       ? 'optional'
