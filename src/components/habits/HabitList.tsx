@@ -49,6 +49,7 @@ export function HabitList() {
   const confirmDelete = useConfirmTarget(archivedHabits);
 
   const combinedItems = useMemo<CombinedItem[]>(() => {
+    if (habits.length === 0) return [];
     const grouped = groupHabitsBySection(habits);
     const items: CombinedItem[] = [];
     for (const section of HABIT_SECTIONS) {
