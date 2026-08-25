@@ -25,3 +25,5 @@ dist-ssr
 
 # Playwright MCP snapshots
 .playwright-mcp/
+
+_stuff/
